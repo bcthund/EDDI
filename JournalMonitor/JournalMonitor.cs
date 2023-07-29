@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -15,6 +16,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Utilities;
+using Windows.UI.Composition;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EddiJournalMonitor
 {
@@ -4165,29 +4168,39 @@ namespace EddiJournalMonitor
                                         int amount = JsonParsing.getInt(signal, "Count");
                                         surfaceSignals.Add( new SignalAmount( source, amount ) );
                                     }
-                                    surfaceSignals = surfaceSignals.OrderByDescending( s => s.amount ).ToList();
+                                    surfaceSignals = surfaceSignals.OrderByDescending(s => s.amount).ToList();
 
-                                    List<string> biosignals = new List<string>();
-                                    //Body body = EDDI.Instance?.CurrentStarSystem.BodyWithID( bodyId );
-
-                                    // TODO:#2212........[FSSBodySignals apparently shows up before Scan which creates the body. Save FSS Biological data until the Scan event can make use of it.]
-                                    // The below code doesn't work because we need to body data to make predictions anyway.
-                                    //foreach ( SignalAmount sig in surfaceSignals )
-                                    //{
-                                    //    if ( sig.signalSource.edname == "SAA_SignalType_Biological" )
-                                    //    {
-                                    //        for ( int i = 0; i < sig.amount; i++ )
-                                    //        {
-                                    //            biosignals.Add( $"Unknown_{i}" );
-                                    //        }
-                                    //    }
-                                    //}
-
-                                    events.Add( new SurfaceSignalsEvent( timestamp, "FSS", systemAddress, bodyName, bodyId, surfaceSignals, biosignals ) { raw = line, fromLoad = fromLogLoad } );
+                                    events.Add( new SurfaceSignalsEvent( timestamp, "FSS", systemAddress, bodyName, bodyId, surfaceSignals ) { raw = line, fromLoad = fromLogLoad } );
                                 }
                                 handled = true;
                                 break;
                             case "SAASignalsFound":
+                                // TODO: Future, implement biologicals into body
+                                //  - See ticket #2455
+                                //  - When SAASignalsFound is triggered, add list of biologicals (genus) to body
+                                //
+                                // { "timestamp":"2023-07-22T03:54:46Z", "event":"SAASignalsFound",
+                                //      "BodyName":"Greae Phio FO-G d11-1005 AB 5 a",
+                                //      "SystemAddress":34542299533283,
+                                //      "BodyID":42,
+                                //      "Signals":[ {
+                                //          "Type":"$SAA_SignalType_Biological;",
+                                //          "Type_Localised":"Biological",
+                                //          "Count":4 } ],
+                                //      "Genuses":[
+                                //          { "Genus":"$Codex_Ent_Bacterial_Genus_Name;", "Genus_Localised":"Bacterium" },
+                                //          { "Genus":"$Codex_Ent_Conchas_Genus_Name;", "Genus_Localised":"Concha" },
+                                //          { "Genus":"$Codex_Ent_Shrubs_Genus_Name;", "Genus_Localised":"Frutexa" },
+                                //          { "Genus":"$Codex_Ent_Tussocks_Genus_Name;", "Genus_Localised":"Tussock" } ] }                                
+                                //
+                                //body = system?.BodyWithID( bodyId );
+                                //if ( !( body is null ) )
+                                //{
+                                //    body.scannedDateTime = body.scannedDateTime ?? timestamp;
+                                //    body.mappedDateTime = timestamp;
+                                //    body.mappedEfficiently = probesUsed <= efficiencyTarget;
+                                //    events.Add( new BodyMappedEvent( timestamp, bodyName, body, systemAddress, probesUsed, efficiencyTarget ) { raw = line, fromLoad = fromLogLoad } );
+                                //}
                                 {
                                     // TODO:#2212........[Remove]
                                     Logging.Info( $"[SAASignalsFound Event]" );
@@ -4198,9 +4211,6 @@ namespace EddiJournalMonitor
                                     long bodyId = JsonParsing.getLong(data, "BodyID");
                                     data.TryGetValue("Signals", out object signalsVal);
                                     data.TryGetValue( "Genuses", out object genusesVal );
-
-                                    //StarSystem system => EDDI.Instance?.CurrentStarSystem;
-                                    //Body body = null;
 
                                     if (bodyName.EndsWith(" Ring"))
                                     {
@@ -4264,83 +4274,27 @@ namespace EddiJournalMonitor
                                         }
                                         surfaceSignals = surfaceSignals.OrderByDescending(s => s.amount).ToList();
 
-                                        // Start of the SurfaceSignals for Exobiology logic
-                                        List<string> biosignals = new List<string>();
-                                        StarSystem system = EDDI.Instance?.CurrentStarSystem;
-                                        Body body = null;
-
-                                        if ( system != null )
+                                        // This is biological signal sources from a body that we've mapped
+                                        List<string> bioSignals = new List<string>();
+                                        foreach ( Dictionary<string, object> signal in (List<object>)genusesVal )
                                         {
-                                            Logging.Info( $">>> - System Exists" );
-                                            body = system?.BodyWithID( bodyId );
-
-                                            if ( !( body is null ) )
-                                            {
-                                                Logging.Info( $">>> - Body Exists" );
-
-                                                if ( body.surfaceSignals == null )
-                                                {
-                                                    body.surfaceSignals = new SurfaceSignals();
-                                                }
-
-                                                // Set the number of detected signals for both Bio and Geo
-                                                body.surfaceSignals.bio.reportedTotal = reportedBios;
-                                                body.surfaceSignals.geo.reportedTotal = reportedGeos;
-
-                                                // If the current list was predicted then erase and recreate with actual values
-                                                // If the number of bios in the list does not match the reported number of bios then clear
-                                                if ( body.surfaceSignals.predicted == true || body.surfaceSignals.bio.numTotal != body.surfaceSignals.bio.reportedTotal )
-                                                {
-                                                    body.surfaceSignals.bio.list.Clear();
-                                                }
-
-                                                //if ( body.surfaceSignals.bio.numTotal == 0 || body.surfaceSignals.predicted == true )
-                                                //{
-                                                //body.surfaceSignals.bio.list.Clear();
-                                                // TODO:#2212........[Remove]
-                                                string log = "[SAASignalsFound]:";
-                                                foreach ( Dictionary<string, object> signal in (List<object>)genusesVal )
-                                                {
-                                                    string edname_genus = JsonParsing.getString(signal, "Genus");
-                                                    edname_genus = ScanOrganic.NormalizedGenus( edname_genus );
-
-                                                    log = log + $"\r\n\tAdding bio [{body.surfaceSignals.bio.numTotal}] {edname_genus}";
-
-                                                    body.surfaceSignals.AddBio( edname_genus );
-                                                }
-                                                Logging.Info( log );
-                                                Thread.Sleep( 10 );
-
-                                                // The bio list is no longer a prediction, do not update it again.
-                                                body.surfaceSignals.predicted = false;
-
-                                                // 2212: Save/Update Body data
-                                                EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                                                StarSystemSqLiteRepository.Instance.SaveStarSystem( system );
-
-                                                //biosignals = EDDI.Instance?.CurrentStarSystem.BodyWithID( bodyId ).surfaceSignals.GetBios();
-
-                                                Logging.Info( $"[SAASignalsFound] Bio Count = {body.surfaceSignals.bio.reportedTotal}" );
-                                                Thread.Sleep( 10 );
-
-                                                body = system?.BodyWithID( bodyId );
-                                                biosignals = body.surfaceSignals.GetBios();
-
-                                                // TODO:#2212........[Remove]
-                                                log = "[SAASignalsFound]:";
-                                                int c = 0;
-                                                foreach ( string signal in biosignals )
-                                                {
-                                                    log = log + $"\r\n\tbiosignals[{c}] {signal}";
-                                                    c++;
-                                                }
-                                                Logging.Info( log );
-                                                Thread.Sleep( 10 );
-                                                //}
-                                            }
+                                            string localizedName = JsonParsing.getString(signal, "Genus_Localised");
+                                            bioSignals.Add( localizedName.ToString() );
                                         }
 
-                                        events.Add( new SurfaceSignalsEvent( timestamp, "SAA", systemAddress, bodyName, bodyId, surfaceSignals, biosignals ) { raw = line, fromLoad = fromLogLoad } );
+                                        // TODO: Future, implement biologicals into body
+                                        //  - See ticket #2455
+                                        //
+                                        //body = system?.BodyWithID( bodyId );
+                                        //if ( !( body is null ) )
+                                        //{
+                                        //    body.scannedDateTime = body.scannedDateTime ?? timestamp;
+                                        //    body.mappedDateTime = timestamp;
+                                        //    body.mappedEfficiently = probesUsed <= efficiencyTarget;
+                                        //    events.Add( new BodyMappedEvent( timestamp, bodyName, body, systemAddress, probesUsed, efficiencyTarget ) { raw = line, fromLoad = fromLogLoad } );
+                                        //}
+
+                                        events.Add( new SurfaceSignalsEvent( timestamp, "SAA", systemAddress, bodyName, bodyId, surfaceSignals, bioSignals ) { raw = line, fromLoad = fromLogLoad } );
                                     }
                                 }
                                 handled = true;

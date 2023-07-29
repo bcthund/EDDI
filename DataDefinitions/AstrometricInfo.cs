@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;
 
@@ -30,7 +33,7 @@ namespace EddiDataDefinitions
         public bool Exists ()
         {
             return this.exists;
-        }
+    }
 
         public void SetExists( bool exists ) {
             this.exists = exists;
@@ -49,7 +52,7 @@ namespace EddiDataDefinitions
             public string edname;
 
             public LookupEntryId ( string className, string edname )
-            {
+    {
                 this.edname = edname;
                 this.className = className;
             }
@@ -300,13 +303,13 @@ namespace EddiDataDefinitions
             AstrometricItem item = new AstrometricItem();
 
             if ( edname != "" )
-            {
+                {
                 item.name = rmAstroName.GetString( edname );
                 item.subCategory = rmAstroSubCategory.GetString( nameData[ edname ].className );
                 item.description = rmAstroDesc.GetString( edname );
 
                 item.SetExists( true );
-            }
+                }
 
             // If the above fails to find an entry then we return the empty item
             // We could modify the item to say that we could not find an entry as well

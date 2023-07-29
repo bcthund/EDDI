@@ -13,20 +13,23 @@ namespace EddiEvents
         public const string DESCRIPTION = "Triggered when an organic scan is made";
         public const string SAMPLE = @"{ ""timestamp"":""2023-07-22T04:01:18Z"", ""event"":""ScanOrganic"", ""ScanType"":""Log"", ""Genus"":""$Codex_Ent_Shrubs_Genus_Name;"", ""Genus_Localised"":""Frutexa"", ""Species"":""$Codex_Ent_Shrubs_05_Name;"", ""Species_Localised"":""Frutexa Fera"", ""Variant"":""$Codex_Ent_Shrubs_05_F_Name;"", ""Variant_Localised"":""Frutexa Fera - Green"", ""SystemAddress"":34542299533283, ""Body"":42 }";
 
+        [PublicAPI( "The ID of the body, so we know when location has changed" )]
+        public int bodyID { get; private set; }
+
         [PublicAPI( "The type of scan which can be Log, Sample or Analyse" )]
         public string scanType { get; private set; }
 
-        //[PublicAPI( "Test variable" )]
-        //public string currentSystem;
+        [PublicAPI( "Simple biologic name, such as 'Frutexa'" )]
+        public string localisedGenus { get; private set; }
 
-        //[PublicAPI( "Test variable" )]
-        //public string currentBody;
+        [PublicAPI( "Species of the genus, such as 'Frutexa Fera'" )]
+        public string localisedSpecies { get; private set; }
 
-        [PublicAPI( "The object holding all the data about the current biological." )]
-        public Exobiology bio { get; set; }
+        [PublicAPI( "The full type of the biolocal, such as 'Frutexa Fera - Green'")]
+        public string localisedVariant { get; private set; }
 
-        [PublicAPI]
-        public int? numTotal { get; set; }
+        [PublicAPI( "The detailed data for the biological" )]
+        public OrganicData data { get; private set; }
 
         [PublicAPI]
         public int? numComplete { get; set; }
@@ -39,55 +42,15 @@ namespace EddiEvents
 
         // Not intended to be user facing
 
-        public string genus;
-        public string species;
-        public string variant;
-        public ulong systemAddress { get; private set; }
-        public int bodyId { get; private set; }
-
-        public ScanOrganicEvent ( DateTime timestamp, ulong systemAddress, int bodyId, Body body, string scanType, string genus, string species, string variant ) : base(timestamp, NAME)
+        public ScanOrganicEvent ( DateTime timestamp, int bodyID, string scanType, string localisedGenus, string localisedSpecies, string localisedVariant ) : base(timestamp, NAME)
         {
-            this.bodyId = bodyId;
+            this.bodyID = bodyID;
             this.scanType = scanType;
-            this.genus = genus;
-            this.species = species;
-            this.variant = variant;
+            this.localisedGenus = localisedGenus;
+            this.localisedSpecies = localisedSpecies;
+            this.localisedVariant = localisedVariant;
 
-            try
-            {
-                this.bio = new Exobiology( genus );
-                try
-                {
-                    this.bio = body.surfaceSignals.GetBio( genus );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio ---------------------------------------------" );
-                    //Thread.Sleep( 10 );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio:    Genus = '{this.bio.genus.name}'" );
-                    //Thread.Sleep( 10 );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio:  Species = '{this.bio.species.name}'" );
-                    //Thread.Sleep( 10 );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio:  Variant = '{this.bio.variant}'" );
-                    //Thread.Sleep( 10 );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio:    Genus = '{this.bio.genus.name}'" );
-                    //Thread.Sleep( 10 );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio: Distance = '{this.bio.genus.distance}'" );
-                    //Thread.Sleep( 10 );
-                    //Logging.Info( $"[ScanOrganicEvent] GetBio ---------------------------------------------" );
-                    //Thread.Sleep( 10 );
-
-                    // TODO:#2212........[These are lagged by one sample if taken here, not updated until after Sample() is called by DiscoveryMonitor and only DiscoveryMonitor has access to current location]
-                    //this.total = body.surfaceSignals.bio.total;
-                    //this.complete = body.surfaceSignals.bio.complete;
-                    //this.remaining = body.surfaceSignals.bio.remaining;
-                }
-                catch ( System.Exception e )
-                {
-                    Logging.Error( $"ScanOrganicEvent: Failed to set 'this.bio = body.surfaceSignals.GetBio( genus )' [{e}]" );
-                }
-            }
-            catch
-            {
-                Logging.Error( "ScanOrganicEvent: Failed to get Surface Signals" );
-            }
+            this.data = OrganicInfo.GetData( localisedGenus, localisedSpecies );
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using MathNet.Numerics;
+using MathNet.Numerics.Distributions;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
@@ -14,6 +19,7 @@ namespace EddiDataDefinitions
         public string name;
         public long? value;
         public string description;
+        public string conditions;
 
         public GeologyItem ()
         {
@@ -23,10 +29,12 @@ namespace EddiDataDefinitions
             this.name = "";
             this.value = 0;
             this.description = "";
+            this.conditions = "";
         }
+    };
 
         public bool Exists ()
-        {
+    {
             return exists;
         }
 
@@ -46,30 +54,58 @@ namespace EddiDataDefinitions
         public class LookupEntryId
         {
             public string geoClass;
-            public string name;
+        public string name;
             public long? value;
 
             public LookupEntryId ( string geoClass, string name, long? value )
-            {
+        {
                 this.geoClass = geoClass;
                 this.name = name;
                 this.value = value;
-            }
+        }
         }
 
         public class LookupName
-        {
+    {
             public long? entryId;
             public string geoClass;
             public long? value;
 
             public LookupName ( long? entryId, string geoClass, long? value )
-            {
+        {
                 this.entryId = entryId;
                 this.geoClass = geoClass;
                 this.value = value;
-            }
         }
+
+        public void Add ( string species, int distance, string desc, string conditions )
+        {
+            GeologySpecies myData = new GeologySpecies(species, distance, desc, conditions);
+            this.species.Add( species, myData );
+        }
+    };
+
+    public class GeologyData
+    {
+        public GeologyGenusBase genus;
+        public GeologySpeciesBase species;
+    }
+
+    public class GeologyInfo
+    {
+        private static GeologyGenus Fumarole = new GeologyGenus( "Fumarole", 0, "Fumaroles are gaps in a planet’s crust through which gases and steam are emitted. The ejected material often accumulates around the opening." );
+        private static GeologyGenus WaterGeyser = new GeologyGenus( "Water Geyser", 0, "Geysers are eruptions of liquid created by pressure from local geological activity." );
+        private static GeologyGenus IceFumarole = new GeologyGenus( "Ice Fumarole", 0, "Ice fumaroles are gaps in an icy planet’s crust that allow liquid or gaseous material to escape under high pressure." );
+        private static GeologyGenus IceGeyser = new GeologyGenus( "Ice Geyser", 0, "Ice geysers, also known as cryogeysers, are eruptions of ice, dust and volatiles." );
+        private static GeologyGenus LavaSpout = new GeologyGenus( "Lava Spout", 0, "Lava spouts are weakened areas of a planet’s surface where molten material percolates, generating heat and emitting vapour and gases. The nature of the material varies according to the planet’s composition and circumstances." );
+        private static GeologyGenus GasVent = new GeologyGenus( "Gas Vent", 0, "Gas vents are the result of internal pressure high enough to burst through a planet’s crust." );
+        private static GeologyGenus LagrangeCloud = new GeologyGenus( "Lagrange Cloud", 0, "Lagrange clouds are a dense accumulation of gas fixed in place at a Lagrange point, where the combined gravitational forces of multiple bodies create a stable region." );
+        private static GeologyGenus P_TypeAnomoly = new GeologyGenus( "P-Type Anomoly", 0, "P-Type anomolies are a range of phenomena characterised by intensily bright energy patterns." );
+        private static GeologyGenus Q_TypeAnomoly = new GeologyGenus( "Q-Type Anomoly", 0, "Q-Type anomolies are a range of phenomena characterised by energetic center orbs." );
+        private static GeologyGenus T_TypeAnomoly = new GeologyGenus( "T-Type Anomoly", 0, "T-Type anomolies are a range of phenomena characterised by the presence of a bright pulsing sphere." );
+        private static GeologyGenus K_TypeAnomoly = new GeologyGenus( "K-Type Anomoly", 0, "K-Type anomolies are a range of high-energy phenomena characterised by luminous cloud patterns." );
+        private static GeologyGenus L_TypeAnomoly = new GeologyGenus( "L-Type Anomoly", 0, "L-Type anomolies are a range of phenomena characterised by luminous clusters of energy." );
+        private static GeologyGenus E_TypeAnomoly = new GeologyGenus( "E-Type Anomoly", 0, "E-Type anomolies are a range of phenomena characterised by slow-moving elements." );
 
         // For easier reverse lookups
         public static Dictionary<long, LookupEntryId> entryIdData = new Dictionary<long, LookupEntryId>();
@@ -279,7 +315,7 @@ namespace EddiDataDefinitions
             if ( entryId != null )
             {
                 if ( entryIdData.ContainsKey( (long)entryId ) )
-                {
+            {
 
                     LookupEntryId data = entryIdData[ (long)entryId ];
 
@@ -309,20 +345,24 @@ namespace EddiDataDefinitions
                     //Thread.Sleep( 10 );
 
                     item.SetExists( true );
-                }
+            }
+            else if ( localisedGenus == "Q-Type Anomoly" )
+            {
+                myData.genus = Q_TypeAnomoly;
+                Q_TypeAnomoly.species.TryGetValue( localisedSpecies, out val );
             }
 
             return item;
-        }
+            }
 
         public static GeologyItem LookupByName ( string edname )
-        {
+            {
             GeologyItem item = new GeologyItem();
 
             if ( edname != "" )
             {
                 if ( nameData.ContainsKey( edname ) )
-                {
+            {
                     LookupName data = nameData[ edname ];
 
                     item.class_name = rmGeoClassName.GetString( data.geoClass );
@@ -333,7 +373,14 @@ namespace EddiDataDefinitions
                     item.description = rmGeoDesc.GetString( edname );
 
                     item.SetExists( true );
-                }
+            }
+
+            if ( val != null ) { myData.species = val; }
+            else
+            {
+                myData.species.name = "Not found.";
+                myData.species.value = 0;
+                myData.species.description = "";
             }
 
             // If the above fails to find an entry then we return the empty item
