@@ -3,6 +3,7 @@ using EddiDataDefinitions;
 using EddiDataProviderService;
 using EddiEvents;
 using EddiStatusService;
+using MathNet.Numerics.RootFinding;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -33,8 +34,9 @@ namespace EddiDiscoveryMonitor
         private long _currentBodyId;
         private StarSystem _currentSystem => EDDI.Instance?.CurrentStarSystem;
         private Body _currentBody(long bodyId) => _currentSystem?.BodyWithID( bodyId );
-        
-        
+
+        public Body currentBody => currentSystem?.BodyWithID( currentBodyId );
+
         //private IDictionary<string,Exobiology> currentBios => currentBody.surfaceSignals.bio.list;
 
         //[PublicAPI( "The current biological" )]
@@ -85,6 +87,7 @@ namespace EddiDiscoveryMonitor
 
         public void Start()
         {
+            //Logging.Info( $"{MonitorName()}: Started" );
         }
 
         public void Stop()
@@ -181,7 +184,7 @@ namespace EddiDiscoveryMonitor
                                         {
                                             status2 = 1;
                                             coords2.status = Exobiology.Status.InsideSampleRange;
-                                        }
+        }
                                     }
                                     else if ( distance2 > body.surfaceSignals.bio.list[ _currentGenus ].genus.distance )
                                     {
@@ -211,7 +214,7 @@ namespace EddiDiscoveryMonitor
                                     Logging.Error( $"Exobiology: Failed to Enqueue 'ScanOrganicDistanceEvent' [{e}]" );
                                 }
                             }
-                            
+
                         }
                     }
                 }
@@ -231,7 +234,7 @@ namespace EddiDiscoveryMonitor
         }
 
         private void handleCodexEntryEvent ( CodexEntryEvent @event )
-        {            
+        {
             // Not sure if we have anything to do here with this yet
         }
 
@@ -614,9 +617,9 @@ namespace EddiDiscoveryMonitor
 
                                         //string[] starParts = data.parentStar.Split(',');
                                         //foreach ( string part in starParts )
-                                        //{
+            //{
                                         //    if ( part == starClass )
-                                        //    {
+            //    {
                                         //        // TODO:#2212........[Remove]
                                         //        //Logging.Info( $"[Predictions] Found Star Match: '{part}' == '{starClass}'" );
                                         //        //Thread.Sleep( 10 );
@@ -958,7 +961,7 @@ namespace EddiDiscoveryMonitor
                                         //        found = true;
                                         //        //break;
                                         //        goto ExitParentStarLoop;
-                                        //    }
+            //    }
                                         //}
 
                                         foreach ( string checkClass in check.starClass )
@@ -1007,7 +1010,7 @@ namespace EddiDiscoveryMonitor
                                                 //        found = true;
                                                 //        break;
                                                 //    }
-                                                //}
+            //}
 
                                                 foreach ( string checkClass in check.starClass )
                                                 {

@@ -1,4 +1,17 @@
-﻿namespace EddiDataDefinitions
+﻿using EddiDataDefinitions.Properties;
+using JetBrains.Annotations;
+using MathNet.Numerics;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Resources;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using Utilities;
+
+namespace EddiDataDefinitions
 {
     public class CodexEntry
     {
@@ -46,6 +59,7 @@
                 astrology = AstrometricInfo.Lookup( entryId, edname );
             }
             else if ( category == "Civilisations" ) {
+                // TODO:#2212........[Possibly combine Thargoid and Guardian?]
                 if ( subCategory == "Guardian" )
                 {
                     guardian = GuardianInfo.Lookup( entryId, edname );
@@ -68,7 +82,7 @@
                 ?.Replace( "_Name;", "" )
                 ?.Replace( "_name;", "" )
                 ?.Replace( ";", "" );
-        }
+                }
 
         public static string NormalizedSubCategory ( string rawName )
         {
@@ -76,7 +90,7 @@
                 ?.Replace( "Codex_SubCategory_", "" )
                 ?.Replace( "$", "" )
                 ?.Replace( ";", "" );
-        }
+            }
 
         public static string NormalizedCategory ( string rawName )
         {

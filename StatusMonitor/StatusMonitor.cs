@@ -262,6 +262,7 @@ namespace EddiStatusMonitor
                         lastDestinationPOI = currentStatus.destination_name;
                     }
 
+                    // TODO:#2212........[Move to DiscoveryMonitor]
                     // Check if planetary coordinates are available and updating
                     // Send hyperspace data as well to be used as a reset condition for planetary exobiology
                     //  - There must be a better way to do this, maybe with Body biologicals implementation

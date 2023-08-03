@@ -4170,15 +4170,18 @@ namespace EddiJournalMonitor
                                     }
                                     surfaceSignals = surfaceSignals.OrderByDescending(s => s.amount).ToList();
 
-                                    events.Add( new SurfaceSignalsEvent( timestamp, "FSS", systemAddress, bodyName, bodyId, surfaceSignals ) { raw = line, fromLoad = fromLogLoad } );
+                                    StarSystem system = EDDI.Instance?.CurrentStarSystem;
+                                    Body body = null;
+                                    if ( system != null )
+                                    {
+                                        body = system.BodyWithID( bodyId );
+                                    }
+
+                                            events.Add( new SurfaceSignalsEvent( timestamp, "FSS", systemAddress, bodyName, bodyId, surfaceSignals, body ) { raw = line, fromLoad = fromLogLoad } );
                                 }
                                 handled = true;
                                 break;
-                            case "SAASignalsFound":
-                                // TODO: Future, implement biologicals into body
-                                //  - See ticket #2455
-                                //  - When SAASignalsFound is triggered, add list of biologicals (genus) to body
-                                //
+                            case "SAASignalsFound":         // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                                 // { "timestamp":"2023-07-22T03:54:46Z", "event":"SAASignalsFound",
                                 //      "BodyName":"Greae Phio FO-G d11-1005 AB 5 a",
                                 //      "SystemAddress":34542299533283,
@@ -4193,6 +4196,8 @@ namespace EddiJournalMonitor
                                 //          { "Genus":"$Codex_Ent_Shrubs_Genus_Name;", "Genus_Localised":"Frutexa" },
                                 //          { "Genus":"$Codex_Ent_Tussocks_Genus_Name;", "Genus_Localised":"Tussock" } ] }                                
                                 //
+                                //StarSystem system = EDDI.Instance?.CurrentStarSystem;
+                                //Body body = null;
                                 //body = system?.BodyWithID( bodyId );
                                 //if ( !( body is null ) )
                                 //{
@@ -4211,6 +4216,9 @@ namespace EddiJournalMonitor
                                     long bodyId = JsonParsing.getLong(data, "BodyID");
                                     data.TryGetValue("Signals", out object signalsVal);
                                     data.TryGetValue( "Genuses", out object genusesVal );
+
+                                    StarSystem system = EDDI.Instance?.CurrentStarSystem;
+                                    Body body = null;
 
                                     if (bodyName.EndsWith(" Ring"))
                                     {
@@ -4241,11 +4249,8 @@ namespace EddiJournalMonitor
                                     }
                                     else
                                     {
-                                        Logging.Info( $">>> - SAA Signals Found" );
-                                        int reportedBios = 0;
-                                        int reportedGeos = 0;
+                                        //body = system?.BodyWithID( bodyId );
 
-                                        // TODO:#2212........[This is pretty much deprecated at this point (SignalAmount), we still get the total count though]
                                         // This is surface signal sources from a body that we've mapped
                                         List<SignalAmount> surfaceSignals = new List<SignalAmount>();
                                         foreach (Dictionary<string, object> signal in (List<object>)signalsVal)
@@ -4274,27 +4279,23 @@ namespace EddiJournalMonitor
                                         }
                                         surfaceSignals = surfaceSignals.OrderByDescending(s => s.amount).ToList();
 
-                                        // This is biological signal sources from a body that we've mapped
-                                        List<string> bioSignals = new List<string>();
-                                        foreach ( Dictionary<string, object> signal in (List<object>)genusesVal )
+                                        if ( system != null )
                                         {
-                                            string localizedName = JsonParsing.getString(signal, "Genus_Localised");
-                                            bioSignals.Add( localizedName.ToString() );
+                                            body = system.BodyWithID( bodyId );
+
+                                            if ( body != null )
+                                            {
+                                                // This is biological signal sources from a body that we've mapped
+                                                //List<string> bioSignals = new List<string>();
+                                                foreach ( Dictionary<string, object> signal in (List<object>)genusesVal )
+                                                {
+                                                    string bio_edname = JsonParsing.getString(signal, "Genus");
+                                                    body.bio.Add( bio_edname );
+                                                }
+                                            }
                                         }
 
-                                        // TODO: Future, implement biologicals into body
-                                        //  - See ticket #2455
-                                        //
-                                        //body = system?.BodyWithID( bodyId );
-                                        //if ( !( body is null ) )
-                                        //{
-                                        //    body.scannedDateTime = body.scannedDateTime ?? timestamp;
-                                        //    body.mappedDateTime = timestamp;
-                                        //    body.mappedEfficiently = probesUsed <= efficiencyTarget;
-                                        //    events.Add( new BodyMappedEvent( timestamp, bodyName, body, systemAddress, probesUsed, efficiencyTarget ) { raw = line, fromLoad = fromLogLoad } );
-                                        //}
-
-                                        events.Add( new SurfaceSignalsEvent( timestamp, "SAA", systemAddress, bodyName, bodyId, surfaceSignals, bioSignals ) { raw = line, fromLoad = fromLogLoad } );
+                                        events.Add( new SurfaceSignalsEvent( timestamp, "SAA", systemAddress, bodyName, bodyId, surfaceSignals, body ) { raw = line, fromLoad = fromLogLoad } );
                                     }
                                 }
                                 handled = true;
@@ -5139,104 +5140,34 @@ namespace EddiJournalMonitor
                                 }
                                 handled = true;
                                 break;
-                            case "SupercruiseDestinationDrop":
+                            case "CodexEntry":              // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
                                 {
-                                    // "Type" may be either a signal source or proper name.
-                                    // If proper name, it might be a fleet carrier with both name and ID.
-                                    var type = JsonParsing.getString( data, "Type" );
-                                    var typeLocalized = JsonParsing.getString( data, "Type_Localised" );
-                                    var threat = JsonParsing.getOptionalInt( data, "Threat" ) ?? 0; // Typically 0 except for USS drops.
-                                    var marketID = JsonParsing.getOptionalLong( data, "MarketID" );
+                                    // { "timestamp":"2023-07-28T05:10:25Z",
+                                    //      "event":"CodexEntry",
+                                    //*     "EntryID":2440103,
+                                    //      "Name":"$Codex_Ent_Shrubs_01_F_Name;",
+                                    //      "Name_Localised":"Frutexa Flabellum - Green",
+                                    //      "SubCategory":"$Codex_SubCategory_Organic_Structures;",
+                                    //      "SubCategory_Localised":"Organic structures",
+                                    //      "Category":"$Codex_Category_Biology;",
+                                    //      "Category_Localised":"Biological and Geological",
+                                    //      "Region":"$Codex_RegionName_5;",
+                                    //      "Region_Localised":"Norma Arm",
+                                    //      "System":"Boeft TO-G d11-2612",
+                                    //      "SystemAddress":89758365536227,
+                                    //      "BodyID":28,
+                                    //      "Latitude":23.507593,
+                                    //      "Longitude":109.069504,
+                                    //      "IsNewEntry":true,
+                                    //      "VoucherAmount":50000
+                                    // }
 
-                                    if ( type.StartsWith("$") ) 
-                                    {
-                                        // Symbolic signal source name. Prefer our own localization and fallback using the provided localization string if needed.
-                                        var signalSource = SignalSource.FromEDName( type );
-                                        signalSource.fallbackLocalizedName = typeLocalized;
-                                        type = signalSource.invariantName;
-                                        typeLocalized = signalSource.localizedName;
-                                    }
-                                    else
-                                    {
-                                        // Destination might be a fleet carrier with name and carrier ID in a single string.
-                                        // Check and break apart if needed.
-                                        var fleetCarrierRegex = new Regex( "^(.+)(?> )([A-Za-z0-9]{3}-[A-Za-z0-9]{3})$" );
-                                        if ( string.IsNullOrEmpty( typeLocalized ) && fleetCarrierRegex.IsMatch( type ) )
-                                        {
-                                            // Fleet carrier names include both the carrier name and carrier ID, we need to separate them
-                                            var fleetCarrierParts = fleetCarrierRegex.Matches( type )[ 0 ].Groups;
-                                            if ( fleetCarrierParts.Count == 3 )
-                                            {
-                                                type = fleetCarrierParts[ 2 ].Value;
-                                                typeLocalized = fleetCarrierParts[ 1 ].Value;
-                                            }
-                                        }
-                                    }
-
-                                    events.Add( new DestinationArrivedEvent( timestamp, type, typeLocalized, threat, marketID ) { raw = line, fromLoad = fromLogLoad } );
-                                }
-                                handled = true;
-                                break;
-                            case "CargoTransfer":
-                                {
-                                    var toShip = new List<CommodityAmount>();
-                                    var toSRV = new List<CommodityAmount>();
-                                    var toCarrier = new List<CommodityAmount>();
-                                    if ( data.TryGetValue("Transfers", out var transfersVal) )
-                                    {
-                                        var transfersArray = JArray.FromObject( transfersVal );
-                                        foreach ( var transfer in transfersArray )
-                                        {
-                                            var direction = transfer[ "Direction" ].ToString();
-                                            var count = (int)transfer[ "Count" ];
-                                            var commodity = CommodityDefinition.FromEDName( transfer[ "Type" ].ToString() );
-                                            commodity.fallbackLocalizedName = transfer[ "Type_Localised" ]?.ToString();
-
-                                            // Objects may have a `MissionID` but the legalstatus is not identified so we rtat these items
-                                            // as CommodityAmount objects and use the `Cargo` event to update the CargoMonitor.
-
-                                            var commodityAmount = new CommodityAmount( commodity, count );
-                                            if ( direction.Equals( "toship", StringComparison.InvariantCultureIgnoreCase ) )
-                                            {
-                                                toShip.Add( commodityAmount );
-                                            }
-                                            else if ( direction.Equals( "tosrv", StringComparison.InvariantCultureIgnoreCase ) )
-                                            {
-                                                toSRV.Add( commodityAmount );
-                                            }
-                                            else if ( direction.Equals( "tocarrier", StringComparison.InvariantCultureIgnoreCase ) )
-                                            {
-                                                toCarrier.Add( commodityAmount );
-                                            }
-                                            else
-                                            {
-                                                throw new ArgumentException( "Unhandled CargoTransfer `Direction`." );
-                                            }
-                                        }
-                                    }
-
-                                    var cargoTransferEvent = new CargoTransferEvent( timestamp, toShip, toSRV, toCarrier ) { raw = line, fromLoad = fromLogLoad };
-                                    if ( fromSpeechResponderTest )
-                                    {
-                                        events.Add( cargoTransferEvent );
-                                    }
-                                    else
-                                    {
-                                        DelayedEventHolder[ CargoEvent.NAME ] = cargoTransferEvent;
-                                    }
-                                }
-                                handled = true;
-                                break;
-                            case "CodexEntry":
-                                {
                                     long entryId = JsonParsing.getLong(data, "EntryID");
                                     string edname = JsonParsing.getString(data, "Name");
-                                    string codexName = JsonParsing.getString(data, "Name");
-                                    codexName = CodexEntry.NormalizedName( codexName );
-                                    string subCategoryName = JsonParsing.getString(data, "SubCategory");
-                                    subCategoryName = CodexEntry.NormalizedSubCategory( subCategoryName );
-                                    string categoryName = JsonParsing.getString(data, "Category");
-                                    categoryName = CodexEntry.NormalizedCategory( categoryName );
+                                    string codexName = JsonParsing.getString(data, "Name").Replace("$", "").Replace(";", "").Replace("Codex_Ent_", "").Replace("_Name", "");
+                                    //string localisedName = JsonParsing.getString(data, "Name_Localised");
+                                    string subCategoryName = JsonParsing.getString(data, "SubCategory").Replace("$", "").Replace(";", "").Replace("Codex_SubCategory_", "");
+                                    string categoryName = JsonParsing.getString(data, "Category").Replace("$", "").Replace(";", "").Replace("Codex_Category_", "");
                                     string regionName = JsonParsing.getString(data, "Region_Localised");
                                     string systemName = JsonParsing.getString(data, "System");
 
@@ -5247,7 +5178,7 @@ namespace EddiJournalMonitor
 
                                     bool newTrait = false;
                                     try
-                                    { newTrait = JsonParsing.getBool( data, "NewTraitsDiscovered" ); }
+                                    { newTrait = JsonParsing.getBool( data, "IsNewEntry" ); }
                                     catch { newTrait = false; }
 
                                     int voucherAmount = 0;
@@ -5268,74 +5199,56 @@ namespace EddiJournalMonitor
                                 }
                                 handled = true;
                                 break;
-                            case "ScanOrganic":
+                            case "ScanOrganic":             // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                                // { "timestamp":"2023-07-22T04:01:18Z",
+                                //      "event":"ScanOrganic",
+                                //*     "ScanType":"Log",
+                                //      "Genus":"$Codex_Ent_Shrubs_Genus_Name;",
+                                //*     "Genus_Localised":"Frutexa",
+                                //      "Species":"$Codex_Ent_Shrubs_05_Name;",
+                                //*     "Species_Localised":"Frutexa Fera",
+                                //      "Variant":"$Codex_Ent_Shrubs_05_F_Name;",
+                                //*     "Variant_Localised":"Frutexa Fera - Green",
+                                //      "SystemAddress":34542299533283,
+                                //      "Body":42 }
+
+                                //StarSystem system = EDDI.Instance?.CurrentStarSystem;
+                                //Body body = null;
+                                //body = system?.BodyWithID( bodyId );
+                                //if ( !( body is null ) )
+                                //{
+                                //    body.scannedDateTime = body.scannedDateTime ?? timestamp;
+                                //    body.mappedDateTime = timestamp;
+                                //    body.mappedEfficiently = probesUsed <= efficiencyTarget;
+                                //    events.Add( new BodyMappedEvent( timestamp, bodyName, body, systemAddress, probesUsed, efficiencyTarget ) { raw = line, fromLoad = fromLogLoad } );
+                                //}
+                                //decimal? lat = EddiStatusService.StatusService.Instance.CurrentStatus.latitude;
+
                                 {
+                                    // TODO:#2212........[update to use edname ("genus") instead of localised]
+
                                     // System address identifier
                                     ulong systemAddress = JsonParsing.getULong(data, "SystemAddress");
 
                                     // This is in fact the BodyID, not the body name
-                                    int bodyId = JsonParsing.getInt(data, "Body");
+                                    int bodyID = JsonParsing.getInt(data, "Body");
 
                                     // Log, Sample, Analyse
                                     string scanType = JsonParsing.getString(data, "ScanType");
                                     
                                     // i.e. Frutexa
                                     string genus = JsonParsing.getString(data, "Genus");
-                                    genus = ScanOrganic.NormalizedGenus( genus );
+                                    string localisedGenus = JsonParsing.getString(data, "Genus_Localised");
                                     
                                     // i.e. Flabellum
                                     string species = JsonParsing.getString(data, "Species");
-                                    species = ScanOrganic.NormalizedSpecies( species );
+                                    string localisedSpecies = JsonParsing.getString(data, "Species_Localised");
                                     
                                     // i.e. Green
                                     string variant = JsonParsing.getString(data, "Variant");
-                                    variant = ScanOrganic.NormalizedVariant( variant );
+                                    string localisedVariant = JsonParsing.getString(data, "Variant_Localised");
 
-                                    Logging.Info( $"[ScanOrganic] ---> START <---\r\n" +
-                                                  $"\tsystemAddress = {systemAddress}\r\n" +
-                                                  $"\tbodyId = {bodyId}\r\n" +
-                                                  $"\tscanType = {scanType}\r\n" +
-                                                  $"\tgenus = {genus}\r\n" +
-                                                  $"\tspecies = {species}\r\n" +
-                                                  $"\tvariant = {variant}\r\n" +
-                                                  $"[ScanOrganic] ---> END <---" );
-
-                                    //if ( !fromLogLoad )
-                                    //{
-                                    StarSystem system = EDDI.Instance?.CurrentStarSystem;
-
-                                    //Logging.Info( $"[ScanOrganic] Not from Log Load" );
-                                    if ( system != null )
-                                    {
-                                        Logging.Info( $"[ScanOrganic] system exists" );
-                                        Body body = system.BodyWithID( bodyId );
-
-                                        if ( body != null )
-                                        {
-                                            Logging.Info( $"[ScanOrganic] Body exists" );
-
-                                            if ( body.surfaceSignals == null )
-                                            {
-                                                Logging.Info( $"[ScanOrganicEvent] body.surfacesignals is null, creating new" );
-                                                Thread.Sleep( 10 );
-                                                body.surfaceSignals = new SurfaceSignals();
-                                            }
-
-                                            if ( !body.surfaceSignals.bio.list.ContainsKey( genus ) )
-                                            {
-                                                Logging.Info( $"[ScanOrganicEvent] Genus doesn't exist in current list, adding '{genus}'" );
-                                                Thread.Sleep( 10 );
-                                                body.surfaceSignals.AddBio( genus );
-                                            }
-
-                                            // 2212: Save/Update Body data
-                                            EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                                            StarSystemSqLiteRepository.Instance.SaveStarSystem( system );
-
-                                            events.Add( new ScanOrganicEvent( timestamp, systemAddress, bodyId, body, scanType, genus, species, variant ) { raw = line, fromLoad = fromLogLoad } );
-                                        }
-                                    }
-                                    //}
+                                    events.Add( new ScanOrganicEvent( timestamp, bodyID, scanType, localisedGenus, localisedSpecies, localisedVariant ) { raw = line, fromLoad = fromLogLoad } );
                                 }
                                 handled = true;
                                 break;

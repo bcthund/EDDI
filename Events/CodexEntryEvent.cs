@@ -46,11 +46,14 @@ namespace EddiEvents
         [PublicAPI("Get simple codex entry data")]
         public CodexEntry codexEntry { get; private set; }
 
-        [PublicAPI( "The detailed data for the astrological object" )]
-        public AstrometricData astrometricData { get; private set; }
+        //[PublicAPI( "The detailed data for the astrological object" )]
+        //public AstrometricItem astrometricData { get; private set; }
 
-        [PublicAPI( "The detailed data for the geology object" )]
-        public GeologyData geologyData { get; private set; }
+        //[PublicAPI( "The detailed data for the geology object" )]
+        //public GeologyItem geologyData { get; private set; }
+
+        [PublicAPI("Get simple codex entry data")]
+        public CodexEntry codexEntry { get; private set; }
 
         // Not intended to be user facing
 

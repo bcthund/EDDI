@@ -1,170 +1,216 @@
-﻿using Utilities;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
+using Utilities;
 
 namespace EddiDataDefinitions
 {
-    public class Exobiology : Organic
+    public class Exobiology /*: ResourceBasedLocalizedEDName<Exobiology>*/
     {
-        public enum Status
+        /// <summary>Information for a single biological populated after mapping a planet</summary>
+        public class BioItem
         {
-            InsideSampleRange = 0,
-            OutsideSampleRange = 1
+            // The genus is the dictionary key for this item
+            public bool prediction;         // Is this a prediction? Should be set to false after proven to exist; object deleted if proven not to exist
+            public string species;          // i.e. Flabellum
+            public string variant;          // i.e. Green
+            public int scans;               // 0=none, 1=Log, 2=Sample 1, 3=Sample 2, 4=Analyse
+            public decimal?[] latitude;     // [n]=latitude of scan n-1 (only Log and Sample 1 matter)
+            public decimal?[] longitude;    // [n]=longitude of scan n-1 (only Log and Sample 1 matter)
+
+            public BioItem ()
+            {
+                this.prediction = false;
+                this.species = "";
+                this.variant = "";
+                this.scans = 0;
+                this.latitude = new decimal?[ 2 ];
+                this.longitude = new decimal?[ 2 ];
+            }
+
+            public BioItem ( string species, string variant, bool prediction=true )
+            {
+                this.prediction = prediction;
+                this.species = species;
+                this.variant = variant;
+                this.scans = 0;
+                this.latitude = new decimal?[ 2 ];
+                this.longitude = new decimal?[ 2 ];
+            }
         }
 
-        public class Coordinates
+        [PublicAPI]
+        /// <summary>
+        /// List of biologicals:
+        ///     - We only have the genus initially when a planet is mapped
+        ///     - The genus here is the edname (i.e. Codex_Ent_Bacterial_Genus_Name)
+        ///     - Only organics scannable with genetic sampler should be in here
+        /// </summary>
+        public IDictionary<string, BioItem> bioItems;
+
+        /// <summary>This stores the last used or specifically set genus</summary>
+        public string currentGenus;
+
+        public Exobiology () /*: base ("", "")*/
         {
-            public decimal? latitude;
-            public decimal? longitude;
-            public Status status;           // 0=Inside Radius, 1=Outside Radius
-            public Status lastStatus;       // diff between this and status determines when to trigger update events
+            //bioItems = new IDictionary<int, BioItem>();
+            //bioItems.Add( 0, new BioItem() );
         }
 
-        public bool prediction;             // Was this added as a prediction?
-        public int samples;                 // 0=none, 1=Log, 2=Sample 1, 3=Sample 2, 4=Analyse
-        public bool complete;               // Sampling of this biological is complete
-        public int value
+        [PublicAPI]
+        /// <summary>
+        /// Add a biological to the list:
+        ///     - This is called when a body is first mapped and all we know is the genus
+        /// </summary>
+        public void Add ( string genus )
         {
-            get {
-                int val = 1;
-                try
-                {
-                    val = 2;
-                    if ( variant != null )
-                    {
-                        val = (int)species.value;
-                    }
-                }
-                catch
-                {
-                    val = 99;
-                }
+            // If the key exists don't add but set to current genus
+            if ( !bioItems.ContainsKey( genus ) )
+            {
+                bioItems.Add( genus, new BioItem() );
+            }
+            currentGenus = genus;
+
+        }
+
+        [PublicAPI]
+        /// <summary>
+        /// Add a biological to the list:
+        ///     - If we know all the data...which we likely never will but just in case.
+        /// </summary>
+        public void Add ( string genus, string species, string variant )
+        {
+            bioItems.Add( genus, new BioItem( species, variant ) );
+            currentGenus = genus;
+        }
                 return val;
             }
 
+        [PublicAPI]
+        /// <summary>
+        /// Sets the current genus for convenience of other functions
+        /// </summary>
+        public void SetGenus ( string genus )
+        {
+            currentGenus = genus;
         }
         public Coordinates[] coords;        // coordinates of scan [n-1]. Only Log and Sample are stored.
 
-        //public Exobiology ( bool prediction=false) : base ()
-        //{
-        //    this.prediction = prediction;
-        //    this.samples = 0;
-        //    coords = new Coordinates [ 2 ];
-        //    for ( int i = 0; i < 2; i++ )
-        //    {
-        //        coords[ i ] = new Coordinates();
-        //    }
-        //}
-
-        public Exobiology ( string genus, bool prediction = false ) : base()
+        /// <summary>
+        /// Set the species name, after we have made a first scan
+        /// </summary>
+        private void SetSpecies ( string genus, string species )
         {
-            if ( genus != null )
-            {
-                this.prediction = prediction;
-                this.samples = 0;
-                coords = new Coordinates[ 2 ];
-                for ( int i = 0; i < 2; i++ )
-                {
-                    coords[ i ] = new Coordinates();
-                }
+            SetGenus( genus );
+            SetSpecies( species );
+        }
 
-                //this.genus = Organic.SetGenus( edname_genus );
-                this.genus = OrganicGenus.Lookup ( genus );
+        private void SetSpecies ( string species )
+        {
+            if ( currentGenus != null )
+            {
+                bioItems[ currentGenus ].species = species;
             }
         }
 
-        /// <summary>Increase the sample count, set the coordinates, and return the number of scans complete.</summary>
-        public int Sample ( string scanType, string variant, decimal? latitude, decimal? longitude )
+        [PublicAPI]
+        /// <summary>
+        /// Set the variant name, after we have made a first scan
+        /// </summary>
+        private void SetVariant ( string genus, string variant )
         {
-            // Never scanned before? Update data.
-            if ( samples == 0 )
+            SetGenus( genus );
+            SetVariant( variant );
+        }
+
+        private void SetVariant ( string variant )
+        {
+            if ( currentGenus != null )
             {
-                SetData( variant );
-                complete = false;
+                bioItems[ currentGenus ].variant = variant;
             }
+        }
 
-            // Check for sample type and update sample numbers
-            if ( scanType == "Log" )
-            {
-                try
-                {
-                    samples = 1;
+        [PublicAPI]
+        public BioItem GetBio ( string genus )
+        {
+            SetGenus( genus );
+            return bioItems[ genus ];
+        }
 
-                    if ( coords[ samples - 1 ].latitude == null )
-                    {
-                        coords[ samples - 1 ].latitude = new decimal( 0 );
-                    }
-                    if ( coords[ samples - 1 ].longitude == null )
-                    {
-                        coords[ samples - 1 ].longitude = new decimal( 0 );
-                    }
+        [PublicAPI]
+        public void SetPrediction ( string genus, bool prediction )
+        {
+            SetGenus( genus );
+            bioItems[ genus ].prediction = prediction;
+        }
 
-                    coords[ samples - 1 ].latitude = latitude;
-                    coords[ samples - 1 ].longitude = longitude;
+        [PublicAPI]
+        /// <summary>
+        /// Increase the scan count and return the result
+        /// </summary>
+        public int Scan ( string genus, string species, string variant, decimal? latitude, decimal? longitude )
+        {
+            SetGenus( genus );
+            SetSpecies( species );
+            SetVariant( variant );
 
-                    coords[ samples - 1 ].status = Status.InsideSampleRange;
-                    coords[ samples - 1 ].lastStatus = Status.InsideSampleRange;
+            // TODO:#2212........[Check and update predictions]
 
-                    complete = false;
-                }
-                catch(System.Exception e )
-                {
-                    Logging.Error( $"Exobiology: Log Failed [{e}]" );
-                }
-            }
+            return Scan( latitude, longitude );
+        }
             else if ( scanType == "Sample" && samples==1 )
             {
                 try
                 {
                     samples = 2;
 
-                    if ( coords[ samples - 1 ].latitude == null )
-                    {
-                        coords[ samples - 1 ].latitude = new decimal( 0 );
-                    }
-                    if ( coords[ samples - 1 ].longitude == null )
-                    {
-                        coords[ samples - 1 ].longitude = new decimal( 0 );
-                    }
+        private int Scan ( string genus, decimal? latitude, decimal? longitude )
+        {
+            SetGenus( genus );
+            return Scan( latitude, longitude);
+        }
 
-                    coords[ samples - 1 ].latitude = latitude;
-                    coords[ samples - 1 ].longitude = longitude;
-                }
-                catch ( System.Exception e )
-                {
-                    Logging.Error( $"Exobiology: Sample 1 Failed [{e}]" );
-                }
-            }
-            else if ( scanType == "Sample" && samples == 2 )
+        private int Scan ( decimal? latitude, decimal? longitude )
+        {
+            bioItems[ currentGenus ].scans++;
+            bioItems[ currentGenus ].latitude[ bioItems[ currentGenus ].scans ] = latitude;
+            bioItems[ currentGenus ].longitude[ bioItems[ currentGenus ].scans ] = longitude;
+            return bioItems[ currentGenus ].scans;
+        }
+
+        [PublicAPI]
+        /// <summary>Get the total number of biologicals</summary>
+        public int Total ()
+        {
+            return bioItems.Count;
+        }
+
+        [PublicAPI]
+        /// <summary>Get the number of scanned biologicals</summary>
+        public int Complete ()
+        {
+            int numComplete = 0;
+
+            foreach ( BioItem item in bioItems.Values )
             {
-                try
+                if ( item.scans >= 4 )
                 {
-                    samples = 3;
+                    numComplete++;
                 }
-                catch ( System.Exception e )
-                {
-                    Logging.Error( $"Exobiology: Sample 2 Failed [{e}]" );
-                }
-            }
-            else if ( scanType == "Analyse" )
-            {
-                complete = true;
-                samples = 4;
-            }
             
             return samples;
+            }
+
+            return numComplete;
         }
 
         [PublicAPI]
-        /// <summary>Is sampling of this biological complete?</summary>
-        public bool IsComplete ()
-        {
-            return ( samples >= 4);
-        }
-
-        [PublicAPI]
-        /// <summary>Get the number of samples remaining</summary>
+        /// <summary>Get the number of unscanned biologicals</summary>
         public int Remaining ()
         {
-            return 3 - samples;
+            return Total() - Complete();
         }
     }
 }
