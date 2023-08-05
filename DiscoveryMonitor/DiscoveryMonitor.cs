@@ -1,15 +1,24 @@
-﻿using EddiCore;
+﻿using Eddi;
+using EddiConfigService;
+using EddiConfigService.Configurations;
+using EddiCore;
 using EddiDataDefinitions;
 using EddiDataProviderService;
 using EddiEvents;
-using EddiStatusService;
-using MathNet.Numerics.RootFinding;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Threading;
 using Utilities;
+using EddiStatusService;
+using MathNet.Numerics.RootFinding;
 
 namespace EddiDiscoveryMonitor
 {
@@ -37,7 +46,7 @@ namespace EddiDiscoveryMonitor
 
         public Body currentBody => currentSystem?.BodyWithID( currentBodyId );
 
-        //private IDictionary<string,Exobiology> currentBios => currentBody.surfaceSignals.bio.list;
+        //public Exobiology currentBios => currentBody.bio;
 
         //[PublicAPI( "The current biological" )]
         //public Exobiology currentBio
@@ -87,7 +96,6 @@ namespace EddiDiscoveryMonitor
 
         public void Start()
         {
-            //Logging.Info( $"{MonitorName()}: Started" );
         }
 
         public void Stop()
@@ -234,7 +242,7 @@ namespace EddiDiscoveryMonitor
         }
 
         private void handleCodexEntryEvent ( CodexEntryEvent @event )
-        {
+        {            
             // Not sure if we have anything to do here with this yet
         }
 
@@ -248,24 +256,20 @@ namespace EddiDiscoveryMonitor
             {
                 FSS_Signals signals = new FSS_Signals();
 
-                signals.systemAddress = (ulong)@event.systemAddress;
-                signals.bodyId = @event.bodyId;
-                bool addSignal = false;
+            if ( CheckSafe( @event.bodyId) )
+            {
+                // TODO:#2212........[Call biological prediction routine]
+                @event.body.surfaceSignals.Predict( @event.body );
 
-                foreach ( SignalAmount sig in @event.surfacesignals )
-                {
-                    if ( sig.signalSource.edname == "SAA_SignalType_Biological" )
-                    {
-                        signals.bioCount = sig.amount;
-                        signals.status = false;
-                        addSignal = true;
-                    }
-                    else if ( sig.signalSource.edname == "SAA_SignalType_Geological" )
-                    {
-                        signals.geoCount = sig.amount;
-                        addSignal = true;
-                    }
-                }
+                // TODO:#2212........Add geologicals to body.surfaceSignals
+                // TODO:#2212........Make biological predictions
+                //@event.body
+                //currentSystem.PreserveBodyData
+                //currentSystem.AddOrUpdateBody
+
+
+            }
+        }
 
                 if ( addSignal )
                 {

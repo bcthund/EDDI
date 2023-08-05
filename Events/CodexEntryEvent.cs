@@ -46,30 +46,20 @@ namespace EddiEvents
         [PublicAPI("Get simple codex entry data")]
         public CodexEntry codexEntry { get; private set; }
 
-        //[PublicAPI( "The detailed data for the astrological object" )]
-        //public AstrometricItem astrometricData { get; private set; }
-
-        //[PublicAPI( "The detailed data for the geology object" )]
-        //public GeologyItem geologyData { get; private set; }
-
-        [PublicAPI("Get simple codex entry data")]
-        public CodexEntry codexEntry { get; private set; }
-
         // Not intended to be user facing
 
         public CodexEntryEvent ( DateTime timestamp, long entryId, string codexName, string subCategoryName, string categoryName, string regionName, string systemName, bool newEntry, bool newTrait, int voucherAmount ) : base( timestamp, NAME )
         {
             if ( !fromLoad )
             {
-            this.systemName = systemName;
-            this.codexName = codexName;
-            this.categoryName = categoryName;
-            this.subCategoryName = subCategoryName;
-            this.entryName = localisedName;
-            this.regionName = regionName;
-            this.newEntry = newEntry;
-            this.newTrait = newTrait;
-            this.voucherAmount = voucherAmount;
+                this.systemName = systemName;
+                this.codexName = codexName;
+                this.categoryName = categoryName;
+                this.subCategoryName = subCategoryName;
+                this.regionName = regionName;
+                this.newEntry = newEntry;
+                this.newTrait = newTrait;
+                this.voucherAmount = voucherAmount;
 
                 this.codexEntry = new CodexEntry( entryId, codexName, subCategoryName, categoryName, regionName, systemName );
             }

@@ -14,42 +14,7 @@ namespace EddiDataDefinitions
     public class Body : INotifyPropertyChanged
     {
         /// <summary>Information for Surface Signals (biology/geology)</summary>
-        [PublicAPI]
         public SurfaceSignals surfaceSignals { get; set; }
-
-        [PublicAPI]
-        public List<string> biosignals
-        {
-            get
-            {
-                if ( surfaceSignals != null )
-                {
-                    return this.surfaceSignals.GetBios();
-                }
-                return new List<string>();
-            }
-        }
-
-        [PublicAPI]
-        public int reportedGeos => surfaceSignals.geo.reportedTotal;
-
-        [PublicAPI]
-        public int reportedBios => surfaceSignals.bio.reportedTotal;
-
-        [PublicAPI]
-        public int? biosComplete => surfaceSignals.bio.numComplete;
-        //public int biosComplete;
-
-        [PublicAPI]
-        public int? biosRemaining => surfaceSignals.bio.numRemaining;
-        //public int biosRemaining;
-
-        [PublicAPI]
-        //public long? numBios => surfaceSignals.bio.list.Count;
-        public int? numBios => surfaceSignals.bio.numTotal;
-
-        [PublicAPI]
-        public bool? hasBios => (surfaceSignals.bio.numTotal>0);
 
         /// <summary>The ID of this body in the star system</summary>
         public long? bodyId { get; set; }

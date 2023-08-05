@@ -119,8 +119,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Properties\OrganicVariant.Designer.cs">
-      <DependentUpon>OrganicVariant.resx</DependentUpon>
+    <Compile Update="Properties\OrganicVariantName.Designer.cs">
+      <DependentUpon>OrganicVariantName.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -538,8 +538,12 @@
       <LastGenOutput>OrganicSpeciesCond.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Properties\OrganicVariant.resx">
-      <LastGenOutput>OrganicVariant.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Properties\OrganicSpeciesCond.resx">
+      <LastGenOutput>OrganicSpeciesCond.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\OrganicVariantName.resx">
+      <LastGenOutput>OrganicVariantName.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\OrganicSpecies.resx">
