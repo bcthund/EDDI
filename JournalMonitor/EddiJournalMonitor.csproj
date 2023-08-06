@@ -39,16 +39,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\JournalMonitor.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>JournalMonitor.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\JournalMonitor.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>JournalMonitor.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>
