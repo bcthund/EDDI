@@ -2,7 +2,7 @@
 {
     public class CodexEntry
     {
-        public Organic organic;
+        public OrganicItem organic;
         public AstrometricItem astrology;
         public GeologyItem geology;
         public GuardianItem guardian;
@@ -18,11 +18,9 @@
 
         public CodexEntry ( long entryId, string edname, string subCategory, string category, string region, string system )
         {
-            organic = new Organic();
+            organic = new OrganicItem();
             astrology = new AstrometricItem();
             geology = new GeologyItem();
-            guardian = new GuardianItem();
-            thargoid = new ThargoidItem();
 
             this.entryId = entryId;
             this.edname = edname;
@@ -35,7 +33,7 @@
             if ( category == "Biology" ) {
                 if ( subCategory == "Organic_Structures" )
                 {
-                    organic = Organic.Lookup( entryId, edname );
+                    organic = OrganicInfo.Lookup( entryId, edname );
                 }
                 else if ( subCategory == "Geology_and_Anomalies" ) {
                     geology = GeologyInfo.Lookup( entryId, edname );
@@ -46,7 +44,6 @@
                 astrology = AstrometricInfo.Lookup( entryId, edname );
             }
             else if ( category == "Civilisations" ) {
-                // TODO:#2212........[Possibly combine Thargoid and Guardian?]
                 if ( subCategory == "Guardian" )
                 {
                     guardian = GuardianInfo.Lookup( entryId, edname );
@@ -69,7 +66,7 @@
                 ?.Replace( "_Name;", "" )
                 ?.Replace( "_name;", "" )
                 ?.Replace( ";", "" );
-                }
+        }
 
         public static string NormalizedSubCategory ( string rawName )
         {
@@ -77,7 +74,7 @@
                 ?.Replace( "Codex_SubCategory_", "" )
                 ?.Replace( "$", "" )
                 ?.Replace( ";", "" );
-            }
+        }
 
         public static string NormalizedCategory ( string rawName )
         {
