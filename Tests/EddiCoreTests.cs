@@ -171,8 +171,10 @@ namespace UnitTests
             Assert.AreEqual(@event.timestamp, EDDI.Instance.CurrentStarSystem?.bodies.Find(b => b.bodyname == "Grea Bloae HH-T d4-44 4").scannedDateTime);
 
             // Re-scanning the same body shouldn't replace the first scan's data
-            var @event2 = new BodyScannedEvent(@event.timestamp.AddSeconds(60), @event.scantype, @event.body);
-            EDDI.Instance.eventBodyScanned( @event2 );
+            // TODO:#2212........[Predictions]
+            //BodyScannedEvent @event2 = new BodyScannedEvent(@event.timestamp.AddSeconds(60), @event.scantype, @event.body, @event.biosignals);
+            BodyScannedEvent @event2 = new BodyScannedEvent(@event.timestamp.AddSeconds(60), @event.scantype, @event.body);
+            privateObject.Invoke("eventBodyScanned", new object[] { @event2 });
             Assert.AreEqual(@event.timestamp, EDDI.Instance.CurrentStarSystem?.bodies.Find(b => b.bodyname == "Grea Bloae HH-T d4-44 4").scannedDateTime);
         }
 
