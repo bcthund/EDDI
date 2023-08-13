@@ -18,10 +18,20 @@ namespace EddiEvents
         [PublicAPI( "The body that the surface signals are on" )]
         public Body body { get; private set; }
 
-        public OrganicPredictionEvent ( DateTime timestamp, Body body, List<string> signals ) : base(timestamp, NAME)
+        public OrganicPredictionEvent ( DateTime timestamp, List<string> signals ) : base(timestamp, NAME)
         {
             this.body = body;
+
             this.biosignals = signals;
+
+            //if ( body != null )
+            //{
+            //    this.biosignals = body.surfaceSignals.GetBios();
+            //}
+            //else
+            //{
+            //    this.biosignals = new List<string>();
+            //}
         }
     }
 }

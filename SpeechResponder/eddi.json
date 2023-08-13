@@ -1834,13 +1834,13 @@
       "description": "Triggered when an interdiction attempt on your ship by an NPC is detected"
     },
     "Organic Surface Signals Prediction": {
-      "enabled": false,
+      "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{set reportSlowBios to 0}\r\n{set reportbody to BodyDetails(event.body.bodyname)}\r\n\r\n{if !reportbody.name || reportbody.name = \"\":\r\n    I do not know which body you are referring to.\r\n|else:\r\n    {set predicted to reportbody.surfaceSignals.predicted}\r\n    {set listAndOr to \"And\"}\r\n    {if predicted:\r\n        {set listAndOr to \"Or\"}\r\n    }\r\n    \r\n    {if predicted:Predictions indicate that}\r\n    {reportbody.bodytype} {reportbody.shortname}\r\n    \r\n    {if predicted:could have|else:has}\r\n    \r\n    {reportbody.reportedBios} Biological{if reportbody.reportedBios > 1:s} of type\r\n    \r\n    {if reportSlowBios:\r\n        {SpeechRate(List(reportbody.biosignals, listAndOr), '-20%')}.\r\n    |else:\r\n        {List(reportbody.biosignals, listAndOr)}.\r\n    }\r\n}",
+      "script": "",
       "default": true,
       "name": "Organic Surface Signals Prediction",
-      "description": "Triggered when surface signal sources are detected during FSS, before the body scan may have occurred"
+      "description": "Triggered when surface signal sources are detected during FSS"
     },
     "Passengers": {
       "enabled": true,

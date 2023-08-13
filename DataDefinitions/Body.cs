@@ -445,8 +445,6 @@ namespace EddiDataDefinitions
         public Body(string bodyName, long? bodyId, string systemName, ulong systemAddress, List<IDictionary<string, object>> parents, decimal? distanceLs, bool? tidallylocked, TerraformState terraformstate, PlanetClass planetClass, AtmosphereClass atmosphereClass, List<AtmosphereComposition> atmosphereCompositions, Volcanism volcanism, decimal? earthmass, decimal? radiusKm, decimal gravity, decimal? temperatureKelvin, decimal? pressureAtm, bool? landable, List<MaterialPresence> materials, List<SolidComposition> solidCompositions, decimal? semimajoraxisLs, decimal? eccentricity, decimal? orbitalinclinationDegrees, decimal? periapsisDegrees, decimal? orbitalPeriodDays, decimal? rotationPeriodDays, decimal? axialtiltDegrees, List<Ring> rings, ReserveLevel reserveLevel, bool? alreadydiscovered, bool? alreadymapped)
         {
             this.surfaceSignals = new SurfaceSignals();
-            //this.biosComplete = surfaceSignals.bio.numComplete;
-            //this.biosRemaining = surfaceSignals.bio.numRemaining;
 
             this.bodyname = bodyName;
             this.bodyType = (bool)parents?.Exists(p => p.ContainsKey("Planet"))
