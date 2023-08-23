@@ -15,25 +15,44 @@ namespace EddiSpeechResponder.CustomFunctions
         public Type ReturnType => typeof( string );
         public IFunction function => Function.CreateNative1( ( runtime, values, writer ) =>
         {
-            var output = string.Empty;
-            var localisedAnd = Properties.SpeechResponder.localizedAnd;
-            foreach ( var value in values.Fields )
+            string output = string.Empty;
+            string localisedAndOr;
+
+            Cottle.IMap cottleVal = values[0].Fields;
+
+            // Let us choose either And/Or for the last list item
+            string type = values.Count > 1 ? values[1].AsString : "and";
+            type = type.ToLower();
+
+            switch ( type )
             {
-                var valueString = value.Value.AsString;
-                if ( value.Key == 0 )
+                case "or":
+                    localisedAndOr = Properties.SpeechResponder.localizedOr;
+                    break;
+                //case "and":
+                default:
+                    localisedAndOr = Properties.SpeechResponder.localizedAnd;
+                    break;
+            }
+
+            foreach (KeyValuePair<Cottle.Value, Cottle.Value> value in cottleVal)
+            {
+                string valueString = value.Value.AsString;
+                if (value.Key == 0)
                 {
                     output = valueString;
                 }
-                else if ( value.Key < ( values.Fields.Count - 1 ) )
+                else if (value.Key < ( cottleVal.Count - 1))
                 {
                     output = $"{output}, {valueString}";
                 }
                 else
                 {
-                    output = $"{output}{( values.Fields.Count() > 2 ? "," : "" )} {localisedAnd} {valueString}";
+                    output = $"{output}{( cottleVal.Count() > 2 ? "," : "")} {localisedAndOr} {valueString}";
                 }
             }
+
             return output;
-        });
+        }, 1, 2);
     }
 }
