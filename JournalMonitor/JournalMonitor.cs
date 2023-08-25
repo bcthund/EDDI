@@ -4262,7 +4262,6 @@ namespace EddiJournalMonitor
                                                 //{
                                                 //body.surfaceSignals.bio.list.Clear();
                                                 // TODO:#2212........[Remove]
-                                                string log = "[SAASignalsFound]:";
                                                 foreach ( Dictionary<string, object> signal in (List<object>)genusesVal )
                                                 {
                                                     string edname_genus = JsonParsing.getString(signal, "Genus");
@@ -5249,14 +5248,13 @@ namespace EddiJournalMonitor
                                             // 2212: Save/Update Body data
                                             EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
                                             StarSystemSqLiteRepository.Instance.SaveStarSystem( EDDI.Instance.CurrentStarSystem );
-                                            StarSystemSqLiteRepository.Instance.SaveStarSystem( system );
+
                                             events.Add( new ScanOrganicEvent( timestamp, systemAddress, bodyId, body, scanType, genus, species, variant ) { raw = line, fromLoad = fromLogLoad } );
                                         }
                                         else
                                         {
                                             Logging.Error( $"[ScanOrganic] Body '{bodyId}' doesn't exist." );
                                         }
-                                    }
                                     }
                                     //}
                                 }

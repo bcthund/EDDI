@@ -156,13 +156,23 @@ namespace EddiDataDefinitions
             //    Thread.Sleep( 10 );
             //}
 
-            // TODO:#2212........[Remove]
-            //foreach ( Exobiology item in updatedBody.surfaceSignals.bio.list.Values )
+            //foreach ( Exobiology item in oldBody.surfaceSignals.bio.list.Values )
             //{
-            //    Logging.Info( $"[PreserveBodyData] Body {updatedBody.shortname}: bios new: {item.genus.name} ({item.samples} samples) ({item.complete}) ({item.coords[ 0 ].latitude},{item.coords[ 0 ].longitude}) ({item.coords[ 1 ].latitude},{item.coords[ 1 ].longitude})" );
-            //    Thread.Sleep( 10 );
+            //    log += $"[PreserveBodyData] Body {oldBody.shortname}: oldBody: {item.genus.localizedName}\r\n" +
+            //           $"\tsamples = {item.samples}\r\n" +
+            //           $"\tcomplete = {item.complete}\r\n" +
+            //           $"\tcoords[0] = ({item.coords[ 0 ].latitude},{item.coords[ 0 ].longitude})\r\n" +
+            //           $"\tcoords[1] = ({item.coords[ 1 ].latitude},{item.coords[ 1 ].longitude})\r\n";
             //}
 
+            //foreach ( Exobiology item in updatedBody.surfaceSignals.bio.list.Values )
+            //{
+            //    log += $"[PreserveBodyData] Body {updatedBody.shortname}: updatedBody: {item.genus.localizedName}\r\n" +
+            //           $"\tsamples = {item.samples}\r\n" +
+            //           $"\tcomplete = {item.complete}\r\n" +
+            //           $"\tcoords[0] = ({item.coords[ 0 ].latitude},{item.coords[ 0 ].longitude})\r\n" +
+            //           $"\tcoords[1] = ({item.coords[ 1 ].latitude},{item.coords[ 1 ].longitude})\r\n";
+            //}
 
             if ( ( oldBody.scannedDateTime ?? DateTime.MinValue) > ( updatedBody.scannedDateTime ?? DateTime.MinValue ) )
             {
