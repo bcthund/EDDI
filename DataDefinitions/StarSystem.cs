@@ -226,13 +226,40 @@ namespace EddiDataDefinitions
                 if ( updatedBody.surfaceSignals.bio.reportedTotal < oldBody.surfaceSignals.bio.reportedTotal )
                 {
                     updatedBody.surfaceSignals.bio = oldBody.surfaceSignals.bio;
+                    log += $"[PreserveBodyData] Using oldBody for bios\r\n";
+                }
+                else
+                {
+                    log += $"[PreserveBodyData] Using updatedBody for bios\r\n";
                 }
 
                 if ( updatedBody.surfaceSignals.geo.reportedTotal < oldBody.surfaceSignals.geo.reportedTotal )
                 {
                     updatedBody.surfaceSignals.geo = oldBody.surfaceSignals.geo;
+                    log += $"[PreserveBodyData] Using oldBody for geos\r\n";
+                }
+                else
+                {
+                    log += $"[PreserveBodyData] Using updatedBody for geos\r\n";
                 }
             }
+            else
+            {
+                if ( updatedBody.surfaceSignals == null )
+                {
+                    updatedBody.surfaceSignals = new SurfaceSignals();
+                    log += $"[PreserveBodyData] updatedBody is null, aborting\r\n";
+                }
+
+                if ( oldBody.surfaceSignals == null )
+                {
+                    log += $"[PreserveBodyData] oldBody is null, aborting\r\n";
+                }
+            }
+
+            log += $"[PreserveBodyData] ---> END <---";
+            Logging.Info( log );
+            Thread.Sleep( 10 );
 
             return updatedBody;
         }
