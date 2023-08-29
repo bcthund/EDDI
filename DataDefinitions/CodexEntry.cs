@@ -2,11 +2,13 @@
 {
     public class CodexEntry
     {
-        public OrganicItem organic;
-        public AstrometricItem astrology;
-        public GeologyItem geology;
-        public GuardianItem guardian;
-        public ThargoidItem thargoid;
+        public Organic organic;
+        public Geology geology;
+        public Astronomical astronomical;
+
+        // TODO:#2212 - Update to standardized class format
+        public Guardian guardian;
+        public Thargoid thargoid;
 
         public long entryId;
         public string edname;
@@ -18,11 +20,11 @@
 
         public CodexEntry ( long entryId, string edname, string subCategory, string category, string region, string system )
         {
-            organic = new OrganicItem();
-            astrology = new AstrometricItem();
-            geology = new GeologyItem();
-            guardian = new GuardianItem();
-            thargoid = new ThargoidItem();
+            organic = new Organic();
+            astronomical = new Astronomical();
+            geology = new Geology();
+            guardian = new Guardian();
+            thargoid = new Thargoid();
 
             this.entryId = entryId;
             this.edname = edname;
@@ -35,24 +37,24 @@
             if ( category == "Biology" ) {
                 if ( subCategory == "Organic_Structures" )
                 {
-                    organic = OrganicInfo.Lookup( entryId, edname );
+                    organic = Organic.Lookup( entryId, edname );
                 }
                 else if ( subCategory == "Geology_and_Anomalies" ) {
-                    geology = GeologyInfo.Lookup( entryId, edname );
+                    geology = Geology.Lookup( entryId, edname );
                 }
             }
             else if ( category == "StellarBodies" )
             {
-                astrology = AstrometricInfo.Lookup( entryId, edname );
+                astronomical = Astronomical.Lookup( entryId, edname );
             }
             else if ( category == "Civilisations" ) {
                 if ( subCategory == "Guardian" )
                 {
-                    guardian = GuardianInfo.Lookup( entryId, edname );
+                    guardian = Guardian.Lookup( entryId, edname );
                 }
                 else if ( subCategory == "Thargoid" )
                 {
-                    thargoid = ThargoidInfo.Lookup( entryId, edname );
+                    thargoid = Thargoid.Lookup( entryId, edname );
                 }
             }
         }
