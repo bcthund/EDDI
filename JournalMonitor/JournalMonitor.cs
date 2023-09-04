@@ -5006,11 +5006,12 @@ namespace EddiJournalMonitor
                                     var categoryEDName = JsonParsing.getString( data, "Category" );
                                     var regionLocalizedName = JsonParsing.getString(data, "Region_Localised");
                                     var systemName = JsonParsing.getString(data, "System");
+                                    var systemAddress = JsonParsing.getULong(data, "SystemAddress");
                                     var newEntry = JsonParsing.getOptionalBool( data, "IsNewEntry" ) ?? false;
                                     var newTrait = JsonParsing.getOptionalBool( data, "NewTraitsDiscovered" ) ?? false;
                                     var voucherAmount = JsonParsing.getOptionalInt( data, "VoucherAmount" ) ?? 0;
                                     events.Add( new CodexEntryEvent( timestamp,
-                                                                     new CodexEntry( entryId, edname, subCategoryEDName, categoryEDName, regionLocalizedName, systemName ),
+                                                                     new CodexEntry( entryId, edname, subCategoryEDName, categoryEDName, regionLocalizedName, systemName, systemAddress ),
                                                                      newEntry,
                                                                      newTrait,
                                                                      voucherAmount ) { raw = line, fromLoad = fromLogLoad } );
@@ -5032,9 +5033,9 @@ namespace EddiJournalMonitor
                                 break;
                             case "SellOrganicData":
                                 {
+                                    var marketID = JsonParsing.getLong(data, "MarketID");
                                     decimal totalValue = 0;
                                     decimal totalBonus = 0;
-                                    decimal total = 0;
 
                                     var bios = new List<Organic>();
                                     data.TryGetValue( "BioData", out object val );
@@ -5043,20 +5044,23 @@ namespace EddiJournalMonitor
                                     {
                                         foreach ( Dictionary<string, object> discoveredBio in discovered )
                                         {
-                                            var genus = GetOrganicGenus( data );
-                                            var species = GetOrganicSpecies( data );
-                                            var variant = GetOrganicVariant( data );
-
-                                            bios.Add( new Organic( genus, species, variant ) );
-
                                             decimal value = JsonParsing.getLong( discoveredBio, "Value" );
                                             decimal bonus = JsonParsing.getLong( discoveredBio, "Bonus" );
+
+                                            var organic = new Organic( GetOrganicVariant( discoveredBio ) ) ?? 
+                                                          new Organic( GetOrganicSpecies(discoveredBio) ) ?? 
+                                                          new Organic( GetOrganicGenus(discoveredBio) )
+                                            {
+                                                value = value, 
+                                                bonus = bonus
+                                            };
+
+                                            bios.Add( organic );
 
                                             totalValue += value;
                                             totalBonus += bonus;
                                         }
-                                        total = totalValue + totalBonus;
-                                        events.Add( new OrganicDataSoldEvent( timestamp, bios, totalValue, totalBonus, total ) { raw = line, fromLoad = fromLogLoad } );
+                                        events.Add( new OrganicDataSoldEvent( timestamp, marketID, bios, totalValue, totalBonus ) { raw = line, fromLoad = fromLogLoad } );
                                     }
                                 }
                                 handled = true;
@@ -5163,6 +5167,10 @@ namespace EddiJournalMonitor
             {
                 variant.fallbackLocalizedName = localizedVariant;
             }
+            if ( variant is null && data.ContainsKey("Variant") )
+            {
+                Logging.Warn("Unable to parse organic variant data.", data );
+            }
             return variant;
         }
 
@@ -5176,6 +5184,10 @@ namespace EddiJournalMonitor
             {
                 species.fallbackLocalizedName = localizedSpecies;
             }
+            if ( species is null && data.ContainsKey("Species"))
+            {
+                Logging.Warn( "Unable to parse organic species data.", data );
+            }
             return species;
         }
 
@@ -5188,6 +5200,10 @@ namespace EddiJournalMonitor
             if ( genus != null && !string.IsNullOrEmpty( localizedGenus ) )
             {
                 genus.fallbackLocalizedName = localizedGenus;
+            }
+            if ( genus is null && data.ContainsKey( "Genus" ) )
+            {
+                Logging.Warn( "Unable to parse organic genus data.", data );
             }
             return genus;
         }
