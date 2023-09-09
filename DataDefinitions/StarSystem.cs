@@ -196,10 +196,6 @@ namespace EddiDataDefinitions
                 updatedBody.surfaceSignals = oldBody.surfaceSignals;
             }
 
-
-
-
-
             return updatedBody;
         }
 
