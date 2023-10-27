@@ -62,6 +62,7 @@
     <PackageReference Include="System.Runtime.Extensions">
       <Version>4.3.1</Version>
     </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="7.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\IPA.Designer.cs">
