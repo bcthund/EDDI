@@ -439,6 +439,15 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thargoid Spire Site.
+        /// </summary>
+        public static string Settlement_Unflattened_TGMegaBarnacle {
+            get {
+                return ResourceManager.GetString("Settlement_Unflattened_TGMegaBarnacle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thargoid Barnacle.
         /// </summary>
         public static string Settlement_Unflattened_Unknown {

@@ -79,6 +79,7 @@ namespace EddiDataDefinitions
             var GuardianStructureMedium = new SignalSource("Ancient_Medium");
             var ThargoidBarnacle = new SignalSource("Settlement_Unflattened_Unknown");
             var ThargoidCrashSite = new SignalSource("Settlement_Unflattened_WreckedUnknown");
+            var ThargoidSpireSite = new SignalSource( "Settlement_Unflattened_TGMegaBarnacle" );
 
             var AbandonedBuggy = new SignalSource("Abandoned_Buggy");
             var ActivePowerSource = new SignalSource("Perimeter");
