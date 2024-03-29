@@ -94,7 +94,8 @@ namespace Utilities
             {
                 RedactEnvironmentVariables( data.ToString() );
             }
-            else if ( data is JObject objectData )
+            
+            if ( data is JObject objectData )
             {
                 objectData.Descendants()
                     .OfType<JProperty>()

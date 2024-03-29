@@ -97,29 +97,37 @@ namespace Utilities
             return message;
         }
 
-        private static Dictionary<string, object> PrepareData ( [CanBeNull] JToken data )
+        private static Dictionary<string, object> PrepareData ( [ CanBeNull ] JToken data )
         {
             if ( data == null ) { return null; }
-            if ( data.Type == JTokenType.String && !JsonRegex.IsMatch( data.ToString() ) )
+
+            if ( data.Type == JTokenType.String )
             {
-                return WrapData( "message", Redaction.RedactEnvironmentVariables( data.ToString() ) );
+                if ( JsonRegex.IsMatch( data.ToString() ) )
+                {
+                    var jToken = JToken.Parse( data.ToString() );
+                    data = jToken;
+                }
+                else
+                {
+                    return WrapData( "message", Redaction.RedactEnvironmentVariables( data.ToString() ) );
+                }
             }
-            else
+
+            try
             {
-                try
+                data = Redaction.RedactEnvironmentVariables( data );
+                data = Redaction.RedactPersonalProperties( data );
+                if ( data is JObject )
                 {
-                    data = Redaction.RedactEnvironmentVariables( data );
-                    data = Redaction.RedactPersonalProperties( data );
-                    if ( data is JObject )
-                    {
-                        return data.ToObject<Dictionary<string, object>>();
-                    }
-                    return WrapData( "data", data );
+                    return data.ToObject<Dictionary<string, object>>();
                 }
-                catch ( ObjectDisposedException )
-                {
-                    return null;
-                }
+
+                return WrapData( "data", data );
+            }
+            catch ( ObjectDisposedException )
+            {
+                return null;
             }
         }
 
