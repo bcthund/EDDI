@@ -6,15 +6,16 @@ Full details of the variables available for each noted event, and VoiceAttack in
   * Core
     * EDDI will no longer report your environment as "Supercruise" right after a Thargoid hyperdiction. (#2597)
     * EDDI will no longer report your enviroment as "Normal Space" when starting docked. (#2598)
+  * Events
+    * `Hyperdicted` added. 
+    * `Signal detected` updated to include new `signaltype` property.
+    * `Ship targeted` updated to better utilize localized names (where available). (#2604)
   * Navigation Monitor
     * Improved route guidance updates.
     * Fixed ship routes reporting wrong jump distances. (#2591)
   * Speech Responder
     * Functions
       * `Play()` now supports relative file system paths. (#2581)
-    * Events
-      * `Hyperdicted` event added. 
-      * `Signal detected` updated to include new `signaltype` property.
 
 ## 4.0.3
   * EDSM Responder

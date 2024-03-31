@@ -2162,33 +2162,33 @@ namespace EddiJournalMonitor
                                 break;
                             case "ShipTargeted":
                                 {
-                                    bool targetlocked = JsonParsing.getBool(data, "TargetLocked");
+                                    var targetlocked = JsonParsing.getBool(data, "TargetLocked");
 
                                     // Target locked
-                                    int? scanstage = JsonParsing.getOptionalInt(data, "ScanStage");
-                                    string ship = JsonParsing.getString(data, "Ship");
-                                    if (ship != null)
+                                    var scanstage = JsonParsing.getOptionalInt(data, "ScanStage");
+                                    VehicleDefinition fighterDef = null;
+                                    Ship shipDef = null;
+                                    var vehicleEDName = JsonParsing.getString(data, "Ship");
+                                    if ( vehicleEDName != null)
                                     {
-                                        if (ship.Contains("fighter"))
+                                        if (vehicleEDName.Contains("fighter", StringComparison.InvariantCultureIgnoreCase))
                                         {
-                                            string shipLocalised = JsonParsing.getString(data, "Ship_Localised");
-                                            if (shipLocalised != null)
-                                            {
-                                                ship = shipLocalised + " Fighter";
-                                            }
+                                            fighterDef = VehicleDefinition.FromEDName( vehicleEDName );
+                                            fighterDef.fallbackLocalizedName = JsonParsing.getString( data, "Ship_Localised" );
                                         }
                                         else
                                         {
-                                            Ship shipDef = ShipDefinitions.FromEDModel(ship, false);
-                                            if (shipDef != null)
+                                            shipDef = ShipDefinitions.FromEDModel(vehicleEDName, false);
+                                            if ( shipDef is null )
                                             {
-                                                ship = shipDef.model;
+                                                shipDef = ShipDefinitions.FromEDModel( vehicleEDName, true );
+                                                shipDef.model = JsonParsing.getString( data, "Ship_Localised" );
                                             }
                                         }
                                     }
 
                                     // Scan stage >= 1
-                                    string name = JsonParsing.getString(data, "PilotName");
+                                    var name = JsonParsing.getString(data, "PilotName");
                                     if (!string.IsNullOrEmpty(JsonParsing.getString(data, "PilotName_Localised")))
                                     {
                                         // This is an NPC with a symbolic name
@@ -2197,21 +2197,39 @@ namespace EddiJournalMonitor
                                             : JsonParsing.getString(data, "PilotName_Localised");
                                     }
 
-                                    CombatRating rank = CombatRating.FromEDName(JsonParsing.getString(data, "PilotRank"));
+                                    // Sometimes we don't get a localized name when we ought to.
+                                    // Strip out any remaining unlocalized content in the name.
+                                    const string unlocalizedNameRegex = @"\$.+;";
+                                    if ( !string.IsNullOrEmpty(name) && Regex.IsMatch( name, unlocalizedNameRegex ) )
+                                    {
+                                        var tidiedName = Regex.Replace( name, unlocalizedNameRegex, "" ).Trim();
+                                        if ( !string.IsNullOrEmpty(tidiedName) )
+                                        {
+                                            name = tidiedName;
+                                        }
+                                    }
+
+                                    var rank = CombatRating.FromEDName(JsonParsing.getString(data, "PilotRank"));
 
                                     // Scan stage >= 2
-                                    decimal? shieldHealth = JsonParsing.getOptionalDecimal(data, "ShieldHealth");
-                                    decimal? hullHealth = JsonParsing.getOptionalDecimal(data, "HullHealth");
+                                    var shieldHealth = JsonParsing.getOptionalDecimal(data, "ShieldHealth");
+                                    var hullHealth = JsonParsing.getOptionalDecimal(data, "HullHealth");
 
                                     // Scan stage >= 3
-                                    string faction = JsonParsing.getString(data, "Faction");
-                                    LegalStatus legalStatus = LegalStatus.FromEDName(JsonParsing.getString(data, "LegalStatus")) ?? LegalStatus.None;
-                                    Power power = Power.FromEDName(JsonParsing.getString(data, "Power")) ?? Power.None;
-                                    int? bounty = JsonParsing.getOptionalInt(data, "Bounty");
-                                    string subSystem = JsonParsing.getString(data, "Subsystem_Localised");
-                                    decimal? subSystemHealth = JsonParsing.getOptionalDecimal(data, "SubsystemHealth");
+                                    var faction = JsonParsing.getString(data, "Faction");
+                                    var legalStatus = LegalStatus.FromEDName(JsonParsing.getString(data, "LegalStatus"));
+                                    var power = Power.FromEDName(JsonParsing.getString(data, "Power"));
+                                    var bounty = JsonParsing.getOptionalInt(data, "Bounty");
+                                    Module subSystem = null;
+                                    decimal? subSystemHealth = null;
+                                    if ( data.ContainsKey( "Subsystem" ) )
+                                    {
+                                        subSystem = Module.FromEDName( JsonParsing.getString( data, "Subsystem" ) );
+                                        subSystem.fallbackLocalizedName = JsonParsing.getString( data, "Subsystem_Localised" );
+                                        subSystemHealth = JsonParsing.getOptionalDecimal( data, "SubsystemHealth" );
+                                    }
 
-                                    events.Add(new ShipTargetedEvent(timestamp, targetlocked, ship, scanstage, name, rank, faction, power, legalStatus, bounty, shieldHealth, hullHealth, subSystem, subSystemHealth) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add(new ShipTargetedEvent(timestamp, targetlocked, shipDef, fighterDef, scanstage, name, rank, faction, power, legalStatus, bounty, shieldHealth, hullHealth, subSystem, subSystemHealth) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;

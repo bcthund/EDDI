@@ -2406,5 +2406,32 @@ namespace UnitTests
             Assert.AreEqual( 1, events.Count );
             Assert.AreEqual( typeof( ShipShutdownEvent ), events[ 0 ].GetType() );
         }
+
+        [DataTestMethod]
+        [DataRow( @"{ ""timestamp"":""2024-03-18T06:14:12Z"", ""event"":""ShipTargeted"", ""TargetLocked"":false }", false, null, null, null, null, null, null, null, null, null, null, null )]
+        [DataRow( @"{ ""timestamp"":""2022-02-19T02:01:44Z"", ""event"":""ShipTargeted"", ""TargetLocked"":true, ""Ship"":""empire_eagle"", ""Ship_Localised"":""Imperial Eagle"", ""ScanStage"":0 }", true, 0, "empire_eagle", null, null, null, null, null, null, null, null, null )]
+        [DataRow( @"{ ""timestamp"":""2022-02-19T02:01:45Z"", ""event"":""ShipTargeted"", ""TargetLocked"":true, ""Ship"":""empire_eagle"", ""Ship_Localised"":""Imperial Eagle"", ""ScanStage"":1, ""PilotName"":""$npc_name_decorate:#name=Syncronax;"", ""PilotName_Localised"":""Syncronax"", ""PilotRank"":""Dangerous"" }", true, 1, "empire_eagle", "Syncronax", "Dangerous", null, null, null, null, null, null, null )]
+        [DataRow( @"{ ""timestamp"":""2022-02-19T02:01:47Z"", ""event"":""ShipTargeted"", ""TargetLocked"":true, ""Ship"":""empire_eagle"", ""Ship_Localised"":""Imperial Eagle"", ""ScanStage"":2, ""PilotName"":""$npc_name_decorate:#name=Syncronax;"", ""PilotName_Localised"":""Syncronax"", ""PilotRank"":""Dangerous"", ""ShieldHealth"":100.000000, ""HullHealth"":100.000000 }", true, 2, "empire_eagle", "Syncronax", "Dangerous", "100", "100", null, null, null, null, null )]
+        [DataRow( @"{ ""timestamp"":""2022-02-19T02:01:49Z"", ""event"":""ShipTargeted"", ""TargetLocked"":true, ""Ship"":""empire_eagle"", ""Ship_Localised"":""Imperial Eagle"", ""ScanStage"":3, ""PilotName"":""$npc_name_decorate:#name=Syncronax;"", ""PilotName_Localised"":""Syncronax"", ""PilotRank"":""Dangerous"", ""ShieldHealth"":100.000000, ""HullHealth"":100.000000, ""Faction"":""Chun Independent Bond"", ""LegalStatus"":""Wanted"", ""Bounty"":79880 }", true, 3, "empire_eagle", "Syncronax", "Dangerous", "100", "100", "Chun Independent Bond", "Wanted", 79880, null, null )]
+        [DataRow( @"{ ""timestamp"":""2024-03-31T00:54:01Z"", ""event"":""ShipTargeted"", ""TargetLocked"":true, ""Ship"":""anaconda"", ""ScanStage"":3, ""PilotName"":""$Name_AX_Military; Gregory"", ""PilotRank"":""Master"", ""ShieldHealth"":100.000000, ""HullHealth"":100.000000, ""Faction"":""Earls of Barati"", ""LegalStatus"":""Lawless"", ""Subsystem"":""$modularcargobaydoor_name;"", ""Subsystem_Localised"":""Cargo Hatch"", ""SubsystemHealth"":100.000000 }", true, 3, "anaconda", "Gregory", "Master", "100", "100", "Earls of Barati", "Lawless", null, "$modularcargobaydoor_name;", "100" )]
+        public void TestShipTargeted ( string line, bool targetLocked, int? scanStage, string edModel, string pilotName, string rankEDName, string shieldHealth, string hullHealth, string faction, string legalStatus, int? bounty, string subsystemEDName, string subsystemHealth )
+        {
+            var events = JournalMonitor.ParseJournalEntry(line);
+            Assert.IsTrue( events.Count == 1 );
+            var @event = (ShipTargetedEvent)events[ 0 ];
+
+            Assert.AreEqual( targetLocked, @event.targetlocked);
+            Assert.AreEqual( ShipDefinitions.FromEDModel( edModel, false )?.model, @event.ship);
+            Assert.AreEqual( scanStage, @event.scanstage );
+            Assert.AreEqual( pilotName, @event.name );
+            Assert.AreEqual( rankEDName, @event.CombatRank?.invariantName);
+            Assert.AreEqual( shieldHealth is null ? null : (decimal?)Convert.ToDecimal( shieldHealth ), @event.shieldhealth);
+            Assert.AreEqual( hullHealth is null ? null : (decimal?)Convert.ToDecimal( hullHealth), @event.hullhealth );
+            Assert.AreEqual( faction, @event.faction );
+            Assert.AreEqual( legalStatus, @event.LegalStatus?.invariantName );
+            Assert.AreEqual( bounty, @event.bounty );
+            Assert.AreEqual( Module.FromEDName( subsystemEDName ), @event.SubSystem );
+            Assert.AreEqual( subsystemHealth is null ? null : (decimal?)Convert.ToDecimal(subsystemHealth), @event.subsystemhealth );
+        }
     }
 }
