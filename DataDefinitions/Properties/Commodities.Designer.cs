@@ -3238,6 +3238,15 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thargoid Heart.
+        /// </summary>
+        public static string ThargoidHeart {
+            get {
+                return ResourceManager.GetString("ThargoidHeart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organ Sample.
         /// </summary>
         public static string ThargoidOrganSample {

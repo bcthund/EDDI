@@ -1861,4 +1861,8 @@
     <value>Organ Sample</value>
     <comment>Commodity ThargoidOrganSample</comment>
   </data>
+  <data name="ThargoidHeart" xml:space="preserve">
+    <value>Thargoid Heart</value>
+    <comment>Commodity ThargoidHeart</comment>
+  </data>
 </root>
