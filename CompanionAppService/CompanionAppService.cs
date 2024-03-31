@@ -174,6 +174,7 @@ namespace EddiCompanionAppService
         ///<summary>Log in. Throws an exception if it fails</summary>
         public void Login()
         {
+            Logging.Debug("Request initiated");
             if (CurrentState != State.LoggedOut)
             {
                 // Shouldn't be here
@@ -189,6 +190,7 @@ namespace EddiCompanionAppService
             string codeChallenge = createAndRememberChallenge();
             string webURL = $"{AUTH_SERVER}{AUTH_URL}" + $"?response_type=code&{AUDIENCE}&{SCOPE}&client_id={clientID}&code_challenge={codeChallenge}&code_challenge_method=S256&state={authSessionID}&redirect_uri={Uri.EscapeDataString(CALLBACK_URL)}";
             Process.Start(webURL);
+            Logging.Debug( "Awaiting callback" );
         }
 
         private string createAndRememberChallenge()
@@ -219,6 +221,7 @@ namespace EddiCompanionAppService
 
         private void handleCallbackUrl(string url)
         {
+            Logging.Debug("Received callback");
             // NB any user can send an arbitrary URL from the Windows Run dialog, so it must be treated as untrusted
             try
             {
@@ -261,7 +264,6 @@ namespace EddiCompanionAppService
                         throw new EliteDangerousCompanionAppAuthenticationException("Invalid refresh token from authorization server");
                     }
                 }
-
             }
             catch (Exception)
             {
@@ -400,6 +402,8 @@ namespace EddiCompanionAppService
             Credentials.Clear();
             Credentials.Save();
             CurrentState = State.LoggedOut;
+
+            Logging.Debug( "Credentials cleared" );
         }
 
         protected internal Tuple<string, DateTime> obtainData(string url)
@@ -458,6 +462,7 @@ namespace EddiCompanionAppService
         {
             // Need to log in again.
             if (clientID == null) { return; }
+            Logging.Debug("Renewing login.");
             Logout();
             Login();
             if (CurrentState != State.Authorized)
@@ -493,7 +498,7 @@ namespace EddiCompanionAppService
                     Logging.Warn("No data returned");
                     return null;
                 }
-                Logging.Debug("Data is " + data);
+                Logging.Debug("Data is:", data);
                 return data;
             }
         }

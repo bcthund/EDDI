@@ -3027,8 +3027,13 @@ namespace EddiCore
                         var updatedCmdr = Commander.FromFrontierApiCmdr(Cmdr, profile.Cmdr, profile.timestamp, JournalTimeStamp, out bool cmdrMatches);
 
                         // Stop if the commander returned from the profile does not match our expected commander name
-                        if (!cmdrMatches) { return false; }
+                        if ( !cmdrMatches )
+                        {
+                            Logging.Debug( "Skipping profile update - Frontier API commander information doesn't match journal information" );
+                            return false;
+                        }
 
+                        Logging.Debug( "Commander information updated from Frontier API; updating local copy" );
                         Cmdr = updatedCmdr;
 
                         bool updatedCurrentStarSystem = false;
@@ -3063,7 +3068,7 @@ namespace EddiCore
 
                         if (updatedCurrentStarSystem)
                         {
-                            Logging.Debug("Star system information updated from remote server; updating local copy");
+                            Logging.Debug( "Star system information updated from Frontier API; updating local copy" );
                             StarSystemSqLiteRepository.Instance.SaveStarSystem(CurrentStarSystem);
                         }
 
@@ -3079,7 +3084,8 @@ namespace EddiCore
                                     }
                                     catch (Exception ex)
                                     {
-                                        Logging.Warn("Monitor failed", ex);
+                                        Logging.Warn($"Monitor {monitor.MonitorName()} failed to handle Frontier API update", ex);
+                                        success = false;
                                     }
                                 })
                                 {
@@ -3092,11 +3098,6 @@ namespace EddiCore
                             {
                                 Thread.ResetAbort();
                                 Logging.Debug("Thread aborted", tax);
-                                success = false;
-                            }
-                            catch (Exception ex)
-                            {
-                                Logging.Error("Monitor " + monitor.MonitorName() + " failed to handle profile.", ex);
                                 success = false;
                             }
                         }
@@ -3337,7 +3338,6 @@ namespace EddiCore
         /// </summary>
         private void conditionallyRefreshStationProfile()
         {
-
             if (CompanionAppService.Instance.CurrentState == CompanionAppService.State.Authorized)
             {
                 try
@@ -3345,6 +3345,7 @@ namespace EddiCore
                     // Make sure we know where we are
                     if (CurrentStarSystem is null || string.IsNullOrEmpty(CurrentStarSystem.systemname))
                     {
+                        Logging.Debug( "Skipping conditional station profile fetch - current location data is incomplete" );
                         return;
                     }
 
@@ -3357,6 +3358,7 @@ namespace EddiCore
                         var mostRecentMarketUpdateSeconds = Math.Max( Math.Max( lastCommodityUpdateSeconds, lastOutfittingUpdateSeconds ), lastShipyardUpdateSeconds );
                         if ( ( Dates.fromDateTimeToSeconds( DateTime.UtcNow ) - mostRecentMarketUpdateSeconds ) < 300 )
                         {
+                            Logging.Debug( "Skipping conditional station profile fetch - data was already very recently updated" );
                             return;
                         }
                     }
