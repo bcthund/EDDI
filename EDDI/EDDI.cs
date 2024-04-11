@@ -3123,17 +3123,20 @@ namespace EddiCore
                     var timestamp = frontierApiCarrierJson["timestamp"]?.ToObject<DateTime>() ?? DateTime.MinValue;
 
                     // Update our Fleet Carrier object
-                    LockManager.GetLock(nameof(FleetCarrier), () =>
+                    if ( FleetCarrier is null )
                     {
-                        if (FleetCarrier is null)
+                        LockManager.GetLock( nameof( FleetCarrier ), () =>
                         {
-                            FleetCarrier = new FleetCarrier(frontierApiCarrierJson, timestamp);
-                        }
-                        else
+                            FleetCarrier = new FleetCarrier( frontierApiCarrierJson, timestamp );
+                        } );
+                    }
+                    else
+                    {
+                        LockManager.GetLock( nameof( FleetCarrier ), () =>
                         {
-                            FleetCarrier.UpdateFrom(frontierApiCarrierJson, timestamp);
-                        }
-                    });
+                            FleetCarrier.UpdateFrom( frontierApiCarrierJson, timestamp );
+                        } );
+                    }
                     UpdateFleetCarrierConfig();
                 }
             }
