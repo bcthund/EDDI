@@ -3,6 +3,7 @@ using EddiCore;
 using EddiDataDefinitions;
 using EddiDataProviderService;
 using EddiEvents;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -23,48 +24,45 @@ namespace EddiJournalMonitor
 
         public JournalMonitor () : base( GetSavedGamesDir(), @"^Journal.*\.[0-9\.]+\.log$",
             ( result, isLogLoadEvent ) =>
-                ForwardJournalEntry( result, EDDI.Instance.enqueueEvent, isLogLoadEvent ) )
+                ForwardJournalEntries( result.ToList(), EDDI.Instance.enqueueEvent, isLogLoadEvent ) )
         { }
 
-        private enum ShipyardType { ShipsHere, ShipsRemote }
+        private enum ShipyardType { [UsedImplicitly] ShipsHere, [UsedImplicitly] ShipsRemote }
 
         private static readonly Dictionary<long, CancellationTokenSource> carrierJumpCancellationTokenSources =
             new Dictionary<long, CancellationTokenSource>();
 
         private static Task ShipShutdownTask = null;
 
-        public static void ForwardJournalEntry(string line, Action<Event> callback, bool isLogLoadEvent)
+        private static void ForwardJournalEntries ( List<string> lines, Action<Event> callback, bool isLogLoadEventBatch )
         {
-            if (line == null)
-            {
-                return;
+            if ( !lines.Any() ) { return; }
+
+            var events = ParseJournalEntries(lines, isLogLoadEventBatch);
+
+            // Enqueue events for processing
+            events.ForEach(callback);
             }
 
-            List<Event> events = ParseJournalEntry(line, isLogLoadEvent);
-            foreach (Event @event in events)
+        public static List<Event> ParseJournalEntries(IEnumerable<string> lines, bool fromLogLoad = false)
             {
-                // The DiscoveryScanEvent and SystemScanComplete events may be written before all applicable scans have been queued.
-                // We will wait a short period of time after these events take place so that all scans generated in tandem 
-                // with these events are enqueued before these events are enqueued.
-                if ((@event is DiscoveryScanEvent || @event is SystemScanComplete) && !@event.fromLoad)
-                {
-                    Task.Run(async () =>
-                    {
-                        int timeout = 0;
-                        do
-                        {
-                            await Task.Delay(1500);
-                            timeout++;
-                        }
-                        while (EDDI.Instance.CurrentStarSystem?.bodies.Count == 0 && timeout < 3);
-                        callback(@event);
-                    });
-                    continue;
-                }
+            var events = lines
+                .Where( line => !string.IsNullOrEmpty( line ) )
+                .SelectMany( line => ParseJournalEntry( line, fromLogLoad ) )
+                .ToList();
 
-                callback(@event);
+            if ( fromLogLoad ) { return events; }
+
+            // Reorder DiscoveryScanEvent to occur after other events in the batch including body and star scans
+            var discoveryScanEvents = events.OfType<DiscoveryScanEvent>().ToList();
+            events = events.Except( discoveryScanEvents ).Concat( discoveryScanEvents ).ToList();
+
+            // Reorder SystemScanComplete to occur after other events in the batch including body and star scans
+            var SystemScanCompleteEvents = events.OfType<SystemScanComplete>().ToList();
+            events = events.Except( SystemScanCompleteEvents ).Concat( SystemScanCompleteEvents ).ToList();
+
+            return events;
             }
-        }
 
         public static List<Event> ParseJournalEntry(string line, bool fromLogLoad = false)
         {
