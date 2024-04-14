@@ -2387,24 +2387,42 @@ namespace UnitTests
             Assert.AreEqual(45, ( (SystemScanComplete)events[ 0 ] ).count );
         }
 
-        [TestMethod]
+        [TestMethod, DoNotParallelize]
         public void TestRepeatedShipShutdownEvents ()
         {
             // Trigger a `ShipShutdown` event.
-            var events = JournalMonitor.ParseJournalEntry( @"{ ""timestamp"":""2023-11-24T20:22:45Z"", ""event"":""SystemsShutdown"" }" );
+            var events = JournalMonitor.ParseJournalEntries( new [] {@"{ ""timestamp"":""2023-11-24T20:22:45Z"", ""event"":""SystemsShutdown"" }" } );
             Assert.AreEqual( 1, events.Count );
             Assert.AreEqual(typeof(ShipShutdownEvent), events[0].GetType() );
+            Assert.IsFalse( ((ShipShutdownEvent)events[ 0 ]).partialshutdown );
 
-            // New `ShipShutdown` events should be suppressed for the next 15 seconds. Test at 8 seconds.
+            // New `ShipShutdown` events should be suppressed for the next 30 seconds. Test at 8 seconds.
             Thread.Sleep( TimeSpan.FromSeconds( 8 ) );
-            events = JournalMonitor.ParseJournalEntry( @"{ ""timestamp"":""2023-11-24T20:22:53Z"", ""event"":""SystemsShutdown"" }" );
+            events = JournalMonitor.ParseJournalEntries(new[] { @"{ ""timestamp"":""2023-11-24T20:22:53Z"", ""event"":""SystemsShutdown"" }" });
             Assert.AreEqual( 0, events.Count );
 
-            // New `ShipShutdown` events should be suppressed for the next 15 seconds. Test at 8 + 8 = 16 seconds.
-            Thread.Sleep( TimeSpan.FromSeconds( 8 ) );
-            events = JournalMonitor.ParseJournalEntry( @"{ ""timestamp"":""2023-11-24T20:23:01Z"", ""event"":""SystemsShutdown"" }" );
+            // New `ShipShutdown` events should be suppressed for the next 30 seconds. Test at 8 + 24 = 32 seconds.
+            Thread.Sleep( TimeSpan.FromSeconds( 24 ) );
+            events = JournalMonitor.ParseJournalEntries(new[] { @"{ ""timestamp"":""2023-11-24T20:23:17Z"", ""event"":""SystemsShutdown"" }" });
             Assert.AreEqual( 1, events.Count );
             Assert.AreEqual( typeof( ShipShutdownEvent ), events[ 0 ].GetType() );
+            Assert.IsFalse( ( (ShipShutdownEvent)events[ 0 ] ).partialshutdown );
+        }
+
+        [TestMethod ]
+        public void TestShipShutdownThargoidTitanPulse ()
+        {
+            //The `SystemsShutdown` event should be ignored because it is followed immediately by a `MaterialCollected` event for the material `tg_shutdowndata` and no shutdown in fact occurs for this circumstance.
+            var lines = new[]
+            {
+                @"{ ""timestamp"":""2024-03-13T23:11:33Z"", ""event"":""SystemsShutdown"" }", 
+                @"{ ""timestamp"":""2024-03-13T23:11:33Z"", ""event"":""MaterialCollected"", ""Category"":""Encoded"", ""Name"":""tg_shutdowndata"", ""Name_Localised"":""Massive Energy Surge Analytics"", ""Count"":1 }"
+            };
+
+            var events = JournalMonitor.ParseJournalEntries( lines );
+            Assert.AreEqual( 2, events.Count );
+            Assert.AreEqual( typeof(ShipShutdownEvent), events[ 0 ].GetType() );
+            Assert.IsTrue( ( (ShipShutdownEvent)events[ 0 ] ).partialshutdown );
         }
 
         [DataTestMethod]

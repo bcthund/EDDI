@@ -32,9 +32,9 @@ namespace EddiJournalMonitor
         private static readonly Dictionary<long, CancellationTokenSource> carrierJumpCancellationTokenSources =
             new Dictionary<long, CancellationTokenSource>();
 
-        private static Task ShipShutdownTask = null;
+        private static CancellationTokenSource ShipShutdownCancellationTokenSource;
 
-        private static void ForwardJournalEntries ( List<string> lines, Action<Event> callback, bool isLogLoadEventBatch )
+        private static void ForwardJournalEntries ( IReadOnlyCollection<string> lines, Action<Event> callback, bool isLogLoadEventBatch )
         {
             if ( !lines.Any() ) { return; }
 
@@ -42,10 +42,10 @@ namespace EddiJournalMonitor
 
             // Enqueue events for processing
             events.ForEach(callback);
-            }
+        }
 
         public static List<Event> ParseJournalEntries(IEnumerable<string> lines, bool fromLogLoad = false)
-            {
+        {
             var events = lines
                 .Where( line => !string.IsNullOrEmpty( line ) )
                 .SelectMany( line => ParseJournalEntry( line, fromLogLoad ) )
@@ -61,8 +61,38 @@ namespace EddiJournalMonitor
             var SystemScanCompleteEvents = events.OfType<SystemScanComplete>().ToList();
             events = events.Except( SystemScanCompleteEvents ).Concat( SystemScanCompleteEvents ).ToList();
 
-            return events;
+            // Handle any other sequential event patterns we wish to handle
+            for ( var i = 0; i < events.Count; i++ )
+            {
+                if ( events[ i ] is ShipShutdownEvent shipShutdownEvent )
+                {
+                    if ( ( i + 1 ) <= ( events.Count - 1 ) && events[ i + 1 ] is MaterialCollectedEvent mce && mce.edname is "tg_shutdowndata" )
+                    {
+                        // If a ShipShutdown event is followed by a material collection event for Massive Energy Surge Analytics
+                        // (available from Thargoid Titan energy pulses), ship systems are only momentarily impacted /
+                        // flickering for a few seconds. Simulate a partial ship system shutdown.
+                        shipShutdownEvent.partialshutdown = true;
+                    }
+                    else
+                    {
+                        // Simulate a full ship system shutdown and reboot.
+                        // Suppress additional shutdown events during this time.
+                        ShipShutdownCancellationTokenSource = new CancellationTokenSource();
+                        var startTime = DateTime.UtcNow;
+                        Task.Run( async () =>
+                        {
+                            // The ship reboots about 30 seconds after the shutdown occurs unless canceled early.
+                            await Task.Delay( TimeSpan.FromSeconds( 30 ), ShipShutdownCancellationTokenSource.Token );
+                            EDDI.Instance.enqueueEvent( new ShipShutdownRebootEvent( shipShutdownEvent.timestamp + ( DateTime.UtcNow - startTime ) ) );
+                            ShipShutdownCancellationTokenSource.Dispose();
+                            ShipShutdownCancellationTokenSource = null;
+                        } ).ConfigureAwait( false );
+                    }
+                }
             }
+
+            return events;
+        }
 
         public static List<Event> ParseJournalEntry(string line, bool fromLogLoad = false)
         {
@@ -4018,17 +4048,14 @@ namespace EddiJournalMonitor
                                 break;
                             case "SystemsShutdown":
                                 {
-                                    if ( ShipShutdownTask is null || ShipShutdownTask.Status != TaskStatus.Running )
+                                    if ( fromLogLoad || ShipShutdownCancellationTokenSource != null )
                                     {
-                                        events.Add(new ShipShutdownEvent(timestamp) { raw = line, fromLoad = fromLogLoad });
-                                        ShipShutdownTask?.Dispose();
-                                        ShipShutdownTask = new Task( () =>
-                                        {
-                                            // The ship reboots about 15 seconds after the shutdown occurs
-                                            Thread.Sleep( TimeSpan.FromSeconds( 15 ) );
-                                            events.Add( new ShipShutdownRebootEvent( timestamp ) { fromLoad = fromLogLoad } );
-                                        } );
-                                        ShipShutdownTask.Start();     
+                                        // Ignore events triggered by loag loads.
+                                        // Ignore repetitions when the ship is already in a shut-down state. 
+                                    }
+                                    else
+                                    {
+                                        events.Add( new ShipShutdownEvent( timestamp ) { raw = line, fromLoad = fromLogLoad } );
                                     }
                                 }
                                 handled = true;
