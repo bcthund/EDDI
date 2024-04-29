@@ -2,12 +2,9 @@
 using CSCore.Codecs.WAV;
 using CSCore.SoundOut;
 using CSCore.Streams.Effects;
-using EddiCore;
 using EddiDataDefinitions;
-using EddiSpeechResponder;
 using EddiSpeechService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.IO;
 using System.Speech.Synthesis;
 using System.Threading;
@@ -326,25 +323,6 @@ namespace SpeechTests
             SpeechService.Instance.Say(null, "Testing null voice", 3, null, false);
             // Test invalid voice
             SpeechService.Instance.Say(null, "Testing invalid voice", 3, "No such voice", false);
-        }
-
-        [TestMethod, TestCategory("Speech"), DoNotParallelize]
-        public void TestFSSDiscoveryScan()
-        {
-            SpeechResponder speechresponder = (SpeechResponder)EDDI.Instance.ObtainResponder("Speech responder");
-
-            string autoscan = @"{ ""timestamp"":""2022-02-18T07:14:01Z"", ""event"":""Scan"", ""ScanType"":""AutoScan"", ""BodyName"":""Wolf 1414 A"", ""BodyID"":1, ""Parents"":[ {""Null"":0} ], ""StarSystem"":""Wolf 1414"", ""SystemAddress"":83718345434, ""DistanceFromArrivalLS"":0.000000, ""StarType"":""K"", ""Subclass"":6, ""StellarMass"":0.542969, ""Radius"":485181728.000000, ""AbsoluteMagnitude"":8.023544, ""Age_MY"":3118, ""SurfaceTemperature"":3913.000000, ""Luminosity"":""V"", ""SemiMajorAxis"":198208671808.242798, ""Eccentricity"":0.295083, ""OrbitalInclination"":34.113437, ""Periapsis"":303.694287, ""OrbitalPeriod"":196849131.584167, ""AscendingNode"":31.266731, ""MeanAnomaly"":53.999015, ""RotationPeriod"":214740.119514, ""AxialTilt"":0.000000, ""WasDiscovered"":true, ""WasMapped"":false }";
-            string honk = @"{ ""timestamp"":""2022-02-18T07:14:02Z"", ""event"":""FSSDiscoveryScan"", ""Progress"":0.193470, ""BodyCount"":27, ""NonBodyCount"":10, ""SystemName"":""Wolf 1414"", ""SystemAddress"":83718345434 }";
-            string secondstar = @"{ ""timestamp"":""2022-02-18T07:14:03Z"", ""event"":""Scan"", ""ScanType"":""Detailed"", ""BodyName"":""Wolf 1414 B"", ""BodyID"":2, ""Parents"":[ {""Null"":0} ], ""StarSystem"":""Wolf 1414"", ""SystemAddress"":83718345434, ""DistanceFromArrivalLS"":1472.392323, ""StarType"":""M"", ""Subclass"":3, ""StellarMass"":0.367188, ""Radius"":408410944.000000, ""AbsoluteMagnitude"":8.709381, ""Age_MY"":3118, ""SurfaceTemperature"":3087.000000, ""Luminosity"":""Va"", ""SemiMajorAxis"":293087559938.430786, ""Eccentricity"":0.295083, ""OrbitalInclination"":34.113437, ""Periapsis"":123.694292, ""OrbitalPeriod"":196849131.584167, ""AscendingNode"":31.266731, ""MeanAnomaly"":53.999018, ""RotationPeriod"":255361.700784, ""AxialTilt"":0.000000, ""WasDiscovered"":true, ""WasMapped"":false }";
-
-            List<EddiEvents.Event> events = new List<EddiEvents.Event>();
-            events.AddRange(EddiJournalMonitor.JournalMonitor.ParseJournalEntry(autoscan));
-            events.AddRange(EddiJournalMonitor.JournalMonitor.ParseJournalEntry(honk));
-            events.AddRange(EddiJournalMonitor.JournalMonitor.ParseJournalEntry(secondstar));
-            foreach (EddiEvents.Event @event in events)
-            {
-                speechresponder.Handle(@event);
-            }
         }
 
         [TestMethod, TestCategory("Speech")]

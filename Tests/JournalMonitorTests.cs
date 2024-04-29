@@ -2451,5 +2451,17 @@ namespace UnitTests
             Assert.AreEqual( Module.FromEDName( subsystemEDName ), @event.SubSystem );
             Assert.AreEqual( subsystemHealth is null ? null : (decimal?)Convert.ToDecimal(subsystemHealth), @event.subsystemhealth );
         }
+
+        [TestMethod, DoNotParallelize]
+        public void TestFSSDiscoveryScan ()
+        {
+            var autoscan = @"{ ""timestamp"":""2022-02-18T07:14:01Z"", ""event"":""Scan"", ""ScanType"":""AutoScan"", ""BodyName"":""Wolf 1414 A"", ""BodyID"":1, ""Parents"":[ {""Null"":0} ], ""StarSystem"":""Wolf 1414"", ""SystemAddress"":83718345434, ""DistanceFromArrivalLS"":0.000000, ""StarType"":""K"", ""Subclass"":6, ""StellarMass"":0.542969, ""Radius"":485181728.000000, ""AbsoluteMagnitude"":8.023544, ""Age_MY"":3118, ""SurfaceTemperature"":3913.000000, ""Luminosity"":""V"", ""SemiMajorAxis"":198208671808.242798, ""Eccentricity"":0.295083, ""OrbitalInclination"":34.113437, ""Periapsis"":303.694287, ""OrbitalPeriod"":196849131.584167, ""AscendingNode"":31.266731, ""MeanAnomaly"":53.999015, ""RotationPeriod"":214740.119514, ""AxialTilt"":0.000000, ""WasDiscovered"":true, ""WasMapped"":false }";
+            var honk = @"{ ""timestamp"":""2022-02-18T07:14:02Z"", ""event"":""FSSDiscoveryScan"", ""Progress"":0.193470, ""BodyCount"":27, ""NonBodyCount"":10, ""SystemName"":""Wolf 1414"", ""SystemAddress"":83718345434 }";
+            var secondstar = @"{ ""timestamp"":""2022-02-18T07:14:03Z"", ""event"":""Scan"", ""ScanType"":""Detailed"", ""BodyName"":""Wolf 1414 B"", ""BodyID"":2, ""Parents"":[ {""Null"":0} ], ""StarSystem"":""Wolf 1414"", ""SystemAddress"":83718345434, ""DistanceFromArrivalLS"":1472.392323, ""StarType"":""M"", ""Subclass"":3, ""StellarMass"":0.367188, ""Radius"":408410944.000000, ""AbsoluteMagnitude"":8.709381, ""Age_MY"":3118, ""SurfaceTemperature"":3087.000000, ""Luminosity"":""Va"", ""SemiMajorAxis"":293087559938.430786, ""Eccentricity"":0.295083, ""OrbitalInclination"":34.113437, ""Periapsis"":123.694292, ""OrbitalPeriod"":196849131.584167, ""AscendingNode"":31.266731, ""MeanAnomaly"":53.999018, ""RotationPeriod"":255361.700784, ""AxialTilt"":0.000000, ""WasDiscovered"":true, ""WasMapped"":false }";
+
+            List<Event> events = new List<Event>();
+            events.AddRange( JournalMonitor.ParseJournalEntries( new[] { autoscan, honk, secondstar } ) );
+            Assert.IsTrue( events.LastOrDefault() is DiscoveryScanEvent );
+        }
     }
 }
