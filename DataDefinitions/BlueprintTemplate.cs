@@ -483,6 +483,10 @@ namespace EddiDataDefinitions
             {
                 { 5, new List<MaterialAmount>() }
             });
+            _ = new BlueprintTemplate( "GuardianWeaponSturdy", new Dictionary<int, List<MaterialAmount>>()
+            {
+                { 1, new List<MaterialAmount>() { new MaterialAmount( Material.HardenedSurfaceFragments, 2), new MaterialAmount( Material.CausticCrystal, 1 ), new MaterialAmount( Material.TacticalCoreChip, 1 ) } }
+            } );
         }
         public static readonly BlueprintTemplate None;
 

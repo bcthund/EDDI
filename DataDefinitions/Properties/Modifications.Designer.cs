@@ -655,6 +655,15 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anti-Guardian Zone Resistance.
+        /// </summary>
+        public static string GuardianWeaponSturdy {
+            get {
+                return ResourceManager.GetString("GuardianWeaponSturdy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light Weight Hatch Breaker Limpet.
         /// </summary>
         public static string HatchBreakerLimpetLightWeight {

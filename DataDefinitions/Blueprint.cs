@@ -835,6 +835,7 @@ namespace EddiDataDefinitions
             _ = new Blueprint( 129012368, "PowerPlantBoosted5", "PowerPlantBoosted", 5 ); // Pre-engineered overcharged 5A power plant 
             _ = new Blueprint( 129015432, "WeaponHighCapacity5", "WeaponHighCapacity", 5 ); // AX Missile Rack
             _ = new Blueprint( 129028578, "WeaponOvercharged5", "WeaponOvercharged", 5 ); // Pre-engineered (Azimuth?) AX overcharged autoloader multicannon
+            _ = new Blueprint( 129030458, "GuardianWeaponSturdy1", "GuardianWeaponSturdy", 1 ); // Anti-Guardian Zone Resistance
         }
         public static readonly Blueprint None;
         private static readonly Dictionary<long, Blueprint> BlueprintsByEliteID;
