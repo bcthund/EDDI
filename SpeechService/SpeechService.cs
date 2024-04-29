@@ -208,7 +208,7 @@ namespace EddiSpeechService
 
         private void CompanionAppService_StateChanged(CompanionAppService.State oldState, CompanionAppService.State newState)
         {
-            if (newState == CompanionAppService.State.ConnectionLost)
+            if (newState == CompanionAppService.State.ConnectionLost && !CompanionAppService.unitTesting)
             {
                 Say(null, EddiCompanionAppService.Properties.CapiResources.frontier_api_lost, 0);
             }
