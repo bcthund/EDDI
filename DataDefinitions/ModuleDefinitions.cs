@@ -1093,6 +1093,12 @@ namespace EddiDataDefinitions
                 new Module(129028577, "Hpt_Human_Extraction_Fixed_Medium", "Extraction_Missile", 2, "B", 843170),
                 new Module(129030049, "Hpt_ATVentDisruptorPylon_Fixed_Medium", "GuardianNaniteTorpedoPylon", 2, "I", 843170),
                 new Module(129030050, "Hpt_ATVentDisruptorPylon_Fixed_Large", "GuardianNaniteTorpedoPylon", 3, "I", 1627420),
+                new Module(129030487, "int_hyperdrive_overcharge_size2_class3", "FrameShiftDrive_SCO", 2, "C", 21363),
+                new Module(129030486, "int_hyperdrive_overcharge_size3_class3", "FrameShiftDrive_SCO", 3, "C", 67722),
+                new Module(129030485, "int_hyperdrive_overcharge_size4_class3", "FrameShiftDrive_SCO", 4, "C", 214678),
+                new Module(129030474, "int_hyperdrive_overcharge_size5_class3", "FrameShiftDrive_SCO", 5, "C", 623816),
+                new Module(129030484, "int_hyperdrive_overcharge_size6_class3", "FrameShiftDrive_SCO", 6, "C", 2157272),
+                new Module(129030483, "int_hyperdrive_overcharge_size7_class3", "FrameShiftDrive_SCO", 7, "C", 6838549),
 
                 // Various free modules that show up in SRVs, fighters and training; not used anywhere but note them here so that they do not throw errors when encountered
                 new Module(128049673, "Hpt_PulseLaser_Fixed_SmallFree", "PulseLaser", 1, "F", 0, ModuleMount.Fixed),
