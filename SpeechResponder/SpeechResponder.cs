@@ -1,4 +1,5 @@
 ﻿using EddiConfigService;
+using EddiConfigService.Configurations;
 using EddiCore;
 using EddiDataDefinitions;
 using EddiEvents;
@@ -72,8 +73,6 @@ namespace EddiSpeechResponder
         private Personality _personality;
         private SpeechResponderConfiguration _configuration;
         private ScriptResolver _scriptResolver;
-
-        object speechresponder_quiet_was;
 
         public string ResponderName()
         {
@@ -274,25 +273,22 @@ namespace EddiSpeechResponder
                 }
             }
 
-            // Simulate a forced shutdown effect affecting the speech responder until the ship's system is rebooted
-            if ( @event is ShipShutdownEvent )
+            // Restore speech after a forced shutdown effect affecting the speech responder
+            if ( @event is ShipShutdownRebootEvent )
             {
-                Logging.Debug("Stopping speech during ship shutdown.");
-                if ( EDDI.Instance.State.TryGetValue( "speechresponder_quiet", out var stateObj ) )
-                {
-                    speechresponder_quiet_was = stateObj as bool?;
-                }
-                EDDI.Instance.State[ "speechresponder_quiet" ] = true;
-                SpeechService.Instance.speechQueue.DequeueAllSpeech();
-                SpeechService.Instance.StopCurrentSpeech();
-            }
-            else if ( @event is ShipShutdownRebootEvent )
-            {
-                Logging.Debug( "Restoring speech after ship shutdown." );
-                EDDI.Instance.State[ "speechresponder_quiet" ] = speechresponder_quiet_was;
+                Logging.Debug( "Unpausing speech after ship shutdown." );
+                SpeechService.Instance.speechQueue.Unpause();
             }
 
             Say(@event);
+
+            // Simulate a forced shutdown effect affecting the speech responder until the ship's system is rebooted
+            if ( @event is ShipShutdownEvent shipShutdownEvent && !shipShutdownEvent.partialshutdown  )
+            {
+                Logging.Debug( "Pausing speech during ship shutdown." );
+                SpeechService.Instance.StopCurrentSpeech();
+                SpeechService.Instance.speechQueue.Pause();
+            }
         }
 
         private void Say(Event @event)

@@ -8,8 +8,9 @@ namespace EddiSpeechService
     {
         public List<ConcurrentQueue<EddiSpeech>> priorityQueues { get; private set; }
         public bool hasSpeech => priorityQueues.Any(q => q.Count > 0);
+        public bool isQueuePaused;
 
-        public SpeechQueue()
+        public SpeechQueue ()
         {
             PrepareSpeechQueues();
         }
@@ -59,9 +60,11 @@ namespace EddiSpeechService
         public bool TryDequeue(out EddiSpeech speech)
         {
             speech = null;
-            for (int i = 0; i < priorityQueues.Count; i++)
+            if ( isQueuePaused ) { return false; }
+            // ReSharper disable once ForCanBeConvertedToForeach - We want to enforce the priority order
+            for ( var i = 0; i < priorityQueues.Count; i++)
             {
-                if (priorityQueues[i].TryDequeue(out EddiSpeech selectedSpeech))
+                if (priorityQueues[i].TryDequeue(out var selectedSpeech))
                 {
                     speech = selectedSpeech;
                     return true;
@@ -73,9 +76,11 @@ namespace EddiSpeechService
         public bool TryPeek(out EddiSpeech speech)
         {
             speech = null;
-            for (int i = 0; i < priorityQueues.Count; i++)
+            if ( isQueuePaused ) { return false; }
+            // ReSharper disable once ForCanBeConvertedToForeach - We want to enforce the priority order
+            for ( var i = 0; i < priorityQueues.Count; i++)
             {
-                if (priorityQueues[i].TryPeek(out EddiSpeech selectedSpeech))
+                if (priorityQueues[i].TryPeek(out var selectedSpeech))
                 {
                     speech = selectedSpeech;
                     return true;
@@ -98,15 +103,25 @@ namespace EddiSpeechService
             // Don't clear system messages (priority 0)
             for (int i = 1; i < priorityQueues.Count; i++)
             {
-                ConcurrentQueue<EddiSpeech> priorityHolder = new ConcurrentQueue<EddiSpeech>();
-                while (priorityQueues[i].TryDequeue(out EddiSpeech eddiSpeech)) { filterSpeechQueue(type, ref priorityHolder, eddiSpeech); };
-                while (priorityHolder.TryDequeue(out EddiSpeech eddiSpeech)) { priorityQueues[i].Enqueue(eddiSpeech); };
+                var priorityHolder = new ConcurrentQueue<EddiSpeech>();
+                while (priorityQueues[i].TryDequeue(out var eddiSpeech)) { filterSpeechQueue(type, ref priorityHolder, eddiSpeech); };
+                while (priorityHolder.TryDequeue(out var eddiSpeech)) { priorityQueues[i].Enqueue(eddiSpeech); };
             }
+        }
+
+        public void Pause ()
+        {
+            isQueuePaused = true;
+        }
+
+        public void Unpause ()
+        {
+            isQueuePaused = false;
         }
 
         private void filterSpeechQueue(string type, ref ConcurrentQueue<EddiSpeech> speechQueue, EddiSpeech eddiSpeech)
         {
-            if (!(eddiSpeech.eventType == type))
+            if (eddiSpeech.eventType != type)
             {
                 speechQueue.Enqueue(eddiSpeech);
             }
