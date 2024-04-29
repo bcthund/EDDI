@@ -15,7 +15,7 @@ namespace EddiEvents
         public string source => signalSource.localizedName;
 
         [PublicAPI( "The signal type" )]
-        public string signaltype => signalSource.signalType.localizedName;
+        public string signaltype => signalSource.signalType?.localizedName;
 
         [PublicAPI("The faction state that triggered the signal source, if any")]
         public string factionstate => signalSource.spawningState.localizedName ?? signalSource.spawningState.fallbackLocalizedName ?? signalSource.spawningState.edname;
