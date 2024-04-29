@@ -2390,6 +2390,10 @@ namespace UnitTests
         [TestMethod, DoNotParallelize]
         public void TestRepeatedShipShutdownEvents ()
         {
+            var privateType = new PrivateType( typeof(JournalMonitor) );
+            // ReSharper disable once AssignNullToNotNullAttribute - CancellationTokenSource is nullable.
+            privateType.SetStaticFieldOrProperty( "ShipShutdownCancellationTokenSource", null );
+
             // Trigger a `ShipShutdown` event.
             var events = JournalMonitor.ParseJournalEntries( new [] {@"{ ""timestamp"":""2023-11-24T20:22:45Z"", ""event"":""SystemsShutdown"" }" } );
             Assert.AreEqual( 1, events.Count );
