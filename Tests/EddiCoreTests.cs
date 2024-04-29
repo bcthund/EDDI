@@ -2,7 +2,10 @@
 using EddiDataDefinitions;
 using EddiEvents;
 using EddiJournalMonitor;
+using EddiSpeechResponder;
+using EddiSpeechService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -278,6 +281,48 @@ namespace UnitTests
             // Switch systems and verify that the `systemScanCompleted` bool returns to it's default state
             privateObject.SetFieldOrProperty("CurrentStarSystem", new StarSystem() { systemname = "TestSystem2" });
             Assert.IsFalse(EDDI.Instance.CurrentStarSystem?.systemScanCompleted);
+        }
+
+        [TestMethod, DoNotParallelize]
+        public void TestShipShutdownScenario ()
+        {
+            var speechResponder = new SpeechResponder();
+            var speechService = SpeechService.Instance;
+
+            // The speech responder should not pause speech after a partial shutdown.
+            const string line = @"{ ""timestamp"":""2024-04-20T10:49:23Z"", ""event"":""SystemsShutdown"" }";
+            const string line2 = @"{ ""timestamp"":""2024-04-20T10:49:23Z"", ""event"":""MaterialCollected"", ""Category"":""Encoded"", ""Name"":""tg_shutdowndata"", ""Name_Localised"":""Massive Energy Surge Analytics"", ""Count"":1 }";
+            var events = JournalMonitor.ParseJournalEntries(new [] { line, line2 } );
+            var @event = (ShipShutdownEvent)events[0];
+            Assert.IsNotNull( @event );
+            Assert.IsTrue(@event.partialshutdown);
+            speechResponder.Handle( @event );
+            Assert.IsFalse( speechService.speechQueue.isQueuePaused );
+
+            // The speech responder should pause speech after a full shutdown.
+            events = JournalMonitor.ParseJournalEntries( new[] { line } );
+            @event = (ShipShutdownEvent)events[ 0 ];
+            Assert.IsNotNull( @event );
+            Assert.IsFalse( @event.partialshutdown );
+            speechResponder.Handle( @event );
+            Assert.IsTrue( speechService.speechQueue.isQueuePaused );
+
+            // While speech is paused, new speech should be added to the queue but not removed from the queue.
+            speechService.speechQueue.DequeueAllSpeech();
+            speechService.Say(null, "This speech should not be dequeued until speech is unpaused.");
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            Assert.IsTrue( speechService.speechQueue.isQueuePaused );
+            Assert.IsTrue( speechService.speechQueue.hasSpeech );
+
+            // Remove the speech from the queue again
+            speechService.speechQueue.DequeueAllSpeech();
+            Assert.IsTrue( speechService.speechQueue.isQueuePaused );
+            Assert.IsFalse( speechService.speechQueue.hasSpeech );
+
+            // The speech responder should unpause speech after a `Ship shutdown reboot` event.
+            var rebootEvent = new ShipShutdownRebootEvent( @event.timestamp + TimeSpan.FromSeconds( 30 ) );
+            speechResponder.Handle( rebootEvent );
+            Assert.IsFalse( speechService.speechQueue.isQueuePaused );
         }
     }
 }

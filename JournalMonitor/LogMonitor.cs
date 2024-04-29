@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,10 @@ namespace EddiJournalMonitor
     public class LogMonitor
     {
         // What we are monitoring and what to do with it
-        public string Directory;
-        public Regex Filter;
-        public Action<string, bool> Callback;
-        public static string journalFileName;
+        private string Directory;
+        private Regex Filter;
+        private Action<IEnumerable<string>, bool> Callback;
+        protected static string journalFileName;
 
         private const int pollingIntervalActiveMs = 100;
         private const int pollingIntervalRelaxedMs = 5000;
@@ -25,14 +26,14 @@ namespace EddiJournalMonitor
 
         public LogMonitor(string filter) { Filter = new Regex(filter); }
 
-        public LogMonitor(string directory, string filter, Action<string, bool> callback)
+        protected LogMonitor(string directory, string filter, Action<IEnumerable<string>, bool> callback)
         {
             Directory = directory;
             Filter = new Regex(filter);
             Callback = callback;
         }
 
-        public void start(bool readAllOnLoad = false)
+        protected void start(bool readAllOnLoad = false)
         {
             if (Directory == null || Directory.Trim() == "")
             {
@@ -41,7 +42,7 @@ namespace EddiJournalMonitor
 
             running = true;
             long lastSize = 0;
-            bool activePolling = false;
+            var activePolling = false;
 
             // Main loop
             while (running)
@@ -78,15 +79,15 @@ namespace EddiJournalMonitor
                 else if (fileInfo.Name != journalFileName)
                 {
                     // We have found a player journal file that is fresher than the one we are using
-                    bool isFirstLoad = journalFileName == null;
+                    var isFirstLoad = journalFileName == null;
                     journalFileName = fileInfo.Name;
                     lastSize = fileInfo.Length;
 
                     if (readAllOnLoad)
                     {
                         // Read everything in the file into the journal monitor
-                        long seekPos = 0;
-                        int readLen = (int)fileInfo.Length;
+                        const long seekPos = 0;
+                        var readLen = (int)fileInfo.Length;
                         Read(seekPos, readLen, fileInfo, isFirstLoad);
                     }
                     else
@@ -100,8 +101,8 @@ namespace EddiJournalMonitor
                     // The player journal file in memory is the correct file. Look for new journal events
                     journalFileName = fileInfo.Name;
 
-                    long thisSize = fileInfo.Length;
-                    int readLen = 0;
+                    var thisSize = fileInfo.Length;
+                    var readLen = 0;
                     long seekPos = 0;
 
                     if (lastSize != thisSize)
@@ -128,26 +129,20 @@ namespace EddiJournalMonitor
 
         private void Read(long seekPos, int readLen, FileInfo fileInfo, bool isLoadEvent)
         {
-            using (FileStream fs = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fs = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 fs.Seek(seekPos, SeekOrigin.Begin);
-                byte[] bytes = new byte[readLen];
-                int haveRead = 0;
+                var bytes = new byte[readLen];
+                var haveRead = 0;
                 while (haveRead < readLen)
                 {
                     haveRead += fs.Read(bytes, haveRead, readLen - haveRead);
                     fs.Seek(seekPos + haveRead, SeekOrigin.Begin);
                 }
                 // Convert bytes to string
-                string s = Encoding.UTF8.GetString(bytes);
-                string[] lines = Regex.Split(s, "\r?\n");
-                foreach (string line in lines)
-                {
-                    if (line != "")
-                    {
-                        Callback(line, isLoadEvent);
-                    }
-                }
+                var s = Encoding.UTF8.GetString(bytes);
+                var lines = Regex.Split(s, "\r?\n");
+                Callback( lines.Where( l => l != "" ), isLoadEvent );
             }
         }
 
@@ -155,51 +150,48 @@ namespace EddiJournalMonitor
         {
             long seekPos = 0;
 
-            using (FileStream fs = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fs = fileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 fs.Seek(seekPos, SeekOrigin.Begin);
-                byte[] bytes = new byte[fileInfo.Length];
-                int haveRead = 0;
+                var bytes = new byte[fileInfo.Length];
+                var haveRead = 0;
                 while (haveRead < fileInfo.Length)
                 {
                     haveRead += fs.Read(bytes, haveRead, (int)fileInfo.Length - haveRead);
                     fs.Seek(seekPos + haveRead, SeekOrigin.Begin);
                 }
                 // Convert bytes to strings
-                string s = Encoding.UTF8.GetString(bytes);
-                string[] lines = Regex.Split(s, "\r?\n");
+                var s = Encoding.UTF8.GetString(bytes);
+                var lines = Regex.Split(s, "\r?\n")
+                    .Select( (v, i) => new { Key = i, Value = v })
+                    .ToDictionary(kv => kv.Key, kv => kv.Value );
 
                 // First line should be a file header
-                string firstLine = lines.FirstOrDefault();
+                var firstLine = lines.Any() ? lines.FirstOrDefault().Value : null;
                 if (!string.IsNullOrEmpty(firstLine) && firstLine.Contains("Fileheader"))
                 {
                     // Pass this along as an event
-                    Callback(firstLine, isLoadEvent);
+                    Callback( new[] { firstLine }, isLoadEvent);
                 }
 
                 // Find the latest "Commander" event, written at the start of the Load Game process
                 // (whenever loading from the main menu) 
-                var commanderLoadLines = lines
-                    .Select((text, index) => new { line = text, lineNumber = index })
-                    .Where(x => x.line.Contains(@"""event"":""Commander"""));
-                var lastLoadLine = commanderLoadLines.LastOrDefault();
+                var lastLoadLine = lines
+                    .LastOrDefault( x => x.Value.Contains(@"""event"":""Commander""") );
 
-                if (lastLoadLine != null)
+                if (lastLoadLine.Value is null)
                 {
-                    Task.Run(() => {
-                        for (int i = lastLoadLine.lineNumber; i < lines.Count(); i++)
-                        {
-                            if (lines[i] != "")
-                            {
-                                Callback(lines[i], isLoadEvent);
-                            }
-                        }
+                    Task.Run(() =>
+                    {
+                        Callback( lines
+                            .Where(l => l.Key >= lastLoadLine.Key )
+                            .Select(l => l.Value), isLoadEvent );
                     });
                 }
             }
         }
 
-        public void stop()
+        protected void stop()
         {
             running = false;
         }
