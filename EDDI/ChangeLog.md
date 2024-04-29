@@ -6,9 +6,11 @@ Full details of the variables available for each noted event, and VoiceAttack in
   * Core
     * EDDI will no longer report your environment as "Supercruise" right after a Thargoid hyperdiction. (#2597)
     * EDDI will no longer report your enviroment as "Normal Space" when starting docked. (#2598)
+    * EDDI will delay rather than discard speech when hit by a full Thargoid shutdown
   * Events
     * `Hyperdicted` added. 
     * `Signal detected` updated to include new `signaltype` property.
+    * `Ship shutdown` updated include new `partialshutdown` property (for instances where the power flickers but doesn't go out completely). (#2603)
     * `Ship targeted` updated to better utilize localized names (where available). (#2604)
   * Navigation Monitor
     * Improved route guidance updates.

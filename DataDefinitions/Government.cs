@@ -23,7 +23,7 @@ namespace EddiDataDefinitions
             Democracy = new Government("$government_Democracy;");
             Dictatorship = new Government("$government_Dictatorship;");
             Feudal = new Government("$government_Feudal;");
-            Imperial = new Government("$government_Imperial;");
+            Imperial = new Government("$government_Imperial;"); // Might not exist? I've never encountered this one.
             Patronage = new Government("$government_Patronage;");
             Prison = new Government("$government_Prison;");
             PrisonColony = new Government("$government_PrisonColony;");
