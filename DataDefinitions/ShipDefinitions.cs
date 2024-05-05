@@ -23,7 +23,7 @@ namespace EddiDataDefinitions
             new Ship( "Federation_Corvette", ShipManufacturer.CoreDynamics, "Federal Corvette", nameof(Properties.Ship.yourFedCorvette), null, LandingPadSize.Large, 5, 1.13M),
             new Ship( "Federation_Dropship", ShipManufacturer.CoreDynamics, "Federal Dropship", nameof(Properties.Ship.yourFedDropship), null, LandingPadSize.Medium, 4, 0.83M),
             new Ship( "Federation_Gunship", ShipManufacturer.CoreDynamics, "Federal Gunship", nameof(Properties.Ship.yourFedGunship), null, LandingPadSize.Medium, 4, 0.82M),
-            new Ship( "FerDeLance", ShipManufacturer.ZorgonPeterson, "Fer-de-Lance", nameof(Properties.Ship.yourFDL), new List<Translation> {new Translation("fer-de-lance", "ˌfɛədəˈlɑːns") }, LandingPadSize.Medium, null, 0.67M),
+            new Ship( "FerDeLance", ShipManufacturer.ZorgonPeterson, "Fer-de-Lance", nameof(Properties.Ship.yourFDL), new List<Translation> {new Translation("Fer-de-Lance", "ˌfɛədəˈlɑːns") }, LandingPadSize.Medium, null, 0.67M),
             new Ship( "Empire_Trader", ShipManufacturer.Gutamaya, "Imperial Clipper", nameof(Properties.Ship.yourImpClipper), null, LandingPadSize.Large, 5, 0.74M),
             new Ship( "Empire_Courier", ShipManufacturer.Gutamaya, "Imperial Courier", nameof(Properties.Ship.yourImpCourier), null, LandingPadSize.Small, null, 0.41M),
             new Ship( "Cutter", ShipManufacturer.Gutamaya, "Imperial Cutter", nameof(Properties.Ship.yourImpCutter), null, LandingPadSize.Large, 5, 1.16M),
@@ -36,8 +36,8 @@ namespace EddiDataDefinitions
             new Ship( "Type6", ShipManufacturer.LakonSpaceways, "Type-6 Transporter", nameof(Properties.Ship.yourType6), null, LandingPadSize.Medium, null, 0.39M),
             new Ship( "Type7", ShipManufacturer.LakonSpaceways, "Type-7 Transporter", nameof(Properties.Ship.yourType7), null, LandingPadSize.Large, null, 0.52M),
             new Ship( "Type9", ShipManufacturer.LakonSpaceways, "Type-9 Heavy", nameof(Properties.Ship.yourType9), null, LandingPadSize.Large, null, 0.77M),
-            new Ship( "Viper", ShipManufacturer.FaulconDeLacy, "Viper Mk. III", nameof(Properties.Ship.yourViperMkIII), new List<Translation> {new Translation("viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("3", "θriː") }, LandingPadSize.Small, 3, 0.41M),
-            new Ship( "Viper_MkIV", ShipManufacturer.FaulconDeLacy, "Viper Mk. IV", nameof(Properties.Ship.yourViperMkIV), new List<Translation> {new Translation("viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("4", "fɔː") }, LandingPadSize.Small, 3, 0.46M),
+            new Ship( "Viper", ShipManufacturer.FaulconDeLacy, "Viper Mk. III", nameof(Properties.Ship.yourViperMkIII), new List<Translation> {new Translation("Viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("3", "θriː") }, LandingPadSize.Small, 3, 0.41M),
+            new Ship( "Viper_MkIV", ShipManufacturer.FaulconDeLacy, "Viper Mk. IV", nameof(Properties.Ship.yourViperMkIV), new List<Translation> {new Translation("Viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("4", "fɔː") }, LandingPadSize.Small, 3, 0.46M),
             new Ship( "Vulture", ShipManufacturer.CoreDynamics, "Vulture", nameof(Properties.Ship.yourVulture), new List<Translation> { new Translation("vulture", "ˈvʌltʃə") }, LandingPadSize.Small, 5, 0.57M),
             new Ship( "Type9_Military", ShipManufacturer.LakonSpaceways, "Type-10 Defender", nameof(Properties.Ship.yourType10), null, LandingPadSize.Large, 5, 0.77M),
             new Ship( "TypeX", ShipManufacturer.LakonSpaceways, "Alliance Chieftain", nameof(Properties.Ship.yourAllChieftain), null, LandingPadSize.Medium, 4, 0.77M),
@@ -71,12 +71,6 @@ namespace EddiDataDefinitions
             }
             else
             {
-                string edModel = null;
-                EddbModelMap?.TryGetValue(model, out edModel);
-                if (edModel != null)
-                {
-                    model = edModel;
-                }
                 Ship = FromEDModel(model, false);
             }
             return Ship;
@@ -107,49 +101,5 @@ namespace EddiDataDefinitions
             }
             return null;
         }
-
-        // EDDB model names may not match either EDDI's model name strings or FDev's EDName strings. 
-        private static readonly Dictionary<string, string> EddbModelMap = new Dictionary<string, string>()
-        {   
-            // Map EDDB model names back to ednames here (format: EDDB model name, EDName)
-            { "Adder", "Adder" },
-            { "Anaconda", "Anaconda" },
-            { "Asp Explorer", "Asp" },
-            { "Asp Scout", "Asp_Scout" },
-            { "Beluga Liner", "BelugaLiner" },
-            { "Cobra Mk. III", "CobraMkIII" },
-            { "Cobra MK IV", "CobraMkIV" },
-            { "Diamondback Explorer", "DiamondbackXL" },
-            { "Diamondback Scout", "Diamondback" },
-            { "Dolphin", "Dolphin" },
-            { "Eagle Mk. II", "Eagle" },
-            { "Federal Assault Ship", "Federation_Dropship_MkII" },
-            { "Federal Corvette", "Federation_Corvette" },
-            { "Federal Dropship", "Federation_Dropship" },
-            { "Federal Gunship", "Federation_Gunship" },
-            { "Fer-de-Lance", "FerDeLance" },
-            { "Imperial Clipper", "Empire_Trader" },
-            { "Imperial Courier", "Empire_Courier" },
-            { "Imperial Cutter", "Cutter" },
-            { "Imperial Eagle", "Empire_Eagle" },
-            { "Hauler", "Hauler" },
-            { "Keelback", "Independant_Trader" },
-            { "Orca", "Orca" },
-            { "Python", "Python" },
-            { "Sidewinder Mk. I", "Sidewinder" },
-            { "Type-6 Transporter", "Type6" },
-            { "Type-7 Transporter", "Type7" },
-            { "Type-9 Heavy", "Type9" },
-            { "Viper Mk III", "Viper" },
-            { "Viper MK IV", "Viper_MkIV" },
-            { "Vulture", "Vulture" },
-            { "Type-10 Defender", "Type9_Military" },
-            { "Alliance Chieftain", "TypeX" },
-            { "Alliance Challenger", "TypeX_2" },
-            { "Alliance Crusader", "TypeX_3" },
-            { "Krait MkII", "Krait_MkII" },
-            { "Krait Phantom", "Krait_Light" },
-            { "Mamba", "Mamba" },
-        };
     }
 }
