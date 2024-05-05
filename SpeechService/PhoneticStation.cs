@@ -2,7 +2,7 @@
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         // Fixes to avoid issues with pronunciation of station model names
         private static readonly Dictionary<string, string> STATION_MODEL_FIXES = new Dictionary<string, string>()

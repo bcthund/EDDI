@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         /// <summary>
         /// Present a number's approximate value in a format suitable for text-to-speech

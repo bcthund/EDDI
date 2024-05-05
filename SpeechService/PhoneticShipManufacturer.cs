@@ -2,12 +2,12 @@
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         public static string getPhoneticShipManufacturer(string val2)
         {
-            string phoneticManufacturer = ShipDefinitions.SpokenManufacturer(val2);
-            if (phoneticManufacturer != null)
+            var phoneticManufacturer = ShipManufacturer.SpokenManufacturer(val2);
+            if (!string.IsNullOrEmpty( phoneticManufacturer ) )
             {
                 return phoneticManufacturer.Trim();
             }

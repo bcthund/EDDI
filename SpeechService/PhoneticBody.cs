@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         /// <summary>Fix up body names</summary>
         private static string getPhoneticBody(string body, bool useICAO = false)

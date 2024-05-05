@@ -2,7 +2,7 @@
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         public static string getPhoneticPlanetClass(string val)
         {

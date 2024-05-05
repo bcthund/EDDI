@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace EddiSpeechService
 {
     /// <summary>Translations for Elite items for text-to-speech</summary>
-    public partial class Translations
+    public static partial class Translations
     {
         public static string GetTranslation(string val, bool useICAO = false, string type = null)
         {

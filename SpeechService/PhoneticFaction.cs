@@ -2,7 +2,7 @@
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         // Fixes to avoid issues with some of the more strangely-named factions
         private static readonly Dictionary<string, string> FACTION_FIXES = new Dictionary<string, string>()

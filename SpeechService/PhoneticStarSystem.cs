@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace EddiSpeechService
 {
-    public partial class Translations
+    public static partial class Translations
     {
         // Fixes to avoid issues with some of the more strangely-named systems
         private static readonly Dictionary<string, string> STAR_SYSTEM_FIXES = new Dictionary<string, string>()
