@@ -597,10 +597,6 @@ namespace EddiDataDefinitions
 
         // Admin
 
-        // The ID in Elite: Dangerous' database
-        [JsonIgnore]
-        public long EDID { get; set; }
-
         // The name in Elite: Dangerous' database
         public string EDName { get; set; }
 
@@ -625,11 +621,10 @@ namespace EddiDataDefinitions
             cargohatch = new Module();
         }
 
-        public Ship(long EDID, string EDName, string Manufacturer, string Model, string possessiveYour, List<Translation> PhoneticModel, LandingPadSize Size, int? MilitarySize, decimal reservoirFuelTankSize)
+        public Ship( string EDName, ShipManufacturer Manufacturer, string Model, string possessiveYour, List<Translation> PhoneticModel, LandingPadSize Size, int? MilitarySize, decimal reservoirFuelTankSize)
         {
-            this.EDID = EDID;
             this.EDName = EDName;
-            manufacturer = Manufacturer;
+            manufacturer = Manufacturer.name;
             model = Model;
             this.possessiveYour = possessiveYour;
             phoneticModel = PhoneticModel;
@@ -693,7 +688,7 @@ namespace EddiDataDefinitions
             return result;
         }
 
-        public string SpokenManufacturer() => ShipDefinitions.SpokenManufacturer(manufacturer) ?? manufacturer;
+        public string SpokenManufacturer() => ShipManufacturer.SpokenManufacturer(manufacturer) ?? manufacturer;
 
         /// <summary> Calculates the distance from the specified coordinates to the ship's recorded x, y, and z coordinates </summary>
         public decimal? Distance(decimal? fromX, decimal? fromY, decimal? fromZ)
@@ -765,7 +760,6 @@ namespace EddiDataDefinitions
             Ship template = ShipDefinitions.FromModel(model);
             if (template != null)
             {
-                EDID = template.EDID;
                 EDName = template.EDName;
                 manufacturer = template.manufacturer;
                 possessiveYour = template.possessiveYour;
@@ -909,7 +903,7 @@ namespace EddiDataDefinitions
             try
             {
                 Logging.Debug($"Converting ShipyardInfoItem to Ship: ", item);
-                var ship = ShipDefinitions.FromEliteID(item.EliteID) ?? ShipDefinitions.FromEDModel(item.edModel, false);
+                var ship = ShipDefinitions.FromEDModel(item.edModel, false);
                 if (ship == null)
                 {
                     // Unknown ship; report the full object so that we can update the definitions 

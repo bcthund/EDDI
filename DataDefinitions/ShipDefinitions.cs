@@ -4,98 +4,62 @@ using Utilities;
 
 namespace EddiDataDefinitions
 {
-    public class ShipDefinitions
+    public static class ShipDefinitions
     {
-        private static readonly Dictionary<long, Ship> ShipsByEliteID = new Dictionary<long, Ship>()
+        private static readonly List<Ship> AllOfThem = new List<Ship>()
         {
-            { 128049267, new Ship(128049267, "Adder", "Zorgon Peterson", "Adder", nameof(Properties.Ship.yourAdder), null, LandingPadSize.Small, null, 0.36M) },
-            { 128049363, new Ship(128049363, "Anaconda", "Faulcon DeLacy", "Anaconda", nameof(Properties.Ship.yourAnaconda), null, LandingPadSize.Large, 5, 1.07M) },
-            { 128049303, new Ship(128049303, "Asp", "Lakon Spaceways", "Asp Explorer", nameof(Properties.Ship.yourAspEx), null, LandingPadSize.Medium, null, 0.63M) },
-            { 128672276, new Ship(128672276, "Asp_Scout", "Lakon Spaceways", "Asp Scout", nameof(Properties.Ship.yourAspS), null, LandingPadSize.Medium, null, 0.47M) },
-            { 128049345, new Ship(128049345, "BelugaLiner", "Saud Kruger", "Beluga", nameof(Properties.Ship.yourBeluga), new List<Translation> {new Translation("beluga", "bɪˈluːɡə") }, LandingPadSize.Large, null, 0.81M) },
-            { 128049279, new Ship(128049279, "CobraMkIII", "Faulcon DeLacy", "Cobra Mk. III", nameof(Properties.Ship.yourCobraMkIII), new List<Translation> {new Translation("cobra", "ˈkəʊbrə"), new Translation("Mark", "mɑːk"), new Translation("3", "θriː") }, LandingPadSize.Small, null, 0.49M) },
-            { 128672262, new Ship(128672262, "CobraMkIV", "Faulcon DeLacy", "Cobra Mk. IV", nameof(Properties.Ship.yourCobraMkIV), new List<Translation> {new Translation("cobra", "ˈkəʊbrə"), new Translation("Mark", "mɑːk"), new Translation("4", "fɔː") }, LandingPadSize.Small, null, 0.51M) },
-            { 128671831, new Ship(128671831, "DiamondbackXL", "Lakon Spaceways", "Diamondback Explorer", nameof(Properties.Ship.yourDBX), null, LandingPadSize.Small, null, 0.52M) },
-            { 128671217, new Ship(128671217, "Diamondback", "Lakon Spaceways", "Diamondback Scout", nameof(Properties.Ship.yourDBS), null, LandingPadSize.Small, null, 0.49M) },
-            { 128049291, new Ship(128049291, "Dolphin", "Saud Kruger", "Dolphin", nameof(Properties.Ship.yourDolphin), null, LandingPadSize.Small, null, 0.50M) },
-            { 128049255, new Ship(128049255, "Eagle", "Core Dynamics", "Eagle", nameof(Properties.Ship.yourEagle), null, LandingPadSize.Small, 2, 0.34M) },
-            { 128672145, new Ship(128672145, "Federation_Dropship_MkII", "Core Dynamics", "Federal Assault Ship", nameof(Properties.Ship.yourFedAssaultShip), null, LandingPadSize.Medium, 4, 0.72M) },
-            { 128049369, new Ship(128049369, "Federation_Corvette", "Core Dynamics", "Federal Corvette", nameof(Properties.Ship.yourFedCorvette), null, LandingPadSize.Large, 5, 1.13M) },
-            { 128049321, new Ship(128049321, "Federation_Dropship", "Core Dynamics", "Federal Dropship", nameof(Properties.Ship.yourFedDropship), null, LandingPadSize.Medium, 4, 0.83M) },
-            { 128672152, new Ship(128672152, "Federation_Gunship", "Core Dynamics", "Federal Gunship", nameof(Properties.Ship.yourFedGunship), null, LandingPadSize.Medium, 4, 0.82M) },
-            { 128049351, new Ship(128049351, "FerDeLance", "Zorgon Peterson", "Fer-de-Lance", nameof(Properties.Ship.yourFDL), new List<Translation> {new Translation("fer-de-lance", "ˌfɛədəˈlɑːns") }, LandingPadSize.Medium, null, 0.67M) },
-            { 128049315, new Ship(128049315, "Empire_Trader", "Gutamaya", "Imperial Clipper", nameof(Properties.Ship.yourImpClipper), null, LandingPadSize.Large, 5, 0.74M) },
-            { 128671223, new Ship(128671223, "Empire_Courier", "Gutamaya", "Imperial Courier", nameof(Properties.Ship.yourImpCourier), null, LandingPadSize.Small, null, 0.41M) },
-            { 128049375, new Ship(128049375, "Cutter", "Gutamaya", "Imperial Cutter", nameof(Properties.Ship.yourImpCutter), null, LandingPadSize.Large, 5, 1.16M) },
-            { 128672138, new Ship(128672138, "Empire_Eagle", "Gutamaya", "Imperial Eagle", nameof(Properties.Ship.yourImpEagle), null, LandingPadSize.Small, 2, 0.37M) },
-            { 128049261, new Ship(128049261, "Hauler", "Zorgon Peterson", "Hauler", nameof(Properties.Ship.yourHauler), null, LandingPadSize.Small, null, 0.25M) },
-            { 128672269, new Ship(128672269, "Independant_Trader", "Lakon Spaceways", "Keelback", nameof(Properties.Ship.yourKeelback), null, LandingPadSize.Medium, null, 0.39M) },
-            { 128049327, new Ship(128049327, "Orca", "Saud Kruger", "Orca", nameof(Properties.Ship.yourOrca), null, LandingPadSize.Large, null, 0.79M) },
-            { 128049339, new Ship(128049339, "Python", "Faulcon DeLacy", "Python", nameof(Properties.Ship.yourPython), null, LandingPadSize.Medium, null, 0.83M)},
-            { 128049249, new Ship(128049249, "Sidewinder", "Faulcon DeLacy", "Sidewinder", nameof(Properties.Ship.yourSidewinder), null, LandingPadSize.Small, null, 0.3M) },
-            { 128049285, new Ship(128049285, "Type6", "Lakon Spaceways", "Type-6 Transporter", nameof(Properties.Ship.yourType6), null, LandingPadSize.Medium, null, 0.39M) },
-            { 128049297, new Ship(128049297, "Type7", "Lakon Spaceways", "Type-7 Transporter", nameof(Properties.Ship.yourType7), null, LandingPadSize.Large, null, 0.52M) },
-            { 128049333, new Ship(128049333, "Type9", "Lakon Spaceways", "Type-9 Heavy", nameof(Properties.Ship.yourType9), null, LandingPadSize.Large, null, 0.77M) },
-            { 128049273, new Ship(128049273, "Viper", "Faulcon DeLacy", "Viper Mk. III", nameof(Properties.Ship.yourViperMkIII), new List<Translation> {new Translation("viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("3", "θriː") }, LandingPadSize.Small, 3, 0.41M) },
-            { 128672255, new Ship(128672255, "Viper_MkIV", "Faulcon DeLacy", "Viper Mk. IV", nameof(Properties.Ship.yourViperMkIV), new List<Translation> {new Translation("viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("4", "fɔː") }, LandingPadSize.Small, 3, 0.46M) },
-            { 128049309, new Ship(128049309, "Vulture", "Core Dynamics", "Vulture", nameof(Properties.Ship.yourVulture), new List<Translation> { new Translation("vulture", "ˈvʌltʃə") }, LandingPadSize.Small, 5, 0.57M) },
-            { 128785619, new Ship(128785619, "Type9_Military", "Lakon Spaceways", "Type-10 Defender", nameof(Properties.Ship.yourType10), null, LandingPadSize.Large, 5, 0.77M) },
-            { 128816574, new Ship(128816574, "TypeX", "Lakon Spaceways", "Alliance Chieftain", nameof(Properties.Ship.yourAllChieftain), null, LandingPadSize.Medium, 4, 0.77M) },
-            { 128816581, new Ship(128816581, "TypeX_2", "Lakon Spaceways", "Alliance Crusader", nameof(Properties.Ship.yourAllCrusader), null, LandingPadSize.Medium, 4, 0.77M) },
-            { 128816588, new Ship(128816588, "TypeX_3", "Lakon Spaceways", "Alliance Challenger", nameof(Properties.Ship.yourAllChallenger), null, LandingPadSize.Medium, 4, 0.77M) },
-            { 128816567, new Ship(128816567, "Krait_MkII", "Faulcon DeLacy", "Krait Mk. II", nameof(Properties.Ship.yourKraitMkII), new List<Translation>{new Translation("Krait", "ˈkreɪt"), new Translation("Mark", "mɑːk"), new Translation("2", "ˈtuː") }, LandingPadSize.Medium, null, 0.63M) },
-            { 128839281, new Ship(128839281, "Krait_Light", "Faulcon DeLacy", "Krait Phantom", nameof(Properties.Ship.yourPhantom), new List<Translation>{new Translation("Krait", "ˈkreɪt"), new Translation("Phantom", "ˈfæntəm") }, LandingPadSize.Medium, null, 0.63M) },
-            { 128915979, new Ship(128915979, "Mamba", "Zorgon Peterson", "Mamba", nameof(Properties.Ship.yourMamba), null, LandingPadSize.Medium, null, 0.5M) },
+            new Ship( "Adder", ShipManufacturer.ZorgonPeterson, "Adder", nameof(Properties.Ship.yourAdder), null, LandingPadSize.Small, null, 0.36M),
+            new Ship( "Anaconda", ShipManufacturer.FaulconDeLacy, "Anaconda", nameof(Properties.Ship.yourAnaconda), null, LandingPadSize.Large, 5, 1.07M),
+            new Ship( "Asp", ShipManufacturer.LakonSpaceways, "Asp Explorer", nameof(Properties.Ship.yourAspEx), null, LandingPadSize.Medium, null, 0.63M),
+            new Ship( "Asp_Scout", ShipManufacturer.LakonSpaceways, "Asp Scout", nameof(Properties.Ship.yourAspS), null, LandingPadSize.Medium, null, 0.47M),
+            new Ship( "BelugaLiner", ShipManufacturer.SaudKruger, "Beluga", nameof(Properties.Ship.yourBeluga), new List<Translation> {new Translation("beluga", "bɪˈluːɡə") }, LandingPadSize.Large, null, 0.81M),
+            new Ship( "CobraMkIII", ShipManufacturer.FaulconDeLacy, "Cobra Mk. III", nameof(Properties.Ship.yourCobraMkIII), new List<Translation> {new Translation("cobra", "ˈkəʊbrə"), new Translation("Mark", "mɑːk"), new Translation("3", "θriː") }, LandingPadSize.Small, null, 0.49M),
+            new Ship( "CobraMkIV", ShipManufacturer.FaulconDeLacy, "Cobra Mk. IV", nameof(Properties.Ship.yourCobraMkIV), new List<Translation> {new Translation("cobra", "ˈkəʊbrə"), new Translation("Mark", "mɑːk"), new Translation("4", "fɔː") }, LandingPadSize.Small, null, 0.51M),
+            new Ship( "DiamondbackXL", ShipManufacturer.LakonSpaceways, "Diamondback Explorer", nameof(Properties.Ship.yourDBX), null, LandingPadSize.Small, null, 0.52M),
+            new Ship( "Diamondback", ShipManufacturer.LakonSpaceways, "Diamondback Scout", nameof(Properties.Ship.yourDBS), null, LandingPadSize.Small, null, 0.49M),
+            new Ship( "Dolphin", ShipManufacturer.SaudKruger, "Dolphin", nameof(Properties.Ship.yourDolphin), null, LandingPadSize.Small, null, 0.50M),
+            new Ship( "Eagle", ShipManufacturer.CoreDynamics, "Eagle", nameof(Properties.Ship.yourEagle), null, LandingPadSize.Small, 2, 0.34M),
+            new Ship( "Federation_Dropship_MkII", ShipManufacturer.CoreDynamics, "Federal Assault Ship", nameof(Properties.Ship.yourFedAssaultShip), null, LandingPadSize.Medium, 4, 0.72M),
+            new Ship( "Federation_Corvette", ShipManufacturer.CoreDynamics, "Federal Corvette", nameof(Properties.Ship.yourFedCorvette), null, LandingPadSize.Large, 5, 1.13M),
+            new Ship( "Federation_Dropship", ShipManufacturer.CoreDynamics, "Federal Dropship", nameof(Properties.Ship.yourFedDropship), null, LandingPadSize.Medium, 4, 0.83M),
+            new Ship( "Federation_Gunship", ShipManufacturer.CoreDynamics, "Federal Gunship", nameof(Properties.Ship.yourFedGunship), null, LandingPadSize.Medium, 4, 0.82M),
+            new Ship( "FerDeLance", ShipManufacturer.ZorgonPeterson, "Fer-de-Lance", nameof(Properties.Ship.yourFDL), new List<Translation> {new Translation("fer-de-lance", "ˌfɛədəˈlɑːns") }, LandingPadSize.Medium, null, 0.67M),
+            new Ship( "Empire_Trader", ShipManufacturer.Gutamaya, "Imperial Clipper", nameof(Properties.Ship.yourImpClipper), null, LandingPadSize.Large, 5, 0.74M),
+            new Ship( "Empire_Courier", ShipManufacturer.Gutamaya, "Imperial Courier", nameof(Properties.Ship.yourImpCourier), null, LandingPadSize.Small, null, 0.41M),
+            new Ship( "Cutter", ShipManufacturer.Gutamaya, "Imperial Cutter", nameof(Properties.Ship.yourImpCutter), null, LandingPadSize.Large, 5, 1.16M),
+            new Ship( "Empire_Eagle", ShipManufacturer.Gutamaya, "Imperial Eagle", nameof(Properties.Ship.yourImpEagle), null, LandingPadSize.Small, 2, 0.37M),
+            new Ship( "Hauler", ShipManufacturer.ZorgonPeterson, "Hauler", nameof(Properties.Ship.yourHauler), null, LandingPadSize.Small, null, 0.25M),
+            new Ship( "Independant_Trader", ShipManufacturer.LakonSpaceways, "Keelback", nameof(Properties.Ship.yourKeelback), null, LandingPadSize.Medium, null, 0.39M),
+            new Ship( "Orca", ShipManufacturer.SaudKruger, "Orca", nameof(Properties.Ship.yourOrca), null, LandingPadSize.Large, null, 0.79M),
+            new Ship( "Python", ShipManufacturer.FaulconDeLacy, "Python", nameof(Properties.Ship.yourPython), null, LandingPadSize.Medium, null, 0.83M),
+            new Ship( "Sidewinder", ShipManufacturer.FaulconDeLacy, "Sidewinder", nameof(Properties.Ship.yourSidewinder), null, LandingPadSize.Small, null, 0.3M),
+            new Ship( "Type6", ShipManufacturer.LakonSpaceways, "Type-6 Transporter", nameof(Properties.Ship.yourType6), null, LandingPadSize.Medium, null, 0.39M),
+            new Ship( "Type7", ShipManufacturer.LakonSpaceways, "Type-7 Transporter", nameof(Properties.Ship.yourType7), null, LandingPadSize.Large, null, 0.52M),
+            new Ship( "Type9", ShipManufacturer.LakonSpaceways, "Type-9 Heavy", nameof(Properties.Ship.yourType9), null, LandingPadSize.Large, null, 0.77M),
+            new Ship( "Viper", ShipManufacturer.FaulconDeLacy, "Viper Mk. III", nameof(Properties.Ship.yourViperMkIII), new List<Translation> {new Translation("viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("3", "θriː") }, LandingPadSize.Small, 3, 0.41M),
+            new Ship( "Viper_MkIV", ShipManufacturer.FaulconDeLacy, "Viper Mk. IV", nameof(Properties.Ship.yourViperMkIV), new List<Translation> {new Translation("viper", "ˈvaɪpə"), new Translation("Mark", "mɑːk"), new Translation("4", "fɔː") }, LandingPadSize.Small, 3, 0.46M),
+            new Ship( "Vulture", ShipManufacturer.CoreDynamics, "Vulture", nameof(Properties.Ship.yourVulture), new List<Translation> { new Translation("vulture", "ˈvʌltʃə") }, LandingPadSize.Small, 5, 0.57M),
+            new Ship( "Type9_Military", ShipManufacturer.LakonSpaceways, "Type-10 Defender", nameof(Properties.Ship.yourType10), null, LandingPadSize.Large, 5, 0.77M),
+            new Ship( "TypeX", ShipManufacturer.LakonSpaceways, "Alliance Chieftain", nameof(Properties.Ship.yourAllChieftain), null, LandingPadSize.Medium, 4, 0.77M),
+            new Ship( "TypeX_2", ShipManufacturer.LakonSpaceways, "Alliance Crusader", nameof(Properties.Ship.yourAllCrusader), null, LandingPadSize.Medium, 4, 0.77M),
+            new Ship( "TypeX_3", ShipManufacturer.LakonSpaceways, "Alliance Challenger", nameof(Properties.Ship.yourAllChallenger), null, LandingPadSize.Medium, 4, 0.77M),
+            new Ship( "Krait_MkII", ShipManufacturer.FaulconDeLacy, "Krait Mk. II", nameof(Properties.Ship.yourKraitMkII), new List<Translation>{new Translation("Krait", "ˈkreɪt"), new Translation("Mark", "mɑːk"), new Translation("2", "ˈtuː") }, LandingPadSize.Medium, null, 0.63M),
+            new Ship( "Krait_Light", ShipManufacturer.FaulconDeLacy, "Krait Phantom", nameof(Properties.Ship.yourPhantom), new List<Translation>{new Translation("Krait", "ˈkreɪt"), new Translation("Phantom", "ˈfæntəm") }, LandingPadSize.Medium, null, 0.63M),
+            new Ship( "Mamba", ShipManufacturer.ZorgonPeterson, "Mamba", nameof(Properties.Ship.yourMamba), null, LandingPadSize.Medium, null, 0.5M),
         };
 
-        public static readonly SortedSet<string> ShipModels = new SortedSet<string>(ShipsByEliteID.Select(kp => kp.Value.model));
-
-        private static readonly Dictionary<string, Ship> ShipsByModel = ShipsByEliteID.ToDictionary(kp => kp.Value.model.ToLowerInvariant(), kp => kp.Value);
-        private static readonly Dictionary<string, Ship> ShipsByEDModel = ShipsByEliteID.ToDictionary(kp => kp.Value.EDName.ToLowerInvariant().Replace(" ", "").Replace(".", "").Replace("_", ""), kp => kp.Value);
-        public static readonly Dictionary<string, List<Translation>> ManufacturerPhoneticNames = new Dictionary<string, List<Translation>>()
-        {
-            { "Core Dynamics", null },
-            { "Faulcon DeLacy", null },
-            { "Gutamaya", new List<Translation> {new Translation("Gutamaya", "guːtəˈmaɪə") }},
-            { "Lakon Spaceways", new List<Translation> {new Translation("Lakon", "leɪkɒn"), new Translation("Spaceways", "speɪsweɪz") }},
-            { "Saud Kruger", new List<Translation> {new Translation("Saud", "saʊd"), new Translation("Kruger", "ˈkruːɡə") }},
-            { "Zorgon Peterson", null }
-        };
-
-        /// <summary>Obtain details of a ship given its Elite ID</summary>
-        public static Ship FromEliteID(long id)
-        {
-            Ship Ship = new Ship();
-            if (ShipsByEliteID.TryGetValue(id, out Ship Template))
-            {
-                Ship.EDID = Template.EDID;
-                Ship.EDName = Template.EDName;
-                Ship.manufacturer = Template.manufacturer;
-                Ship.possessiveYour = Template.possessiveYour;
-                Ship.model = Template.model;
-                Ship.phoneticModel = Template.phoneticModel;
-                Ship.Size = Template.Size;
-                Ship.militarysize = Template.militarysize;
-                Ship.activeFuelReservoirCapacity = Template.activeFuelReservoirCapacity;
-            }
-            // All ships default to 100% health
-            Ship.health = 100;
-
-            return Ship;
-        }
+        public static readonly SortedSet<string> ShipModels = new SortedSet<string>(AllOfThem.Select(ship => ship.model));
+        private static readonly Dictionary<string, Ship> ShipsByModel = AllOfThem.ToDictionary( ship => ship.model.ToLowerInvariant(), ship => ship );
+        private static readonly Dictionary<string, Ship> ShipsByEDModel = AllOfThem.ToDictionary( ship => ship.EDName.ToLowerInvariant().Replace(" ", "").Replace(".", "").Replace("_", ""), ship => ship );
 
         /// <summary>Obtain details of a ship given its model</summary>
         public static Ship FromModel(string model)
         {
-            if (model == null)
-            {
-                return null;
-            }
+            if ( model == null ) { return null; }
 
-            Ship Ship = new Ship();
+            var Ship = new Ship();
             if (ShipsByModel.TryGetValue(model.ToLowerInvariant(), out Ship Template))
             {
-                Ship.EDID = Template.EDID;
                 Ship.EDName = Template.EDName;
                 Ship.manufacturer = Template.manufacturer;
                 Ship.possessiveYour = Template.possessiveYour;
@@ -121,14 +85,11 @@ namespace EddiDataDefinitions
         /// <summary>Obtain details of a ship given its Elite:Dangerous model</summary>
         public static Ship FromEDModel(string edModel, bool createIfMissing = true)
         {
-            if (edModel == null)
-            {
-                return null;
-            }
-            Ship Ship = new Ship();
+            if ( edModel == null ) { return null; }
+
+            var Ship = new Ship();
             if (ShipsByEDModel.TryGetValue(edModel.ToLowerInvariant().Replace(" ", "").Replace(".", "").Replace("_", ""), out Ship Template))
             {
-                Ship.EDID = Template.EDID;
                 Ship.EDName = Template.EDName;
                 Ship.manufacturer = Template.manufacturer;
                 Ship.possessiveYour = Template.possessiveYour;
@@ -190,21 +151,5 @@ namespace EddiDataDefinitions
             { "Krait Phantom", "Krait_Light" },
             { "Mamba", "Mamba" },
         };
-
-        public static string SpokenManufacturer(string manufacturer)
-        {
-            var phoneticmanufacturer = ManufacturerPhoneticNames.FirstOrDefault(m => m.Key == manufacturer).Value;
-            if (phoneticmanufacturer != null)
-            {
-                var result = "";
-                foreach (Translation item in phoneticmanufacturer)
-                {
-                    result += "<phoneme alphabet=\"ipa\" ph=\"" + item.to + "\">" + item.from + "</phoneme> ";
-                }
-                return result;
-            }
-            // Model isn't in the dictionary
-            return null;
-        }
     }
 }

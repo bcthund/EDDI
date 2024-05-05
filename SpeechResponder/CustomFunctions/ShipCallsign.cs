@@ -57,7 +57,7 @@ namespace EddiSpeechResponder.CustomFunctions
             if (string.IsNullOrEmpty(ship?.manufacturer) || string.IsNullOrEmpty(id)) { return string.Empty; }
 
             // First, obtain the phonetic manufacturer. This may be the complete name or only a partial name, depending on the manufacturer.
-            var phoneticmanufacturer = ShipDefinitions.ManufacturerPhoneticNames.FirstOrDefault(m => m.Key == ship.manufacturer).Value;
+            var phoneticmanufacturer = ShipManufacturer.AllOfThem.FirstOrDefault(m => m.name == ship.manufacturer)?.phoneticName;
 
             var sb = new StringBuilder();
             switch (ship.manufacturer)

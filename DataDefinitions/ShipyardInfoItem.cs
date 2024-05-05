@@ -6,9 +6,6 @@ namespace EddiDataDefinitions
     /// <summary> This class is designed to be deserialized from either shipyard.json or the Frontier API. </summary>
     public class ShipyardInfoItem
     {
-        [JsonProperty("id")]
-        public long EliteID { get; set; }
-
         [JsonProperty("ShipType")]
         public string edModel { get; set; }
 
@@ -27,16 +24,15 @@ namespace EddiDataDefinitions
         public ShipyardInfoItem()
         { }
 
-        public ShipyardInfoItem(long eliteId, string ShipType, long ShipPrice)
+        public ShipyardInfoItem( string ShipType, long ShipPrice )
         {
-            this.EliteID = eliteId;
             this.edModel = ShipType;
             this.shipPrice = ShipPrice;
         }
 
         public Ship ToShip()
         {
-            Ship ship = ShipDefinitions.FromEliteID(EliteID) ?? ShipDefinitions.FromEDModel(edModel, false);
+            Ship ship = ShipDefinitions.FromEDModel( edModel, false );
             if (ship == null)
             {
                 // Unknown ship; report the full object so that we can update the definitions 

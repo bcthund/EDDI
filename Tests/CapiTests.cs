@@ -50,18 +50,18 @@ namespace UnitTests
         {
             // Test shipyard data
             var expectedShips = new List<ShipyardInfoItem>()
-            { 
-                new ShipyardInfoItem(128049255, "Eagle", 44800),
-                new ShipyardInfoItem(128672276, "Asp_Scout", 3961154),
-                new ShipyardInfoItem(128049249, "SideWinder", 32000),
-                new ShipyardInfoItem(128049309, "Vulture", 4925615),
-                new ShipyardInfoItem(128049363, "Anaconda", 146969451),
-                new ShipyardInfoItem(128049321, "Federation_Dropship", 14314205),
-                new ShipyardInfoItem(128672152, "Federation_Gunship", 35814205),
-                new ShipyardInfoItem(128672145, "Federation_Dropship_MkII", 19814205)
+            {
+                new ShipyardInfoItem( "Eagle", 44800 ),
+                new ShipyardInfoItem( "Asp_Scout", 3961154 ),
+                new ShipyardInfoItem( "SideWinder", 32000 ),
+                new ShipyardInfoItem( "Vulture", 4925615 ),
+                new ShipyardInfoItem( "Anaconda", 146969451 ),
+                new ShipyardInfoItem( "Federation_Dropship", 14314205 ),
+                new ShipyardInfoItem( "Federation_Gunship", 35814205 ),
+                new ShipyardInfoItem( "Federation_Dropship_MkII", 19814205 )
             };
 
-            JObject json = DeserializeJsonResource<JObject>(Resources.capi_shipyard_Abasheli_Barracks)?.ToObject<JObject>();
+            var json = DeserializeJsonResource<JObject>(Resources.capi_shipyard_Abasheli_Barracks)?.ToObject<JObject>();
             Assert.IsNotNull(json);
             json["timestamp"] = DateTime.UtcNow; // We add a timestamp to the json returned from the Frontier API, do the same here.
             var station = FrontierApiStation.FromJson(null, json);
@@ -72,7 +72,7 @@ namespace UnitTests
             {
                 foreach (var actualShip in actualShips)
                 {
-                    if (expectedShip.EliteID == actualShip.EliteID)
+                    if (expectedShip.edModel == actualShip.edModel)
                     {
                         Assert.IsTrue(expectedShip.DeepEquals(actualShip));
                     }

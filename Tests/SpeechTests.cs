@@ -59,32 +59,32 @@ namespace SpeechTests
         {
             string SagI = "Sagittarius A*";
             string translated = Translations.GetTranslation(SagI);
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), translated);
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), translated);
         }
 
         [TestMethod, TestCategory("Speech")]
         public void TestSsml1()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), @"<break time=""100ms""/>Fred's ship.");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), @"<break time=""100ms""/>Fred's ship.");
         }
 
         [TestMethod, TestCategory("Speech")]
         public void TestSsml2()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), @"<break time=""100ms""/>7 < 10.");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), @"<break time=""100ms""/>7 < 10.");
         }
 
         [TestMethod, TestCategory("Speech")]
         public void TestSsml3()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), @"<break time=""100ms""/>He said ""Foo"".");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), @"<break time=""100ms""/>He said ""Foo"".");
         }
 
         [TestMethod, TestCategory("Speech")]
         public void TestSsml4()
         {
             Logging.Verbose = true;
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), @"<break time=""100ms""/>We're on our way to " + Translations.GetTranslation("i Bootis") + ".");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), @"<break time=""100ms""/>We're on our way to " + Translations.GetTranslation("i Bootis") + ".");
         }
 
         [TestMethod, TestCategory("Speech")]
@@ -117,19 +117,19 @@ namespace SpeechTests
         [TestMethod, TestCategory("Speech")]
         public void TestCallsign()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), Translations.ICAO("GAB-1655"));
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), Translations.ICAO("GAB-1655"));
         }
 
         [TestMethod, TestCategory("Speech")]
         public void TestSsml()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049363), "You are travelling to the " + Translations.GetTranslation("Hotas") + " system.");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Anaconda" ), "You are travelling to the " + Translations.GetTranslation("Hotas") + " system.");
         }
 
         [TestMethod, TestCategory("Speech")]
         public void TestPowerplay()
         {
-            var ship = ShipDefinitions.FromEliteID(128049363);
+            var ship = ShipDefinitions.FromEDModel( "Anaconda" );
             var speaker = SpeechService.Instance;
             string[] powerNames = {
                 "Aisling Duval",
@@ -178,7 +178,7 @@ namespace SpeechTests
         [TestMethod, TestCategory("Speech")]
         public void TestDamage()
         {
-            Ship ship = ShipDefinitions.FromEliteID(128049363);
+            Ship ship = ShipDefinitions.FromEDModel( "Anaconda" );
             var origHealth = ship.health;
             ship.health = 100;
             SpeechService.Instance.Say(ship, "Systems fully operational.");
@@ -198,9 +198,9 @@ namespace SpeechTests
         [TestMethod, TestCategory("Speech")]
         public void TestVariants()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049309), "Welcome to your Vulture.  Weapons online.");
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049339), "Welcome to your Python.  Scanning at full range.");
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049363), "Welcome to your Anaconda.  All systems operational.");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Vulture" ), "Welcome to your Vulture.  Weapons online.");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Python" ), "Welcome to your Python.  Scanning at full range.");
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Anaconda" ), "Welcome to your Anaconda.  All systems operational.");
         }
 
         [TestMethod, TestCategory("Speech")]
@@ -217,7 +217,7 @@ namespace SpeechTests
         [TestMethod, TestCategory("Speech")]
         public void TestSendAndReceive()
         {
-            SpeechService.Instance.Say(ShipDefinitions.FromEliteID(128049339), "Anaconda golf foxtrot lima one niner six eight returning from orbit.", 3, null, true);
+            SpeechService.Instance.Say(ShipDefinitions.FromEDModel( "Python" ), "Anaconda golf foxtrot lima one niner six eight returning from orbit.", 3, null, true);
         }
 
         [TestMethod, TestCategory("Speech")]
