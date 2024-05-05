@@ -1093,12 +1093,6 @@ namespace EddiDataDefinitions
                 new Module(129028577, "Hpt_Human_Extraction_Fixed_Medium", "Extraction_Missile", 2, "B", 843170),
                 new Module(129030049, "Hpt_ATVentDisruptorPylon_Fixed_Medium", "GuardianNaniteTorpedoPylon", 2, "I", 843170),
                 new Module(129030050, "Hpt_ATVentDisruptorPylon_Fixed_Large", "GuardianNaniteTorpedoPylon", 3, "I", 1627420),
-                new Module(129030487, "int_hyperdrive_overcharge_size2_class3", "FrameShiftDrive_SCO", 2, "C", 21363),
-                new Module(129030486, "int_hyperdrive_overcharge_size3_class3", "FrameShiftDrive_SCO", 3, "C", 67722),
-                new Module(129030485, "int_hyperdrive_overcharge_size4_class3", "FrameShiftDrive_SCO", 4, "C", 214678),
-                new Module(129030474, "int_hyperdrive_overcharge_size5_class3", "FrameShiftDrive_SCO", 5, "C", 623816),
-                new Module(129030484, "int_hyperdrive_overcharge_size6_class3", "FrameShiftDrive_SCO", 6, "C", 2157272),
-                new Module(129030483, "int_hyperdrive_overcharge_size7_class3", "FrameShiftDrive_SCO", 7, "C", 6838549),
 
                 // Various free modules that show up in SRVs, fighters and training; not used anywhere but note them here so that they do not throw errors when encountered
                 new Module(128049673, "Hpt_PulseLaser_Fixed_SmallFree", "PulseLaser", 1, "F", 0, ModuleMount.Fixed),
@@ -1164,6 +1158,7 @@ namespace EddiDataDefinitions
                 new Module(999999948, "Krait_Light_Cockpit", "CockpitCanopy", 1, "I", 0),
                 new Module(999999949, "Mamba_Cockpit", "CockpitCanopy", 1, "I", 0),
                 new Module(999999950, "TypeX_2_Cockpit", "CockpitCanopy", 1, "I", 0),
+                new Module(999999951, "Python_NX_Cockpit", "CockpitCanopy", 1, "I", 0),
 
                 // Fighter modules
                 new Module(899990000, "Empire_Fighter_Cockpit", "CockpitCanopy", 1, "I", 0),
@@ -1206,7 +1201,42 @@ namespace EddiDataDefinitions
                 new Module(899990050, "hpt_guardianplasma_fixed_gdn_fighter", "GuardianPlasmaCharger", 1, "I", 0),
                 new Module(899990050, "hpt_guardianshard_fixed_gdn_fighter", "ShardCannon", 1, "I", 0),
 
-                // Needs pricing
+                // Need pricing confirmed
+                new Module(129030466, "python_nx_armour_grade1", "LightweightAlloy", 1, "I", 0 ),
+                new Module(129030467, "python_nx_armour_grade2", "ReinforcedAlloy", 1, "I", 23702103 ),
+                new Module(129030468, "python_nx_armour_grade3", "MilitaryGradeComposite", 1, "I", 53329732 ),
+                new Module(129030469, "python_nx_armour_mirrored", "MirroredSurfaceComposite", 1, "I", 126035933 ),
+                new Module(129030470, "python_nx_armour_reactive", "ReactiveSurfaceComposite", 1, "I", 139664643 ),
+                new Module(129030474, "int_hyperdrive_overcharge_size5_class3", "FrameShiftDrive_SCO", 5, "C", 623816),
+                new Module(129030483, "int_hyperdrive_overcharge_size7_class3", "FrameShiftDrive_SCO", 7, "C", 6838549),
+                new Module(129030484, "int_hyperdrive_overcharge_size6_class3", "FrameShiftDrive_SCO", 6, "C", 2157272),
+                new Module(129030485, "int_hyperdrive_overcharge_size4_class3", "FrameShiftDrive_SCO", 4, "C", 214678),
+                new Module(129030486, "int_hyperdrive_overcharge_size3_class3", "FrameShiftDrive_SCO", 3, "C", 67722),
+                new Module(129030487, "int_hyperdrive_overcharge_size2_class3", "FrameShiftDrive_SCO", 2, "C", 21363),
+                new Module(129030577, "int_hyperdrive_overcharge_size2_class1", "FrameShiftDrive_SCO", 2, "E", 18747 ),
+                new Module(129030578, "int_hyperdrive_overcharge_size2_class2", "FrameShiftDrive_SCO", 2, "D", 56239 ),
+                new Module(129030579, "int_hyperdrive_overcharge_size2_class4", "FrameShiftDrive_SCO", 2, "B", 56239 ),
+                new Module(129030580, "int_hyperdrive_overcharge_size2_class5", "FrameShiftDrive_SCO", 2, "A", 168717 ),
+                new Module(129030581, "int_hyperdrive_overcharge_size3_class1", "FrameShiftDrive_SCO", 3, "E", 59427 ),
+                new Module(129030582, "int_hyperdrive_overcharge_size3_class2", "FrameShiftDrive_SCO", 3, "D", 178278 ),
+                new Module(129030583, "int_hyperdrive_overcharge_size3_class4", "FrameShiftDrive_SCO", 3, "B", 178278 ),
+                new Module(129030584, "int_hyperdrive_overcharge_size3_class5", "FrameShiftDrive_SCO", 3, "A", 534832 ),
+                new Module(129030585, "int_hyperdrive_overcharge_size4_class1", "FrameShiftDrive_SCO", 4, "E", 188380 ),
+                new Module(129030586, "int_hyperdrive_overcharge_size4_class2", "FrameShiftDrive_SCO", 4, "D", 565139 ),
+                new Module(129030587, "int_hyperdrive_overcharge_size4_class4", "FrameShiftDrive_SCO", 4, "B", 565139 ),
+                new Module(129030588, "int_hyperdrive_overcharge_size4_class5", "FrameShiftDrive_SCO", 4, "A", 1695415 ),
+                new Module(129030589, "int_hyperdrive_overcharge_size5_class1", "FrameShiftDrive_SCO", 5, "E", 547400 ),
+                new Module(129030590, "int_hyperdrive_overcharge_size5_class2", "FrameShiftDrive_SCO", 5, "D", 1791488 ),
+                new Module(129030591, "int_hyperdrive_overcharge_size5_class4", "FrameShiftDrive_SCO", 5, "B", 1791488 ),
+                new Module(129030592, "int_hyperdrive_overcharge_size5_class5", "FrameShiftDrive_SCO", 5, "A", 5374463 ),
+                new Module(129030593, "int_hyperdrive_overcharge_size6_class1", "FrameShiftDrive_SCO", 6, "E", 1893006 ),
+                new Module(129030594, "int_hyperdrive_overcharge_size6_class2", "FrameShiftDrive_SCO", 6, "D", 5679016 ),
+                new Module(129030595, "int_hyperdrive_overcharge_size6_class4", "FrameShiftDrive_SCO", 6, "B", 5679016 ),
+                new Module(129030596, "int_hyperdrive_overcharge_size6_class5", "FrameShiftDrive_SCO", 6, "A", 17037047 ),
+                new Module(129030597, "int_hyperdrive_overcharge_size7_class1", "FrameShiftDrive_SCO", 7, "E", 6000827 ),
+                new Module(129030598, "int_hyperdrive_overcharge_size7_class2", "FrameShiftDrive_SCO", 7, "D", 18002479 ),
+                new Module(129030599, "int_hyperdrive_overcharge_size7_class4", "FrameShiftDrive_SCO", 7, "B", 18002479 ),
+                new Module(129030600, "int_hyperdrive_overcharge_size7_class5", "FrameShiftDrive_SCO", 7, "A", 54007436 ),
             };
         }
 

@@ -46,6 +46,7 @@ namespace EddiDataDefinitions
             new Ship( "Krait_MkII", ShipManufacturer.FaulconDeLacy, "Krait Mk. II", nameof(Properties.Ship.yourKraitMkII), new List<Translation>{new Translation("Krait", "ˈkreɪt"), new Translation("Mark", "mɑːk"), new Translation("2", "ˈtuː") }, LandingPadSize.Medium, null, 0.63M),
             new Ship( "Krait_Light", ShipManufacturer.FaulconDeLacy, "Krait Phantom", nameof(Properties.Ship.yourPhantom), new List<Translation>{new Translation("Krait", "ˈkreɪt"), new Translation("Phantom", "ˈfæntəm") }, LandingPadSize.Medium, null, 0.63M),
             new Ship( "Mamba", ShipManufacturer.ZorgonPeterson, "Mamba", nameof(Properties.Ship.yourMamba), null, LandingPadSize.Medium, null, 0.5M),
+            new Ship( "Python_NX", ShipManufacturer.FaulconDeLacy, "Python Mk. II", nameof(Properties.Ship.yourPython), new List<Translation>{new Translation("Python", "ˈpaɪθən" ), new Translation("Mark", "mɑːk"), new Translation("2", "ˈtuː") }, LandingPadSize.Medium, null, 0.83M),
         };
 
         public static readonly SortedSet<string> ShipModels = new SortedSet<string>(AllOfThem.Select(ship => ship.model));
