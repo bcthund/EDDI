@@ -7,6 +7,8 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * EDDI will no longer report your environment as "Supercruise" right after a Thargoid hyperdiction. (#2597)
     * EDDI will no longer report your enviroment as "Normal Space" when starting docked. (#2598)
     * EDDI will delay rather than discard speech when hit by a full Thargoid shutdown
+  * EDDN Responder
+    * Add support for `DockingDenied` and `DockingGranted` schemas
   * Events
     * `Hyperdicted` added. 
     * `Signal detected` updated to include new `signaltype` property.
