@@ -20,9 +20,6 @@ namespace EddiDataDefinitions
 
         // Additional definition for some items
 
-        [PublicAPI, JsonProperty]
-        public int? ShipId { get; set; } // Only for bulkheads
-
         ///<summary>The localized name of the weapon mount</summary>
         [PublicAPI, JsonIgnore]
         public string mount => Mount != null ? Properties.Modules.ResourceManager.GetString(Mount.ToString()) : "";
@@ -123,7 +120,6 @@ namespace EddiDataDefinitions
             this.@class = Module.@class;
             this.grade = Module.grade;
             this.value = Module.value;
-            this.ShipId = Module.ShipId;
             this.Mount = Module.Mount;
             this.clipcapacity = Module.clipcapacity;
             this.hoppercapacity = Module.hoppercapacity;
@@ -148,18 +144,6 @@ namespace EddiDataDefinitions
             this.@class = Class;
             this.grade = Grade;
             this.value = Value;
-            this.modified = false;
-            ModulesByEliteID[EDID] = this;
-        }
-
-        // Module definition for a bulkhead - requires ship ID
-        public Module(long EDID, string edname, string basename, int Class, string Grade, long Value, int ShipId) : base(edname, basename)
-        {
-            this.EDID = EDID;
-            this.@class = Class;
-            this.grade = Grade;
-            this.value = Value;
-            this.ShipId = ShipId;
             this.modified = false;
             ModulesByEliteID[EDID] = this;
         }
