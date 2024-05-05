@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using System;
 using System.Threading;
 using System.Windows;
+using Utilities;
 
 namespace EddiSpeechResponder.CustomFunctions
 {
@@ -14,22 +15,31 @@ namespace EddiSpeechResponder.CustomFunctions
         public FunctionCategory Category => FunctionCategory.Utility;
         public string description => Properties.CustomFunctions_Untranslated.SetClipboard;
         public Type ReturnType => typeof( string );
-        public NativeFunction function => new NativeFunction((values) =>
+        public NativeFunction function => new NativeFunction( ( values ) =>
         {
             var text = values[0].AsString;
-            if (!string.IsNullOrEmpty(text))
+            if ( !string.IsNullOrEmpty( text ) )
             {
-                var clipboardThread = new Thread(() => { Clipboard.SetData(DataFormats.Text, text); });
-                clipboardThread.SetApartmentState(ApartmentState.STA);
+                var clipboardThread = new Thread( () =>
+                {
+                    try
+                    {
+                        Clipboard.SetData(DataFormats.Text, text);
+                    }
+                    catch ( Exception e )
+                    {
+                        Logging.Error( "Failed to set clipboard", e );
+                    }
+                });
+                clipboardThread.SetApartmentState( ApartmentState.STA );
                 clipboardThread.Start();
                 clipboardThread.Join();
                 return "";
             }
             else
             {
-                return
-                    "The SetClipboard function is used improperly. Please review the documentation for correct usage.";
+                return "The SetClipboard function is used improperly. Please review the documentation for correct usage.";
             }
-        }, 1);
+        }, 1 );
     }
 }
