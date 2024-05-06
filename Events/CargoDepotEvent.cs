@@ -26,7 +26,7 @@ namespace EddiEvents
         [PublicAPI("The Market ID of the 'delivery' mission depot")]
         public long endmarketid { get; private set; }
 
-        [PublicAPI("The amount of cargo collected or delivered for this event")]
+        [PublicAPI("The amount of cargo being collected or delivered for this event")]
         public int? amount { get; private set; }
 
         [PublicAPI("The total amount of cargo collected")]
