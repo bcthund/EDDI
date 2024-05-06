@@ -355,7 +355,7 @@ namespace EddiCargoMonitor
         private bool _handleCommodityEjectedEvent(CommodityEjectedEvent @event)
         {
             bool update = false;
-            Cargo cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
+            var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
             if (cargo != null)
             {
                 if (EDDI.Instance?.Vehicle != Constants.VEHICLE_SHIP)
@@ -372,7 +372,7 @@ namespace EddiCargoMonitor
                     update = true;
                 }
 
-                Haulage haulage = cargo.haulageData.FirstOrDefault(h => h.missionid == @event.missionid);
+                var haulage = cargo.haulageData.FirstOrDefault(h => h.missionid == @event.missionid);
                 if (haulage != null)
                 {
                     switch (haulage.typeEDName)
@@ -490,8 +490,8 @@ namespace EddiCargoMonitor
             var mission = ConfigService.Instance.missionMonitorConfiguration
                 ?.missions
                 ?.FirstOrDefault(m => m.missionid == @event.missionid);
-            var cargo = new Cargo();
-            var haulage = new Haulage();
+            Cargo cargo;
+            Haulage haulage;
             int amountRemaining = @event.totaltodeliver - @event.delivered;
 
             switch (@event.updatetype)

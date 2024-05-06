@@ -111,7 +111,6 @@ namespace UnitTests
         public void TestCargoEventsScenario()
         {
             var privateObject = new PrivateObject(cargoMonitor);
-            Haulage haulage = new Haulage();
 
             // 'Startup' CargoEvent
             line = "{ \"timestamp\":\"2018-10-31T01:54:40Z\", \"event\":\"Missions\", \"Active\":[  ], \"Failed\":[  ], \"Complete\":[  ] }";
@@ -160,7 +159,7 @@ namespace UnitTests
             Assert.IsNotNull(cargo);
             Assert.AreEqual(30, cargo.total);
             Assert.AreEqual(30, cargo.haulage);
-            haulage = cargo.haulageData.FirstOrDefault();
+            var haulage = cargo.haulageData.FirstOrDefault();
             Assert.IsNotNull(haulage);
             Assert.AreEqual(426282789, haulage.missionid);
             Assert.AreEqual("Mission_None", haulage.name);
@@ -184,7 +183,6 @@ namespace UnitTests
         public void TestCargoMissionScenario()
         {
             var privateObject = new PrivateObject(cargoMonitor);
-            Haulage haulage = new Haulage();
 
             // CargoEvent
             line = "{ \"timestamp\":\"2018-10-31T03:39:10Z\", \"event\":\"Cargo\", \"Count\":32, \"Inventory\":[ { \"Name\":\"hydrogenfuel\", \"Name_Localised\":\"Hydrogen Fuel\", \"Count\":1, \"Stolen\":0 }, { \"Name\":\"biowaste\", \"MissionID\":426282789, \"Count\":30, \"Stolen\":0 }, { \"Name\":\"animalmeat\", \"Name_Localised\":\"Animal Meat\", \"Count\":1, \"Stolen\":0 } ] }";
@@ -209,7 +207,7 @@ namespace UnitTests
             Assert.AreEqual(2, cargo.haulageData.Count);
 
             // Verify haulage populated properly
-            haulage = cargo.haulageData.FirstOrDefault(h => h.missionid == 375682327);
+            var haulage = cargo.haulageData.FirstOrDefault(h => h.missionid == 375682327);
             Assert.IsNotNull(haulage);
             Assert.AreEqual(3, haulage.amount);
             Assert.AreEqual("Mission_Salvage_Planet", haulage.name);

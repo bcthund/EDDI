@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Utilities;
 
@@ -9,15 +8,6 @@ namespace EddiDataDefinitions
     [JsonObject(MemberSerialization.OptOut)]
     public class Haulage
     {
-        [JsonIgnore]
-        private static readonly Dictionary<string, string> CHAINED = new Dictionary<string, string>()
-        {
-            {"clearingthepath", "delivery"},
-            {"helpfinishtheorder", "delivery"},
-            {"rescuefromthetwins", "salvage"},
-            {"rescuethewares", "salvage"}
-        };
-
         [PublicAPI]
         public long missionid { get; set; }
 
@@ -71,8 +61,6 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public bool shared { get; set; }
 
-        public Haulage() { }
-
         public Haulage(Haulage haulage)
         {
             missionid = haulage.missionid;
@@ -107,13 +95,30 @@ namespace EddiDataDefinitions
 
             // Mechanism for identifying chained delivery and 'welcome' missions
             typeEDName = Name.Split('_').ElementAtOrDefault(1)?.ToLowerInvariant();
-            if (typeEDName != null && CHAINED.TryGetValue(typeEDName, out string value))
+            if ( !string.IsNullOrEmpty(typeEDName) )
             {
-                typeEDName = value;
+                switch ( typeEDName )
+                {
+                    case "clearingthepath":
+                    case "helpfinishtheorder":
+                        {
+                            typeEDName = "delivery";
+                            break;
             }
-            else if (typeEDName == "ds" || typeEDName == "rs" || typeEDName == "welcome")
+                    case "rescuefromthetwins":
+                    case "rescuethewares":
             {
-                typeEDName = Name.Split('_').ElementAt(2)?.ToLowerInvariant();
+                            typeEDName = "salvage";
+                            break;
+                        }
+                    case "ds":
+                    case "rs":
+                    case "welcome":
+                        {
+                            typeEDName = Name.Split( '_' ).ElementAt( 2 ).ToLowerInvariant();
+                            break;
+                        }
+                }
             }
         }
     }
