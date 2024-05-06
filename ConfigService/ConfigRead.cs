@@ -20,7 +20,7 @@ namespace EddiConfigService
                 }
                 catch (Exception ex)
                 {
-                    Logging.Debug($"Failed to read {typeof(T).Name}", ex);
+                    Logging.Warn($"Failed to read {typeof(T).Name}", ex);
                 }
             }
             return configuration;
