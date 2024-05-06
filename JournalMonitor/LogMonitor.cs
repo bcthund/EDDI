@@ -179,7 +179,7 @@ namespace EddiJournalMonitor
                 var lastLoadLine = lines
                     .LastOrDefault( x => x.Value.Contains(@"""event"":""Commander""") );
 
-                if (lastLoadLine.Value is null)
+                if (lastLoadLine.Value != null)
                 {
                     Task.Run(() =>
                     {
