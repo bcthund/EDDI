@@ -294,7 +294,7 @@ namespace EddiCargoMonitor
                 {
                     if (haulage != null)
                     {
-                        cargo.AddDetailedQty(CargoType.haulage, 1, 0);
+                        cargo.AddDetailedQty(CargoType.mission, 1, 0);
                     }
                     else if (@event.stolen)
                     {
@@ -302,7 +302,7 @@ namespace EddiCargoMonitor
                     }
                     else
                     {
-                        cargo.AddDetailedQty(CargoType.owned, 1, 0);
+                        cargo.AddDetailedQty(CargoType.legal, 1, 0);
                     }
                     cargo.CalculateNeed();
                     update = true;
@@ -342,11 +342,11 @@ namespace EddiCargoMonitor
                 {
                     if (@event.missionid != null)
                     {
-                        cargo.RemoveDetailedQty(CargoType.haulage, @event.amount, (long)@event.missionid);
+                        cargo.RemoveDetailedQty(CargoType.mission, @event.amount, (long)@event.missionid);
                     }
                     else
                     {
-                        cargo.RemoveDetailedQty(CargoType.owned, @event.amount);
+                        cargo.RemoveDetailedQty(CargoType.legal, @event.amount);
                     }
                     cargo.CalculateNeed();
                     update = true;
@@ -400,11 +400,11 @@ namespace EddiCargoMonitor
             {
                 haulage.sourcesystem = EDDI.Instance?.CurrentStarSystem?.systemname;
                 haulage.sourcebody = EDDI.Instance?.CurrentStation?.name;
-                cargo.AddDetailedQty(CargoType.haulage, @event.amount, @event.price, haulage);
+                cargo.AddDetailedQty(CargoType.mission, @event.amount, @event.price, haulage);
             }
             else
             {
-                cargo.AddDetailedQty(CargoType.owned, @event.amount, @event.price);
+                cargo.AddDetailedQty(CargoType.legal, @event.amount, @event.price);
             }
             AddOrUpdateCargo(cargo);
             return true;
@@ -643,7 +643,7 @@ namespace EddiCargoMonitor
         private bool _handleLimpetPurchasedEvent(LimpetPurchasedEvent @event)
         {
             var cargo = GetCargoWithEDName("Drones") ?? new Cargo("Drones");
-            cargo.AddDetailedQty(CargoType.owned, @event.amount, @event.price);
+            cargo.AddDetailedQty(CargoType.legal, @event.amount, @event.price);
             AddOrUpdateCargo(cargo);
             return true;
         }
@@ -699,7 +699,7 @@ namespace EddiCargoMonitor
             {
                 var cargo = GetCargoWithMissionId(@event.missionid ?? 0);
                 var onboard = haulage.remaining - haulage.need;
-                cargo.RemoveDetailedQty(CargoType.haulage, onboard, @event.missionid);
+                cargo.RemoveDetailedQty(CargoType.mission, onboard, @event.missionid);
                 cargo.AddDetailedQty(CargoType.stolen, onboard, cargo.price);
                 RemoveCargo(cargo);
                 update = true;
@@ -855,7 +855,7 @@ namespace EddiCargoMonitor
             {
                 var cargo = GetCargoWithMissionId(@event.missionid ?? 0);
                 var onboard = haulage.remaining - haulage.need;
-                cargo.RemoveDetailedQty(CargoType.haulage, onboard, haulage);
+                cargo.RemoveDetailedQty(CargoType.mission, onboard, haulage);
                 cargo.AddDetailedQty(CargoType.stolen, onboard, cargo.price);
                 RemoveCargo(cargo);
                 return true;
@@ -889,7 +889,7 @@ namespace EddiCargoMonitor
                 var cargo = GetCargoWithEDName(@event.commodityAmount.edname);
                 if (cargo != null)
                 {
-                    cargo.RemoveDetailedQty(CargoType.owned, Math.Min(cargo.owned, @event.commodityAmount.amount));
+                    cargo.RemoveDetailedQty(CargoType.legal, Math.Min(cargo.owned, @event.commodityAmount.amount));
                     RemoveCargo(cargo);
                     update = true;
                 }
@@ -914,7 +914,7 @@ namespace EddiCargoMonitor
             if (@event.synthesis.Contains("Limpet"))
             {
                 var cargo = GetCargoWithEDName("Drones") ?? new Cargo("Drones");
-                cargo.AddDetailedQty(CargoType.owned, 4, 0);
+                cargo.AddDetailedQty(CargoType.legal, 4, 0);
                 AddOrUpdateCargo(cargo);
                 return true;
             }

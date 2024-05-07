@@ -213,7 +213,7 @@ namespace EddiDataDefinitions
             UpdateWeightedPrice(acquistionPrice, acquistionAmount);
             switch (cargoType)
             {
-                case CargoType.haulage:
+                case CargoType.mission:
                     {
                         haulage += acquistionAmount;
                         if (cargoHaulageData != null) 
@@ -259,7 +259,7 @@ namespace EddiDataDefinitions
         {
             switch (cargoType)
             {
-                case CargoType.haulage:
+                case CargoType.mission:
                     {
                         haulage -= removedAmount;
                         if (cargoHaulageData != null) { haulageData.Remove(cargoHaulageData); }
@@ -280,9 +280,9 @@ namespace EddiDataDefinitions
     }
 
     public enum CargoType
-    { 
-        haulage,
-        owned,
+    {
+        legal,
+        mission,
         stolen
     }
 }
