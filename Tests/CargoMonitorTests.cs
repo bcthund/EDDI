@@ -26,14 +26,6 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestHaulageCopyCtor()
-        {
-            Haulage original = new Haulage(1, "name", "Sol", 42, null, false);
-            Haulage copy = new Haulage(original);
-            Assert.AreEqual(original.name, copy.name);
-        }
-
-        [TestMethod]
         public void TestCargoConfig()
         {
             string cargoConfigJson = @"{
@@ -211,7 +203,6 @@ namespace UnitTests
             Assert.IsNotNull(haulage);
             Assert.AreEqual(3, haulage.amount);
             Assert.AreEqual("Mission_Salvage_Planet", haulage.name);
-            Assert.AreEqual(DateTime.Parse("2018-05-12T15:20:27Z").ToUniversalTime(), haulage.expiry);
 
             // Verify duplication protection
             events = JournalMonitor.ParseJournalEntry(line);

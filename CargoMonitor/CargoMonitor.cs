@@ -498,7 +498,7 @@ namespace EddiCargoMonitor
                             cargo = new Cargo(@event.commodityDefinition.edname); // Total will be updated by following 'Cargo' event
                             var originSystem = EDDI.Instance?.CurrentStarSystem?.systemname;
                             var name = mission?.name ?? "MISSION_DeliveryWing";
-                            haulage = new Haulage(@event.missionid ?? 0, name, originSystem, amountRemaining, null, true);
+                            haulage = new Haulage(@event.missionid ?? 0, name, originSystem, amountRemaining, true);
                             cargo.haulageData.Add(haulage);
                         }
                         if (haulage != null)
@@ -532,7 +532,7 @@ namespace EddiCargoMonitor
                             {
                                 var originSystem = (@event.startmarketid == 0) ? EDDI.Instance?.CurrentStarSystem?.systemname : null;
                                 var name = mission?.name ?? (@event.startmarketid == 0 ? "MISSION_CollectWing" : "MISSION_DeliveryWing");
-                                haulage = new Haulage(@event.missionid ?? 0, name, originSystem, amountRemaining, null);
+                                haulage = new Haulage(@event.missionid ?? 0, name, originSystem, amountRemaining);
                                 cargo.haulageData.Add(haulage);
                             }
                         }
@@ -543,7 +543,7 @@ namespace EddiCargoMonitor
                             cargo = GetCargoWithEDName(@event.commodityDefinition.edname) ?? new Cargo(@event.commodityDefinition.edname); 
                             var originSystem = (@event.startmarketid == 0) ? EDDI.Instance?.CurrentStarSystem?.systemname : null;
                             var name = mission?.name ?? (@event.startmarketid == 0 ? "MISSION_CollectWing" : "MISSION_DeliveryWing");
-                            haulage = new Haulage(@event.missionid ?? 0, name, originSystem, amountRemaining, null, true);
+                            haulage = new Haulage(@event.missionid ?? 0, name, originSystem, amountRemaining, true);
                             cargo.haulageData.Add(haulage);
                             AddOrUpdateCargo(cargo);
                         }
@@ -588,7 +588,7 @@ namespace EddiCargoMonitor
                             // First exposure to new cargo, use 'Unknown' as placeholder
                             cargo = new Cargo("Unknown");
                             var name = mission?.name ?? (@event.startmarketid == 0 ? "MISSION_CollectWing" : "MISSION_DeliveryWing");
-                            haulage = new Haulage(@event.missionid ?? 0, name, null, amountRemaining, null, true);
+                            haulage = new Haulage(@event.missionid ?? 0, name, null, amountRemaining, true);
                             cargo.haulageData.Add(haulage);
                         }
                         AddOrUpdateCargo(cargo);
@@ -751,7 +751,7 @@ namespace EddiCargoMonitor
                         {
                             var naval = @event.name.ToLowerInvariant().Contains("rank");
                             var originSystem = EDDI.Instance?.CurrentStarSystem?.systemname;
-                            haulage = new Haulage(@event.missionid ?? 0, @event.name, originSystem, @event.amount ?? 0, @event.expiry)
+                            haulage = new Haulage(@event.missionid ?? 0, @event.name, originSystem, @event.amount ?? 0)
                             {
                                 startmarketid = (type.Contains("delivery") && !naval) ? EDDI.Instance?.CurrentStation?.marketId ?? 0 : 0,
                                 endmarketid = (type.Contains("collect")) ? EDDI.Instance?.CurrentStation?.marketId ?? 0 : 0,
@@ -1118,7 +1118,7 @@ namespace EddiCargoMonitor
                     var amount = mission?.amount ?? info.count;
                     var expiry = mission?.expiry;
 
-                    cargoHaulage = new Haulage(info.missionid ?? 0, name, mission?.originsystem, amount, expiry);
+                    cargoHaulage = new Haulage(info.missionid ?? 0, name, mission?.originsystem, amount);
                     cargo.haulageData.Add(cargoHaulage);
                 }
             }

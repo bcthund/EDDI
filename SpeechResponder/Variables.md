@@ -129,7 +129,6 @@ Mission related details of haulage under the haulageData object, within the Carg
   - *amount* - amount of the commodity involved in the mission
   - *collected* - amount of the commodity collected in a wing mission
   - *delivered* - amount of the commodity delivered in a wing mission
-  - *expiry* - expiry date and time of the mission
 
 ### Commodity
 

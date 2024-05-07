@@ -31,57 +31,35 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public string sourcebody { get; set; }
 
-        [PublicAPI, JsonIgnore]
+        [PublicAPI, JsonIgnore] // False if illegal mission items are required
         public bool legal => !name.ToLowerInvariant().Contains("illegal");
 
         [JsonIgnore]
         public bool wing => name.ToLowerInvariant().Contains("wing");
 
-        [PublicAPI]
+        [PublicAPI] // The total quantity of mission items which need to be delivered for the mission
         public int amount { get; set; }
 
         public int remaining { get; set; }
 
-        [PublicAPI]
+        [PublicAPI] // The quantity of mission items which still need to be delivered
         public int need { get; set; }
 
         public long startmarketid { get; set; }
 
         public long endmarketid { get; set; }
 
-        [PublicAPI]
+        [PublicAPI] // The quantity of mission items which has been collected (at a cargo depot)
         public int collected { get; set; }
 
-        [PublicAPI]
+        [PublicAPI] // The quantity of mission items which has been delivered (at a cargo depot)
         public int delivered { get; set; }
-
-        [PublicAPI]
-        public DateTime? expiry { get; set; }
 
         [PublicAPI]
         public bool shared { get; set; }
 
-        public Haulage(Haulage haulage)
-        {
-            missionid = haulage.missionid;
-            name = haulage.name;
-            typeEDName = haulage.typeEDName;
-            originsystem = haulage.originsystem;
-            sourcesystem = haulage.sourcesystem;
-            sourcebody = haulage.sourcebody;
-            status = haulage.status;
-            amount = haulage.amount;
-            startmarketid = haulage.startmarketid;
-            endmarketid = haulage.endmarketid;
-            remaining = haulage.remaining;
-            need = haulage.need;
-            collected = haulage.collected;
-            delivered = haulage.delivered;
-            expiry = haulage.expiry;
-            shared = haulage.shared;
-        }
 
-        public Haulage(long MissionId, string Name, string OriginSystem, int Amount, DateTime? Expiry, bool Shared = false)
+        public Haulage (long MissionId, string Name, string OriginSystem, int Amount, bool Shared = false)
         {
             missionid = MissionId;
             name = Name;
@@ -90,7 +68,6 @@ namespace EddiDataDefinitions
             amount = Amount;
             remaining = Amount;
             need = Amount;
-            expiry = Expiry;
             shared = Shared;
 
             // Mechanism for identifying chained delivery and 'welcome' missions
@@ -104,10 +81,10 @@ namespace EddiDataDefinitions
                         {
                             typeEDName = "delivery";
                             break;
-            }
+                        }
                     case "rescuefromthetwins":
                     case "rescuethewares":
-            {
+                        {
                             typeEDName = "salvage";
                             break;
                         }
