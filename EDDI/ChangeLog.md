@@ -4,6 +4,8 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.0.4-b1
   * Core
+    * Updated ship and module definitions.
+    * Revised jump calculations for new SCO FSDs.
     * EDDI will no longer report your environment as "Supercruise" right after a Thargoid hyperdiction. (#2597)
     * EDDI will no longer report your enviroment as "Normal Space" when starting docked. (#2598)
     * EDDI will delay rather than discard speech when hit by a full Thargoid shutdown. (#2603)
@@ -11,9 +13,10 @@ Full details of the variables available for each noted event, and VoiceAttack in
   * EDDN Responder
     * Add support for `DockingDenied` and `DockingGranted` schemas
   * Events
+    * `Bounty awarded` updated to include new `pilot` property (when applicable).
     * `Hyperdicted` added. 
     * `Signal detected` updated to include new `signaltype` property.
-    * `Ship shutdown` updated include new `partialshutdown` property (for instances where the power flickers but doesn't go out completely). (#2603)
+    * `Ship shutdown` updated to include new `partialshutdown` property (for instances where the power flickers but doesn't go out completely). (#2603)
     * `Ship targeted` updated to better utilize localized names (where available). (#2604)
   * Navigation Monitor
     * Improved route guidance updates.

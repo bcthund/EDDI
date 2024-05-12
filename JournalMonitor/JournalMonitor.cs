@@ -445,31 +445,8 @@ namespace EddiJournalMonitor
                             case "Bounty":
                                 {
                                     var target = JsonParsing.getString(data, "Target");
-                                    if ( target != null)
-                                    {
-                                        // Might be a ship
-                                        var targetShip = ShipDefinitions.FromEDModel(target, false);
-
-                                        // Might be a SRV or Fighter
-                                        var targetVehicle = VehicleDefinition.EDNameExists(target) ? VehicleDefinition.FromEDName(target) : null;
-
-                                        // Might be an on foot commander
-                                        var targetCmdrSuit = Suit.EDNameExists(target) ? Suit.FromEDName(target) : null;
-
-                                        // Might be an on foot NPC
-                                        var targetNpcSuitLoadout = NpcSuitLoadout.EDNameExists(target) ? NpcSuitLoadout.FromEDName(target) : null;
-
-                                        target = targetShip?.SpokenModel()
-                                                 ?? targetCmdrSuit?.localizedName
-                                                 ?? targetVehicle?.localizedName
-                                                 ?? targetNpcSuitLoadout?.localizedName
-                                                 ?? JsonParsing.getString(data, "Target_Localised")
-                                            ;
-                                    }
-
-                                    var pilot = JsonParsing.getString(data, "PilotName");
-                                    var pilotLocalised = JsonParsing.getString(data, "PilotName_Localised");
-
+                                    var target_localised = JsonParsing.getString( data, "Target_Localised" );
+                                    var victimName = JsonParsing.getString(data, "PilotName_Localised");
                                     var victimFaction = GetFactionName(data, "VictimFaction");
 
                                     data.TryGetValue("SharedWithOthers", out object val);
@@ -516,7 +493,7 @@ namespace EddiJournalMonitor
                                         }
                                     }
 
-                                    events.Add(new BountyAwardedEvent(timestamp, target, victimFaction, reward, rewards, shared) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add(new BountyAwardedEvent(timestamp, target, target_localised, victimName, victimFaction, reward, rewards, shared) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;

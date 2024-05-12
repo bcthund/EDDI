@@ -2011,33 +2011,48 @@ namespace UnitTests
             Assert.AreEqual(expectedOtherSignals, @event.surfacesignals?.FirstOrDefault(s => s.signalSource.edname == "SAA_SignalType_Other")?.amount ?? 0);
         }
 
-        [TestMethod]
-        public void TestBountyAwardedOdyssey()
+        [ TestMethod ]
+        public void TestBountyAwardedOdyssey ()
         {
             string line1 = @"{ ""timestamp"":""2023-01-28T23:36:38Z"", ""event"":""Bounty"", ""Rewards"":[ { ""Faction"":""Duwali Liberty Party"", ""Reward"":2050 } ], ""Target"":""citizensuitai_scientific"", ""Target_Localised"":""Researcher"", ""TotalReward"":2050, ""VictimFaction"":""Duwali Partnership"" }";
             string line2 = @"{ ""timestamp"":""2023-01-28T23:36:59Z"", ""event"":""Bounty"", ""Rewards"":[ { ""Faction"":""Defence Party of Duwali"", ""Reward"":14100 } ], ""Target"":""citizensuitai_industrial"", ""Target_Localised"":""Technician"", ""TotalReward"":14100, ""VictimFaction"":""Duwali Partnership"" }";
+            string line3 = @"{ ""timestamp"":""2023-10-20T23:43:59Z"", ""event"":""Bounty"", ""Rewards"":[ { ""Faction"":""New Gungkuni Alliance"", ""Reward"":67748 } ], ""PilotName"":""$npc_name_decorate:#name=Morty;"", ""PilotName_Localised"":""Morty"", ""Target"":""cobramkiii"", ""Target_Localised"":""Cobra Mk III"", ""TotalReward"":67748, ""VictimFaction"":""Copityar Purple Posse"" }";
 
-            var events1 = JournalMonitor.ParseJournalEntry(line1);
-            Assert.AreEqual(1, events1.Count);
-            var event1 = (BountyAwardedEvent)events1[0];
-            Assert.IsNotNull(event1);
-            Assert.AreEqual(1, event1.rewards.Count);
-            Assert.AreEqual("Duwali Liberty Party", event1.rewards[0].faction);
-            Assert.AreEqual(2050, event1.rewards[0].amount);
-            Assert.AreEqual("Researcher", event1.target);
-            Assert.AreEqual(2050, event1.reward);
-            Assert.AreEqual("Duwali Partnership", event1.faction);
+            var events1 = JournalMonitor.ParseJournalEntry( line1 );
+            Assert.AreEqual( 1, events1.Count );
+            var event1 = (BountyAwardedEvent)events1[ 0 ];
+            Assert.IsNotNull( event1 );
+            Assert.AreEqual( 1, event1.rewards.Count );
+            Assert.AreEqual( "Duwali Liberty Party", event1.rewards[ 0 ].faction );
+            Assert.AreEqual( 2050, event1.rewards[ 0 ].amount );
+            Assert.AreEqual( "Researcher", event1.target );
+            Assert.AreEqual( 2050, event1.reward );
+            Assert.AreEqual( null, event1.pilot );
+            Assert.AreEqual( "Duwali Partnership", event1.faction );
 
-            var events2 = JournalMonitor.ParseJournalEntry(line2);
-            Assert.AreEqual(1, events2.Count);
-            var event2 = (BountyAwardedEvent)events2[0];
-            Assert.IsNotNull(event2);
-            Assert.AreEqual(1, event2.rewards.Count);
-            Assert.AreEqual("Defence Party of Duwali", event2.rewards[0].faction);
-            Assert.AreEqual(14100, event2.rewards[0].amount);
-            Assert.AreEqual("Technician", event2.target);
-            Assert.AreEqual(14100, event2.reward);
-            Assert.AreEqual("Duwali Partnership", event2.faction);
+            var events2 = JournalMonitor.ParseJournalEntry( line2 );
+            Assert.AreEqual( 1, events2.Count );
+            var event2 = (BountyAwardedEvent)events2[ 0 ];
+            Assert.IsNotNull( event2 );
+            Assert.AreEqual( 1, event2.rewards.Count );
+            Assert.AreEqual( "Defence Party of Duwali", event2.rewards[ 0 ].faction );
+            Assert.AreEqual( 14100, event2.rewards[ 0 ].amount );
+            Assert.AreEqual( "Technician", event2.target );
+            Assert.AreEqual( 14100, event2.reward );
+            Assert.AreEqual( null, event2.pilot );
+            Assert.AreEqual( "Duwali Partnership", event2.faction );
+
+            var events3 = JournalMonitor.ParseJournalEntry( line3 );
+            Assert.AreEqual( 1, events3.Count );
+            var event3 = (BountyAwardedEvent)events3[ 0 ];
+            Assert.IsNotNull( event3 );
+            Assert.AreEqual( 1, event3.rewards.Count );
+            Assert.AreEqual( "New Gungkuni Alliance", event3.rewards[ 0 ].faction );
+            Assert.AreEqual( 67748, event3.rewards[ 0 ].amount );
+            Assert.AreEqual( "Cobra Mk. III", event3.target );
+            Assert.AreEqual( 67748, event3.reward );
+            Assert.AreEqual( "Morty", event3.pilot );
+            Assert.AreEqual( "Copityar Purple Posse", event3.faction );
         }
 
         [TestMethod, DoNotParallelize]
