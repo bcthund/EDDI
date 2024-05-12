@@ -1692,8 +1692,8 @@ namespace UnitTests
             Assert.AreEqual(4293000003, @event.shipid);
             Assert.IsTrue(string.IsNullOrEmpty(@event.shipname));
             Assert.IsTrue(string.IsNullOrEmpty(@event.shipident));
-            Assert.AreEqual(1M, @event.fuel);
-            Assert.AreEqual(1M, @event.fuelcapacity);
+            Assert.AreEqual(1, @event.fuel);
+            Assert.AreEqual(1, @event.fuelcapacity);
             Assert.AreEqual("Open", @event.mode);
             Assert.AreEqual(294004749, @event.credits);
             Assert.AreEqual(0, @event.loan);
@@ -1792,8 +1792,8 @@ namespace UnitTests
             Assert.AreEqual(38, @event.shipid);
             Assert.AreEqual("Resolution", @event.shipname);
             Assert.AreEqual("TK-28D", @event.shipident);
-            Assert.AreEqual(32M, @event.fuel);
-            Assert.AreEqual(32M, @event.fuelcapacity);
+            Assert.AreEqual(32, @event.fuel);
+            Assert.AreEqual(32, @event.fuelcapacity);
             Assert.AreEqual("Solo", @event.mode);
             Assert.AreEqual(7795285167, @event.credits);
             Assert.AreEqual(0, @event.loan);

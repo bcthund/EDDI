@@ -73,9 +73,9 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestLoadoutParsing()
+        public void TestLoadoutParsingEmpireTrader()
         {
-            string data = DeserializeJsonResource<string>(Resources.loadout);
+            string data = DeserializeJsonResource<string>(Resources.loadout_empire_trader);
 
             List<Event> events = JournalMonitor.ParseJournalEntry(data);
             Assert.AreEqual(1, events.Count);
@@ -90,11 +90,45 @@ namespace UnitTests
             object[] args = new object[] { loadoutEvent };
             Ship ship = privateObject.Invoke("ParseShipLoadoutEvent", args) as Ship;
             Assert.IsNotNull(ship);
-            Assert.AreEqual("Peppermint", ship.name);
-            Assert.AreEqual("Int_FuelScoop_Size7_Class5", ship.compartments[0].module.edname);
-            Assert.AreEqual("Fuel Scoop", ship.compartments[0].module.invariantName);
-            Assert.AreEqual(16, ship.fueltankcapacity);
-            Assert.AreEqual(24, ship.fueltanktotalcapacity);
+            Assert.AreEqual( "Peppermint", ship.name );
+            Assert.AreEqual( "VT-E23", ship.ident );
+            Assert.AreEqual( 16, ship.fueltankcapacity );
+            Assert.AreEqual( 24, ship.fueltanktotalcapacity );
+            Assert.AreEqual( 13943105, ship.hullvalue );
+            Assert.AreEqual( 111211684, ship.modulesvalue );
+            Assert.AreEqual( 6257742, ship.rebuy );
+            Assert.AreEqual( 100, ship.health );
+            Assert.AreEqual( false, ship.hot );
+            Assert.AreEqual( 530.8, ship.unladenmass );
+            Assert.AreEqual( 64, ship.cargocapacity );
+            Assert.AreEqual( 2, ship.hardpoints.Count( h => h.module.edname == "Hpt_MultiCannon_Gimbal_Large" ) );
+            Assert.AreEqual( "Empire_Trader_Armour_Grade1", ship.bulkheads.edname );
+            Assert.AreEqual( 4478720, ship.powerplant.price );
+            Assert.AreEqual( 100, ship.powerplant.health );
+            Assert.AreEqual( 5, ship.thrusters.modifiers.Count );
+            Assert.AreEqual( 3, ship.thrusters.engineerlevel );
+            Assert.AreEqual( 0, ship.thrusters.engineerquality );
+            Assert.AreEqual( "Int_FuelScoop_Size7_Class5", ship.compartments[ 0 ].module.edname );
+            Assert.AreEqual( "Fuel Scoop", ship.compartments[ 0 ].module.invariantName );
+
+            // Test fuel calculations
+            Assert.AreEqual( 1547.139526, ship.optimalmass );
+            Assert.AreEqual( 5.199397, ship.maxfuelperjump );
+            // With zero fuel and zero cargo
+            Assert.AreEqual( 0, ship.JumpDetails( "next" ).distance );
+            Assert.AreEqual( 34.356, Math.Round(ship.JumpDetails( "max" ).distance, 3) );
+            Assert.AreEqual( 0, ship.JumpDetails( "total" ).distance );
+            Assert.AreEqual( 165.718, Math.Round(ship.JumpDetails( "full" ).distance, 3) );
+            // With with max fuel and zero cargo
+            Assert.AreEqual( 33.720, Math.Round(ship.JumpDetails( "next", 16 ).distance), 3 );
+            Assert.AreEqual( 34.356, Math.Round( ship.JumpDetails( "max", 16 ).distance, 3 ) );
+            Assert.AreEqual( 115.258, Math.Round( ship.JumpDetails( "total", 16 ).distance, 3 ) );
+            Assert.AreEqual( 165.718, Math.Round( ship.JumpDetails( "full", 16 ).distance, 3 ) );
+            // With with max fuel and max cargo
+            Assert.AreEqual( 30.696, Math.Round( ship.JumpDetails( "next", 16, 64 ).distance ), 3 );
+            Assert.AreEqual( 30.696, Math.Round( ship.JumpDetails( "max", 16, 64 ).distance, 3 ) );
+            Assert.AreEqual( 102.969, Math.Round( ship.JumpDetails( "total", 16, 64 ).distance, 3 ) );
+            Assert.AreEqual( 148.053, Math.Round( ship.JumpDetails( "full", 16, 64 ).distance, 3 ) );
         }
 
         [TestMethod]
@@ -345,9 +379,10 @@ namespace UnitTests
             {
                 configuration = DeserializeJsonResource<ShipMonitorConfiguration>(Resources.shipMonitor);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Assert.Fail("Failed to read ship configuration");
+                Logging.Warn( "Failed to read ship configuration", ex );
+                Assert.Fail();
             }
 
             // Start a ship monitor
@@ -401,9 +436,10 @@ namespace UnitTests
             {
                 DeserializeJsonResource<ShipMonitorConfiguration>(Resources.shipMonitor);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Assert.Fail("Failed to read ship configuration");
+                Logging.Warn( "Failed to read ship configuration", ex );
+                Assert.Fail();
             }
 
             Assert.AreEqual("Multipurpose", Role.MultiPurpose.edname);
@@ -417,7 +453,7 @@ namespace UnitTests
             privateObject.SetFieldOrProperty("shipyard", new ObservableCollection<Ship>());
             privateObject.SetFieldOrProperty("updatedAt", DateTime.MinValue);
 
-            string data = DeserializeJsonResource<string>(Resources.loadout);
+            string data = DeserializeJsonResource<string>(Resources.loadout_empire_trader);
             List<Event> events = JournalMonitor.ParseJournalEntry(data);
             ShipLoadoutEvent loadoutEvent = events[0] as ShipLoadoutEvent;
             object[] loadoutArgs = { loadoutEvent };
@@ -447,7 +483,7 @@ namespace UnitTests
         [TestMethod]
         public void TestFighterLoadoutEvent()
         {
-            string data = DeserializeJsonResource<string>(Resources.loadout);
+            string data = DeserializeJsonResource<string>(Resources.loadout_empire_trader);
             List<Event> events = JournalMonitor.ParseJournalEntry(data);
             ShipLoadoutEvent loadoutEvent = events[0] as ShipLoadoutEvent;
 
@@ -547,7 +583,7 @@ namespace UnitTests
             var privateObject = new PrivateObject(shipMonitor);
 
             // Set up our ship
-            Ship ship = new Ship { LocalId = 9999, fueltanktotalcapacity = 32M };
+            Ship ship = new Ship { LocalId = 9999, fueltanktotalcapacity = 32 };
             privateObject.Invoke("RemoveShip", 9999);
             privateObject.Invoke("AddShip", ship);
             privateObject.SetFieldOrProperty("currentShipId", 9999);
@@ -555,15 +591,15 @@ namespace UnitTests
             // Evaluate the results of our events
             Assert.IsNotNull(event1);
             shipMonitor.PreHandle(event1);
-            Assert.AreEqual(5.001066M, event1.amount);
-            Assert.AreEqual(31.552881M, event1.total);
+            Assert.AreEqual(5.001066, event1.amount);
+            Assert.AreEqual(31.552881, event1.total);
             Assert.IsFalse(event1.full);
             Assert.AreEqual("Ship refuelled", event1.type);
 
             Assert.IsNotNull(event2);
             shipMonitor.PreHandle(event2);
-            Assert.AreEqual(0.447121M, event2.amount);
-            Assert.AreEqual(32.000000M, event2.total);
+            Assert.AreEqual(0.447121, event2.amount);
+            Assert.AreEqual(32.000000, event2.total);
             Assert.IsTrue(event2.full);
         }
 

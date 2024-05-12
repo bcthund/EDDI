@@ -647,40 +647,39 @@ namespace EddiJournalMonitor
                             case "Loadout":
                                 {
                                     data.TryGetValue("ShipID", out object val);
-                                    int shipId = (int)(long)val;
-                                    string ship = JsonParsing.getString(data, "Ship");
-                                    string shipName = JsonParsing.getString(data, "ShipName");
-                                    string shipIdent = JsonParsing.getString(data, "ShipIdent");
+                                    var shipId = (int)(long)val;
+                                    var ship = JsonParsing.getString(data, "Ship");
+                                    var shipName = JsonParsing.getString(data, "ShipName");
+                                    var shipIdent = JsonParsing.getString(data, "ShipIdent");
 
-                                    long? hullValue = JsonParsing.getOptionalLong(data, "HullValue");
-                                    long? modulesValue = JsonParsing.getOptionalLong(data, "ModulesValue");
-                                    decimal hullHealth = sensibleHealth((JsonParsing.getOptionalDecimal(data, "HullHealth") ?? 1) * 100);
-                                    decimal unladenMass = JsonParsing.getOptionalDecimal(data, "UnladenMass") ?? 0;
-                                    decimal maxJumpRange = JsonParsing.getOptionalDecimal(data, "MaxJumpRange") ?? 0;
-                                    decimal optimalMass = 0;
+                                    var hullValue = JsonParsing.getOptionalLong(data, "HullValue");
+                                    var modulesValue = JsonParsing.getOptionalLong(data, "ModulesValue");
+                                    var hullHealth = sensibleHealth((JsonParsing.getOptionalDecimal(data, "HullHealth") ?? 1) * 100);
+                                    var unladenMass = JsonParsing.getOptionalDouble(data, "UnladenMass") ?? 0;
+                                    var maxJumpRange = JsonParsing.getOptionalDouble(data, "MaxJumpRange") ?? 0;
 
-                                    long rebuy = JsonParsing.getLong(data, "Rebuy");
+                                    var rebuy = JsonParsing.getLong(data, "Rebuy");
 
                                     // If ship is 'hot', then modules are also 'hot'
-                                    bool hot = JsonParsing.getOptionalBool(data, "Hot") ?? false;
+                                    var hot = JsonParsing.getOptionalBool(data, "Hot") ?? false;
 
                                     data.TryGetValue("Modules", out val);
-                                    List<object> modulesData = (List<object>)val;
+                                    var modulesData = (List<object>)val;
 
                                     string paintjob = null;
-                                    List<Hardpoint> hardpoints = new List<Hardpoint>();
-                                    List<Compartment> compartments = new List<Compartment>();
+                                    var hardpoints = new List<Hardpoint>();
+                                    var compartments = new List<Compartment>();
                                     if (modulesData != null)
                                     {
                                         foreach (Dictionary<string, object> moduleData in modulesData)
                                         {
                                             // Common items
-                                            string slot = JsonParsing.getString(moduleData, "Slot");
-                                            string item = JsonParsing.getString(moduleData, "Item");
-                                            bool enabled = JsonParsing.getBool(moduleData, "On");
-                                            int priority = JsonParsing.getInt(moduleData, "Priority");
+                                            var slot = JsonParsing.getString(moduleData, "Slot");
+                                            var item = JsonParsing.getString(moduleData, "Item");
+                                            var enabled = JsonParsing.getBool(moduleData, "On");
+                                            var priority = JsonParsing.getInt(moduleData, "Priority");
                                             // Health is as 0->1 but we want 0->100, and to a sensible number of decimal places
-                                            decimal health = JsonParsing.getDecimal(moduleData, "Health") * 100;
+                                            var health = JsonParsing.getDecimal(moduleData, "Health") * 100;
                                             if (health < 5)
                                             {
                                                 health = Math.Round(health, 1);
@@ -691,38 +690,38 @@ namespace EddiJournalMonitor
                                             }
 
                                             // Some built-in modules don't give "Value" keys in the Loadout event. We'll set them to zero to match the Frontier API.
-                                            long price = JsonParsing.getOptionalLong(moduleData, "Value") ?? 0;
+                                            var price = JsonParsing.getOptionalLong(moduleData, "Value") ?? 0;
 
                                             // Ammunition
-                                            int? clip = JsonParsing.getOptionalInt(moduleData, "AmmoInClip");
-                                            int? hopper = JsonParsing.getOptionalInt(moduleData, "AmmoInHopper");
+                                            var clip = JsonParsing.getOptionalInt(moduleData, "AmmoInClip");
+                                            var hopper = JsonParsing.getOptionalInt(moduleData, "AmmoInHopper");
 
                                             // Engineering modifications
                                             moduleData.TryGetValue("Engineering", out object engineeringVal);
-                                            bool modified = engineeringVal != null;
-                                            Dictionary<string, object> engineeringData = (Dictionary<string, object>)engineeringVal;
-                                            string blueprint = modified ? JsonParsing.getString(engineeringData, "BlueprintName") : null;
-                                            long blueprintId = modified ? JsonParsing.getLong(engineeringData, "BlueprintID") : 0;
-                                            int level = modified ? JsonParsing.getInt(engineeringData, "Level") : 0;
-                                            Blueprint modification = Blueprint.FromEliteID(blueprintId, engineeringData)
-                                                ?? Blueprint.FromEDNameAndGrade(blueprint, level) ?? Blueprint.None;
-                                            decimal quality = modified ? JsonParsing.getDecimal(engineeringData, "Quality") : 0;
-                                            string experimentalEffect = modified ? JsonParsing.getString(engineeringData, "ExperimentalEffect") : null;
-                                            List<EngineeringModifier> modifiers = new List<EngineeringModifier>();
+                                            var modified = engineeringVal != null;
+                                            var engineeringData = (Dictionary<string, object>)engineeringVal;
+                                            var blueprint = modified ? JsonParsing.getString(engineeringData, "BlueprintName") : null;
+                                            var blueprintId = modified ? JsonParsing.getLong(engineeringData, "BlueprintID") : 0;
+                                            var level = modified ? JsonParsing.getInt(engineeringData, "Level") : 0;
+                                            var modification = Blueprint.FromEliteID(blueprintId, engineeringData)
+                                                               ?? Blueprint.FromEDNameAndGrade(blueprint, level) ?? Blueprint.None;
+                                            var quality = modified ? JsonParsing.getDecimal(engineeringData, "Quality") : 0;
+                                            var experimentalEffect = modified ? JsonParsing.getString(engineeringData, "ExperimentalEffect") : null;
+                                            var modifiers = new List<EngineeringModifier>();
                                             if (modified)
                                             {
                                                 engineeringData.TryGetValue("Modifiers", out object modifiersVal);
-                                                List<object> modifiersData = (List<object>)modifiersVal;
+                                                var modifiersData = (List<object>)modifiersVal;
                                                 foreach (Dictionary<string, object> modifier in modifiersData)
                                                 {
                                                     try
                                                     {
-                                                        string edname = JsonParsing.getString(modifier, "Label");
-                                                        decimal? currentValue = JsonParsing.getOptionalDecimal(modifier, "Value");
-                                                        decimal? originalValue = JsonParsing.getOptionalDecimal(modifier, "OriginalValue");
-                                                        bool lessIsGood = JsonParsing.getOptionalInt(modifier, "LessIsGood") == 1;
-                                                        string valueStr = JsonParsing.getString(modifier, "ValueStr");
-                                                        modifiers.Add(new EngineeringModifier()
+                                                        var edname = JsonParsing.getString(modifier, "Label");
+                                                        var currentValue = JsonParsing.getOptionalDouble(modifier, "Value");
+                                                        var originalValue = JsonParsing.getOptionalDouble(modifier, "OriginalValue");
+                                                        var lessIsGood = JsonParsing.getOptionalInt(modifier, "LessIsGood") == 1;
+                                                        var valueStr = JsonParsing.getString(modifier, "ValueStr");
+                                                        modifiers.Add(new EngineeringModifier
                                                         {
                                                             EDName = edname,
                                                             currentValue = currentValue,
@@ -866,27 +865,10 @@ namespace EddiJournalMonitor
                                                     compartment.module = module;
                                                     compartments.Add(compartment);
                                                 }
-
-                                                // Get the optimal mass for the Frame Shift Drive
-                                                if (slot.Equals("FrameShiftDrive", StringComparison.InvariantCultureIgnoreCase))
-                                                {
-                                                    string fsd = module.@class + module.grade;
-                                                    Constants.baseOptimalMass.TryGetValue(fsd, out optimalMass);
-                                                    if (modified)
-                                                    {
-                                                        foreach (EngineeringModifier modifier in modifiers)
-                                                        {
-                                                            if (modifier.EDName.Equals("FSDOptimalMass", StringComparison.InvariantCultureIgnoreCase))
-                                                            {
-                                                                optimalMass = (decimal)modifier.currentValue;
-                                                            }
-                                                        }
-                                                    }
-                                                }
                                             }
                                         }
                                     }
-                                    events.Add(new ShipLoadoutEvent(timestamp, ship, shipId, shipName, shipIdent, hullValue, modulesValue, hullHealth, unladenMass, maxJumpRange, optimalMass, rebuy, hot, compartments, hardpoints, paintjob) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add(new ShipLoadoutEvent(timestamp, ship, shipId, shipName, shipIdent, hullValue, modulesValue, hullHealth, unladenMass, maxJumpRange, rebuy, hot, compartments, hardpoints, paintjob) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;
@@ -2709,8 +2691,8 @@ namespace EddiJournalMonitor
                                     long credits = (long)JsonParsing.getOptionalLong(data, "Credits");
                                     long loan = (long)JsonParsing.getOptionalLong(data, "Loan");
 
-                                    decimal? fuel = JsonParsing.getOptionalDecimal(data, "FuelLevel");
-                                    decimal? fuelCapacity = JsonParsing.getOptionalDecimal(data, "FuelCapacity");
+                                    double? fuel = JsonParsing.getOptionalDouble(data, "FuelLevel");
+                                    double? fuelCapacity = JsonParsing.getOptionalDouble(data, "FuelCapacity");
 
                                     string version = JsonParsing.getString(data, "gameversion")?.Trim();
                                     string build = JsonParsing.getString(data, "build")?.Trim();
@@ -3021,7 +3003,7 @@ namespace EddiJournalMonitor
                                 break;
                             case "RefuelPartial":
                                 {
-                                    decimal amount = JsonParsing.getDecimal(data, "Amount");
+                                    var amount = JsonParsing.getDouble(data, "Amount");
                                     data.TryGetValue("Cost", out object val);
                                     long price = (long)val;
 
@@ -3031,7 +3013,7 @@ namespace EddiJournalMonitor
                                 break;
                             case "RefuelAll":
                                 {
-                                    decimal amount = JsonParsing.getDecimal(data, "Amount");
+                                    double amount = JsonParsing.getDouble(data, "Amount");
                                     data.TryGetValue("Cost", out object val);
                                     long price = (long)val;
 
@@ -3041,8 +3023,8 @@ namespace EddiJournalMonitor
                                 break;
                             case "FuelScoop":
                                 {
-                                    decimal amount = JsonParsing.getDecimal(data, "Scooped");
-                                    decimal total = JsonParsing.getDecimal(data, "Total");
+                                    double amount = JsonParsing.getDouble(data, "Scooped");
+                                    double total = JsonParsing.getDouble(data, "Total");
                                     events.Add(new ShipRefuelledEvent(timestamp, "Scoop", null, amount, total) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;

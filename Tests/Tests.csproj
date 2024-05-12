@@ -47,32 +47,6 @@
     <ProjectReference Include="..\VoiceAttackResponder\EddiVoiceAttackResponder.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\capi-shipyard-Abasheli Barracks.json" />
-    <EmbeddedResource Include="Properties\bgsFaction.json" />
-    <EmbeddedResource Include="Properties\edsmBodies.json" />
-    <EmbeddedResource Include="Properties\edsmDeaths.json" />
-    <EmbeddedResource Include="Properties\edsmFactions.json" />
-    <EmbeddedResource Include="Properties\edsmStations.json" />
-    <EmbeddedResource Include="Properties\edsmSystem.json" />
-    <EmbeddedResource Include="Properties\edsmTraffic.json" />
-    <EmbeddedResource Include="Properties\fighterLoadout.json" />
-    <EmbeddedResource Include="Properties\loadout.json" />
-    <EmbeddedResource Include="Properties\shipMonitor.json" />
-    <EmbeddedResource Include="Properties\sqlStarSystem1.json" />
-    <EmbeddedResource Include="Properties\sqlStarSystem2.json" />
-    <EmbeddedResource Include="Properties\sqlStarSystem3.json" />
-    <EmbeddedResource Include="Properties\sqlStarSystem4.json" />
-    <EmbeddedResource Include="Properties\vehicle.json" />
-    <EmbeddedResource Include="Properties\market.json" />
-    <EmbeddedResource Include="Properties\SpanshCarrierResult.json" />
-    <EmbeddedResource Include="Properties\SpanshGalaxyResult.json" />
-    <EmbeddedResource Include="Properties\sqlStarSystem5.json" />
-    <EmbeddedResource Include="Properties\sqlStarSystem6.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\starsystems.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Cottle">
       <Version>1.4.0.4</Version>
     </PackageReference>

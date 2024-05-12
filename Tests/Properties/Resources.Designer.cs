@@ -223,9 +223,9 @@ namespace Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] loadout {
+        public static byte[] loadout_empire_trader {
             get {
-                object obj = ResourceManager.GetObject("loadout", resourceCulture);
+                object obj = ResourceManager.GetObject("loadout_empire_trader", resourceCulture);
                 return ((byte[])(obj));
             }
         }

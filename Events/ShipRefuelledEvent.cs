@@ -18,15 +18,15 @@ namespace EddiEvents
         public long? price { get; private set; }
 
         [PublicAPI("The amount of fuel obtained")]
-        public decimal amount { get; private set; }
+        public double amount { get; private set; }
 
         [PublicAPI("The new fuel level (only available if the source is Scoop)")]
-        public decimal? total { get; private set; }
+        public double? total { get; private set; }
 
         [PublicAPI("Whether this is a full refuel")]
         public bool? full { get; set; }
 
-        public ShipRefuelledEvent(DateTime timestamp, string source, long? price, decimal amount, decimal? total, bool? full = null) : base(timestamp, NAME)
+        public ShipRefuelledEvent(DateTime timestamp, string source, long? price, double amount, double? total, bool? full = null) : base(timestamp, NAME)
         {
             this.source = source;
             this.price = price;

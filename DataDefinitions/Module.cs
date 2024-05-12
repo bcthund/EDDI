@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Utilities;
 
 namespace EddiDataDefinitions
@@ -183,13 +184,159 @@ namespace EddiDataDefinitions
                 modifiers = modified ? modifiers : new List<EngineeringModifier>();
             }
         }
+
+        public double GetFsdPowerConstant ()
+        {
+            if ( @class == 0 ) { return 1; }
+
+            var powerConstantFSD = new Dictionary<int, double>
+            {
+                { 2, 2.00 }, { 3, 2.15 }, { 4, 2.30 }, { 5, 2.45 }, { 6, 2.60 }, { 7, 2.75 }, { 8, 2.90 }
+            };
+            return powerConstantFSD.TryGetValue( @class , out var result )
+                ? result
+                : 1;
+        }
+
+        public double GetFsdRatingConstant ()
+        {
+            if ( string.IsNullOrEmpty(grade) ) { return 0; }
+
+            if ( edname?.Contains( "hyperdrive_overcharge" ) ?? false )
+            {
+                var ratingConstants_SCO = new Dictionary<string, double>
+                {
+                    { "E", 8.0 }, { "D", 12.0 }, { "C", 12.0 }, { "B", 12.0 }, { "A", 13.0 }
+                };
+                return ratingConstants_SCO.TryGetValue( grade, out var rating ) 
+                    ? rating 
+                    : ratingConstants_SCO.First().Value;
+            }
+            else
+            {
+                var ratingConstants = new Dictionary<string, double>
+                {
+                    { "E", 11.0 }, { "D", 10.0 }, { "C", 8.0 }, { "B", 10.0 }, { "A", 12.0 },
+                };
+                return ratingConstants.TryGetValue( grade, out var rating ) 
+                    ? rating 
+                    : ratingConstants.First().Value;
+            }
+        }
+
+        public double GetFsdMaxFuelPerJump ()
+        {
+            if ( string.IsNullOrEmpty( grade ) || @class == 0 ) { return 0; }
+
+            // Use modified value if a modified value exists
+            var maxFuelPerJump = modifiers?.FirstOrDefault(m => 
+                m.EDName.Equals("MaxFuelPerJump", StringComparison.InvariantCultureIgnoreCase))?.currentValue;
+            if ( maxFuelPerJump != null )
+            {
+                return (double) maxFuelPerJump;
+            }
+
+            // No modified value exists, use a base value
+            double baseMaxFuelPerJump;
+            if ( edname?.Contains( "hyperdrive_overcharge" ) ?? false )
+            {
+                var baseMaxFuelsPerJump_SCO = new Dictionary<string, double>
+                {
+                    { "2E", 0.60 }, { "2D", 0.90 }, { "2C", 0.90 }, { "2B", 0.90 }, { "2A", 1.00 },
+                    { "3E", 1.20 }, { "3D", 1.80 }, { "3C", 1.80 }, { "3B", 1.80 }, { "3A", 1.90 },
+                    { "4E", 2.00 }, { "4D", 3.00 }, { "4C", 3.00 }, { "4B", 3.00 }, { "4A", 3.20 },
+                    { "5E", 3.30 }, { "5D", 5.00 }, { "5C", 5.00 }, { "5B", 5.00 }, { "5A", 5.20 },
+                    { "6E", 5.30 }, { "6D", 8.00 }, { "6C", 8.00 }, { "6B", 8.00 }, { "6A", 8.30 },
+                    { "7E", 8.50 }, { "7D", 12.8 }, { "7C", 12.8 }, { "7B", 12.8 }, { "7A", 13.1 }
+                };
+                baseMaxFuelsPerJump_SCO.TryGetValue( @class + grade, out baseMaxFuelPerJump );
+            }
+            else
+            {
+                var baseMaxFuelsPerJump = new Dictionary<string, double>
+                {
+                    { "2E", 0.60 }, { "2D", 0.60 }, { "2C", 0.60 }, { "2B", 0.80 }, { "2A", 0.90 },
+                    { "3E", 1.20 }, { "3D", 1.20 }, { "3C", 1.20 }, { "3B", 1.50 }, { "3A", 1.80 },
+                    { "4E", 2.00 }, { "4D", 2.00 }, { "4C", 2.00 }, { "4B", 2.50 }, { "4A", 3.00 },
+                    { "5E", 3.30 }, { "5D", 3.30 }, { "5C", 3.30 }, { "5B", 4.10 }, { "5A", 5.00 },
+                    { "6E", 5.30 }, { "6D", 5.30 }, { "6C", 5.30 }, { "6B", 6.60 }, { "6A", 8.00 },
+                    { "7E", 8.50 }, { "7D", 8.50 }, { "7C", 8.50 }, { "7B", 10.6 }, { "7A", 12.8 },
+                    { "8E", 13.6 }, { "8D", 13.6 }, { "8C", 13.6 }, { "8B", 17.0 }, { "8A", 20.4 }
+                };
+                baseMaxFuelsPerJump.TryGetValue( @class + grade, out baseMaxFuelPerJump );
+            }
+            // 0 indicates no result, the `Ship` class will recalculate if the current value is 0.
+            return baseMaxFuelPerJump;
+        }
+
+        /// <summary>
+        /// Gets the optimal mass of this FSD.
+        /// </summary>
+        /// <returns>The base or modified (if modifiers are set) optimal mass of this FSD</returns>
+        public double GetFsdOptimalMass ()
+        {
+            if ( string.IsNullOrEmpty( grade ) || @class == 0 ) { return 0; }
+
+            // Use modified value if a modified value exists
+            var optimalMass = modifiers?.FirstOrDefault( m =>
+                m.EDName.Equals( "FSDOptimalMass", StringComparison.InvariantCultureIgnoreCase ) )?.currentValue;
+            if ( optimalMass != null )
+            {
+                return (double)optimalMass;
+            }
+
+            // No modified value exists, use a base value
+            double baseOptimalMass;
+            if ( edname?.Contains( "hyperdrive_overcharge" ) ?? false )
+            {
+                var baseOptimalMasses_SCO = new Dictionary<string, double>
+                {
+                    { "2E", 60.000 }, { "2D", 90.000 }, { "2C", 90.000 }, { "2B", 90.000 }, { "2A", 100.00 },
+                    { "3E", 100.00 }, { "3D", 150.00 }, { "3C", 150.00 }, { "3B", 150.00 }, { "3A", 167.00 },
+                    { "4E", 350.00 }, { "4D", 525.00 }, { "4C", 525.00 }, { "4B", 525.00 }, { "4A", 585.00 },
+                    { "5E", 700.00 }, { "5D", 1050.0 }, { "5C", 1050.0 }, { "5B", 1050.0 }, { "5A", 1175.0 },
+                    { "6E", 1200.0 }, { "6D", 1800.0 }, { "6C", 1800.0 }, { "6B", 1800.0 }, { "6A", 2000.0 },
+                    { "7E", 1800.0 }, { "7D", 2700.0 }, { "7C", 2700.0 }, { "7B", 2700.0 }, { "7A", 3000.0 }
+                };
+                baseOptimalMasses_SCO.TryGetValue( @class + grade, out baseOptimalMass );
+            }
+            else
+            {
+               var baseOptimalMasses = new Dictionary<string, double>
+                {
+                    { "2E", 48.000 }, { "2D", 54.000 }, { "2C", 60.000 }, { "2B", 75.000 }, { "2A", 90.000 },
+                    { "3E", 80.000 }, { "3D", 90.000 }, { "3C", 100.00 }, { "3B", 125.00 }, { "3A", 150.00 },
+                    { "4E", 280.00 }, { "4D", 315.00 }, { "4C", 350.00 }, { "4B", 438.00 }, { "4A", 525.00 },
+                    { "5E", 560.00 }, { "5D", 630.00 }, { "5C", 700.00 }, { "5B", 875.00 }, { "5A", 1050.0 },
+                    { "6E", 960.00 }, { "6D", 1080.0 }, { "6C", 1200.0 }, { "6B", 1500.0 }, { "6A", 1800.0 },
+                    { "7E", 1440.0 }, { "7D", 1620.0 }, { "7C", 1800.0 }, { "7B", 2250.0 }, { "7A", 2700.0 },
+                    { "8E", 2240.0 }, { "8D", 2520.0 }, { "8C", 2800.0 }, { "8B", 3500.0 }, { "8A", 4200.0 }
+                };
+                baseOptimalMasses.TryGetValue( @class + grade, out baseOptimalMass );
+            }
+            // 0 indicates no result, the `Ship` class will recalculate if the current value is 0.
+            return baseOptimalMass;
+        }
+
+        public double GetGuardianFSDBoost ()
+        {
+            if ( @class == 0 ) { return 0; }
+
+            var guardianBoostFSD_LY = new Dictionary<int, double>()
+            {
+                {1, 4.00 }, {2, 6.00 }, {3, 7.75}, {4, 9.25}, {5, 10.50}
+            };
+            return guardianBoostFSD_LY.TryGetValue( @class, out var result )
+                ? result
+                : 0;
+        }
     }
 
     public class EngineeringModifier
     {
         public string EDName { get; set; }
-        public decimal? currentValue { get; set; }
-        public decimal? originalValue { get; set; }
+        public double? currentValue { get; set; }
+        public double? originalValue { get; set; }
         public bool lessIsGood { get; set; }
         public string valueStr { get; set; }
     }

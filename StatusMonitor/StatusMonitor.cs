@@ -81,7 +81,7 @@ namespace EddiStatusMonitor
                     if (thisStatus.vehicle == Constants.VEHICLE_SHIP && EDDI.Instance.CurrentShip != null)
                     {
                         EDDI.Instance.CurrentShip.cargoCarried = thisStatus.cargo_carried ?? 0;
-                        EDDI.Instance.CurrentShip.fuelInTanks = thisStatus.fuelInTanks;
+                        EDDI.Instance.CurrentShip.fuelInTanks = thisStatus.fuelInTanks ?? 0;
                     }
 
                     // Trigger events for changed status, as applicable

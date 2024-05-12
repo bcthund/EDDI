@@ -161,11 +161,12 @@ namespace UnitTests
             // Arrange
             fakeSpanshRestClient.Expect("systems/field_values/system_names?q=NLTT 13249", "{\"values\":[\"NLTT 13249\"]}");
             fakeSpanshRestClient.Expect("systems/field_values/system_names?q=Soul Sector EL-Y d7", "{\"values\":[\"Soul Sector EL-Y d7\"]}");
-            fakeSpanshRestClient.Expect("generic/route?source=NLTT 13249destination=Soul Sector EL-Y d7is_supercharged=0use_supercharge=1use_injections=0exclude_secondary=0fuel_power=2.60fuel_multiplier=0.012optimal_mass=1800.0base_mass=0tank_size=16internal_tank_size=1.07max_fuel_per_jump=8.00range_boost=0", "{\"job\":\"F2B5B476-4458-11ED-9B9F-5DE194EB4527\",\"status\":\"queued\"}");
+            fakeSpanshRestClient.Expect( "generic/route?source=NLTT 13249destination=Soul Sector EL-Y d7is_supercharged=0use_supercharge=1use_injections=0exclude_secondary=0fuel_power=2.6fuel_multiplier=0.012optimal_mass=1800base_mass=0tank_size=16internal_tank_size=1.07max_fuel_per_jump=8range_boost=0", "{\"job\":\"F2B5B476-4458-11ED-9B9F-5DE194EB4527\",\"status\":\"queued\"}");
             fakeSpanshRestClient.Expect("results/F2B5B476-4458-11ED-9B9F-5DE194EB4527", DeserializeJsonResource<string>(Resources.SpanshGalaxyResult));
 
             // Act
             var ship = EddiDataDefinitions.ShipDefinitions.FromEDModel("Anaconda");
+            ship.fueltanktotalcapacity = 16;
             ship.frameshiftdrive = EddiDataDefinitions.Module.FromEDName("Int_Hyperdrive_Size6_Class5");
             var result = fakeSpanshService.GetGalaxyRoute("NLTT 13249", "Soul Sector EL-Y d7", ship);
 

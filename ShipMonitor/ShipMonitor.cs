@@ -550,7 +550,6 @@ namespace EddiShipMonitor
                 if (compartment != null)
                 {
                     ship.frameshiftdrive = compartment.module;
-                    ship.optimalmass = @event.optimalmass;
                 }
 
                 compartment = @event.compartments.FirstOrDefault(c => c.name == "LifeSupport");
@@ -573,7 +572,7 @@ namespace EddiShipMonitor
 
                 if (ship.fueltank != null)
                 {
-                    ship.fueltankcapacity = (decimal)Math.Pow(2, ship.fueltank.@class);
+                    ship.fueltankcapacity = Math.Pow(2, ship.fueltank.@class);
                 }
 
                 compartment = @event.compartments.FirstOrDefault(c => c.name == "CargoHatch");
@@ -1509,7 +1508,7 @@ namespace EddiShipMonitor
                         case "FuelTank":
                             {
                                 ship.fueltank = module;
-                                ship.fueltankcapacity = (decimal)Math.Pow(2, ship.fueltank.@class);
+                                ship.fueltankcapacity = Math.Pow(2, ship.fueltank.@class);
                             }
                             break;
                         case "CargoHatch":
@@ -1720,7 +1719,7 @@ namespace EddiShipMonitor
                             case "FuelTank":
                                 {
                                     ship.fueltank = replacement;
-                                    ship.fueltankcapacity = (decimal)Math.Pow(2, ship.fueltank.@class);
+                                    ship.fueltankcapacity = Math.Pow(2, ship.fueltank.@class);
                                 }
                                 break;
                             case "CargoHatch":

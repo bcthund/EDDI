@@ -148,9 +148,6 @@
   <data name="fighterLoadout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>fighterLoadout.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="loadout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>loadout.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="shipMonitor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>shipMonitor.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -228,5 +225,11 @@
   </data>
   <data name="Shipyard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Shipyard.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="loadout_empire_trader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>loadout-empire-trader.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="loadout_python_nx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>loadout-python-nx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

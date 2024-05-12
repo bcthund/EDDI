@@ -104,19 +104,10 @@ namespace EddiShipMonitor
                     Ship.fueltank = ModuleFromJson( (JObject)json["modules"]["FuelTank"]);
                     if (Ship.fueltank != null)
                     {
-                        Ship.fueltankcapacity = (decimal)Math.Pow(2, Ship.fueltank.@class);
+                        Ship.fueltankcapacity = Math.Pow(2, Ship.fueltank.@class);
                     }
                     Ship.fueltanktotalcapacity = Ship.fueltankcapacity;
                     Ship.paintjob = (string)(json["modules"]?["PaintJob"]?["name"]);
-
-                    // Get the ship's FSD optimal mass for jump calculations
-                    string fsd = Ship.frameshiftdrive.@class + Ship.frameshiftdrive.grade;
-                    if (Constants.baseOptimalMass.TryGetValue(fsd, out decimal optimalMass))
-                    {
-                        decimal modifier = (decimal?)json["modules"]["FrameShiftDrive"]?["WorkInProgress_modifications"]?
-                            ["OutfittingFieldType_FSDOptimalMass"]?["value"] ?? 1;
-                        Ship.optimalmass = optimalMass * modifier;
-                    }
 
                     // Obtain the hardpoints.  Hardpoints can come in any order so first parse them then second put them in the correct order
                     Dictionary<string, Hardpoint> hardpoints = new Dictionary<string, Hardpoint>();
@@ -150,7 +141,7 @@ namespace EddiShipMonitor
                                 string moduleName = compartment.module.invariantName ?? "";
                                 if (moduleName == "Fuel Tank")
                                 {
-                                    Ship.fueltanktotalcapacity += (decimal)Math.Pow(2, compartment.module.@class);
+                                    Ship.fueltanktotalcapacity += Math.Pow(2, compartment.module.@class);
                                 }
                                 if (moduleName.Contains("Cargo Rack"))
                                 {
@@ -275,6 +266,37 @@ namespace EddiShipMonitor
                 module.engineermodification = Blueprint.FromEDNameAndGrade(blueprintName, blueprintGrade);
                 module.blueprintId = module.engineermodification?.blueprintId ?? 0;
                 module.engineerExperimentalEffectEDName = json["specialModifications"].ToObject<KeyValuePair<string, string>>().Value;
+
+                if ( module.edname.Contains("hyperdrive") )
+                {
+                    // Get the ship FSD's optimal mass for jump calculations
+                    var fsdOptimalMassMultiplier = json[ "WorkInProgress_modifications" ]?["OutfittingFieldType_FSDOptimalMass"];
+                    if ( fsdOptimalMassMultiplier != null )
+                    {
+                        var baseOptimalMass = module.GetFsdOptimalMass();
+                        module.modifiers.Add( new EngineeringModifier
+                        {
+                            EDName = "FSDOptimalMass",
+                            currentValue = baseOptimalMass * (double)fsdOptimalMassMultiplier[ "value" ],
+                            originalValue = baseOptimalMass,
+                            lessIsGood = false,
+                        } );
+                    }
+
+                    // Get the ship FSD's max fuel per jump for jump calculations
+                    var fsdMaxFuelPerJumpMultiplier = json[ "WorkInProgress_modifications" ]?["OutfittingFieldType_MaxFuelPerJump"];
+                    if ( fsdMaxFuelPerJumpMultiplier != null )
+                    {
+                        var baseMaxFuelPerJump = module.GetFsdMaxFuelPerJump();
+                        module.modifiers.Add( new EngineeringModifier
+                        {
+                            EDName = "FSDOptimalMass",
+                            currentValue = baseMaxFuelPerJump * (double)fsdMaxFuelPerJumpMultiplier[ "value" ],
+                            originalValue = baseMaxFuelPerJump,
+                            lessIsGood = false,
+                        } );
+                    }
+                }
             }
             return module;
         }

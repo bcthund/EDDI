@@ -161,7 +161,7 @@ namespace EddiNavigationService
         /// <param name="fromUserInterface">True if the navigation query was generated from the UI thread</param>
         /// <returns>The query result</returns>
         [CanBeNull]
-        public RouteDetailsEvent NavQuery(QueryType queryType, string stringArg0 = null, string stringArg1 = null, decimal? numericArg = null, bool? booleanArg = null, bool fromUserInterface = false)
+        public RouteDetailsEvent NavQuery(QueryType queryType, string stringArg0 = null, string stringArg1 = null, double? numericArg = null, bool? booleanArg = null, bool fromUserInterface = false)
         {
             IsWorking = true;
             RouteDetailsEvent result = null;

@@ -15,38 +15,44 @@ namespace UnitTests
 {
     public class MockVAProxy
     {
-        [UsedImplicitly] public List<string> vaLog = new List<string>();
+        [UsedImplicitly] public List<KeyValuePair<string, string>> vaLog = new List<KeyValuePair<string, string>>();
 
         public Dictionary<string, object> vaVars = new Dictionary<string, object>();
 
-        public void WriteToLog(string msg)
+        [UsedImplicitly]
+        public void WriteToLog(string msg, string color = null)
         {
-            vaLog.Add(msg);
+            vaLog.Add(new KeyValuePair<string, string>(msg, color));
         }
 
+        [UsedImplicitly]
         public void SetText(string varName, string value)
         {
             vaVars[ varName ] = value;
         }
 
+        [UsedImplicitly]
         public void SetInt(string varName, int? value)
         {
-            vaVars[ varName ] = value;
+            vaVars[ varName ] = value is null ? null : (int?)Convert.ToInt32( value );
         }
 
+        [UsedImplicitly]
         public void SetBoolean(string varName, bool? value)
         {
-            vaVars[ varName ] = value;
+            vaVars[ varName ] = value is null ? null : (bool?)Convert.ToBoolean( value );
         }
 
-        public void SetDecimal(string varName, decimal? value)
+        [UsedImplicitly]
+        public void SetDecimal(string varName, object value)
         {
-            vaVars[ varName ] = value;
+            vaVars[ varName ] = value is null ? null : (decimal?)Convert.ToDecimal(value);
         }
 
+        [UsedImplicitly]
         public void SetDate(string varName, DateTime? value)
         {
-            vaVars[ varName ] = value;
+            vaVars[ varName ] = value is null ? null : (DateTime?)Convert.ToDateTime( value );
         }
     }
 
@@ -211,9 +217,10 @@ namespace UnitTests
             {
                 configuration = DeserializeJsonResource<ShipMonitorConfiguration>( Resources.shipMonitor );
             }
-            catch ( Exception )
+            catch ( Exception ex )
             {
-                Assert.Fail( "Failed to read ship configuration" );
+                Logging.Warn( "Failed to read ship configuration", ex );
+                Assert.Fail();
             }
 
             dynamic mockVaProxy = new MockVAProxy();
