@@ -92,6 +92,7 @@ namespace UnitTests
             Assert.IsNotNull(ship);
             Assert.AreEqual( "Peppermint", ship.name );
             Assert.AreEqual( "VT-E23", ship.ident );
+            Assert.AreEqual( 6, ship.LocalId );
             Assert.AreEqual( 16, ship.fueltankcapacity );
             Assert.AreEqual( 24, ship.fueltanktotalcapacity );
             Assert.AreEqual( 13943105, ship.hullvalue );
@@ -129,6 +130,66 @@ namespace UnitTests
             Assert.AreEqual( 30.696, Math.Round( ship.JumpDetails( "max", 16, 64 ).distance, 3 ) );
             Assert.AreEqual( 102.969, Math.Round( ship.JumpDetails( "total", 16, 64 ).distance, 3 ) );
             Assert.AreEqual( 148.053, Math.Round( ship.JumpDetails( "full", 16, 64 ).distance, 3 ) );
+        }
+
+        [TestMethod]
+        public void TestLoadoutParsingPythonNX ()
+        {
+            string data = DeserializeJsonResource<string>(Resources.loadout_python_nx);
+
+            List<Event> events = JournalMonitor.ParseJournalEntry(data);
+            Assert.AreEqual( 1, events.Count );
+            ShipLoadoutEvent loadoutEvent = events[0] as ShipLoadoutEvent;
+            Assert.IsNotNull( loadoutEvent );
+            Assert.AreEqual( "", loadoutEvent.shipname );
+            Assert.AreEqual( 16, loadoutEvent.compartments.Count );
+            Assert.AreEqual( 12, loadoutEvent.hardpoints.Count );
+
+            ShipMonitor shipMonitor = new ShipMonitor();
+            var privateObject = new PrivateObject(shipMonitor);
+            object[] args = new object[] { loadoutEvent };
+            Ship ship = privateObject.Invoke("ParseShipLoadoutEvent", args) as Ship;
+            Assert.IsNotNull( ship );
+            Assert.AreEqual( null, ship.name );
+            Assert.AreEqual( "FL-01P", ship.ident );
+            Assert.AreEqual( 64, ship.LocalId );
+            Assert.AreEqual( 16, ship.fueltankcapacity );
+            Assert.AreEqual( 16, ship.fueltanktotalcapacity );
+            Assert.AreEqual( 0, ship.hullvalue );
+            Assert.AreEqual( 0, ship.modulesvalue );
+            Assert.AreEqual( 0, ship.rebuy );
+            Assert.AreEqual( 100, ship.health );
+            Assert.AreEqual( false, ship.hot );
+            Assert.AreEqual( 693.099976, ship.unladenmass );
+            Assert.AreEqual( 8, ship.cargocapacity );
+            Assert.AreEqual( 4, ship.hardpoints.Count( h => h.module.edname == "Hpt_MultiCannon_Gimbal_Large" ) );
+            Assert.AreEqual( "python_nx_armour_grade1", ship.bulkheads.edname );
+            Assert.AreEqual( 0, ship.powerplant.price );
+            Assert.AreEqual( 100, ship.powerplant.health );
+            Assert.AreEqual( 0, ship.thrusters.modifiers.Count );
+            Assert.AreEqual( 0, ship.thrusters.engineerlevel );
+            Assert.AreEqual( 0, ship.thrusters.engineerquality );
+            Assert.AreEqual( "Int_ShieldGenerator_Size6_Class3_Fast", ship.compartments[ 0 ].module.edname );
+            Assert.AreEqual( "Bi-Weave Shield Generator", ship.compartments[ 0 ].module.invariantName );
+
+            // Test fuel calculations
+            Assert.AreEqual( 1175, ship.optimalmass );
+            Assert.AreEqual( 5.2, ship.maxfuelperjump );
+            // With zero fuel and zero cargo
+            Assert.AreEqual( 0, ship.JumpDetails( "next" ).distance );
+            Assert.AreEqual( 19.389, Math.Round( ship.JumpDetails( "max" ).distance, 3 ) );
+            Assert.AreEqual( 0, ship.JumpDetails( "total" ).distance );
+            Assert.AreEqual( 65.018, Math.Round( ship.JumpDetails( "full" ).distance, 3 ) );
+            // With with max fuel and zero cargo
+            Assert.AreEqual( 19.389, Math.Round( ship.JumpDetails( "next", 16 ).distance, 3 ) );
+            Assert.AreEqual( 19.389, Math.Round( ship.JumpDetails( "max", 16 ).distance, 3 ) );
+            Assert.AreEqual( 65.018, Math.Round( ship.JumpDetails( "total", 16 ).distance, 3 ) );
+            Assert.AreEqual( 65.018, Math.Round( ship.JumpDetails( "full", 16 ).distance, 3 ) );
+            // With with max fuel and max cargo
+            Assert.AreEqual( 19.169, Math.Round( ship.JumpDetails( "next", 16, 8 ).distance, 3 ) );
+            Assert.AreEqual( 19.169, Math.Round( ship.JumpDetails( "max", 16, 8 ).distance, 3 ) );
+            Assert.AreEqual( 64.282, Math.Round( ship.JumpDetails( "total", 16, 8 ).distance, 3 ) );
+            Assert.AreEqual( 64.282, Math.Round( ship.JumpDetails( "full", 16, 8 ).distance, 3 ) );
         }
 
         [TestMethod]

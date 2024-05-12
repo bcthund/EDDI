@@ -54,10 +54,7 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public long value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
                 if (_value != value)
@@ -75,42 +72,36 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public long? hullvalue
         {
-            get
-            {
-                return _hullvalue;
-            }
+            get => _hullvalue;
             set
             {
                 if (_hullvalue != value)
                 {
-                    _hullvalue = value;
+                    _hullvalue = value ?? 0;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private long? _hullvalue;
+        private long _hullvalue;
 
         /// <summary>the value of the ship's hull, in credits</summary>
 
         [PublicAPI]
         public long? modulesvalue
         {
-            get
-            {
-                return _modulesvalue;
-            }
+            get => _modulesvalue;
             set
             {
                 if (_modulesvalue != value)
                 {
-                    _modulesvalue = value;
+                    _modulesvalue = value ?? 0;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private long? _modulesvalue;
+        private long _modulesvalue;
 
         /// <summary>the value of the ship's rebuy, in credits</summary>
         [PublicAPI]
@@ -119,17 +110,13 @@ namespace EddiDataDefinitions
             get => _rebuy;
             set { _rebuy = value; OnPropertyChanged(); }
         }
-
         private long _rebuy;
 
         /// <summary>the name of this ship</summary>
         [PublicAPI]
         public string name
         {
-            get
-            {
-                return _name;
-            }
+            get => _name;
             set
             {
                 if (_name != value)
@@ -145,10 +132,7 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public string model
         {
-            get
-            {
-                return _model;
-            }
+            get => _model;
             set
             {
                 if (_model != value)
@@ -166,10 +150,7 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public string ident
         {
-            get
-            {
-                return _ident;
-            }
+            get => _ident;
             set
             {
                 if (_ident != value)
@@ -273,10 +254,7 @@ namespace EddiDataDefinitions
         /// </summary>
         public string raw
         {
-            get
-            {
-                return _raw;
-            }
+            get => _raw;
             set
             {
                 if (_raw != value)
@@ -296,10 +274,7 @@ namespace EddiDataDefinitions
         [PublicAPI, JsonIgnore]
         public bool hot
         {
-            get
-            {
-                return _hot;
-            }
+            get => _hot;
             set
             {
                 if (_hot != value)
@@ -316,10 +291,7 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public string starsystem
         {
-            get
-            {
-                return _starsystem;
-            }
+            get => _starsystem;
             set
             {
                 if (_starsystem != value)
@@ -801,7 +773,6 @@ namespace EddiDataDefinitions
             var boostFactor = Math.Pow( baseMaxRange / ( baseMaxRange + guardianFsdBoosterRange), frameshiftdrive.GetFsdPowerConstant());
 
             return Math.Pow( ( fuel / (boostFactor * frameshiftdrive.GetFsdRatingConstant() / 1000 ) ), (1 / frameshiftdrive.GetFsdPowerConstant() ) ) * boostFactor * optimalmass / mass;
-            //return maxRange * boostFactor / boostModifier;
         }
 
         public static Ship FromShipyardInfo(ShipyardInfoItem item)

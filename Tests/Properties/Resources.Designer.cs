@@ -229,7 +229,19 @@ namespace Tests.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] loadout_python_nx
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("loadout_python_nx", resourceCulture);
+                return ( (byte[])( obj ) );
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
