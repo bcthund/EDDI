@@ -1184,6 +1184,7 @@ namespace EddiJournalMonitor
                                 handled = true;
                                 break;
                             case "ShipyardNew":
+                            case "ShipRedeemed":
                                 {
                                     data.TryGetValue("NewShipID", out object val);
                                     int shipId = (int)(long)val;
