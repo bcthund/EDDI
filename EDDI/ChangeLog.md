@@ -10,6 +10,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * EDDI will no longer report your enviroment as "Normal Space" when starting docked. (#2598)
     * EDDI will delay rather than discard speech when hit by a full Thargoid shutdown. (#2603)
     * Fixed a crash when using the Cottle `dump()` function to enumerate a `Haulage` object. Removed the `expiry` property from the `Haulage` object (but it is still available from the `Mission` object). (#2593)
+    * Fixed the `inventory` object not being updated until after the `Commodity collected` event.
   * EDDN Responder
     * Add support for `DockingDenied` and `DockingGranted` schemas
   * Events

@@ -149,7 +149,6 @@ namespace EddiCargoMonitor
             }
             else if (@event is CargoDepotEvent cargoDepotEvent)
             {
-                // If cargo is collected or delivered in a wing mission
                 handleCargoDepotEvent(cargoDepotEvent);
             }
             else if (@event is LimpetPurchasedEvent limpetPurchasedEvent)
@@ -158,32 +157,26 @@ namespace EddiCargoMonitor
             }
             else if (@event is MissionsEvent missionsEvent)
             {
-                // Remove cargo haulage stragglers for completed missions
                 handleMissionsEvent(missionsEvent);
             }
             else if (@event is MissionAbandonedEvent missionAbandonedEvent)
             {
-                // If we abandon a mission with cargo it becomes stolen
                 handleMissionAbandonedEvent(missionAbandonedEvent);
             }
             else if (@event is MissionAcceptedEvent missionAcceptedEvent)
             {
-                // Check to see if this is a cargo mission and update our inventory accordingly
                 handleMissionAcceptedEvent(missionAcceptedEvent);
             }
             else if (@event is MissionCompletedEvent missionCompletedEvent)
             {
-                // Check to see if this is a cargo mission and update our inventory accordingly
                 handleMissionCompletedEvent(missionCompletedEvent);
             }
             else if (@event is MissionExpiredEvent missionExpiredEvent)
             {
-                // Check to see if this is a cargo mission and update our inventory accordingly
                 handleMissionExpiredEvent(missionExpiredEvent);
             }
             else if (@event is MissionFailedEvent missionFailedEvent)
             {
-                // If we fail a mission with cargo it becomes stolen
                 handleMissionFailedEvent(missionFailedEvent);
             }
             else if (@event is DiedEvent)
@@ -200,6 +193,7 @@ namespace EddiCargoMonitor
             }
         }
 
+        // Keeps inventory levels synced to the game
         private void handleCargoEvent(CargoEvent @event)
         {
             if (@event.timestamp > updateDat)
@@ -285,39 +279,36 @@ namespace EddiCargoMonitor
 
         private bool _handleCommodityCollectedEvent(CommodityCollectedEvent @event)
         {
-            var update = false;
-            var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
-            if (cargo != null)
+            var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname) ?? new Cargo(@event.commodityDefinition?.edname);
+            var haulage = cargo.haulageData.FirstOrDefault( h => h.missionid == @event.missionid );
+            if ( @event.missionid != null )
             {
-                var haulage = cargo.haulageData.FirstOrDefault(h => h.missionid == @event.missionid);
-                if (EDDI.Instance?.Vehicle != Constants.VEHICLE_SHIP)
-                {
-                    if (haulage != null)
-                    {
-                        cargo.AddDetailedQty(CargoType.mission, 1, 0);
-                    }
-                    else if (@event.stolen)
-                    {
-                        cargo.AddDetailedQty(CargoType.stolen, 1, 0);
-                    }
-                    else
-                    {
-                        cargo.AddDetailedQty(CargoType.legal, 1, 0);
-                    }
-                    cargo.CalculateNeed();
-                    update = true;
-                }
-                if (haulage != null && ((haulage.typeEDName?.Contains("mining") ?? false)
-                    || (haulage.typeEDName?.Contains("piracy") ?? false)
-                    || (haulage.typeEDName?.Contains("rescue") ?? false)
-                    || (haulage.typeEDName?.Contains("salvage") ?? false)))
+                if ( ( haulage?.typeEDName?.Contains( "mining" ) ?? false )
+                     || ( haulage?.typeEDName?.Contains( "piracy" ) ?? false )
+                     || ( haulage?.typeEDName?.Contains( "rescue" ) ?? false )
+                     || ( haulage?.typeEDName?.Contains( "salvage" ) ?? false ) )
                 {
                     haulage.sourcesystem = EDDI.Instance?.CurrentStarSystem?.systemname;
                     haulage.sourcebody = EDDI.Instance?.CurrentStellarBody?.bodyname;
-                    update = true;
                 }
             }
-            return update;
+
+            if ( @event.missionid != null )
+            {
+                cargo.AddDetailedQty( CargoType.mission, 1, 0, haulage );
+            }
+            else if ( @event.stolen )
+            {
+                cargo.AddDetailedQty( CargoType.stolen, 1, 0 );
+            }
+            else
+            {
+                cargo.AddDetailedQty( CargoType.legal, 1, 0 );
+            }
+
+            cargo.CalculateNeed();
+            AddOrUpdateCargo( cargo );
+            return true;
         }
 
         private void handleCommodityEjectedEvent(CommodityEjectedEvent @event)
@@ -455,6 +446,7 @@ namespace EddiCargoMonitor
             }
         }
 
+        // If cargo is collected or delivered in a wing mission
         private void handleCargoDepotEvent(CargoDepotEvent @event)
         {
             if (@event.timestamp > updateDat)
@@ -648,6 +640,7 @@ namespace EddiCargoMonitor
             return true;
         }
 
+        // Remove cargo haulage stragglers for completed missions
         private void handleMissionsEvent(MissionsEvent @event)
         {
             if (@event.timestamp > updateDat)
@@ -679,6 +672,7 @@ namespace EddiCargoMonitor
             return update;
         }
 
+        // If we abandon a mission with cargo it becomes stolen
         private void handleMissionAbandonedEvent(MissionAbandonedEvent @event)
         {
             if (@event.timestamp > updateDat)
@@ -707,6 +701,7 @@ namespace EddiCargoMonitor
             return update;
         }
 
+        // Check to see if this is a cargo mission and update our inventory accordingly
         private void handleMissionAcceptedEvent(MissionAcceptedEvent @event)
         {
             if (@event.timestamp > updateDat && @event.Mission.CommodityDefinition != null)
@@ -779,6 +774,7 @@ namespace EddiCargoMonitor
             return update;
         }
 
+        // Check to see if this is a cargo mission and update our inventory accordingly
         private void handleMissionCompletedEvent(MissionCompletedEvent @event)
         {
             if (@event.commodityDefinition != null || @event.commodityrewards != null)
@@ -811,6 +807,7 @@ namespace EddiCargoMonitor
             return update;
         }
 
+        // Check to see if this is a cargo mission and update our inventory accordingly
         private void handleMissionExpiredEvent(MissionExpiredEvent @event)
         {
             if (@event.timestamp > updateDat)
@@ -835,6 +832,7 @@ namespace EddiCargoMonitor
             return update;
         }
 
+        // If we fail a mission with cargo it becomes stolen
         private void handleMissionFailedEvent(MissionFailedEvent @event)
         {
             if (@event.timestamp > updateDat)
