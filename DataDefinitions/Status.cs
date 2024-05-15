@@ -279,10 +279,10 @@ namespace EddiDataDefinitions
         public decimal? slope { get; set; }
 
         [PublicAPI]
-        public double? fuel => fuelInTanks + fuelInReservoir;
+        public decimal? fuel => fuelInTanks + fuelInReservoir;
 
         [PublicAPI]
-        public double? fuel_percent { get; set; }
+        public decimal? fuel_percent { get; set; }
 
         public int? fuel_percentile => fuel_percent is null 
             ? null 
@@ -296,8 +296,8 @@ namespace EddiDataDefinitions
 
         // Not intended to be user facing
 
-        public double? fuelInTanks;
-        public double? fuelInReservoir;
+        public decimal? fuelInTanks;
+        public decimal? fuelInReservoir;
         public Flags flags;
         public Flags2 flags2;
         public DateTime timestamp = DateTime.UtcNow;

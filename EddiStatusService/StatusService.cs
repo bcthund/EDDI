@@ -27,7 +27,7 @@ namespace EddiStatusService
 
         // Public Write variables (set elsewhere to assist with various calculations)
         public Ship CurrentShip;
-        public List<KeyValuePair<DateTime, double?>> fuelLog;
+        public List<KeyValuePair<DateTime, decimal?>> fuelLog;
         public EnteredNormalSpaceEvent lastEnteredNormalSpaceEvent;
 
         // Other variables used by this service
@@ -266,8 +266,8 @@ namespace EddiStatusService
                     {
                         if (fuelData is IDictionary<string, object> fuelInfo)
                         {
-                            status.fuelInTanks = JsonParsing.getOptionalDouble(fuelInfo, "FuelMain");
-                            status.fuelInReservoir = JsonParsing.getOptionalDouble( fuelInfo, "FuelReservoir");
+                            status.fuelInTanks = JsonParsing.getOptionalDecimal(fuelInfo, "FuelMain");
+                            status.fuelInReservoir = JsonParsing.getOptionalDecimal(fuelInfo, "FuelReservoir");
                         }
                     }
                     status.cargo_carried = (int?)JsonParsing.getOptionalDecimal(data, "Cargo");
@@ -352,13 +352,13 @@ namespace EddiStatusService
 
         private void SetFuelExtras(Status status)
         {
-            double? fuel_rate = FuelConsumptionPerSecond(status.timestamp, status.fuel);
-            FuelPercentAndTime(status.vehicle, status.fuel, fuel_rate, out double? fuel_percent, out int? fuel_seconds);
+            decimal? fuel_rate = FuelConsumptionPerSecond(status.timestamp, status.fuel);
+            FuelPercentAndTime(status.vehicle, status.fuel, fuel_rate, out decimal? fuel_percent, out int? fuel_seconds);
             status.fuel_percent = fuel_percent;
             status.fuel_seconds = fuel_seconds;
         }
 
-        private double? FuelConsumptionPerSecond(DateTime timestamp, double? fuel, int trackingMinutes = 5)
+        private decimal? FuelConsumptionPerSecond(DateTime timestamp, decimal? fuel, int trackingMinutes = 5)
         {
             if (fuel is null)
             {
@@ -367,16 +367,16 @@ namespace EddiStatusService
 
             if (fuelLog is null)
             {
-                fuelLog = new List<KeyValuePair<DateTime, double?>>();
+                fuelLog = new List<KeyValuePair<DateTime, decimal?>>();
             }
             else
             {
                 fuelLog.RemoveAll(log => (DateTime.UtcNow - log.Key).TotalMinutes > trackingMinutes);
             }
-            fuelLog.Add(new KeyValuePair<DateTime, double?>(timestamp, fuel));
+            fuelLog.Add(new KeyValuePair<DateTime, decimal?>(timestamp, fuel));
             if (fuelLog.Count > 1)
             {
-                double? fuelConsumed = fuelLog.FirstOrDefault().Value - fuelLog.LastOrDefault().Value;
+                decimal? fuelConsumed = fuelLog.FirstOrDefault().Value - fuelLog.LastOrDefault().Value;
                 TimeSpan timespan = fuelLog.LastOrDefault().Key - fuelLog.FirstOrDefault().Key;
 
                 return timespan.Seconds == 0 ? null : fuelConsumed / timespan.Seconds; // Return tons of fuel consumed per second
@@ -385,7 +385,7 @@ namespace EddiStatusService
             return 0;
         }
 
-        private void FuelPercentAndTime(string vehicle, double? fuelRemaining, double? fuelPerSecond, out double? fuel_percent, out int? fuel_seconds)
+        private void FuelPercentAndTime(string vehicle, decimal? fuelRemaining, decimal? fuelPerSecond, out decimal? fuel_percent, out int? fuel_seconds)
         {
             fuel_percent = null;
             fuel_seconds = null;
@@ -400,15 +400,15 @@ namespace EddiStatusService
                 if (CurrentShip?.fueltanktotalcapacity > 0)
                 {
                     // Fuel recorded in Status.json includes the fuel carried in the Active Fuel Reservoir
-                    var percent = (double)(fuelRemaining / (CurrentShip.fueltanktotalcapacity + CurrentShip.activeFuelReservoirCapacity) * 100);
+                    decimal percent = (decimal)(fuelRemaining / (CurrentShip.fueltanktotalcapacity + CurrentShip.activeFuelReservoirCapacity) * 100);
                     fuel_percent = percent > 10 ? Math.Round(percent, 0) : Math.Round(percent, 1);
                     fuel_seconds = fuelPerSecond > 0 ? (int?)((CurrentShip.fueltanktotalcapacity + CurrentShip.activeFuelReservoirCapacity) / fuelPerSecond) : null;
                 }
             }
             else if (vehicle == Constants.VEHICLE_SRV)
             {
-                const double srvFuelTankCapacity = 0.45;
-                var percent = (double)(fuelRemaining / srvFuelTankCapacity * 100);
+                const decimal srvFuelTankCapacity = 0.45M;
+                decimal percent = (decimal)(fuelRemaining / srvFuelTankCapacity * 100);
                 fuel_percent = percent > 10 ? Math.Round(percent, 0) : Math.Round(percent, 1);
                 fuel_seconds = fuelPerSecond > 0 ? (int?)(srvFuelTankCapacity / fuelPerSecond) : null;
             }

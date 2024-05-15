@@ -82,7 +82,6 @@ namespace EddiShipMonitor
                 Ship.ident = (string)json.GetValue("shipID");
 
                 Ship.value = (long)(json["value"]?["hull"] ?? 0) + (long)(json["value"]?["modules"] ?? 0);
-                Ship.cargocapacity = 0;
 
                 decimal? healthOutOf1e6 = (decimal?)(json["health"]?["hull"]);
                 if (healthOutOf1e6 != null)
@@ -102,11 +101,6 @@ namespace EddiShipMonitor
                     Ship.powerdistributor = ModuleFromJson( (JObject)json["modules"]["PowerDistributor"]);
                     Ship.sensors = ModuleFromJson( (JObject)json["modules"]["Radar"]);
                     Ship.fueltank = ModuleFromJson( (JObject)json["modules"]["FuelTank"]);
-                    if (Ship.fueltank != null)
-                    {
-                        Ship.fueltankcapacity = Math.Pow(2, Ship.fueltank.@class);
-                    }
-                    Ship.fueltanktotalcapacity = Ship.fueltankcapacity;
                     Ship.paintjob = (string)(json["modules"]?["PaintJob"]?["name"]);
 
                     // Obtain the hardpoints.  Hardpoints can come in any order so first parse them then second put them in the correct order
@@ -136,18 +130,6 @@ namespace EddiShipMonitor
                         if (module.Name.Contains("Slot"))
                         {
                             Compartment compartment = CompartmentFromJson(module);
-                            if (compartment.module != null)
-                            {
-                                string moduleName = compartment.module.invariantName ?? "";
-                                if (moduleName == "Fuel Tank")
-                                {
-                                    Ship.fueltanktotalcapacity += Math.Pow(2, compartment.module.@class);
-                                }
-                                if (moduleName.Contains("Cargo Rack"))
-                                {
-                                    Ship.cargocapacity += (int)Math.Pow(2, compartment.module.@class);
-                                }
-                            }
                             Ship.compartments.Add(compartment);
                         }
                     }
@@ -273,11 +255,11 @@ namespace EddiShipMonitor
                     var fsdOptimalMassMultiplier = json[ "WorkInProgress_modifications" ]?["OutfittingFieldType_FSDOptimalMass"];
                     if ( fsdOptimalMassMultiplier != null )
                     {
-                        var baseOptimalMass = module.GetFsdOptimalMass();
+                        var baseOptimalMass = Convert.ToDecimal( module.GetFsdOptimalMass() );
                         module.modifiers.Add( new EngineeringModifier
                         {
                             EDName = "FSDOptimalMass",
-                            currentValue = baseOptimalMass * (double)fsdOptimalMassMultiplier[ "value" ],
+                            currentValue = baseOptimalMass * (decimal)fsdOptimalMassMultiplier[ "value" ],
                             originalValue = baseOptimalMass,
                             lessIsGood = false,
                         } );
@@ -290,8 +272,8 @@ namespace EddiShipMonitor
                         var baseMaxFuelPerJump = module.GetFsdMaxFuelPerJump();
                         module.modifiers.Add( new EngineeringModifier
                         {
-                            EDName = "FSDOptimalMass",
-                            currentValue = baseMaxFuelPerJump * (double)fsdMaxFuelPerJumpMultiplier[ "value" ],
+                            EDName = "MaxFuelPerJump",
+                            currentValue = baseMaxFuelPerJump * (decimal)fsdMaxFuelPerJumpMultiplier[ "value" ],
                             originalValue = baseMaxFuelPerJump,
                             lessIsGood = false,
                         } );

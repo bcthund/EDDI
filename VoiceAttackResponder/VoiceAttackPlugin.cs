@@ -1113,7 +1113,7 @@ namespace EddiVoiceAttackResponder
 
                 if ( Enum.TryParse(type, true, out QueryType result))
                 {
-                    var @event = NavigationService.Instance.NavQuery(result, string0, string1, (double)numeric, boolean);
+                    var @event = NavigationService.Instance.NavQuery(result, string0, string1, numeric, boolean);
                     if (@event != null)
                     {
                         EDDI.Instance?.enqueueEvent(@event);

@@ -19,7 +19,7 @@ namespace EddiNavigationService.QueryResolvers
 
         /// <summary> Route to the nearest star system that is eligible for fuel scoop refueling </summary>
         /// <returns> The query result </returns>
-        private RouteDetailsEvent GetNearestScoopSystem ( [NotNull] StarSystem startSystem, double? searchRadius = null )
+        private RouteDetailsEvent GetNearestScoopSystem ( [NotNull] StarSystem startSystem, decimal? searchRadius = null )
         {
             if ( searchRadius is null )
             {

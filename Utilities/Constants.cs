@@ -41,7 +41,6 @@ namespace Utilities
         public const double solMassKg = 1.98847e30;
         public const double gravitationalConstant = 6.67430e-11; // cubic meters / (kilograms * seconds squared)
 
-
         // Fleet Carrier Constants
         public const int carrierJumpSeconds = 72; // 72 seconds from when the jump is engaged to when it completes.
         public const int carrierPostJumpSeconds = 290; // 4 minutes 50 seconds cool down

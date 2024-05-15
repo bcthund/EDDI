@@ -57,7 +57,7 @@ namespace IntegrationTests
             privateObject.SetFieldOrProperty(nameof(EDDI.Instance.CurrentStarSystem), sol);
             privateObject.SetFieldOrProperty( nameof( EDDI.Instance.CurrentShip ), ShipDefinitions.FromEDModel( "Anaconda" ) );
 
-            var result = navigationService.NavQuery(query, stringArg0, stringArg1, numericArg, prioritizeOrbitalStations);
+            var result = navigationService.NavQuery(query, stringArg0, stringArg1, Convert.ToDecimal(numericArg), prioritizeOrbitalStations);
             Assert.IsNotNull(result);
             Assert.AreEqual(expectedStarSystem, result.system);
             Assert.AreEqual(expectedStationName, result.station);

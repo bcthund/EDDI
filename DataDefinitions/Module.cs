@@ -224,7 +224,7 @@ namespace EddiDataDefinitions
             }
         }
 
-        public double GetFsdMaxFuelPerJump ()
+        public decimal GetFsdMaxFuelPerJump ()
         {
             if ( string.IsNullOrEmpty( grade ) || @class == 0 ) { return 0; }
 
@@ -233,35 +233,35 @@ namespace EddiDataDefinitions
                 m.EDName.Equals("MaxFuelPerJump", StringComparison.InvariantCultureIgnoreCase))?.currentValue;
             if ( maxFuelPerJump != null )
             {
-                return (double) maxFuelPerJump;
+                return (decimal) maxFuelPerJump;
             }
 
             // No modified value exists, use a base value
-            double baseMaxFuelPerJump;
+            decimal baseMaxFuelPerJump;
             if ( edname?.Contains( "hyperdrive_overcharge" ) ?? false )
             {
-                var baseMaxFuelsPerJump_SCO = new Dictionary<string, double>
+                var baseMaxFuelsPerJump_SCO = new Dictionary<string, decimal>
                 {
-                    { "2E", 0.60 }, { "2D", 0.90 }, { "2C", 0.90 }, { "2B", 0.90 }, { "2A", 1.00 },
-                    { "3E", 1.20 }, { "3D", 1.80 }, { "3C", 1.80 }, { "3B", 1.80 }, { "3A", 1.90 },
-                    { "4E", 2.00 }, { "4D", 3.00 }, { "4C", 3.00 }, { "4B", 3.00 }, { "4A", 3.20 },
-                    { "5E", 3.30 }, { "5D", 5.00 }, { "5C", 5.00 }, { "5B", 5.00 }, { "5A", 5.20 },
-                    { "6E", 5.30 }, { "6D", 8.00 }, { "6C", 8.00 }, { "6B", 8.00 }, { "6A", 8.30 },
-                    { "7E", 8.50 }, { "7D", 12.8 }, { "7C", 12.8 }, { "7B", 12.8 }, { "7A", 13.1 }
+                    { "2E", 0.60M }, { "2D", 0.90M }, { "2C", 0.90M }, { "2B", 0.90M }, { "2A", 1.00M },
+                    { "3E", 1.20M }, { "3D", 1.80M }, { "3C", 1.80M }, { "3B", 1.80M }, { "3A", 1.90M },
+                    { "4E", 2.00M }, { "4D", 3.00M }, { "4C", 3.00M }, { "4B", 3.00M }, { "4A", 3.20M },
+                    { "5E", 3.30M }, { "5D", 5.00M }, { "5C", 5.00M }, { "5B", 5.00M }, { "5A", 5.20M },
+                    { "6E", 5.30M }, { "6D", 8.00M }, { "6C", 8.00M }, { "6B", 8.00M }, { "6A", 8.30M },
+                    { "7E", 8.50M }, { "7D", 12.8M }, { "7C", 12.8M }, { "7B", 12.8M }, { "7A", 13.1M }
                 };
                 baseMaxFuelsPerJump_SCO.TryGetValue( @class + grade, out baseMaxFuelPerJump );
             }
             else
             {
-                var baseMaxFuelsPerJump = new Dictionary<string, double>
+                var baseMaxFuelsPerJump = new Dictionary<string, decimal>
                 {
-                    { "2E", 0.60 }, { "2D", 0.60 }, { "2C", 0.60 }, { "2B", 0.80 }, { "2A", 0.90 },
-                    { "3E", 1.20 }, { "3D", 1.20 }, { "3C", 1.20 }, { "3B", 1.50 }, { "3A", 1.80 },
-                    { "4E", 2.00 }, { "4D", 2.00 }, { "4C", 2.00 }, { "4B", 2.50 }, { "4A", 3.00 },
-                    { "5E", 3.30 }, { "5D", 3.30 }, { "5C", 3.30 }, { "5B", 4.10 }, { "5A", 5.00 },
-                    { "6E", 5.30 }, { "6D", 5.30 }, { "6C", 5.30 }, { "6B", 6.60 }, { "6A", 8.00 },
-                    { "7E", 8.50 }, { "7D", 8.50 }, { "7C", 8.50 }, { "7B", 10.6 }, { "7A", 12.8 },
-                    { "8E", 13.6 }, { "8D", 13.6 }, { "8C", 13.6 }, { "8B", 17.0 }, { "8A", 20.4 }
+                    { "2E", 0.60M }, { "2D", 0.60M }, { "2C", 0.60M }, { "2B", 0.80M }, { "2A", 0.90M },
+                    { "3E", 1.20M }, { "3D", 1.20M }, { "3C", 1.20M }, { "3B", 1.50M }, { "3A", 1.80M },
+                    { "4E", 2.00M }, { "4D", 2.00M }, { "4C", 2.00M }, { "4B", 2.50M }, { "4A", 3.00M },
+                    { "5E", 3.30M }, { "5D", 3.30M }, { "5C", 3.30M }, { "5B", 4.10M }, { "5A", 5.00M },
+                    { "6E", 5.30M }, { "6D", 5.30M }, { "6C", 5.30M }, { "6B", 6.60M }, { "6A", 8.00M },
+                    { "7E", 8.50M }, { "7D", 8.50M }, { "7C", 8.50M }, { "7B", 10.6M }, { "7A", 12.8M },
+                    { "8E", 13.6M }, { "8D", 13.6M }, { "8C", 13.6M }, { "8B", 17.0M }, { "8A", 20.4M }
                 };
                 baseMaxFuelsPerJump.TryGetValue( @class + grade, out baseMaxFuelPerJump );
             }
@@ -335,8 +335,8 @@ namespace EddiDataDefinitions
     public class EngineeringModifier
     {
         public string EDName { get; set; }
-        public double? currentValue { get; set; }
-        public double? originalValue { get; set; }
+        public decimal? currentValue { get; set; }
+        public decimal? originalValue { get; set; }
         public bool lessIsGood { get; set; }
         public string valueStr { get; set; }
     }

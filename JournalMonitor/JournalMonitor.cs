@@ -632,8 +632,8 @@ namespace EddiJournalMonitor
                                     var hullValue = JsonParsing.getOptionalLong(data, "HullValue");
                                     var modulesValue = JsonParsing.getOptionalLong(data, "ModulesValue");
                                     var hullHealth = sensibleHealth((JsonParsing.getOptionalDecimal(data, "HullHealth") ?? 1) * 100);
-                                    var unladenMass = JsonParsing.getOptionalDouble(data, "UnladenMass") ?? 0;
-                                    var maxJumpRange = JsonParsing.getOptionalDouble(data, "MaxJumpRange") ?? 0;
+                                    var unladenMass = JsonParsing.getOptionalDecimal(data, "UnladenMass") ?? 0;
+                                    var maxJumpRange = JsonParsing.getOptionalDecimal(data, "MaxJumpRange") ?? 0;
 
                                     var rebuy = JsonParsing.getLong(data, "Rebuy");
 
@@ -681,7 +681,7 @@ namespace EddiJournalMonitor
                                             var blueprintId = modified ? JsonParsing.getLong(engineeringData, "BlueprintID") : 0;
                                             var level = modified ? JsonParsing.getInt(engineeringData, "Level") : 0;
                                             var modification = Blueprint.FromEliteID(blueprintId, engineeringData)
-                                                               ?? Blueprint.FromEDNameAndGrade(blueprint, level) ?? Blueprint.None;
+                                                ?? Blueprint.FromEDNameAndGrade(blueprint, level) ?? Blueprint.None;
                                             var quality = modified ? JsonParsing.getDecimal(engineeringData, "Quality") : 0;
                                             var experimentalEffect = modified ? JsonParsing.getString(engineeringData, "ExperimentalEffect") : null;
                                             var modifiers = new List<EngineeringModifier>();
@@ -694,8 +694,8 @@ namespace EddiJournalMonitor
                                                     try
                                                     {
                                                         var edname = JsonParsing.getString(modifier, "Label");
-                                                        var currentValue = JsonParsing.getOptionalDouble(modifier, "Value");
-                                                        var originalValue = JsonParsing.getOptionalDouble(modifier, "OriginalValue");
+                                                        var currentValue = JsonParsing.getOptionalDecimal(modifier, "Value");
+                                                        var originalValue = JsonParsing.getOptionalDecimal(modifier, "OriginalValue");
                                                         var lessIsGood = JsonParsing.getOptionalInt(modifier, "LessIsGood") == 1;
                                                         var valueStr = JsonParsing.getString(modifier, "ValueStr");
                                                         modifiers.Add(new EngineeringModifier
@@ -2669,8 +2669,8 @@ namespace EddiJournalMonitor
                                     long credits = (long)JsonParsing.getOptionalLong(data, "Credits");
                                     long loan = (long)JsonParsing.getOptionalLong(data, "Loan");
 
-                                    double? fuel = JsonParsing.getOptionalDouble(data, "FuelLevel");
-                                    double? fuelCapacity = JsonParsing.getOptionalDouble(data, "FuelCapacity");
+                                    decimal? fuel = JsonParsing.getOptionalDecimal(data, "FuelLevel");
+                                    decimal? fuelCapacity = JsonParsing.getOptionalDecimal(data, "FuelCapacity");
 
                                     string version = JsonParsing.getString(data, "gameversion")?.Trim();
                                     string build = JsonParsing.getString(data, "build")?.Trim();
@@ -2981,7 +2981,7 @@ namespace EddiJournalMonitor
                                 break;
                             case "RefuelPartial":
                                 {
-                                    var amount = JsonParsing.getDouble(data, "Amount");
+                                    decimal amount = JsonParsing.getDecimal(data, "Amount");
                                     data.TryGetValue("Cost", out object val);
                                     long price = (long)val;
 
@@ -2991,7 +2991,7 @@ namespace EddiJournalMonitor
                                 break;
                             case "RefuelAll":
                                 {
-                                    double amount = JsonParsing.getDouble(data, "Amount");
+                                    decimal amount = JsonParsing.getDecimal(data, "Amount");
                                     data.TryGetValue("Cost", out object val);
                                     long price = (long)val;
 
@@ -3001,8 +3001,8 @@ namespace EddiJournalMonitor
                                 break;
                             case "FuelScoop":
                                 {
-                                    double amount = JsonParsing.getDouble(data, "Scooped");
-                                    double total = JsonParsing.getDouble(data, "Total");
+                                    decimal amount = JsonParsing.getDecimal(data, "Scooped");
+                                    decimal total = JsonParsing.getDecimal(data, "Total");
                                     events.Add(new ShipRefuelledEvent(timestamp, "Scoop", null, amount, total) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;

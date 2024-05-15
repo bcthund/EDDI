@@ -46,8 +46,12 @@ namespace EddiDataDefinitions
         public int? militarysize { get; set; }
 
         /// <summary>the total tonnage cargo capacity</summary>
-        [PublicAPI]
-        public int cargocapacity { get; set; }
+        [ PublicAPI, JsonIgnore] 
+        public int cargocapacity => compartments
+            .Where( c=> c.module != null  )
+            .Select(c => c.module)
+            .Where( m => m.@class > 0 && m.basename.Contains( "CargoRack", StringComparison.InvariantCultureIgnoreCase ))
+            .Sum( m => 1 << m.@class); // Calculated using a shift operator (`<<`), equiv to 2^(@class), calculated as an integer )
 
         /// <summary>the value of the ship without cargo, in credits</summary>
 
@@ -401,8 +405,6 @@ namespace EddiDataDefinitions
             set
             {
                 _frameshiftdrive = value;
-                maxfuelperjump = value?.GetFsdMaxFuelPerJump() ?? 0;
-                optimalmass = value?.GetFsdOptimalMass() ?? 0;
                 OnPropertyChanged();
             }
         }
@@ -437,7 +439,7 @@ namespace EddiDataDefinitions
         {
             get => _fueltank;
             set { _fueltank = value; OnPropertyChanged(); }
-        }
+            }
         private Module _fueltank = new Module();
 
         [PublicAPI, JetBrains.Annotations.NotNull, JetBrains.Annotations.ItemNotNull]
@@ -466,28 +468,22 @@ namespace EddiDataDefinitions
 
         public string paintjob { get; set; }
 
-        [PublicAPI]
-        public double? fueltankcapacity // Core capacity
-        {
-            get => _fueltankcapacity;
-            set { _fueltankcapacity = value ?? 0; OnPropertyChanged(); }
-        }
-        private double _fueltankcapacity;
+        [PublicAPI, JsonIgnore] // Core capacity
+        public decimal? fueltankcapacity => fueltank?.@class > 0 ? 1 << fueltank?.@class : 0; // Shift operator, equiv to 2^(fueltank.@class), calculated as an integer
 
-        [PublicAPI]
-        public double? fueltanktotalcapacity // Capacity including additional tanks
-        {
-            get => _fueltanktotalcapacity;
-            set { _fueltanktotalcapacity = value ?? 0; OnPropertyChanged(); }
-        }
-        private double _fueltanktotalcapacity;
+        [PublicAPI, JsonIgnore] // Capacity including additional tanks (and excluding the active fuel reservoir)
+        public decimal? fueltanktotalcapacity => fueltankcapacity + compartments
+            .Where( c => c.module != null )
+            .Select( c => c.module )
+            .Where( m => m.@class > 0 && m.basename.Contains( "FuelTank", StringComparison.InvariantCultureIgnoreCase ) )
+            .Sum( m => 1 << m.@class ); // Calculated using a shift operator (`<<`), equiv to 2^(@class), calculated as an integer )
 
-        public double activeFuelReservoirCapacity { get; set; }
+        public decimal activeFuelReservoirCapacity { get; set; }
 
         // Ship jump and mass properties
 
         [PublicAPI]
-        public double maxjumprange 
+        public decimal maxjumprange 
         {
             get => _maxjumprange;
             set
@@ -504,44 +500,20 @@ namespace EddiDataDefinitions
                 OnPropertyChanged(nameof(maxjumprange));
             }
         }
-        private double _maxjumprange;
+        private decimal _maxjumprange;
 
         [JsonIgnore, Obsolete("Please use maxjumprange instead")]
-        public double maxjump => maxjumprange;
+        public decimal maxjump => maxjumprange;
 
-        [PublicAPI]
-        public double maxfuelperjump
-        {
-            get => _maxfuelperjump;
-            set
-            {
-                _maxfuelperjump = value > 0 
-                    ? value 
-                    : frameshiftdrive?.GetFsdMaxFuelPerJump() ?? 0;
-                OnPropertyChanged(nameof(maxfuelperjump));
-            }
-        }
-        private double _maxfuelperjump;
+        [ PublicAPI, JsonIgnore] 
+        public decimal maxfuelperjump => frameshiftdrive?.GetFsdMaxFuelPerJump() ?? 0;
 
         [JsonIgnore, Obsolete("Please use maxfuelperjump instead")]
-        public double maxfuel => maxfuelperjump;
+        public decimal maxfuel => maxfuelperjump;
 
-        public double optimalmass 
-        {
-            get => _optimalmass;
-            set
-            {
-                _optimalmass = value > 0
-                    ? value
-                    : frameshiftdrive?.GetFsdOptimalMass() ?? 0;
-                OnPropertyChanged(nameof(optimalmass));
-            }
-        }
-        private double _optimalmass;
+        public decimal unladenmass { get; set; }
 
-        public double unladenmass { get; set; }
-
-        public double? fuelInTanks
+        public decimal? fuelInTanks
         {
             get => _fuelInTanks;
             set
@@ -550,7 +522,7 @@ namespace EddiDataDefinitions
                 maxjumprange = JumpRange( _fuelInTanks, 0 );
             }
         }
-        private double _fuelInTanks;
+        private decimal _fuelInTanks;
 
         public int cargoCarried { get; set; }
 
@@ -566,7 +538,7 @@ namespace EddiDataDefinitions
         public Ship()
         { }
 
-        public Ship( string EDName, ShipManufacturer Manufacturer, string Model, string possessiveYour, List<Translation> PhoneticModel, LandingPadSize Size, int? MilitarySize, double reservoirFuelTankSize )
+        public Ship( string EDName, ShipManufacturer Manufacturer, string Model, string possessiveYour, List<Translation> PhoneticModel, LandingPadSize Size, int? MilitarySize, decimal reservoirFuelTankSize )
         {
             this.EDName = EDName;
             manufacturer = Manufacturer.name;
@@ -706,13 +678,10 @@ namespace EddiDataDefinitions
             }
         }
 
-        public JumpDetail JumpDetails(string type, double? fuelInTanksOverride = null, int? cargoCarriedOverride = null)
+        public JumpDetail JumpDetails(string type, decimal? fuelInTanksOverride = null, int? cargoCarriedOverride = null)
         {
             var currentFuel = fuelInTanksOverride ?? fuelInTanks ?? 0;
             var cargoTonnage = cargoCarriedOverride ?? cargoCarried;
-
-            if (string.IsNullOrEmpty(type)) { return null; }
-
 
             if (!string.IsNullOrEmpty(type))
             {
@@ -720,7 +689,7 @@ namespace EddiDataDefinitions
                 {
                     case "next":
                         {
-                            var jumpRange = JumpRange( Math.Min( currentFuel, maxfuelperjump ), cargoTonnage );
+                            decimal jumpRange = JumpRange( currentFuel, cargoTonnage );
                             return new JumpDetail(jumpRange, 1);
                         }
                     case "max":
@@ -730,7 +699,7 @@ namespace EddiDataDefinitions
                         }
                     case "total":
                         {
-                            double total = 0;
+                            decimal total = 0;
                             int jumps = 0;
                             while (currentFuel > 0)
                             {
@@ -743,7 +712,7 @@ namespace EddiDataDefinitions
                     case "full":
                         {
                             currentFuel = fueltanktotalcapacity ?? 0;
-                            double total = 0;
+                            decimal total = 0;
                             int jumps = 0;
                             while ( currentFuel > 0)
                             {
@@ -758,21 +727,21 @@ namespace EddiDataDefinitions
             return null;
         }
 
-        private double JumpRange (double currentFuel, int carriedCargo, double boostModifier = 1)
+        private decimal JumpRange ( decimal currentFuel, int carriedCargo, double boostModifier = 1)
         {
-            if ( frameshiftdrive is null || unladenmass == 0 || optimalmass == 0 ) { return 0; }
-            var mass = unladenmass + currentFuel + activeFuelReservoirCapacity + carriedCargo;
-            var fuel = Math.Min(currentFuel, maxfuelperjump);
-            
+            if ( frameshiftdrive is null || unladenmass == 0 ) { return 0; }
+            var mass = Convert.ToDouble( unladenmass + currentFuel + carriedCargo);
+            var fuel = Convert.ToDouble( Math.Min(currentFuel, maxfuelperjump ) );
+
             // Calculate our base max range
-            var baseMaxRange = (optimalmass / mass) * Math.Pow( fuel * 1000 / frameshiftdrive.GetFsdRatingConstant(), ( 1 / frameshiftdrive.GetFsdPowerConstant() ) );
+            var baseMaxRange = frameshiftdrive.GetFsdOptimalMass() / mass * Math.Pow( ( fuel * 1000 / frameshiftdrive.GetFsdRatingConstant() ), ( 1 / frameshiftdrive.GetFsdPowerConstant() ) );
             if ( baseMaxRange == 0 ) { return 0; }
 
             // Return the maximum range with the specified fuel and cargo levels, with a boost modifier if using synthesis or a jet cone boost
             var guardianFsdBoosterRange = compartments.FirstOrDefault(c => c.module.edname.Contains("Int_GuardianFSDBooster"))?.module?.GetGuardianFSDBoost() ?? 0;
-            var boostFactor = Math.Pow( baseMaxRange / ( baseMaxRange + guardianFsdBoosterRange), frameshiftdrive.GetFsdPowerConstant());
+            var boostFactor = Math.Pow( baseMaxRange / ( baseMaxRange + guardianFsdBoosterRange ), frameshiftdrive.GetFsdPowerConstant() );
 
-            return Math.Pow( ( fuel / (boostFactor * frameshiftdrive.GetFsdRatingConstant() / 1000 ) ), (1 / frameshiftdrive.GetFsdPowerConstant() ) ) * boostFactor * optimalmass / mass;
+            return Convert.ToDecimal( Math.Pow( ( fuel / ( boostFactor * frameshiftdrive.GetFsdRatingConstant() / 1000 ) ), ( 1 / frameshiftdrive.GetFsdPowerConstant() ) ) * boostFactor * frameshiftdrive.GetFsdOptimalMass() / mass );
         }
 
         public static Ship FromShipyardInfo(ShipyardInfoItem item)

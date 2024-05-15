@@ -35,13 +35,13 @@ namespace EddiEvents
         public long? modulesvalue { get; private set; }
 
         [PublicAPI("The unladen mass of the ship")]
-        public double unladenmass { get; private set; }
+        public decimal unladenmass { get; private set; }
 
         [PublicAPI("The max unlaiden jump range of the ship")]
-        public double maxjumprange { get; private set; }
+        public decimal maxjumprange { get; private set; }
 
         [ PublicAPI( "The optimal mass value of the frame shift drive" ) ]
-        public double optimalmass => frameShiftDrive.GetFsdOptimalMass();
+        public decimal optimalmass => Convert.ToDecimal( frameShiftDrive.GetFsdOptimalMass() );
 
         [PublicAPI("The rebuy value of the ship")]
         public long rebuy { get; private set; }
@@ -69,7 +69,7 @@ namespace EddiEvents
 
         public string edModel { get; private set; }
 
-        public ShipLoadoutEvent(DateTime timestamp, string ship, int shipId, string shipName, string shipIdent, long? hullValue, long? modulesValue, decimal hullHealth, double unladenmass, double maxjumprange, long rebuy, bool hot, List<Compartment> compartments, List<Hardpoint> hardpoints, string paintjob) : base(timestamp, NAME)
+        public ShipLoadoutEvent(DateTime timestamp, string ship, int shipId, string shipName, string shipIdent, long? hullValue, long? modulesValue, decimal hullHealth, decimal unladenmass, decimal maxjumprange, long rebuy, bool hot, List<Compartment> compartments, List<Hardpoint> hardpoints, string paintjob) : base(timestamp, NAME)
         {
             this.edModel = ship;
             this.shipid = shipId;

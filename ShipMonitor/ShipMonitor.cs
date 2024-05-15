@@ -299,10 +299,6 @@ namespace EddiShipMonitor
                     if (ship is null) { return; }
                     setShipName(ship, @event.shipname);
                     setShipIdent(ship, @event.shipident);
-                    if (@event.fuelcapacity.HasValue)
-                    {
-                        ship.fueltanktotalcapacity = @event.fuelcapacity;
-                    }
                     if (!@event.fromLoad) { writeShips(); }
                 }
             }
@@ -570,11 +566,6 @@ namespace EddiShipMonitor
                     ship.fueltank = compartment.module;
                 }
 
-                if (ship.fueltank != null)
-                {
-                    ship.fueltankcapacity = Math.Pow(2, ship.fueltank.@class);
-                }
-
                 compartment = @event.compartments.FirstOrDefault(c => c.name == "CargoHatch");
                 if (compartment != null)
                 {
@@ -600,15 +591,6 @@ namespace EddiShipMonitor
 
                 ship.hardpoints = hardpoints;
 
-                // total fuel tank capacity
-                ship.fueltanktotalcapacity = ship.fueltankcapacity + (int)ship.compartments
-                    .Where(c => c.module != null && c.module.basename.Equals("FuelTank"))
-                    .Sum(c => Math.Pow(2, c.module.@class));
-
-                // Cargo capacity
-                ship.cargocapacity = (int)ship.compartments
-                    .Where(c => c.module != null && c.module.basename.Contains("CargoRack"))
-                    .Sum(c => Math.Pow(2, c.module.@class));
                 return ship;
             }
         }
@@ -1149,8 +1131,7 @@ namespace EddiShipMonitor
                         {
                             ship.launchbays.Clear();
                         }
-                        // Update FSD optimum mass from profile
-                        ship.optimalmass = profileCurrentShip.optimalmass;
+
                         // Update ship hull health from profile
                         ship.health = profileCurrentShip.health;
 
@@ -1508,7 +1489,6 @@ namespace EddiShipMonitor
                         case "FuelTank":
                             {
                                 ship.fueltank = module;
-                                ship.fueltankcapacity = Math.Pow(2, ship.fueltank.@class);
                             }
                             break;
                         case "CargoHatch":
@@ -1717,10 +1697,7 @@ namespace EddiShipMonitor
                                 ship.sensors = replacement;
                                 break;
                             case "FuelTank":
-                                {
-                                    ship.fueltank = replacement;
-                                    ship.fueltankcapacity = Math.Pow(2, ship.fueltank.@class);
-                                }
+                                ship.fueltank = replacement;
                                 break;
                             case "CargoHatch":
                                 ship.cargohatch = replacement;

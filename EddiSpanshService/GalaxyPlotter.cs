@@ -34,8 +34,8 @@ namespace EddiSpanshService
             }
             
             GetShipJumpDetails(ship, out double fuel_power, out double fuel_multiplier, out double optimal_mass,
-                out double base_mass, out double tank_size, out double internal_tank_size,
-                out double max_fuel_per_jump, out double range_boost );
+                out decimal base_mass, out decimal tank_size, out decimal internal_tank_size,
+                out decimal max_fuel_per_jump, out double range_boost );
 
             var request = GalaxyRouteRequest(currentSystem, targetSystem, cargoCarriedTons, fuel_power, fuel_multiplier, optimal_mass, base_mass, tank_size, internal_tank_size, max_fuel_per_jump, range_boost, is_supercharged, use_supercharge, use_injections, exclude_secondary);
             var initialResponse = spanshRestClient.Get(request);
@@ -58,10 +58,10 @@ namespace EddiSpanshService
             return ParseGalaxyRoute(routeTask.Result);
         }
 
-        private void GetShipJumpDetails(Ship ship, out double fuel_power, out double fuel_multiplier, out double optimal_mass, out double base_mass, out double tank_size, out double internal_tank_size, out double max_fuel_per_jump, out double range_boost )
+        private void GetShipJumpDetails(Ship ship, out double fuel_power, out double fuel_multiplier, out double optimal_mass, out decimal base_mass, out decimal tank_size, out decimal internal_tank_size, out decimal max_fuel_per_jump, out double range_boost)
         {
             // Optimal mass
-            optimal_mass = ship.optimalmass;
+            optimal_mass = ship.frameshiftdrive.GetFsdOptimalMass();
 
             // Unladen mass
             base_mass = ship.unladenmass;
@@ -76,17 +76,17 @@ namespace EddiSpanshService
             fuel_power = ship.frameshiftdrive.GetFsdPowerConstant();
 
             // Guardian module range boost
-            range_boost = ship.compartments.FirstOrDefault(c => 
-                c.module.edname.Contains("Int_GuardianFSDBooster", StringComparison.InvariantCultureIgnoreCase))?.module?.GetGuardianFSDBoost() ?? 0;
-            
+            range_boost = ship.compartments.FirstOrDefault( c =>
+                c.module.edname.Contains( "Int_GuardianFSDBooster", StringComparison.InvariantCultureIgnoreCase ) )?.module?.GetGuardianFSDBoost() ?? 0;
+
             // Fuel tank capacity
-            tank_size = ship.fueltanktotalcapacity ?? 0;
+            tank_size = ship.fueltanktotalcapacity ?? 16;
 
             // Fuel reservoir capacity
             internal_tank_size = ship.activeFuelReservoirCapacity;
         }
 
-        private IRestRequest GalaxyRouteRequest(string currentSystem, string targetSystem, int? cargoCarriedTons, double fuel_power, double fuel_multiplier, double optimal_mass, double base_mass, double tank_size, double internal_tank_size, double max_fuel_per_jump, double range_boost, bool is_supercharged, bool use_supercharge, bool use_injections, bool exclude_secondary)
+        private IRestRequest GalaxyRouteRequest(string currentSystem, string targetSystem, int? cargoCarriedTons, double fuel_power, double fuel_multiplier, double optimal_mass, decimal base_mass, decimal tank_size, decimal internal_tank_size, decimal max_fuel_per_jump, double range_boost, bool is_supercharged, bool use_supercharge, bool use_injections, bool exclude_secondary)
         {
             var request = new RestRequest("generic/route");
             request
@@ -99,10 +99,10 @@ namespace EddiSpanshService
                 .AddParameter("fuel_power", fuel_power)
                 .AddParameter("fuel_multiplier", fuel_multiplier)
                 .AddParameter("optimal_mass", optimal_mass)
-                .AddParameter("base_mass", base_mass)
-                .AddParameter("tank_size", tank_size)
-                .AddParameter("internal_tank_size", internal_tank_size)
-                .AddParameter("max_fuel_per_jump", max_fuel_per_jump)
+                .AddParameter("base_mass", base_mass.ToInvariantString())
+                .AddParameter("tank_size", tank_size.ToInvariantString())
+                .AddParameter("internal_tank_size", internal_tank_size.ToInvariantString())
+                .AddParameter("max_fuel_per_jump", max_fuel_per_jump.ToInvariantString())
                 .AddParameter("range_boost", range_boost)
                 ;
             if (cargoCarriedTons != null)

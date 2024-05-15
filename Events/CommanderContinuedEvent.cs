@@ -43,10 +43,10 @@ namespace EddiEvents
         public long loan { get; private set; }
 
         [PublicAPI("The current fuel level of the commander's vehicle")]
-        public double? fuel { get; private set; }
+        public decimal? fuel { get; private set; }
 
         [PublicAPI("The total fuel capacity of the commander's vehicle")]
-        public double? fuelcapacity { get; private set; }
+        public decimal? fuelcapacity { get; private set; }
 
         [PublicAPI("True if the commander is starting landed")]
         public bool? startlanded { get; private set; }
@@ -68,7 +68,7 @@ namespace EddiEvents
 
         public string gamebuild { get; private set; }
 
-        public CommanderContinuedEvent(DateTime timestamp, string commander, string frontierID, bool horizons, bool odyssey, long? shipId, string shipEdModel, string shipName, string shipIdent, bool? startedLanded, bool? startDead, GameMode mode, string group, long credits, long loan, double? fuel, double? fuelcapacity, string version, string build) : base(timestamp, NAME)
+        public CommanderContinuedEvent(DateTime timestamp, string commander, string frontierID, bool horizons, bool odyssey, long? shipId, string shipEdModel, string shipName, string shipIdent, bool? startedLanded, bool? startDead, GameMode mode, string group, long credits, long loan, decimal? fuel, decimal? fuelcapacity, string version, string build) : base(timestamp, NAME)
         {
             this.commander = commander;
             this.frontierID = frontierID;

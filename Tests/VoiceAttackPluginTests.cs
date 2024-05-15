@@ -34,25 +34,25 @@ namespace UnitTests
         [UsedImplicitly]
         public void SetInt(string varName, int? value)
         {
-            vaVars[ varName ] = value is null ? null : (int?)Convert.ToInt32( value );
+            vaVars[ varName ] = value;
         }
 
         [UsedImplicitly]
         public void SetBoolean(string varName, bool? value)
         {
-            vaVars[ varName ] = value is null ? null : (bool?)Convert.ToBoolean( value );
+            vaVars[ varName ] = value;
         }
 
         [UsedImplicitly]
-        public void SetDecimal(string varName, object value)
+        public void SetDecimal(string varName, decimal? value)
         {
-            vaVars[ varName ] = value is null ? null : (decimal?)Convert.ToDecimal(value);
+            vaVars[ varName ] = value;
         }
 
         [UsedImplicitly]
         public void SetDate(string varName, DateTime? value)
         {
-            vaVars[ varName ] = value is null ? null : (DateTime?)Convert.ToDateTime( value );
+            vaVars[ varName ] = value;
         }
     }
 

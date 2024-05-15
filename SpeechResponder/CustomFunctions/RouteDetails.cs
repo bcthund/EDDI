@@ -37,7 +37,7 @@ namespace EddiSpeechResponder.CustomFunctions
                 // Special case any queries which allow optional arguments
                 string stringArg0 = null;
                 string stringArg1 = null;
-                double? numericArg = null;
+                decimal? numericArg = null;
 
                 // Set arguments as required
                 switch (queryType)
@@ -64,9 +64,9 @@ namespace EddiSpeechResponder.CustomFunctions
                     case QueryType.scoop:
                     case QueryType.scorpion:
                     {
-                        if (values.Count >= 2 && double.TryParse(values[1].AsString, out var doubleDistance))
+                        if (values.Count >= 2 && decimal.TryParse(values[1].AsString, out var decimalDistance))
                         {
-                            numericArg = doubleDistance;
+                            numericArg = decimalDistance;
                         }
 
                         break;
@@ -97,7 +97,7 @@ namespace EddiSpeechResponder.CustomFunctions
                         }
                         if (values.Count >= 3)
                         {
-                            if (double.TryParse(values[2].AsString, out var load) && load > 0)
+                            if (decimal.TryParse(values[2].AsString, out var load) && load > 0)
                             {
                                 numericArg = load; // Used capacity
                             }
@@ -109,7 +109,7 @@ namespace EddiSpeechResponder.CustomFunctions
                         if (values.Count >= 4)
                         {
                             if (!string.IsNullOrEmpty(stringArg1)
-                                && double.TryParse(values[3].AsString, out var load) && load > 0)
+                                && decimal.TryParse(values[3].AsString, out var load) && load > 0)
                             {
                                 numericArg = load; // Used capacity
                             }

@@ -112,56 +112,6 @@ namespace Utilities
             throw new ArgumentException("Unparseable value for " + key);
         }
 
-        public static double getDouble ( IDictionary<string, object> data, string key )
-        {
-            data.TryGetValue( key, out object val );
-            return getDouble( key, val );
-        }
-
-        public static double getDouble ( string key, object val )
-        {
-            if ( val == null )
-            {
-                throw new ArgumentNullException( "Expected value for " + key + " not present" );
-            }
-            if ( val is long l )
-            {
-                return l;
-            }
-            else if ( val is double d )
-            {
-                return d;
-            }
-            throw new ArgumentException( "Unparseable value for " + key );
-        }
-
-        public static double? getOptionalDouble ( IDictionary<string, object> data, string key )
-        {
-            data.TryGetValue( key, out object val );
-            return getOptionalDouble( key, val );
-        }
-
-        public static double? getOptionalDouble ( string key, object val )
-        {
-            if ( val == null )
-            {
-                return null;
-            }
-            else if ( val is long l )
-            {
-                return l;
-            }
-            else if ( val is double d )
-            {
-                return d;
-            }
-            else if ( val is BigInteger bigInteger )
-            {
-                return (double?)bigInteger;
-            }
-            throw new ArgumentException( "Unparseable value for " + key );
-        }
-
         public static int getInt(IDictionary<string, object> data, string key)
         {
             data.TryGetValue(key, out object val);

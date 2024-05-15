@@ -103,8 +103,8 @@ namespace UnitTests
             Assert.AreEqual(0M, status.pips_wea);
             Assert.AreEqual(0, status.firegroup);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.AreEqual(32, status.fuelInTanks);
-            Assert.AreEqual(0.63, status.fuelInReservoir);
+            Assert.AreEqual(32M, status.fuelInTanks);
+            Assert.AreEqual(0.63M, status.fuelInReservoir);
             Assert.AreEqual(0, status.cargo_carried);
             Assert.AreEqual("Clean", status.legalstatus);
             Assert.IsFalse(status.aim_down_sight);
@@ -167,8 +167,8 @@ namespace UnitTests
             Assert.AreEqual(2M, status.pips_wea);
             Assert.AreEqual(0, status.firegroup);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.AreEqual(8, status.fuelInTanks);
-            Assert.AreEqual(0.57, status.fuelInReservoir);
+            Assert.AreEqual(8M, status.fuelInTanks);
+            Assert.AreEqual(0.57M, status.fuelInReservoir);
             Assert.AreEqual(0, status.cargo_carried);
             Assert.AreEqual("Clean", status.legalstatus);
             Assert.IsFalse(status.aim_down_sight);
@@ -231,8 +231,8 @@ namespace UnitTests
             Assert.AreEqual(2M, status.pips_wea);
             Assert.AreEqual(0, status.firegroup);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.AreEqual(8, status.fuelInTanks);
-            Assert.AreEqual(0.36, status.fuelInReservoir);
+            Assert.AreEqual(8M, status.fuelInTanks);
+            Assert.AreEqual(0.36M, status.fuelInReservoir);
             Assert.AreEqual(0, status.cargo_carried);
             Assert.AreEqual("Clean", status.legalstatus);
             Assert.IsFalse(status.aim_down_sight);
@@ -295,8 +295,8 @@ namespace UnitTests
             Assert.AreEqual(1M, status.pips_wea);
             Assert.AreEqual(0, status.firegroup);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.AreEqual(0, status.fuelInTanks);
-            Assert.AreEqual(0.24, status.fuelInReservoir);
+            Assert.AreEqual(0M, status.fuelInTanks);
+            Assert.AreEqual(0.24M, status.fuelInReservoir);
             Assert.AreEqual(0, status.cargo_carried);
             Assert.AreEqual("Clean", status.legalstatus);
             Assert.IsFalse(status.aim_down_sight);
@@ -359,8 +359,8 @@ namespace UnitTests
             Assert.AreEqual(0M, status.pips_wea);
             Assert.AreEqual(0, status.firegroup);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.AreEqual(32, status.fuelInTanks);
-            Assert.AreEqual(0.384769, status.fuelInReservoir);
+            Assert.AreEqual(32M, status.fuelInTanks);
+            Assert.AreEqual(0.384769M, status.fuelInReservoir);
             Assert.AreEqual(0, status.cargo_carried);
             Assert.AreEqual("Clean", status.legalstatus);
             Assert.IsFalse(status.aim_down_sight);
@@ -423,8 +423,8 @@ namespace UnitTests
             Assert.AreEqual(0.5M, status.pips_wea);
             Assert.AreEqual(0, status.firegroup);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.AreEqual(0, status.fuelInTanks);
-            Assert.AreEqual(0.447595, status.fuelInReservoir);
+            Assert.AreEqual(0M, status.fuelInTanks);
+            Assert.AreEqual(0.447595M, status.fuelInReservoir);
             Assert.AreEqual(0, status.cargo_carried);
             Assert.AreEqual("Clean", status.legalstatus);
             Assert.IsFalse(status.aim_down_sight);
@@ -651,9 +651,9 @@ namespace UnitTests
             // Variables set from status flags (when not signed in, flags are set to '0')
             Assert.AreEqual((Status.Flags)16777240, status.flags);
             Assert.AreEqual("Ship", status.vehicle);
-            Assert.AreEqual(26.589718, status.fuelInTanks);
-            Assert.AreEqual(0.484983, status.fuelInReservoir);
-            Assert.AreEqual(26.589718 + 0.484983, status.fuel);
+            Assert.AreEqual(26.589718M, status.fuelInTanks);
+            Assert.AreEqual(0.484983M, status.fuelInReservoir);
+            Assert.AreEqual(26.589718M + 0.484983M, status.fuel);
             Assert.AreEqual(3, status.cargo_carried);
             Assert.AreEqual(LegalStatus.Clean, status.legalStatus);
             Assert.IsTrue(status.supercruise);
@@ -741,8 +741,7 @@ namespace UnitTests
             Assert.AreEqual(true, status.night_vision);
             Assert.AreEqual(true, status.lights_on);
             Assert.AreEqual("none", status.gui_focus);
-            Assert.IsNotNull( status.fuel );
-            Assert.AreEqual(29.564209, Math.Round((double)status.fuel, 6));
+            Assert.AreEqual(29.564209M, status.fuel);
             Assert.AreEqual(39, status.cargo_carried);
         }
     }

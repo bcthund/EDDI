@@ -8,7 +8,7 @@
 
         public string StringArg1 { get; }
 
-        public double? NumericArg { get; }
+        public decimal? NumericArg { get; }
 
         public bool? BooleanArg { get; }
 
@@ -18,7 +18,7 @@
             QueryType queryType, 
             string stringArg0 = null, 
             string stringArg1 = null,
-            double? numericArg = null, 
+            decimal? numericArg = null, 
             bool? booleanArg = null, 
             bool fromUI = false 
             )
