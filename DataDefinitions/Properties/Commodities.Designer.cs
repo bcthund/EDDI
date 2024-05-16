@@ -3265,7 +3265,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thargoid Scout Tissue Sample .
+        ///   Looks up a localized string similar to Thargoid Scout Tissue Sample.
         /// </summary>
         public static string ThargoidScoutTissueSample {
             get {
