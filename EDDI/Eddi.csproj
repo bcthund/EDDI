@@ -43,6 +43,9 @@
     <StartupObject>Eddi.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="MainWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Speech" />
   </ItemGroup>
   <ItemGroup>

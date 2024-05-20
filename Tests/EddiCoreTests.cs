@@ -110,7 +110,6 @@ namespace UnitTests
             Assert.IsTrue(result);
         }
 
-
         [TestMethod, DoNotParallelize]
         public void TestJumpedHandler_Hyperdiction()
         {

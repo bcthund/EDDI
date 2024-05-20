@@ -58,7 +58,6 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public bool shared { get; set; }
 
-
         public Haulage (long MissionId, string Name, string OriginSystem, int Amount, bool Shared = false)
         {
             missionid = MissionId;
