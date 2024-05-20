@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -133,11 +134,13 @@ namespace Utilities
         #endregion
 
         #region IEnumerable<KeyValuePair<TKey,TValue>> Members
+        [MustDisposeResource]
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
             return _dictionary.GetEnumerator();
         }
 
+        [MustDisposeResource]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _dictionary.GetEnumerator();
