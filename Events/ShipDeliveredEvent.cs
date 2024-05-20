@@ -9,7 +9,7 @@ namespace EddiEvents
     {
         public const string NAME = "Ship delivered";
         public const string DESCRIPTION = "Triggered when your newly-purchased ship is delivered to you";
-        public const string SAMPLE = "{ \"timestamp\":\"2016-09-20T18:14:26Z\", \"event\":\"ShipyardBuy\", \"ShipType\":\"federation_corvette\", \"ShipPrice\":18796945, \"SellOldShip\":\"CobraMkIII\", \"SellShipID\":42, \"SellPrice\":950787 }";
+        public const string SAMPLE = "{ \"timestamp\":\"2018-02-04T00:06:45Z\", \"event\":\"ShipyardNew\", \"ShipType\":\"typex\", \"ShipType_Localised\":\"Alliance Chieftain\", \"NewShipID\":70 }";
 
         [PublicAPI("The ID of the ship that was delivered")]
         public int? shipid { get; private set; }
