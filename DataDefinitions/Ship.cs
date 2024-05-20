@@ -402,11 +402,7 @@ namespace EddiDataDefinitions
         public Module frameshiftdrive
         {
             get => _frameshiftdrive;
-            set
-            {
-                _frameshiftdrive = value;
-                OnPropertyChanged();
-            }
+            set { _frameshiftdrive = value; OnPropertyChanged(); }
         }
         private Module _frameshiftdrive = new Module();
 
@@ -689,7 +685,7 @@ namespace EddiDataDefinitions
                 {
                     case "next":
                         {
-                            decimal jumpRange = JumpRange( currentFuel, cargoTonnage );
+                            decimal jumpRange = JumpRange( currentFuel + activeFuelReservoirCapacity, cargoTonnage );
                             return new JumpDetail(jumpRange, 1);
                         }
                     case "max":
@@ -703,7 +699,7 @@ namespace EddiDataDefinitions
                             int jumps = 0;
                             while (currentFuel > 0)
                             {
-                                total += JumpRange( Math.Min( currentFuel, maxfuelperjump ), cargoTonnage );
+                                total += JumpRange( Math.Min( currentFuel + activeFuelReservoirCapacity, maxfuelperjump ), cargoTonnage );
                                 jumps++;
                                 currentFuel -= Math.Min( currentFuel, maxfuelperjump );
                             }
@@ -716,7 +712,7 @@ namespace EddiDataDefinitions
                             int jumps = 0;
                             while ( currentFuel > 0)
                             {
-                                total += JumpRange( Math.Min( currentFuel, maxfuelperjump ), cargoTonnage );
+                                total += JumpRange( Math.Min( currentFuel + activeFuelReservoirCapacity, maxfuelperjump ), cargoTonnage );
                                 jumps++;
                                 currentFuel -= Math.Min( currentFuel, maxfuelperjump );
                             }
@@ -730,18 +726,23 @@ namespace EddiDataDefinitions
         private decimal JumpRange ( decimal currentFuel, int carriedCargo, double boostModifier = 1)
         {
             if ( frameshiftdrive is null || unladenmass == 0 ) { return 0; }
+
+            var optimalMass = frameshiftdrive.GetFsdOptimalMass();
             var mass = Convert.ToDouble( unladenmass + currentFuel + carriedCargo);
             var fuel = Convert.ToDouble( Math.Min(currentFuel, maxfuelperjump ) );
+            var linearConstant = frameshiftdrive.GetFsdRatingConstant();
+            var powerConstant = frameshiftdrive.GetFsdPowerConstant();
+            var guardianFsdBoosterRange = compartments.FirstOrDefault(c => c.module.edname.Contains("Int_GuardianFSDBooster"))?.module?.GetGuardianFSDBoost() ?? 0;
 
             // Calculate our base max range
-            var baseMaxRange = frameshiftdrive.GetFsdOptimalMass() / mass * Math.Pow( ( fuel * 1000 / frameshiftdrive.GetFsdRatingConstant() ), ( 1 / frameshiftdrive.GetFsdPowerConstant() ) );
+            var baseMaxRange = optimalMass / mass * Math.Pow( ( fuel * 1000 / linearConstant ), ( 1 / powerConstant ) );
             if ( baseMaxRange == 0 ) { return 0; }
 
             // Return the maximum range with the specified fuel and cargo levels, with a boost modifier if using synthesis or a jet cone boost
-            var guardianFsdBoosterRange = compartments.FirstOrDefault(c => c.module.edname.Contains("Int_GuardianFSDBooster"))?.module?.GetGuardianFSDBoost() ?? 0;
-            var boostFactor = Math.Pow( baseMaxRange / ( baseMaxRange + guardianFsdBoosterRange ), frameshiftdrive.GetFsdPowerConstant() );
-
-            return Convert.ToDecimal( Math.Pow( ( fuel / ( boostFactor * frameshiftdrive.GetFsdRatingConstant() / 1000 ) ), ( 1 / frameshiftdrive.GetFsdPowerConstant() ) ) * boostFactor * frameshiftdrive.GetFsdOptimalMass() / mass );
+            var guardianBoostedMaxRange = ( baseMaxRange + guardianFsdBoosterRange ) / baseMaxRange * optimalMass / mass * Math.Pow( ( fuel * 1000 / linearConstant ), ( 1 / powerConstant ) );
+            
+            var result = Convert.ToDecimal(guardianBoostedMaxRange * boostModifier);
+            return result;
         }
 
         public static Ship FromShipyardInfo(ShipyardInfoItem item)
