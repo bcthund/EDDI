@@ -15,6 +15,7 @@ namespace EddiEddnResponder.Schemas
 
         // Track this so that we do not send duplicate data from the journal and from CAPI.
         private long? lastSentMarketID;
+        private DateTime? lastSentDateTime;
 
         public bool Handle(string edType, ref IDictionary<string, object> data, EDDNState eddnState)
         {
@@ -24,11 +25,15 @@ namespace EddiEddnResponder.Schemas
                 if (eddnState?.GameVersion is null) { return false; }
 
                 var marketID = JsonParsing.getLong(data, "MarketID");
-                if (lastSentMarketID == marketID)
+                var timestamp = JsonParsing.getDateTime( "timestamp", data );
+
+                // Suppress repetitious messages less than 2 minutes apart.
+                if ( lastSentMarketID == marketID && timestamp < (lastSentDateTime + TimeSpan.FromMinutes(2)))
                 {
-                    lastSentMarketID = null;
                     return false;
                 }
+                lastSentMarketID = marketID;
+                lastSentDateTime = timestamp;
 
                 if (data.TryGetValue("PriceList", out var shipsList))
                 {
@@ -43,6 +48,7 @@ namespace EddiEddnResponder.Schemas
                         handledData["allowCobraMkIV"] = data["AllowCobraMkIV"];
                         handledData["ships"] = ships
                             .Select(s => (s as Dictionary<string, object> ?? new Dictionary<string, object>())["ShipType"]?.ToString())
+                            .Distinct()
                             .ToList();
 
                         // Apply data augments
@@ -76,13 +82,19 @@ namespace EddiEddnResponder.Schemas
                 // Sanity check - we must have a valid timestamp
                 if (timestamp == null) { return null; }
 
+                // Suppress repetitious messages less than 2 minutes apart.
+                if ( lastSentMarketID == marketID && timestamp < ( lastSentDateTime + TimeSpan.FromMinutes( 2 ) ) )
+                {
+                    return null;
+                }
+
                 // Build our ships list
                 var ships = shipyardJson["ships"]?["shipyard_list"]?.Children().Values()
-                    .Select(s => s["name"]?.ToString()).ToList() ?? new List<string>();
+                    .Select(s => s["name"]?.ToString()).Distinct().ToList() ?? new List<string>();
                 if (shipyardJson["ships"]["unavailable_list"] != null)
                 {
                     ships.AddRange(shipyardJson["ships"]?["unavailable_list"]?
-                        .Select(s => s?["name"]?.ToString()).ToList() ?? new List<string>());
+                        .Select(s => s?["name"]?.ToString()).Distinct().ToList() ?? new List<string>());
                 }
 
                 // Continue if our ships list is not empty
@@ -102,6 +114,7 @@ namespace EddiEddnResponder.Schemas
                     var gameVersionOverride = fromLegacyServer ? "CAPI-Legacy-shipyard" : "CAPI-Live-shipyard";
                     EDDNSender.SendToEDDN("https://eddn.edcd.io/schemas/shipyard/2", data, eddnState, gameVersionOverride);
                     lastSentMarketID = marketID;
+                    lastSentDateTime = timestamp;
                     return data;
                 }
             }

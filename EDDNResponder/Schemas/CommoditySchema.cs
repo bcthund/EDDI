@@ -16,6 +16,7 @@ namespace EddiEddnResponder.Schemas
 
         // Track this so that we do not send duplicate data from the journal and from CAPI.
         private long? lastSentMarketID;
+        private DateTime? lastSentDateTime;
 
         public bool Handle(string edType, ref IDictionary<string, object> data, EDDNState eddnState)
         {
@@ -25,11 +26,15 @@ namespace EddiEddnResponder.Schemas
                 if (eddnState?.GameVersion is null) { return false; }
 
                 var marketID = JsonParsing.getLong(data, "MarketID");
-                if (lastSentMarketID == marketID) 
+                var timestamp = JsonParsing.getDateTime( "timestamp", data );
+
+                // Suppress repetitious messages less than 2 minutes apart.
+                if ( lastSentMarketID == marketID && timestamp < ( lastSentDateTime + TimeSpan.FromMinutes( 2 ) ) )
                 {
-                    lastSentMarketID = null;
-                    return false; 
+                    return false;
                 }
+                lastSentMarketID = marketID;
+                lastSentDateTime = timestamp;
 
                 // Only send the message if we have commodities
                 if (data.TryGetValue("Items", out var commoditiesList) &&
@@ -96,7 +101,13 @@ namespace EddiEddnResponder.Schemas
                 var timestamp = marketJson["timestamp"].ToObject<DateTime?>();
 
                 // Sanity check - we must have a valid timestamp
-                if (timestamp == null) { return null; }
+                if ( timestamp == null ) { return null; }
+
+                // Suppress repetitious messages less than 2 minutes apart.
+                if ( lastSentMarketID == marketID && timestamp < ( lastSentDateTime + TimeSpan.FromMinutes( 2 ) ) )
+                {
+                    return null;
+                }
 
                 // Build our commodities lists
                 var commodities = JArray.FromObject(marketJson["commodities"]?.ToObject<JArray>()?
@@ -136,6 +147,7 @@ namespace EddiEddnResponder.Schemas
                     var gameVersionOverride = fromLegacyServer ? "CAPI-Legacy-market" : "CAPI-Live-market";
                     EDDNSender.SendToEDDN("https://eddn.edcd.io/schemas/commodity/3", data, eddnState, gameVersionOverride);
                     lastSentMarketID = marketID;
+                    lastSentDateTime = timestamp;
                     return data;
                 }
             }
