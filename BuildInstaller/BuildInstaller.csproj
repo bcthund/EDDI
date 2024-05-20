@@ -35,6 +35,7 @@ if "$(Configuration)" == "Release" (
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>xcopy /y "$(SolutionDir)Lexicons.md" "$(SolutionDir)bin\$(Configuration)\Wiki\"
+xcopy /y "$(SolutionDir)Lexicons.md" "$(SolutionDir)bin\$(Configuration)\Wiki\"
 xcopy /y "$(SolutionDir)images\*.*" "$(SolutionDir)bin\$(Configuration)\Wiki\images\"</PreBuildEvent>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>

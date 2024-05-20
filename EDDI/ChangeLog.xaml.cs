@@ -20,7 +20,9 @@ namespace Eddi
             try
             {
                 DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException());
-                markdown = Files.Read(dir + @"\ChangeLog.md");
+                FileInfo fileInfo = new FileInfo( dir + @"\ChangeLog.md" );
+                if ( !fileInfo.Exists ) { throw new FileNotFoundException(); }
+                markdown = Files.Read( dir + @"\ChangeLog.md" );
             }
             catch (Exception ex)
             {

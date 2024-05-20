@@ -130,4 +130,7 @@
     <PackageIcon>logo-with-alpha.png</PackageIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy /y &quot;$(SolutionDir)ChangeLog.md&quot; &quot;$(SolutionDir)bin\$(Configuration)\&quot;" />
+  </Target>
 </Project>
