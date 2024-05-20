@@ -182,8 +182,8 @@ namespace EddiSpeechResponder.Service
                 ["va_active"] = new Tuple<Type, Value>(typeof(bool), App.FromVA),
                 ["vehicle"] = new Tuple<Type, Value>(typeof(string), EDDI.Instance.Vehicle),
                 ["icao_active"] = new Tuple<Type, Value>(typeof(bool), SpeechService.Instance.Configuration.EnableIcao),
-                ["ipa_active"] = new Tuple<Type, Value>(typeof(bool), !SpeechService.Instance.Configuration.DisableIpa)
-
+                ["ipa_active"] = new Tuple<Type, Value>(typeof(bool), !SpeechService.Instance.Configuration.DisableIpa),
+                ["version"] = new Tuple<Type, Value>(typeof(string), Constants.EDDI_VERSION.ShortString)
             };
 
             // Standard objects

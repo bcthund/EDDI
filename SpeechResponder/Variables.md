@@ -23,6 +23,7 @@ Information on game state is available at the top level i.e. these values can be
   - *icao_active* - true if ICAO is currently enabled
   - *ipa_active* - true if phonetic speech ssml tags are currently enabled
   - *va_active* - true when the Voice Attack plug-in is active
+  - *version* - the version level of EDDI which is currently running
 
 ---
 
