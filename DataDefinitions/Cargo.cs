@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -94,22 +95,8 @@ namespace EddiDataDefinitions
 
         // The number of items needed for missions
 
-        [JsonProperty("need")]
-        private int _need;
-
-        [PublicAPI]
-        public int need
-        {
-            get => _need;
-            set
-            {
-                if (_need != value)
-                {
-                    _need = value;
-                    NotifyPropertyChanged("need");
-                }
-            }
-        }
+        [ PublicAPI ] 
+        public int need => haulageData?.Sum( h => h.need ) ?? 0;
 
         // Total amount of the commodity
         
@@ -148,7 +135,7 @@ namespace EddiDataDefinitions
         public CommodityDefinition commodity => commodityDef;
 
         [PublicAPI, JsonProperty("haulageData")]
-        public List<Haulage> haulageData { get; set; } = new List<Haulage>();
+        public ObservableCollection<Haulage> haulageData { get; set; } = new ObservableCollection<Haulage>();
 
         [JsonExtensionData]
         private IDictionary<string, JToken> _additionalJsonData;
@@ -183,12 +170,7 @@ namespace EddiDataDefinitions
         }
 
         public void CalculateNeed()
-        {
-            if (haulageData != null && haulageData.Any())
-            {
-                need = haulageData.Sum(h => h.need);
-            }
-        }
+        { }
 
         public void UpdateWeightedPrice(decimal newPrice, int newAmount)
         {
@@ -218,10 +200,11 @@ namespace EddiDataDefinitions
                         haulage += acquistionAmount;
                         if (cargoHaulageData != null) 
                         {
-                            var haulageIndex = haulageData.FindIndex(h => h.missionid == cargoHaulageData.missionid);
-                            if (haulageIndex > -1)
+                            var currentHaulage = haulageData.FirstOrDefault( h => h.missionid == cargoHaulageData.missionid );
+                            if ( currentHaulage != null)
                             {
-                                haulageData[haulageIndex] = cargoHaulageData;
+                                var haulageIndex = haulageData.IndexOf( currentHaulage );
+                                haulageData[ haulageIndex] = cargoHaulageData;
                             }
                             else
                             {
@@ -262,7 +245,6 @@ namespace EddiDataDefinitions
                 case CargoType.mission:
                     {
                         haulage -= removedAmount;
-                        if (cargoHaulageData != null) { haulageData.Remove(cargoHaulageData); }
                         break;
                     }
                 case CargoType.stolen:
