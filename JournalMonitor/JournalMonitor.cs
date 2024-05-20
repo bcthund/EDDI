@@ -4962,6 +4962,7 @@ namespace EddiJournalMonitor
                             case "ScanBaryCentre": // We do not do anything with scanned barycentres at this time (though the raw event is still passed to the EDDN responder)
                             case "Scanned": // Written at the end of a successful scan, too late to react to this.
                             case "SharedBookmarkToSquadron": // Unnecessary.
+                            case "ShipyardRedeem": // Unnecessary, all of the necessary information is already given in the `ShipRedeem` event.
                             case "SupercruiseDestinationDrop": // Unnecessary. The same information is available from the `SupercruiseExit` and `USSDrop` events.
                             case "TradeMicroResources": // This is always followed by `ShipLocker`, which we can use to keep our inventory up to date
                             case "TransferMicroResources": // Removed, no longer written
