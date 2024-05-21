@@ -116,20 +116,20 @@ namespace UnitTests
             Assert.AreEqual( 1547.139526, ship.frameshiftdrive.GetFsdOptimalMass() );
             Assert.AreEqual( 5.199397M, ship.maxfuelperjump );
             // With zero fuel and zero cargo
-            Assert.AreEqual( 0, ship.JumpDetails( "next" ).distance );
-            Assert.AreEqual( 34.403M, Math.Round(ship.JumpDetails( "max" ).distance, 3) );
-            Assert.AreEqual( 0, ship.JumpDetails( "total" ).distance );
-            Assert.AreEqual( 165.947M, Math.Round(ship.JumpDetails( "full" ).distance, 3) );
+            Assert.AreEqual( 15.654M, Math.Round( ship.JumpDetails( "next" ).distance, 3 ) );
+            Assert.AreEqual( 34.403M, Math.Round (ship.JumpDetails( "max" ).distance, 3) );
+            Assert.AreEqual( 15.654M, Math.Round( ship.JumpDetails( "total" ).distance, 3 ) );
+            Assert.AreEqual( 168.413M, Math.Round(ship.JumpDetails( "full" ).distance, 3) );
             // With with max fuel and zero cargo
             Assert.AreEqual( 33.720M, Math.Round(ship.JumpDetails( "next", 16 ).distance), 3 );
             Assert.AreEqual( 34.403M, Math.Round( ship.JumpDetails( "max", 16 ).distance, 3 ) );
-            Assert.AreEqual( 115.418M, Math.Round( ship.JumpDetails( "total", 16 ).distance, 3 ) );
-            Assert.AreEqual( 165.947M, Math.Round( ship.JumpDetails( "full", 16 ).distance, 3 ) );
+            Assert.AreEqual( 121.881M, Math.Round( ship.JumpDetails( "total", 16 ).distance, 3 ) );
+            Assert.AreEqual( 168.413M, Math.Round( ship.JumpDetails( "full", 16 ).distance, 3 ) );
             // With with max fuel and max cargo
             Assert.AreEqual( 30.734M, Math.Round( ship.JumpDetails( "next", 16, 64 ).distance ), 3 );
             Assert.AreEqual( 30.734M, Math.Round( ship.JumpDetails( "max", 16, 64 ).distance, 3 ) );
-            Assert.AreEqual( 103.096M, Math.Round( ship.JumpDetails( "total", 16, 64 ).distance, 3 ) );
-            Assert.AreEqual( 148.236M, Math.Round( ship.JumpDetails( "full", 16, 64 ).distance, 3 ) );
+            Assert.AreEqual( 108.867M, Math.Round( ship.JumpDetails( "total", 16, 64 ).distance, 3 ) );
+            Assert.AreEqual( 150.442M, Math.Round( ship.JumpDetails( "full", 16, 64 ).distance, 3 ) );
         }
 
         [TestMethod]
@@ -176,20 +176,20 @@ namespace UnitTests
             Assert.AreEqual( 1175, ship.frameshiftdrive.GetFsdOptimalMass() );
             Assert.AreEqual( 5.2M, ship.maxfuelperjump );
             // With zero fuel and zero cargo
-            Assert.AreEqual( 0, ship.JumpDetails( "next" ).distance );
+            Assert.AreEqual( 9.237M, Math.Round( ship.JumpDetails( "next" ).distance, 3 ) );
             Assert.AreEqual( 19.412M, Math.Round( ship.JumpDetails( "max" ).distance, 3 ) );
-            Assert.AreEqual( 0, ship.JumpDetails( "total" ).distance );
-            Assert.AreEqual( 65.096M, Math.Round( ship.JumpDetails( "full" ).distance, 3 ) );
+            Assert.AreEqual( 9.237M, Math.Round( ship.JumpDetails( "total" ).distance, 3 ) );
+            Assert.AreEqual( 69.074M, Math.Round( ship.JumpDetails( "full" ).distance, 3 ) );
             // With with max fuel and zero cargo
-            Assert.AreEqual( 19.116M, Math.Round( ship.JumpDetails( "next", 16 ).distance, 3 ) );
+            Assert.AreEqual( 19.094M, Math.Round( ship.JumpDetails( "next", 16 ).distance, 3 ) );
             Assert.AreEqual( 19.412M, Math.Round( ship.JumpDetails( "max", 16 ).distance, 3 ) );
-            Assert.AreEqual( 65.096M, Math.Round( ship.JumpDetails( "total", 16 ).distance, 3 ) );
-            Assert.AreEqual( 65.096M, Math.Round( ship.JumpDetails( "full", 16 ).distance, 3 ) );
+            Assert.AreEqual( 69.074M, Math.Round( ship.JumpDetails( "total", 16 ).distance, 3 ) );
+            Assert.AreEqual( 69.074M, Math.Round( ship.JumpDetails( "full", 16 ).distance, 3 ) );
             // With with max fuel and max cargo
-            Assert.AreEqual( 18.903M, Math.Round( ship.JumpDetails( "next", 16, 8 ).distance, 3 ) );
+            Assert.AreEqual( 18.881M, Math.Round( ship.JumpDetails( "next", 16, 8 ).distance, 3 ) );
             Assert.AreEqual( 19.192M, Math.Round( ship.JumpDetails( "max", 16, 8 ).distance, 3 ) );
-            Assert.AreEqual( 64.358M, Math.Round( ship.JumpDetails( "total", 16, 8 ).distance, 3 ) );
-            Assert.AreEqual( 64.358M, Math.Round( ship.JumpDetails( "full", 16, 8 ).distance, 3 ) );
+            Assert.AreEqual( 68.291M, Math.Round( ship.JumpDetails( "total", 16, 8 ).distance, 3 ) );
+            Assert.AreEqual( 68.291M, Math.Round( ship.JumpDetails( "full", 16, 8 ).distance, 3 ) );
         }
 
         [TestMethod]

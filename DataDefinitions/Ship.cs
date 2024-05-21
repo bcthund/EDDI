@@ -476,6 +476,8 @@ namespace EddiDataDefinitions
 
         public decimal activeFuelReservoirCapacity { get; set; }
 
+        public decimal? fuelInReservoir { get; set; }
+
         // Ship jump and mass properties
 
         [PublicAPI]
@@ -676,7 +678,7 @@ namespace EddiDataDefinitions
 
         public JumpDetail JumpDetails(string type, decimal? fuelInTanksOverride = null, int? cargoCarriedOverride = null)
         {
-            var currentFuel = fuelInTanksOverride ?? fuelInTanks ?? 0;
+            var currentFuel = (fuelInTanksOverride ?? fuelInTanks ?? 0);
             var cargoTonnage = cargoCarriedOverride ?? cargoCarried;
 
             if (!string.IsNullOrEmpty(type))
@@ -685,7 +687,8 @@ namespace EddiDataDefinitions
                 {
                     case "next":
                         {
-                            decimal jumpRange = JumpRange( currentFuel + activeFuelReservoirCapacity, cargoTonnage );
+                            currentFuel += fuelInReservoir ?? activeFuelReservoirCapacity;
+                            decimal jumpRange = JumpRange( currentFuel, cargoTonnage );
                             return new JumpDetail(jumpRange, 1);
                         }
                     case "max":
@@ -695,11 +698,12 @@ namespace EddiDataDefinitions
                         }
                     case "total":
                         {
+                            currentFuel += fuelInReservoir ?? activeFuelReservoirCapacity;
                             decimal total = 0;
                             int jumps = 0;
                             while (currentFuel > 0)
                             {
-                                total += JumpRange( Math.Min( currentFuel + activeFuelReservoirCapacity, maxfuelperjump ), cargoTonnage );
+                                total += JumpRange( Math.Min( currentFuel, maxfuelperjump ), cargoTonnage );
                                 jumps++;
                                 currentFuel -= Math.Min( currentFuel, maxfuelperjump );
                             }
@@ -707,12 +711,12 @@ namespace EddiDataDefinitions
                         }
                     case "full":
                         {
-                            currentFuel = fueltanktotalcapacity ?? 0;
+                            currentFuel = ( fueltanktotalcapacity ?? 0 ) + activeFuelReservoirCapacity;
                             decimal total = 0;
                             int jumps = 0;
                             while ( currentFuel > 0)
                             {
-                                total += JumpRange( Math.Min( currentFuel + activeFuelReservoirCapacity, maxfuelperjump ), cargoTonnage );
+                                total += JumpRange( Math.Min( currentFuel, maxfuelperjump ), cargoTonnage );
                                 jumps++;
                                 currentFuel -= Math.Min( currentFuel, maxfuelperjump );
                             }
