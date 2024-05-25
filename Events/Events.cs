@@ -7,9 +7,9 @@ namespace EddiEvents
     public class Events
     {
         public static IDictionary<string, Type> TYPES = new Dictionary<string, Type>();
-        public static IDictionary<string, object> SAMPLES = new Dictionary<string, object>();
-        public static IDictionary<string, string> DEFAULTS = new Dictionary<string, string>();
-        public static IDictionary<string, string> DESCRIPTIONS = new Dictionary<string, string>();
+        private static readonly IDictionary<string, IList<object>> SAMPLES = new Dictionary<string, IList<object>>();
+        private static readonly IDictionary<string, string> DEFAULTS = new Dictionary<string, string>();
+        public static readonly IDictionary<string, string> DESCRIPTIONS = new Dictionary<string, string>();
 
         static Events()
         {
@@ -17,7 +17,7 @@ namespace EddiEvents
             {
                 try
                 {
-                    foreach (var type in typeof(Event).Assembly.GetTypes())
+                    foreach ( var type in typeof(Event).Assembly.GetTypes() )
                     {
                         if ( type.IsInterface ||
                              type.IsAbstract ||
@@ -27,34 +27,39 @@ namespace EddiEvents
                         }
 
                         // Ensure that the static constructor of the class has been run
-                        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(type.TypeHandle);
+                        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor( type.TypeHandle );
 
-                        if (type.GetField("NAME") is var nameField && 
-                            nameField?.GetValue( null ) is string eventName)
+                        if ( type.GetField( "NAME" ) is var nameField &&
+                             nameField?.GetValue( null ) is string eventName )
                         {
-                            TYPES.Add(eventName, type);
+                            TYPES.Add( eventName, type );
 
-                            if (type.GetField("DESCRIPTION") is var descriptionField && 
-                                descriptionField?.GetValue(null) is string eventDescription)
+                            if ( type.GetField( "DESCRIPTION" ) is var descriptionField &&
+                                 descriptionField?.GetValue( null ) is string eventDescription )
                             {
-                                DESCRIPTIONS.Add(eventName, eventDescription);
+                                DESCRIPTIONS.Add( eventName, eventDescription );
                             }
 
-                            if (type.GetField("DEFAULT") is var defaultField &&
-                                defaultField?.GetValue(null) is string eventDefault)
+                            if ( type.GetField( "DEFAULT" ) is var defaultField &&
+                                 defaultField?.GetValue( null ) is string eventDefault )
                             {
-                                DEFAULTS.Add(eventName, eventDefault);
+                                DEFAULTS.Add( eventName, eventDefault );
                             }
 
-                            if (type.GetField("SAMPLE") is var sampleField &&
-                                sampleField?.GetValue(null) is var eventSample )
+                            if ( type.GetField( "SAMPLES" ) is var samplesField &&
+                                 samplesField?.GetValue( null ) is IList<object> eventSamples )
                             {
-                                SAMPLES.Add(eventName, eventSample);
+                                SAMPLES.Add( eventName, eventSamples );
+                            }
+                            else if ( type.GetField( "SAMPLE" ) is var sampleField &&
+                                 sampleField?.GetValue( null ) is var eventSample )
+                            {
+                                SAMPLES.Add( eventName, new List<object> { eventSample } );
                             }
                         }
                     }
                 }
-                catch (ReflectionTypeLoadException)
+                catch ( ReflectionTypeLoadException )
                 {
                     // DLL we can't parse; ignore
                 }
@@ -69,8 +74,18 @@ namespace EddiEvents
 
         public static object SampleByName(string name)
         {
-            SAMPLES.TryGetValue(name, out object value);
-            return value;
+            SAMPLES.TryGetValue(name, out var value);
+            if ( value?.Count == 1 )
+            {
+                return value[ 0 ];
+            }
+            if ( value?.Count > 1 )
+            {
+                var rand = new Random();
+                var randIndex = rand.Next( value.Count );
+                return value[ randIndex ];
+            }
+            return string.Empty;
         }
 
         public static string DescriptionByName(string name)
