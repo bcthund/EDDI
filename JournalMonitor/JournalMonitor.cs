@@ -4726,32 +4726,59 @@ namespace EddiJournalMonitor
                                 break;
                             case "BuyMicroResources":
                                 {
-                                    var edname = JsonParsing.getString(data, "Name");
-                                    var fallbackName = JsonParsing.getString(data, "Name_Localised");
-                                    var category = JsonParsing.getString(data, "Category");
-                                    var fallbackCategoryName = JsonParsing.getString(data, "Category_Localised");
-                                    var amount = JsonParsing.getInt(data, "Count");
-                                    var price = JsonParsing.getInt(data, "Price");
                                     var marketId = JsonParsing.getOptionalLong(data, "MarketID");
 
-                                    switch (category)
+                                    MicroResource GetResource( IDictionary<string, object> resourceData )
                                     {
-                                        case "Item":
-                                        case "Component":
-                                        case "Data":
-                                        case "Consumable":
-                                            {
-                                                var microResource = MicroResource.FromEDName(edname);
-                                                microResource.fallbackLocalizedName = fallbackName;
-                                                microResource.Category.fallbackLocalizedName = fallbackCategoryName;
-                                                events.Add(new MicroResourcesPurchasedEvent(timestamp, microResource, amount, price, marketId) { raw = line, fromLoad = fromLogLoad });
-                                                handled = true;
-                                            }
-                                            break;
-                                        default:
-                                            // Unhandled category
-                                            break;
+                                        var edname = JsonParsing.getString(resourceData, "Name");
+                                        var microResource = MicroResource.FromEDName(edname);
+                                        if ( microResource is null ) { return null; }
+
+                                        var fallbackName = JsonParsing.getString(resourceData, "Name_Localised");
+                                        microResource.fallbackLocalizedName = fallbackName;
+
+                                        var category = JsonParsing.getString(resourceData, "Category");
+                                        var fallbackCategoryName = JsonParsing.getString(resourceData, "Category_Localised");
+                                        if ( microResource.Category is null ) { microResource.Category = MicroResourceCategory.FromEDName( category ); }
+                                        microResource.Category.fallbackLocalizedName = fallbackCategoryName;
+                                        return microResource;
                                     }
+
+                                    // The `BuyMicroResources` event sometimes contains an array
+                                    // (thought to occur primarily when buying from a fleet carrier bartender)
+                                    if ( data.ContainsKey("TotalCount") )
+                                    {
+                                        var price = JsonParsing.getInt( data, "Price" ); // Total price
+                                        var resourceAmounts = new List<MicroResourceAmount>();
+                                        if ( data.TryGetValue( "MicroResources", out var val ) )
+                                        {
+                                            if ( val is List<object> listVal )
+                                            {
+                                                foreach ( var res in listVal )
+                                                {
+                                                    if ( res is IDictionary<string, object> microVal )
+                                                    {
+                                                        var microResource = GetResource( microVal );
+                                                        var amount = JsonParsing.getInt(microVal, "Count");
+                                                        if ( microResource != null )
+                                                        {
+                                                            resourceAmounts.Add( new MicroResourceAmount( microResource, amount ) );
+                                                        }
+                                                    }
+                                                }
+                                                events.Add( new MicroResourcesPurchasedEvent( timestamp, resourceAmounts, price, marketId ) { raw = line, fromLoad = fromLogLoad } );
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var microResource = GetResource( data );
+                                        var amount = JsonParsing.getInt( data, "Count" );
+                                        var price = JsonParsing.getInt(data, "Price"); // Total price
+                                        var resourceAmounts = new List<MicroResourceAmount> { new MicroResourceAmount( microResource, amount ) };
+                                        events.Add( new MicroResourcesPurchasedEvent( timestamp, resourceAmounts, price, marketId ) { raw = line, fromLoad = fromLogLoad } );
+                                    }
+                                    handled = true;
                                 }
                                 break;
                             case "BuySuit":

@@ -1930,18 +1930,31 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestBuyMicroResourcesEvent()
+        public void TestBuyMicroResourcesEvents()
         {
-            var line = @"{ ""timestamp"":""2021-04-30T21:41:34Z"", ""event"":""BuyMicroResources"", ""Name"":""healthpack"", ""Name_Localised"":""Medkit"", ""Category"":""Consumable"", ""Count"":2, ""Price"":2000, ""MarketID"":3221524992 }";
-            var events = JournalMonitor.ParseJournalEntry(line);
+            var line = "{ \"timestamp\":\"2021-04-30T21:41:34Z\", \"event\":\"BuyMicroResources\", \"Name\":\"healthpack\", \"Name_Localised\":\"Medkit\", \"Category\":\"Consumable\", \"Count\":2, \"Price\":2000, \"MarketID\":3221524992 }";
+            var events = JournalMonitor.ParseJournalEntry( line );
             Assert.AreEqual(1, events.Count);
             var @event = (MicroResourcesPurchasedEvent)events[0];
 
-            Assert.AreEqual("Medkit", @event.microResource?.invariantName);
-            Assert.AreEqual("Consumables", @event.microResource?.Category?.invariantName);
-            Assert.AreEqual(2, @event.amount);
+            Assert.AreEqual(1, @event.resourceamounts.Count);
+            Assert.AreEqual("Medkit", @event.resourceamounts[0]?.invariantName);
+            Assert.AreEqual(MicroResourceCategory.Consumables.invariantName, @event.resourceamounts[ 0 ]?.invariantCategory);
+            Assert.AreEqual(2, @event.resourceamounts[ 0 ]?.amount);
             Assert.AreEqual(2000, @event.price);
             Assert.AreEqual(3221524992, @event.marketid);
+
+            var line2 = "{ \"timestamp\":\"2024-05-25T05:05:16Z\", \"event\":\"BuyMicroResources\", \"TotalCount\":10, \"MicroResources\":[ { \"Name\":\"opticalfibre\", \"Name_Localised\":\"Optical Fibre\", \"Category\":\"Component\", \"Count\":10 } ], \"Price\":6000, \"MarketID\":3707594240 }";
+            events = JournalMonitor.ParseJournalEntry( line2 );
+            Assert.AreEqual( 1, events.Count );
+            @event = (MicroResourcesPurchasedEvent)events[0];
+
+            Assert.AreEqual( 1, @event.resourceamounts.Count );
+            Assert.AreEqual( "Optical Fiber", @event.resourceamounts[ 0 ]?.invariantName );
+            Assert.AreEqual( MicroResourceCategory.Components.invariantName, @event.resourceamounts[ 0 ]?.invariantCategory );
+            Assert.AreEqual( 10, @event.resourceamounts[ 0 ]?.amount );
+            Assert.AreEqual( 6000, @event.price );
+            Assert.AreEqual( 3707594240, @event.marketid );
         }
 
         [DataTestMethod]

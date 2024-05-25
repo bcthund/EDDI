@@ -1,5 +1,7 @@
 ﻿using EddiDataDefinitions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Utilities;
 
 namespace EddiEvents
@@ -9,30 +11,28 @@ namespace EddiEvents
     {
         public const string NAME = "Micro resources purchased";
         public const string DESCRIPTION = "Triggered when you buy micro resources";
-        public const string SAMPLE = "{ \"timestamp\":\"2021-04-30T21:41:34Z\", \"event\":\"BuyMicroResources\", \"Name\":\"healthpack\", \"Name_Localised\":\"Medkit\", \"Category\":\"Consumable\", \"Count\":2, \"Price\":2000, \"MarketID\":3221524992 }";
+        public static readonly string[] SAMPLES = 
+        {
+            "{ \"timestamp\":\"2021-04-30T21:41:34Z\", \"event\":\"BuyMicroResources\", \"Name\":\"healthpack\", \"Name_Localised\":\"Medkit\", \"Category\":\"Consumable\", \"Count\":2, \"Price\":2000, \"MarketID\":3221524992 }",
+            "{ \"timestamp\":\"2024-05-25T05:05:16Z\", \"event\":\"BuyMicroResources\", \"TotalCount\":10, \"MicroResources\":[ { \"Name\":\"opticalfibre\", \"Name_Localised\":\"Optical Fibre\", \"Category\":\"Component\", \"Count\":10 } ], \"Price\":6000, \"MarketID\":3707594240 }"
+        };
 
-        [PublicAPI("The name of the purchased micro resource")]
-        public string microresource => microResource?.localizedName;
+        [PublicAPI( "A list of purchased micro resources with name, category, and amount for each" )]
+        public List<MicroResourceAmount> resourceamounts { get; }
 
-        [PublicAPI("The category of the purchased micro resource")]
-        public string category => microResource?.Category?.localizedName;
+        [ PublicAPI( "The total count of micro resources purchased" ) ]
+        public int totalamount => resourceamounts.Sum( r => r.amount );
 
-        [PublicAPI("The amount of the purchased micro resource")]
-        public int amount { get; }
-
-        [PublicAPI("The price paid per unit of the purchased micro resource")]
+        [ PublicAPI( "The total price paid for all micro resources" ) ]
         public int price { get; }
 
         // Not intended to be user facing
 
-        public MicroResource microResource { get; }
-
         public long? marketid { get; }
 
-        public MicroResourcesPurchasedEvent(DateTime timestamp, MicroResource microResource, int amount, int price, long? marketid) : base(timestamp, NAME)
+        public MicroResourcesPurchasedEvent(DateTime timestamp, List<MicroResourceAmount> resourceAmounts, int price, long? marketid) : base(timestamp, NAME)
         {
-            this.microResource = microResource;
-            this.amount = amount;
+            this.resourceamounts = resourceAmounts ?? new List<MicroResourceAmount>();
             this.price = price;
             this.marketid = marketid;
         }

@@ -224,7 +224,7 @@ namespace EddiDataDefinitions
         // Unknown / Miscellaneous
         public static readonly MicroResource None = new MicroResource("None", MicroResourceCategory.Unknown);
 
-        [PublicAPI]
+        [PublicAPI("The localized category name")]
         public string category => Category?.localizedName;
 
         public long? EDID { get; private set; }

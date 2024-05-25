@@ -16,6 +16,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
   * Events
     * `Bounty awarded` updated to include new `pilot` property (when applicable).
     * `Hyperdicted` added. 
+    * `Micro resources purchased` updated to use a list of purchased micro resources with name, category, and amount for each (so that it could support both purchases from a station and from carrier bartenders). 
     * `Signal detected` updated to include new `signaltype` property.
     * `Ship shutdown` updated to include new `partialshutdown` property (for instances where the power flickers but doesn't go out completely). (#2603)
     * `Ship targeted` updated to better utilize localized names (where available). (#2604)
