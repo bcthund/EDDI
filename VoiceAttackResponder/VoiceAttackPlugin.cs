@@ -101,6 +101,10 @@ namespace EddiVoiceAttackResponder
                     {
                         setDictionaryValues(EDDI.Instance.State, "state", ref vaProxy);
                     };
+                    EDDI.Instance.State.PropertyChanged += ( s, e ) =>
+                    {
+                        setDictionaryValues( EDDI.Instance.State, "state", ref vaProxy );
+                    };
                     SpeechService.Instance.PropertyChanged += (s, e) =>
                     {
                         setSpeechState(e);

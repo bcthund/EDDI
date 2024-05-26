@@ -101,10 +101,10 @@ namespace EddiVoiceAttackResponder
         // Set values from a dictionary
         protected static void setDictionaryValues(IDictionary<string, object> dict, string prefix, ref dynamic vaProxy)
         {
-            foreach (string key in dict.Keys)
+            foreach (var key in dict.Keys)
             {
-                string varname = "EDDI " + prefix + " " + key;
-                object value = dict[key];
+                var varname = "EDDI " + prefix + " " + key;
+                var value = dict[key];
                 if (value == null)
                 {
                     // No idea what it might have been so reset everything
@@ -114,7 +114,7 @@ namespace EddiVoiceAttackResponder
                     vaProxy.SetBoolean(varname, null);
                     continue;
                 }
-                Type valueType = value.GetType();
+                var valueType = value.GetType();
                 if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     valueType = Nullable.GetUnderlyingType(valueType);
