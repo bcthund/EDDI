@@ -27,7 +27,7 @@ namespace EddiStatusService
 
         // Public Write variables (set elsewhere to assist with various calculations)
         public Ship CurrentShip;
-        public List<KeyValuePair<DateTime, decimal?>> fuelLog;
+        public readonly List<KeyValuePair<DateTime, decimal?>> fuelLog = new List<KeyValuePair<DateTime, decimal?>>();
         public EnteredNormalSpaceEvent lastEnteredNormalSpaceEvent;
 
         // Other variables used by this service
@@ -365,14 +365,7 @@ namespace EddiStatusService
                 return null;
             }
 
-            if (fuelLog is null)
-            {
-                fuelLog = new List<KeyValuePair<DateTime, decimal?>>();
-            }
-            else
-            {
-                fuelLog.RemoveAll(log => (DateTime.UtcNow - log.Key).TotalMinutes > trackingMinutes);
-            }
+            fuelLog.RemoveAll( log => ( DateTime.UtcNow - log.Key ).TotalMinutes > trackingMinutes );
             fuelLog.Add(new KeyValuePair<DateTime, decimal?>(timestamp, fuel));
             if (fuelLog.Count > 1)
             {

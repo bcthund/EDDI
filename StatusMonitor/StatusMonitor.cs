@@ -258,7 +258,7 @@ namespace EddiStatusMonitor
                     // Reset our fuel log if we change vehicles or refuel
                     if (thisStatus.vehicle != lastStatus.vehicle || thisStatus.fuel > lastStatus.fuel)
                     {
-                        StatusService.Instance.fuelLog = null;
+                        StatusService.Instance.fuelLog.Clear();
                     }
                     // Detect whether we're in combat
                     if (lastStatus.in_danger && !thisStatus.in_danger)
