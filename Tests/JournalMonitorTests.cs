@@ -2441,7 +2441,7 @@ namespace UnitTests
             Assert.IsFalse( ( (ShipShutdownEvent)events[ 0 ] ).partialshutdown );
         }
 
-        [TestMethod ]
+        [TestMethod, DoNotParallelize]
         public void TestShipShutdownThargoidTitanPulse ()
         {
             //The `SystemsShutdown` event should be ignored because it is followed immediately by a `MaterialCollected` event for the material `tg_shutdowndata` and no shutdown in fact occurs for this circumstance.
