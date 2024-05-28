@@ -2444,6 +2444,10 @@ namespace UnitTests
         [TestMethod, DoNotParallelize]
         public void TestShipShutdownThargoidTitanPulse ()
         {
+            var privateType = new PrivateType( typeof(JournalMonitor) );
+            // ReSharper disable once AssignNullToNotNullAttribute - CancellationTokenSource is nullable.
+            privateType.SetStaticFieldOrProperty( "ShipShutdownCancellationTokenSource", null );
+
             //The `SystemsShutdown` event should be ignored because it is followed immediately by a `MaterialCollected` event for the material `tg_shutdowndata` and no shutdown in fact occurs for this circumstance.
             var lines = new[]
             {
@@ -2452,7 +2456,7 @@ namespace UnitTests
             };
 
             var events = JournalMonitor.ParseJournalEntries( lines );
-            Assert.AreEqual( 2, events.Count );
+            Assert.AreEqual( 2, events.Count, $"Observed event types: {string.Join("; ", events.Select(e => e.type))}" );
             Assert.AreEqual( typeof(ShipShutdownEvent), events[ 0 ].GetType() );
             Assert.IsTrue( ( (ShipShutdownEvent)events[ 0 ] ).partialshutdown );
         }
