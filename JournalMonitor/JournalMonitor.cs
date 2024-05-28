@@ -5232,30 +5232,40 @@ namespace EddiJournalMonitor
                     };
                     faction.presences.Add( factionPresense );
                 }
+            }
 
-                // Get the faction allegiance
-                if ( data.TryGetValue( type + "Allegiance", out _ ) )
+            // Since systems can have Thargoid allegiance, treat Thargoids like a faction for the purpose of
+            // allegiance and government (even when no human faction exists).
+
+            // Get the faction allegiance
+            if ( data.TryGetValue( type + "Allegiance", out _ ) )
+            {
+                if ( faction is null ) { faction = new Faction(); }
+                faction.Allegiance = GetAllegiance( data, type + "Allegiance" );
+                if ( string.IsNullOrEmpty( faction.name ) && faction.Allegiance != null )
                 {
-                    faction.Allegiance = GetAllegiance( data, type + "Allegiance" );
+                    faction.name = faction.Allegiance.localizedName;
                 }
-                else if ( data.TryGetValue( "Factions", out var val ) )
+            }
+            else if ( data.TryGetValue( "Factions", out var val ) && val is List<object> factionsList )
+            {
+                // Station controlling faction government is not discretely available in 'Location' event
+                if ( faction is null ) { faction = new Faction(); }
+                foreach ( IDictionary<string, object> factionDetail in factionsList )
                 {
-                    // Station controlling faction government not discretely available in 'Location' event
-                    if ( val is List<object> factionsList )
+                    string fName = JsonParsing.getString( factionDetail, "Name" );
+                    if ( fName == faction.name )
                     {
-                        foreach ( IDictionary<string, object> factionDetail in factionsList )
-                        {
-                            string fName = JsonParsing.getString( factionDetail, "Name" );
-                            if ( fName == faction.name )
-                            {
-                                faction.Allegiance = GetAllegiance( factionDetail, "Allegiance" );
-                                break;
-                            }
-                        }
+                        faction.Allegiance = GetAllegiance( factionDetail, "Allegiance" );
+                        break;
                     }
                 }
+            }
 
-                // Get the controlling faction (system or station) government
+            // Get the controlling faction (system or station) government
+            if ( data.TryGetValue( type + "Government", out _ ) )
+            {
+                if ( faction is null ) { faction = new Faction(); }
                 faction.Government = Government.FromEDName( JsonParsing.getString( data, type + "Government" ) ) ?? Government.None;
             }
 
