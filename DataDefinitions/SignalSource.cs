@@ -61,6 +61,7 @@ namespace EddiDataDefinitions
             var PirateAttackT7 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T7");
             var NotableStellarPhenomenaCloud = new SignalSource("Fixed_Event_Life_Cloud");
             var NotableStellarPhenomenaRing = new SignalSource("Fixed_Event_Life_Ring");
+            var AncientProbe = new SignalSource("FIXED_EVENT_PROBE");
 
             var AttackAftermath = new SignalSource("AttackAftermath");
             var AftermathLarge = new SignalSource("Aftermath_Large");

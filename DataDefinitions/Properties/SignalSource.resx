@@ -421,4 +421,8 @@
     <value>Thargoid Spire Site</value>
     <comment>Thargoid Spire Site</comment>
   </data>
+  <data name="FIXED_EVENT_PROBE" xml:space="preserve">
+    <value>Ancient Probe</value>
+    <comment>Ancient Probe</comment>
+  </data>
 </root>

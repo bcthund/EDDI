@@ -268,6 +268,15 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ancient Probe.
+        /// </summary>
+        public static string FIXED_EVENT_PROBE {
+            get {
+                return ResourceManager.GetString("FIXED_EVENT_PROBE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signal Source.
         /// </summary>
         public static string GenericSignalSource {
