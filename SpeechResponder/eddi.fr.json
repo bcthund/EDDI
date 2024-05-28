@@ -2348,6 +2348,15 @@
       "name": "Star scanned",
       "description": "Triggered when you complete a scan of a stellar body"
     },
+    "Station mailslot": {
+      "enabled": true,
+      "priority": 3,
+      "responder": true,
+      "script": null,
+      "default": true,
+      "name": "Station mailslot",
+      "description": "Triggered when your ship enters through a station's mailslot without the aid of a docking computer"
+    },
     "Station no fire zone entered": {
       "enabled": true,
       "priority": 3,

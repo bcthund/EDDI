@@ -21,6 +21,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * `Signal detected` updated to include new `signaltype` property.
     * `Ship shutdown` updated to include new `partialshutdown` property (for instances where the power flickers but doesn't go out completely). (#2603)
     * `Ship targeted` updated to better utilize localized names (where available). (#2604)
+    * `Station mailslot` event added, triggered when your ship enters through a station's mailslot without the aid of a docking computer
   * Navigation Monitor
     * Improved route guidance updates.
     * Fixed ship routes reporting wrong jump distances. (#2591)

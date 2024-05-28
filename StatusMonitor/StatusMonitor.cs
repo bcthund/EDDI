@@ -2,6 +2,7 @@
 using EddiDataDefinitions;
 using EddiEvents;
 using EddiStatusService;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ using Utilities;
 
 namespace EddiStatusMonitor
 {
+    [UsedImplicitly]
     public class StatusMonitor : IEddiMonitor
     {
         // Miscellaneous tracking
         private bool jumping;
         private string lastDestinationPOI;
+        private string lastMusicTrack;
 
         public StatusMonitor()
         {
@@ -280,8 +283,7 @@ namespace EddiStatusMonitor
         }
 
         public void Reload()
-        {
-        }
+        { }
 
         public UserControl ConfigurationTabItem()
         {
@@ -291,38 +293,56 @@ namespace EddiStatusMonitor
         public void PreHandle(Event @event)
         {
             // Some events can be derived from our status during a given event
-            if (@event is EnteredNormalSpaceEvent)
+            if ( @event is EnteredNormalSpaceEvent enteredNormalSpaceEvent )
             {
-                handleEnteredNormalSpaceEvent(@event);
+                handleEnteredNormalSpaceEvent( enteredNormalSpaceEvent );
             }
-            else if (@event is FSDEngagedEvent)
+            else if ( @event is FSDEngagedEvent fsdEngagedEvent )
             {
-                handleFSDEngagedEvent(@event);
+                handleFSDEngagedEvent( fsdEngagedEvent );
+            }
+            else if ( @event is MusicEvent musicEvent )
+            {
+                handleMusicEvent( musicEvent );
             }
         }
 
-        private void handleEnteredNormalSpaceEvent(Event @event)
+        private void handleEnteredNormalSpaceEvent( EnteredNormalSpaceEvent @event )
         {
             // We can derive a "Glide" event from the context in our status
-            StatusService.Instance.lastEnteredNormalSpaceEvent = (EnteredNormalSpaceEvent)@event;
+            StatusService.Instance.lastEnteredNormalSpaceEvent = @event;
         }
 
-        private void handleFSDEngagedEvent(Event @event)
+        private void handleFSDEngagedEvent( FSDEngagedEvent @event )
         {
-            if (((FSDEngagedEvent)@event).target == "Hyperspace")
+            if (@event.target == "Hyperspace")
             {
                 jumping = true;
             }
-            EDDI.Instance.enqueueEvent(new ShipFsdEvent(DateTime.UtcNow, "charging complete") { fromLoad = @event.fromLoad });
+            EDDI.Instance.enqueueEvent(new ShipFsdEvent( @event.timestamp, "charging complete" ) { fromLoad = @event.fromLoad });
+        }
+
+        private void handleMusicEvent ( MusicEvent @event )
+        {
+            // Derive a "Station mailslot" event from changes to music tracks
+            if ( StatusService.Instance.CurrentStatus.vehicle == Constants.VEHICLE_SHIP )
+            {
+                if ( @event.musictrack == "Starport" && 
+                     ( lastMusicTrack == "NoTrack" || lastMusicTrack == "Exploration" ) &&
+                     !StatusService.Instance.CurrentStatus.docked )
+                {
+                    EDDI.Instance.enqueueEvent( new StationMailslotEvent( @event.timestamp ) { fromLoad = @event.fromLoad } );
+                }
+            }
+
+            lastMusicTrack = @event.musictrack;
         }
 
         public void PostHandle(Event @event)
-        {
-        }
+        { }
 
         public void HandleProfile(JObject profile)
-        {
-        }
+        { }
 
         public IDictionary<string, Tuple<Type, object>> GetVariables()
         {

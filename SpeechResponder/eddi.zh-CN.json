@@ -2333,6 +2333,15 @@
       "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'star')}\r\n{SetState('eddi_context_last_action', 'scan')}\r\n{SetState('eddi_context_star_system', system.name)}\r\n{SetState('eddi_context_star_star', event.name)}\r\n{SetState('eddi_context_last_scan_estimated_value', event.estimatedvalue)}\r\n\r\n{if ship.Role.edname = \"Exploration\" || ship.Role.edname = \"Multipurpose\":\r\n    {F(\"Star report\")}\r\n}",
       "default": true
     },
+    "Station mailslot": {
+      "enabled": true,
+      "priority": 3,
+      "responder": true,
+      "script": null,
+      "default": true,
+      "name": "Station mailslot",
+      "description": "Triggered when your ship enters through a station's mailslot without the aid of a docking computer"
+    },
     "Station no fire zone entered": {
       "name": "Station no fire zone entered",
       "description": "Triggered when your ship enters a station's no fire zone",
