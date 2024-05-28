@@ -159,7 +159,7 @@ namespace EddiCore
         private ConcurrentBag<IEddiResponder> activeResponders = new ConcurrentBag<IEddiResponder>();
         private static readonly object responderLock = new object();
 
-        public string vaVersion { get; set; }
+        public System.Version vaVersion { get; set; }
 
         // Information obtained from the configuration
         [CanBeNull]

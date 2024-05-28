@@ -11,9 +11,8 @@ using EddiSpeechResponder;
 using EddiSpeechService;
 using EddiStarMapService;
 using EddiStatusService;
+using JetBrains.Annotations;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -25,18 +24,22 @@ using Utilities;
 
 namespace EddiVoiceAttackResponder
 {
+    [UsedImplicitly]
     public class VoiceAttackPlugin : VoiceAttackVariables
     {
+        // ReSharper disable once UnusedMember.Global - VA Interface Member
         public static string VA_DisplayName()
         {
             return Constants.EDDI_NAME + " " + Constants.EDDI_VERSION;
         }
 
+        // ReSharper disable once UnusedMember.Global - VA Interface Member
         public static string VA_DisplayInfo()
         {
             return Constants.EDDI_NAME + "\r\nVersion " + Constants.EDDI_VERSION;
         }
 
+        // ReSharper disable once UnusedMember.Global - VA Interface Member
         public static Guid VA_Id()
         {
             return new Guid("{4AD8E3A4-CEFA-4558-B503-1CC9B99A07C1}");
@@ -44,18 +47,9 @@ namespace EddiVoiceAttackResponder
 
         private static readonly Random random = new Random();
 
-        public static readonly ConcurrentDictionary<string, BlockingCollection<Event>> eventQueues = new ConcurrentDictionary<string, BlockingCollection<Event>>();
-        private static readonly ConcurrentBag<Task> consumerTasks = new ConcurrentBag<Task>();
-        private static readonly CancellationTokenSource consumerCancellationTS = new CancellationTokenSource(); // This must be static so that it is visible to child threads and tasks
+        internal static readonly object vaProxyLock = new object();
 
-        // We'll maintain a referenceable list of variables that we've set from events
-        private static List<VoiceAttackVariable> currentVariables = new List<VoiceAttackVariable>();
-
-        private static System.Version vaVersion;
-        private static readonly object vaProxyLock = new object();
-
-        private static Status currentStatus;
-
+        // ReSharper disable once MemberCanBePrivate.Global - VA Interface Member
         public static void VA_Init1(dynamic vaProxy)
         {
             // Initialize and launch an EDDI instance without opening the main window
@@ -73,37 +67,18 @@ namespace EddiVoiceAttackResponder
                     initializeStandardValues();
 
                     // Set up our event responder.
-                    VoiceAttackResponder.RaiseEvent += (s, theEvent) =>
-                    {
-                        if (theEvent is null) { return; }
-                        if (eventQueues.TryGetValue(theEvent.type, out var eventQueue))
-                        {
-                            // Add our event to an existing blocking collection for that event type.
-                            eventQueue.Add(theEvent);
-                        }
-                        else
-                        {
-                            // Add our event to a new blocking collection for that event type and start a consumer task for that collection
-                            eventQueues[theEvent.type] = new BlockingCollection<Event> { theEvent };
-                            var consumerTask = Task.Run(() =>
-                            {
-                                // ReSharper disable once AccessToModifiedClosure - OK to use vaProxy in this context.
-                                dequeueEvents(eventQueues[theEvent.type], ref vaProxy);
-                            });
-                            consumerTasks.Add(consumerTask);
-                        }
-                    };
+                    VoiceAttackResponder.RaiseEvent += (s, theEvent) => { VoiceAttackEventHandler.Handle(theEvent); };
 
                     // Add notifiers for changes in variables we want to react to 
                     // (we can only use event handlers with classes which are always constructed - nullable objects will be updated via responder events)
                     EDDI.Instance.PropertyChanged += (s, e) => updateStandardValues(e);
                     EDDI.Instance.State.CollectionChanged += (s, e) =>
                     {
-                        setDictionaryValues(EDDI.Instance.State, "state", ref vaProxy);
+                        setDictionaryValues(EDDI.Instance.State, "state", ref App.vaProxy );
                     };
                     EDDI.Instance.State.PropertyChanged += ( s, e ) =>
                     {
-                        setDictionaryValues( EDDI.Instance.State, "state", ref vaProxy );
+                        setDictionaryValues( EDDI.Instance.State, "state", ref App.vaProxy );
                     };
                     SpeechService.Instance.PropertyChanged += (s, e) =>
                     {
@@ -111,16 +86,15 @@ namespace EddiVoiceAttackResponder
                     };
                     CompanionAppService.Instance.StateChanged += (oldState, newState) =>
                     {
-                        setCAPIState(newState == CompanionAppService.State.Authorized, ref vaProxy);
+                        setCAPIState(newState == CompanionAppService.State.Authorized, ref App.vaProxy );
                     };
-                    StatusService.StatusUpdatedEvent += OnStatusUpdated;
 
                     var cargoMonitor = (CargoMonitor)EDDI.Instance.ObtainMonitor("Cargo monitor");
                     cargoMonitor.InventoryUpdatedEvent += (s, e) =>
                     {
                         lock (vaProxyLock)
                         {
-                            setCargo(cargoMonitor, ref vaProxy);
+                            setCargo(cargoMonitor, ref App.vaProxy );
                         }
                     };
 
@@ -131,8 +105,8 @@ namespace EddiVoiceAttackResponder
                         {
                             lock (vaProxyLock)
                             {
-                                setShipValues(shipMonitor.GetCurrentShip(), "Ship", ref vaProxy);
-                                Task.Run(() => setShipyardValues(shipMonitor.shipyard?.ToList(), ref vaProxy));
+                                setShipValues(shipMonitor.GetCurrentShip(), "Ship", ref App.vaProxy );
+                                Task.Run(() => setShipyardValues(shipMonitor.shipyard?.ToList(), ref App.vaProxy ) );
                             }
                         };
                     }
@@ -143,7 +117,7 @@ namespace EddiVoiceAttackResponder
                         {
                             lock (vaProxyLock)
                             {
-                                setStatusValues(status, "Status", ref vaProxy);
+                                setStatusValues(status, "Status", ref App.vaProxy );
                             }
                         }
                     };
@@ -176,8 +150,10 @@ namespace EddiVoiceAttackResponder
                     EDDI.Instance.enqueueEvent(new VAInitializedEvent(DateTime.UtcNow));
 
                     // Set a variable indicating the version of VoiceAttack in use
-                    vaVersion = vaProxy.VAVersion;
-                    EDDI.Instance.vaVersion = vaVersion?.ToString();
+                    if ( vaProxy.VAVersion is System.Version version )
+                    {
+                        EDDI.Instance.vaVersion = version;
+                    }
 
                     Logging.Info("EDDI VoiceAttack plugin initialization complete");
                 }
@@ -193,155 +169,15 @@ namespace EddiVoiceAttackResponder
             appThread.Start();
         }
 
-        private static void OnStatusUpdated(object sender, EventArgs e)
-        {
-            if (sender is Status status)
-            {
-                LockManager.GetLock(nameof(currentStatus), () =>
-                {
-                    currentStatus = status;
-                });
-            }
-        }
-
-        private static void dequeueEvents(BlockingCollection<Event> eventQueue, ref dynamic vaProxy)
-        {
-            try
-            {
-                foreach (var @event in eventQueue.GetConsumingEnumerable(consumerCancellationTS.Token))
-                {
-                    try
-                    {
-                        Logging.Debug($"Passing event {@event.type} to VoiceAttack", @event);
-                        if (@event?.type != null)
-                        {
-                            lock (vaProxyLock)
-                            {
-                                updateValuesOnEvent(@event, ref vaProxy);
-                                triggerVACommands(@event, ref vaProxy);
-                            }
-                            // We need to wait until each event is no longer active before moving to the next from the same
-                            // queue / event type so that variables aren't overwritten before VoiceAttack can respond.
-                            // Other queues / event types will be able to continue processing events while we wait.
-                            var active = true;
-                            while (active)
-                            {
-                                Thread.Sleep(50);
-                                if (vaVersion?.CompareTo(new System.Version(1, 7, 4)) > 0) // If running VoiceAttack version 1.7.4 or later
-                                {
-                                    active = vaProxy.Command.Active("((EDDI " + @event.type.ToLowerInvariant() + "))");
-                                }
-                                else // Legacy command invocation for versions of VoiceAttack prior to 1.7.4
-                                {
-                                    active = vaProxy.CommandActive("((EDDI " + @event.type.ToLowerInvariant() + "))");
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Error($"VoiceAttack failed to handle {@event.type} event.", ex);
-                    }
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                // Task canceled. Mark this collection as not accepting any new items.
-                eventQueue.CompleteAdding();
-            }
-        }
-
-        public static void updateValuesOnEvent(Event @event, ref dynamic vaProxy)
-        {
-            try
-            {
-                Logging.Debug($"Processing EDDI event {@event.type}:", @event);
-                var startTime = DateTime.UtcNow;
-                vaProxy.SetText("EDDI event", @event.type);
-
-                // Retrieve and clear variables from prior iterations of the same event
-                clearPriorEventValues(ref vaProxy, @event.type, currentVariables);
-                currentVariables = currentVariables.Where(v => v.eventType != @event.type).ToList();
-
-                // Prepare and update this event's variable values
-                var eventVariables = new MetaVariables(@event.GetType(), @event)
-                    .Results
-                    .AsVoiceAttackVariables("EDDI", @event.type);
-                foreach (var @var in eventVariables) { @var.Set(vaProxy); }
-                Logging.Debug($"Set VoiceAttack variables for EDDI event {@event.type}", eventVariables);
-
-                // Save the updated state of our event variables
-                currentVariables.AddRange(eventVariables);
-
-                Logging.Debug($"Processed EDDI event {@event.type} in {(DateTime.UtcNow - startTime).Milliseconds} milliseconds:", @event);
-            }
-            catch (Exception ex)
-            {
-                Logging.Error("Failed to set event variables in VoiceAttack", ex);
-            }
-        }
-
-        public static void clearPriorEventValues(ref dynamic vaProxy, string eventType, List<VoiceAttackVariable> eventVariables)
-        {
-            try
-            {
-                // We set all values in our list from a prior version of the same event to null
-                foreach (var variable in eventVariables
-                    .Where(v => v.eventType == eventType && v.value != null))
-                {
-                    variable.value = null;
-                }
-                // We clear variable values by swapping the values to null and then instructing VA to set them again
-                foreach (var @var in eventVariables) { @var.Set(vaProxy); }
-            }
-            catch (Exception ex)
-            {
-                Logging.Error("Failed to clear event variables in VoiceAttack", ex);
-            }
-        }
-
-        private static void triggerVACommands(Event @event, ref dynamic vaProxy)
-        {
-            string commandName = "((EDDI " + @event.type.ToLowerInvariant() + "))";
-            try
-            {
-                // Fire local command if present  
-                Logging.Debug("Searching for command " + commandName);
-                if (vaVersion?.CompareTo(new System.Version(1,7,4)) > 0) // If running VoiceAttack version 1.7.4 or later
-                {
-                    if (vaProxy.Command.Exists(commandName))
-                    {
-                        Logging.Debug("Found command " + commandName);
-                        vaProxy.Command.Execute(commandName);
-                        Logging.Info("Executed command " + commandName);
-                    }
-                }
-                else // Legacy command invocation for versions of VoiceAttack prior to 1.7.4
-                {
-                    if (vaProxy.CommandExists(commandName))
-                    {
-                        Logging.Debug("Found command " + commandName);
-                        vaProxy.ExecuteCommand(commandName);
-                        Logging.Info("Executed command " + commandName);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Error("Failed to trigger local VoiceAttack command " + commandName, ex);
-            }
-        }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0060:Remove unused parameter", Justification = "VA API" )]
         // ReSharper disable once UnusedMember.Global
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "VA API")]
+        // ReSharper disable once UnusedParameter.Global - VoiceAttack API
         public static void VA_Exit1(dynamic vaProxy)
         {
             Logging.Info("EDDI VoiceAttack plugin exiting");
 
-            // Cancel the updater threads and wait for them to complete
-            consumerCancellationTS?.Cancel();
-            var timeout = Task.Delay(2000);
-            Task.WhenAny(Task.WhenAll(consumerTasks), timeout);
+            // Cancel event queue threads and wait for them to complete
+            VoiceAttackEventHandler.StopEventHandling();
 
             if (Application.Current?.Dispatcher != null)
             {
@@ -373,9 +209,11 @@ namespace EddiVoiceAttackResponder
             }
         }
 
+        [UsedImplicitly]
         public static void VA_StopCommand()
         { }
 
+        [UsedImplicitly]
         public static void VA_Invoke1(dynamic vaProxy)
         {
             Logging.Debug("Invoked with context " + (string)vaProxy.Context);
