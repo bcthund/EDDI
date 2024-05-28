@@ -38,18 +38,7 @@ namespace EddiEvents
         public decimal? distancefromstar { get; private set; }
 
         [PublicAPI("A list of possible station services: Dock, Autodock, BlackMarket, Commodities, Contacts, Exploration, Initiatives, Missions, Outfitting, CrewLounge, Rearm, Refuel, Repair, Shipyard, Tuning, Workshop, MissionsGenerated, Facilitator, Research, FlightController, StationOperations, OnDockMission, Powerplay, SearchAndRescue, TechBroker, MaterialTrader")]
-        public List<string> stationservices
-        {
-            get
-            {
-                List<string> services = new List<string>();
-                foreach (StationService service in stationServices)
-                {
-                    services.Add(service.localizedName);
-                }
-                return services;
-            }
-        }
+        public List<string> stationservices => stationServices.Select( s => s.localizedName ).ToList();
 
         [PublicAPI("True if landing with a breached cockpit")]
         public bool cockpitbreach { get; private set; }

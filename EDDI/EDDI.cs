@@ -1272,7 +1272,8 @@ namespace EddiCore
 
         private bool eventSettlementApproached(SettlementApproachedEvent settlementApproachedEvent)
         {
-            if (CurrentStarSystem?.systemAddress == settlementApproachedEvent.systemAddress)
+            if (CurrentStarSystem?.systemAddress == settlementApproachedEvent.systemAddress
+                && settlementApproachedEvent.marketId != null )
             {
                 var station = CurrentStarSystem?.stations.FirstOrDefault(s => s.marketId == settlementApproachedEvent.marketId);
                 if (station is null)
@@ -1287,6 +1288,9 @@ namespace EddiCore
                     };
                     CurrentStarSystem?.stations.Add(station);
                 }
+                station.Faction = settlementApproachedEvent.controllingFaction;
+                station.stationServices = settlementApproachedEvent.stationServices;
+                station.economyShares = settlementApproachedEvent.economyShares;
             }
             return true;
         }

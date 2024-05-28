@@ -887,23 +887,56 @@ namespace EddiJournalMonitor
                                 break;
                             case "ApproachSettlement":
                                 {
-                                    string settlementname = JsonParsing.getString(data, "Name");
-                                    long? marketId = JsonParsing.getOptionalLong(data, "MarketID"); // Tourist beacons are reported as settlements without MarketID
-                                    var systemAddress = JsonParsing.getULong(data, "SystemAddress");
-                                    string bodyName = JsonParsing.getString(data, "BodyName");
-                                    long? bodyId = JsonParsing.getOptionalLong(data, "BodyID");
+                                    // The settlement name may be a proper name or a symbolic name.
+                                    var settlementName = JsonParsing.getString(data, "Name").ReplaceEnd('+');
 
-                                    // The settlement name may be a proper name or a generic signal type.
-                                    SignalSource settlementName = SignalSource.FromEDName(settlementname) ?? new SignalSource();
+                                    // Symbolic names may include a localized name which may have an number appended to it (e.g. "Ancient Ruins (3)".
+                                    // If so, remove the appended number.
                                     var localizedName = JsonParsing.getString(data, "Name_Localised");
-                                    if (!string.IsNullOrEmpty(localizedName) && !localizedName.Contains("$"))
+                                    if ( !string.IsNullOrEmpty(localizedName) )
                                     {
-                                        settlementName.fallbackLocalizedName = localizedName;
+                                        localizedName = Regex.Replace( localizedName, @"\s\(\d\)", "" ).Trim();
                                     }
-                                    decimal? latitude = JsonParsing.getOptionalDecimal(data, "Latitude");
-                                    decimal? longitude = JsonParsing.getOptionalDecimal(data, "Longitude");
 
-                                    events.Add(new SettlementApproachedEvent(timestamp, settlementName, marketId, systemAddress, bodyName, bodyId, latitude, longitude) { raw = line, fromLoad = fromLogLoad });
+                                    var marketId = JsonParsing.getOptionalLong(data, "MarketID"); // Tourist beacons and guardian structures are reported as settlements without MarketID
+                                    var systemAddress = JsonParsing.getULong(data, "SystemAddress");
+                                    var bodyName = JsonParsing.getString(data, "BodyName");
+                                    var bodyId = JsonParsing.getOptionalLong(data, "BodyID");
+
+                                    var latitude = JsonParsing.getOptionalDecimal(data, "Latitude");
+                                    var longitude = JsonParsing.getOptionalDecimal(data, "Longitude");
+
+                                    var controllingFaction = GetFaction(data, "Station", EDDI.Instance.CurrentStarSystem?.systemname);
+
+                                    // Get station services data
+                                    var stationServices = new List<StationService>();
+                                    if ( data.TryGetValue( "StationServices", out var val ) )
+                                    {
+                                        stationServices = ( val as List<object> )
+                                            .Cast<string>()
+                                            .Select( StationService.FromEDName )
+                                            .ToList();
+                                    }
+
+                                    // Get station economies and their shares
+                                    var Economies = new List<EconomyShare>();
+                                    if ( data.TryGetValue( "StationEconomies", out var val2 ) )
+                                    {
+                                        var economies = ( val2 as List<object> )
+                                            .Cast<Dictionary<string, object>>();
+                                        foreach ( var economyshare in economies )
+                                        {
+                                            var economy = Economy.FromEDName(JsonParsing.getString(economyshare, "Name"));
+                                            economy.fallbackLocalizedName = JsonParsing.getString( economyshare, "Name_Localised" );
+                                            var share = JsonParsing.getDecimal(economyshare, "Proportion");
+                                            if ( economy != Economy.None && share > 0 )
+                                            {
+                                                Economies.Add( new EconomyShare( economy, share ) );
+                                            }
+                                        }
+                                    }
+
+                                    events.Add(new SettlementApproachedEvent(timestamp, settlementName, localizedName, marketId, controllingFaction, stationServices, Economies, systemAddress, bodyName, bodyId, latitude, longitude) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;
@@ -5161,53 +5194,70 @@ namespace EddiJournalMonitor
 
         private static Faction GetFaction(IDictionary<string, object> data, string type, string systemName)
         {
-            Faction faction = new Faction();
+            Faction faction = null;
 
             // Get the faction name and state
             if (data.TryGetValue(type + "Faction", out object factionVal))
             {
-                if (factionVal is Dictionary<string, object> factionData) // 3.3.03 or later journal
-                {
-                    faction.name = JsonParsing.getString(factionData, "Name");
+                var factionName = string.Empty;
+                var factionState = FactionState.None;
 
-                    // Get the faction information specific to the star system
-                    FactionPresence factionPresense = new FactionPresence()
+                if ( factionVal is Dictionary<string, object> factionData) // 3.3.03 or later journal
+                {
+                    factionName = JsonParsing.getString( factionData, "Name" );
+                    factionState = FactionState.FromEDName( JsonParsing.getString( factionData, "FactionState" ) ) ??
+                                   FactionState.None;
+                }
+                else if (factionVal is string s) // per-3.3.03 journal
+                {
+                    factionName = s;
+                }
+
+                if ( string.IsNullOrEmpty(factionName) )
+                {
+                    throw new ArgumentException( "Faction information could not be parsed" );
+                }
+
+                faction = EDDI.Instance.CurrentStarSystem?.factions.FirstOrDefault( f => f.name == factionName ) ??
+                          new Faction { name = factionName };
+
+                // Get the faction information specific to the star system
+                var factionPresense = faction.presences.FirstOrDefault( p => p.systemName == systemName );
+                if ( factionPresense is null && !string.IsNullOrEmpty( systemName ) )
+                {
+                    factionPresense = new FactionPresence()
                     {
                         systemName = systemName,
-                        FactionState = FactionState.FromEDName(JsonParsing.getString(factionData, "FactionState")) ?? FactionState.None,
+                        FactionState = factionState
                     };
-                    faction.presences.Add(factionPresense);
+                    faction.presences.Add( factionPresense );
                 }
-                else // per-3.3.03 journal
-                {
-                    faction.name = factionVal as string;
-                }
-            }
 
-            // Get the faction allegiance
-            if (data.TryGetValue(type + "Allegiance", out _))
-            {
-                faction.Allegiance = GetAllegiance(data, type + "Allegiance");
-            }
-            else if (data.TryGetValue("Factions", out object val))
-            {
-                // Station controlling faction government not discretely available in 'Location' event
-                if ( val is List<object> factionsList )
+                // Get the faction allegiance
+                if ( data.TryGetValue( type + "Allegiance", out _ ) )
                 {
-                    foreach ( IDictionary<string, object> factionDetail in factionsList )
+                    faction.Allegiance = GetAllegiance( data, type + "Allegiance" );
+                }
+                else if ( data.TryGetValue( "Factions", out var val ) )
+                {
+                    // Station controlling faction government not discretely available in 'Location' event
+                    if ( val is List<object> factionsList )
                     {
-                        string fName = JsonParsing.getString( factionDetail, "Name" );
-                        if ( fName == faction.name )
+                        foreach ( IDictionary<string, object> factionDetail in factionsList )
                         {
-                            faction.Allegiance = GetAllegiance( factionDetail, "Allegiance" );
-                            break;
+                            string fName = JsonParsing.getString( factionDetail, "Name" );
+                            if ( fName == faction.name )
+                            {
+                                faction.Allegiance = GetAllegiance( factionDetail, "Allegiance" );
+                                break;
+                            }
                         }
                     }
                 }
-            }
 
-            // Get the controlling faction (system or station) government
-            faction.Government = Government.FromEDName(JsonParsing.getString(data, type + "Government")) ?? Government.None;
+                // Get the controlling faction (system or station) government
+                faction.Government = Government.FromEDName( JsonParsing.getString( data, type + "Government" ) ) ?? Government.None;
+            }
 
             return faction;
         }

@@ -49,14 +49,14 @@ namespace System
         // Remove undesired characters from end of a string (like the +++ on the end of some station names)
         public static string ReplaceEnd(this string str, char endreplace)
         {
-            if (string.IsNullOrEmpty(str) || !char.IsWhiteSpace(endreplace)) { return str; }
+            if (string.IsNullOrEmpty(str) || char.IsWhiteSpace(endreplace)) { return str; }
             str = str.Trim();
             var ep = str.Length - 1;
             while (ep >= 0 && str[ep] == endreplace)
             {
                 ep--;
             }
-            return str.Substring(0, ep + 1);
+            return str.Substring(0, ep + 1).Trim();
         }
 
         public static string ToInvariantString(this decimal? dec)
