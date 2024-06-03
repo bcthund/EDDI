@@ -37,6 +37,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Entered signal source` removed.
       * `Destination arrived` added.
       * `Message received` updated to handle the oddly written phrase "Every feel like"
+      * `Route details` updated so that the `update` type will not restate a destination that you've already selected as your next system destination.
 
 ## 4.0.3
   * EDSM Responder
