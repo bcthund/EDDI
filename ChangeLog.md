@@ -36,6 +36,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Entered normal space` updated to correct an occasional error in the default script
       * `Entered signal source` removed.
       * `Destination arrived` added.
+      * `Message received` updated to handle the oddly written phrase "Every feel like"
 
 ## 4.0.3
   * EDSM Responder
