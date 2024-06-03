@@ -42,6 +42,8 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Ship repaired` updated to correct an occasional rendering error in the default script.
       * `Ship targeted` updated to not comment on wanted targets identified while in supercruise unless the current ship contains an interdictor.
       * `Star report` updated to correct an occasional rendering error in the default script.
+      * `System scan complete` updated to correct an occasional rendering error in the default script.
+
 
 ## 4.0.3
   * EDSM Responder
