@@ -34,7 +34,7 @@ namespace EddiJournalMonitor
 
         private static CancellationTokenSource ShipShutdownCancellationTokenSource;
 
-        private static void ForwardJournalEntries ( IReadOnlyCollection<string> lines, Action<Event> callback, bool isLogLoadEventBatch )
+        private static void ForwardJournalEntries ( IList<string> lines, Action<Event> callback, bool isLogLoadEventBatch )
         {
             if ( !lines.Any() ) { return; }
 
@@ -44,7 +44,7 @@ namespace EddiJournalMonitor
             events.ForEach(callback);
         }
 
-        public static List<Event> ParseJournalEntries(IEnumerable<string> lines, bool fromLogLoad = false)
+        public static List<Event> ParseJournalEntries(IList<string> lines, bool fromLogLoad = false)
         {
             var events = lines
                 .Where( line => !string.IsNullOrEmpty( line ) )
@@ -60,6 +60,16 @@ namespace EddiJournalMonitor
             // Reorder SystemScanComplete to occur after other events in the batch including body and star scans
             var SystemScanCompleteEvents = events.OfType<SystemScanComplete>().ToList();
             events = events.Except( SystemScanCompleteEvents ).Concat( SystemScanCompleteEvents ).ToList();
+
+            // We will ignore `USSDrop` journal events since they are redundant with `SupercruiseDestinationDrop` but we shall 
+            // supplement our response to `SupercruiseDestinationDrop` with a signal source identifier.
+            if ( lines.Any( l => l.Contains( "USSDrop" ) ) )
+            {
+                foreach ( var destinationArrivedEvent in events.OfType<DestinationArrivedEvent>() )
+                {
+                    destinationArrivedEvent.isSignalSource = true;
+                }
+            }
 
             // Handle any other sequential event patterns we wish to handle
             for ( var i = 0; i < events.Count; i++ )
@@ -2467,15 +2477,6 @@ namespace EddiJournalMonitor
                                     data.TryGetValue("TotalEarnings", out val);
                                     decimal total = (long)val;
                                     events.Add(new ExplorationDataSoldEvent(timestamp, systems, reward, bonus, total) { raw = line, fromLoad = fromLogLoad });
-                                }
-                                handled = true;
-                                break;
-                            case "USSDrop":
-                                {
-                                    SignalSource source = GetSignalSourceName(data);
-                                    data.TryGetValue("USSThreat", out object val);
-                                    int threat = (int)(long)val;
-                                    events.Add(new EnteredSignalSourceEvent(timestamp, source, threat) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;
@@ -4978,6 +4979,44 @@ namespace EddiJournalMonitor
                                 }
                                 handled = true;
                                 break;
+                            case "SupercruiseDestinationDrop":
+                                {
+                                    // "Type" may be either a signal source or proper name.
+                                    // If proper name, it might be a fleet carrier with both name and ID.
+                                    var type = JsonParsing.getString( data, "Type" );
+                                    var typeLocalized = JsonParsing.getString( data, "Type_Localised" );
+                                    var threat = JsonParsing.getOptionalInt( data, "Threat" ) ?? 0; // Typically 0 except for USS drops.
+                                    var marketID = JsonParsing.getOptionalLong( data, "MarketID" );
+
+                                    if ( type.StartsWith("$") ) 
+                                    {
+                                        // Symbolic signal source name. Prefer our own localization and fallback using the provided localization string if needed.
+                                        var signalSource = SignalSource.FromEDName( type );
+                                        signalSource.fallbackLocalizedName = typeLocalized;
+                                        type = signalSource.invariantName;
+                                        typeLocalized = signalSource.localizedName;
+                                    }
+                                    else
+                                    {
+                                        // Destination might be a fleet carrier with name and carrier ID in a single string.
+                                        // Check and break apart if needed.
+                                        var fleetCarrierRegex = new Regex( "^(.+)(?> )([A-Za-z0-9]{3}-[A-Za-z0-9]{3})$" );
+                                        if ( string.IsNullOrEmpty( typeLocalized ) && fleetCarrierRegex.IsMatch( type ) )
+                                        {
+                                            // Fleet carrier names include both the carrier name and carrier ID, we need to separate them
+                                            var fleetCarrierParts = fleetCarrierRegex.Matches( type )[ 0 ].Groups;
+                                            if ( fleetCarrierParts.Count == 3 )
+                                            {
+                                                type = fleetCarrierParts[ 2 ].Value;
+                                                typeLocalized = fleetCarrierParts[ 1 ].Value;
+                                            }
+                                        }
+                                    }
+
+                                    events.Add( new DestinationArrivedEvent( timestamp, type, typeLocalized, threat, marketID ) { raw = line, fromLoad = fromLogLoad } );
+                                }
+                                handled = true;
+                                break;
 
                             // we silently ignore these, but forward them to the responders
                             case "CodexDiscovery":
@@ -5023,10 +5062,10 @@ namespace EddiJournalMonitor
                             case "Scanned": // Written at the end of a successful scan, too late to react to this.
                             case "SharedBookmarkToSquadron": // Unnecessary.
                             case "ShipyardRedeem": // Unnecessary, all of the necessary information is already given in the `ShipRedeem` event.
-                            case "SupercruiseDestinationDrop": // Unnecessary. The same information is available from the `SupercruiseExit` and `USSDrop` events.
                             case "TradeMicroResources": // This is always followed by `ShipLocker`, which we can use to keep our inventory up to date
                             case "TransferMicroResources": // Removed, no longer written
                             case "UseConsumable": // Seems to include only medkits and energy cells (grenades not included) and it's not needed. The `BackpackChange` event keeps us up to date.
+                            case "USSDrop": // Superseded by / redundant with the `SupercruiseDestinationDrop` event.
                             case "WonATrophyForSquadron": // No interesting data here so no reason to add this.
                                 break;
                             default:

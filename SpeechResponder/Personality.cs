@@ -87,6 +87,7 @@ namespace EddiSpeechResponder
 
         private static readonly string[] obsoleteScriptKeys = 
         {
+            "Entered signal source", // Replaced by "Destination arrived" script
             "Jumping", // Replaced by "FSD engaged" script
             "Crew member role change", // This name is mismatched to the key (should be "changed"), so EDDI couldn't match the script name to the .json key correctly. The default script has been corrected.
             "Ship low fuel", // Accidental duplicate. The real event is called 'Low fuel'

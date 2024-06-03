@@ -12,9 +12,10 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * Fixed a crash when using the Cottle `dump()` function to enumerate a `Haulage` object. Removed the `expiry` property from the `Haulage` object (but it is still available from the `Mission` object). (#2593)
     * Fixed the `inventory` object not being updated until after the `Commodity collected` event.
   * EDDN Responder
-    * Add support for `DockingDenied` and `DockingGranted` schemas
+    * Add support for `DockingDenied` and `DockingGranted` schemas (for identifying fleet carriers with limited docking permissions).
   * Events
     * `Bounty awarded` updated to include new `pilot` property (when applicable).
+    * `Entered signal source` removed (replaced by `Destination arrived`).
     * `Hyperdicted` added. 
     * `Micro resources purchased` updated to use a list of purchased micro resources with name, category, and amount for each (so that it could support both purchases from a station and from carrier bartenders). 
     * `Settlement approached` updated with new properties `economy`, `secondeconomy`, `stationservices`, `faction`, `allegiance`, government` (similar to `Docked` event)
@@ -29,7 +30,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * Functions
       * `Play()` now supports relative file system paths. (#2581)
     * Variables
-      * `{version}` top level variable added.
+      * `{version}` top level variable added to allow users to check EDDI's latest version via a script.
 
 ## 4.0.3
   * EDSM Responder
