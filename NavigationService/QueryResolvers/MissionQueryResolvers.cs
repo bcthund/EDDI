@@ -360,6 +360,8 @@ namespace EddiNavigationService.QueryResolvers
             var homeSystemWaypoint = homeStarSystem is null ? null : new NavWaypoint( homeStarSystem );
             if ( CalculateRepetiveNearestNeighbor ( navWaypoints, missions, out var sortedRoute, homeSystemWaypoint ) )
             {
+                var searchSystem = sortedRoute.FirstOrDefault ( w => !w.visited )?.systemName;
+
                 // Prepend our current system to the route if it is not already present
                 if ( sortedRoute.FirstOrDefault ()?.systemAddress != currentSystem.systemAddress )
                 {
@@ -368,7 +370,6 @@ namespace EddiNavigationService.QueryResolvers
 
                 var navRouteList = new NavWaypointCollection ( sortedRoute );
                 navRouteList.UpdateLocationData( currentSystem.systemAddress, currentSystem.x, currentSystem.y, currentSystem.z );
-                var searchSystem = navRouteList.Waypoints.FirstOrDefault ( w => !w.visited )?.systemName;
                 var routeCount = navRouteList.Waypoints.Count;
 
                 Logging.Debug ( "Calculated Route Selected = " + string.Join ( ", ", sortedRoute.Select ( w => w.systemName ) ) + ", Total Distance = " + navRouteList.RouteDistance );
