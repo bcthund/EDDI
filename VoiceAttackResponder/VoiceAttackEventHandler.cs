@@ -44,7 +44,7 @@ namespace EddiVoiceAttackResponder
                 {
                     // ReSharper disable once AccessToModifiedClosure - OK to use vaProxy in this context.
                     dequeueEvents( eventQueues[ theEvent.type ], ref App.vaProxy );
-                }, consumerCancellationTS.Token, TaskCreationOptions.PreferFairness | TaskCreationOptions.LongRunning ) { theEvent };
+                }, consumerCancellationTS.Token, TaskCreationOptions.PreferFairness ) { theEvent };
             }
         }
 
