@@ -40,6 +40,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Route details` updated so that the `update` type will not restate a destination that you've already selected as your next system destination.
       * `Ship delivered` updated to more clearly state the in-game result of the event.
       * `Ship repaired` updated to correct an occasional rendering error in the default script.
+      * `Ship targeted` updated to not comment on wanted targets identified while in supercruise unless the current ship contains an interdictor.
       
 ## 4.0.3
   * EDSM Responder
