@@ -92,6 +92,7 @@ namespace EddiVoiceAttackResponder
                     if ( eventQueue.Count == 0 )
                     {
                         // If the event queue is empty then we can complete and clean up the associated consumer task.
+                        eventQueue.CompleteAdding();
                         return;
                     }
                 }
