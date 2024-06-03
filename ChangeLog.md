@@ -32,6 +32,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * Variables
       * `{version}` top level variable added to allow users to check EDDI's latest version via a script.
     * Scripts
+      * `Carrier jump engaged` and `FSD engaged` updated to consistently use `{reportsystem}`.
       * `Entered normal space` updated to correct an occasional error in the default script
       * `Entered signal source` removed.
       * `Destination arrived` added.
