@@ -13,7 +13,7 @@ namespace EddiVoiceAttackResponder
 {
     internal static class VoiceAttackEventHandler
     {
-        private static readonly ConcurrentDictionary<string, TaskQueue<Event>> eventQueues = new ConcurrentDictionary<string, TaskQueue<Event>>();
+        private static readonly ConcurrentDictionary<string, TaskQueue<Event>> taskQueues = new ConcurrentDictionary<string, TaskQueue<Event>>();
         private static readonly CancellationTokenSource consumerCancellationTS = new CancellationTokenSource(); // This must be static so that it is visible to child threads and tasks
 
         // We'll maintain a referenceable list of variables that we've set from events
@@ -22,9 +22,9 @@ namespace EddiVoiceAttackResponder
         public static void Handle ( Event theEvent )
         {
             // Check for any completed, cancelled, or faulted consumer tasks and clean up consumer tasks which are no longer needed
-            foreach ( var eventQueue in eventQueues.Where( q => !q.Value.isRunning ) )
+            foreach ( var taskQueue in taskQueues.Where( q => !q.Value.isRunning ) )
             {
-                if ( eventQueues.TryRemove( eventQueue.Key, out var removed ) )
+                if ( taskQueues.TryRemove( taskQueue.Key, out var removed ) )
                 {
                     removed.Dispose();
                 }
@@ -32,19 +32,21 @@ namespace EddiVoiceAttackResponder
 
             if ( theEvent is null || consumerCancellationTS.IsCancellationRequested ) { return; }
 
-            if ( eventQueues.TryGetValue( theEvent.type, out var taskQueue ) )
+            if ( taskQueues.TryGetValue( theEvent.type, out var runningTaskQueue ) )
             {
                 // Add our event to an existing blocking collection for that event type.
-                taskQueue.Add( theEvent );
+                runningTaskQueue.Add( theEvent );
             }
             else
             {
                 // Add our event to a new blocking collection for that event type and start a consumer task for that collection
-                eventQueues[ theEvent.type ] = new TaskQueue<Event>( () =>
+                var newTaskQueue = new TaskQueue<Event>( () =>
                 {
                     // ReSharper disable once AccessToModifiedClosure - OK to use vaProxy in this context.
-                    dequeueEvents( eventQueues[ theEvent.type ], ref App.vaProxy );
-                }, consumerCancellationTS.Token, TaskCreationOptions.PreferFairness ) { theEvent };
+                    dequeueEvents( taskQueues[ theEvent.type ], ref App.vaProxy );
+                }, consumerCancellationTS.Token ) { theEvent };
+                taskQueues.TryAdd( theEvent.type, newTaskQueue );
+                newTaskQueue.Start();
             }
         }
 
@@ -190,29 +192,35 @@ namespace EddiVoiceAttackResponder
             Task.WhenAny(
                 Task.Run( () =>
                 {
-                    while ( eventQueues.Values.Any( q => q.isRunning ) )
+                    while ( taskQueues.Values.Any( q => q.isRunning ) )
                     {
                         Thread.Sleep( TimeSpan.FromMilliseconds( 50 ) );
                     }
                 } ),
                 Task.Delay( 2000 )
             );
-            foreach ( var q in eventQueues.Values )
+            foreach ( var q in taskQueues.Values )
             { q.Dispose(); }
         }
     }
 
     internal class TaskQueue<T> : BlockingCollection<T>
     {
-        public bool isRunning => consumerTask != null &&
-                                 ( !consumerTask.IsCanceled || consumerTask.IsCompleted || consumerTask.IsFaulted );
+        public bool isRunning => consumerTask != null && 
+                                 consumerTask.Status != TaskStatus.Canceled &&
+                                 consumerTask.Status != TaskStatus.Faulted &&
+                                 consumerTask.Status != TaskStatus.RanToCompletion;
 
         private Task consumerTask { get; }
 
-        public TaskQueue ( Action action, CancellationToken cancellationToken, TaskCreationOptions creationOptions )
+        public TaskQueue ( Action action, CancellationToken cancellationToken )
         {
-            consumerTask = new Task( action, cancellationToken, creationOptions );
-            consumerTask.Start();
+            consumerTask = new Task( action, cancellationToken, TaskCreationOptions.PreferFairness );
+        }
+
+        public void Start ()
+        {
+            consumerTask?.Start();
         }
     }
 }
