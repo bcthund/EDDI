@@ -2053,7 +2053,7 @@
       "enabled": true,
       "priority": 3,
       "responder": true,
-      "script": "{ShipCallsign()} handover complete.",
+      "script": "Your new {P(event.ship, 'shipmodel')} has been delivered to your shipyard.",
       "default": true,
       "name": "Ship delivered",
       "description": "Triggered when your newly-purchased ship is delivered to you"
