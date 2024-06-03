@@ -33,12 +33,13 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `{version}` top level variable added to allow users to check EDDI's latest version via a script.
     * Scripts
       * `Carrier jump engaged` and `FSD engaged` updated to consistently use `{reportsystem}`.
-      * `Entered normal space` updated to correct an occasional error in the default script
+      * `Entered normal space` updated to correct an occasional rendering error in the default script.
       * `Entered signal source` removed.
       * `Destination arrived` added.
-      * `Message received` updated to handle the oddly written phrase "Every feel like"
+      * `Message received` updated to handle the oddly written phrase "Every feel like".
       * `Route details` updated so that the `update` type will not restate a destination that you've already selected as your next system destination.
       * `Ship delivered` updated to more clearly state the in-game result of the event.
+      * `Ship repaired` updated to correct an occasional rendering error in the default script.
       
 ## 4.0.3
   * EDSM Responder
