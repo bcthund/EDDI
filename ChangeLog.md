@@ -31,6 +31,10 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Play()` now supports relative file system paths. (#2581)
     * Variables
       * `{version}` top level variable added to allow users to check EDDI's latest version via a script.
+    * Scripts
+      * `Entered normal space` updated to correct an occasional error in the default script
+      * `Entered signal source` removed.
+      * `Destination arrived` added.
 
 ## 4.0.3
   * EDSM Responder
