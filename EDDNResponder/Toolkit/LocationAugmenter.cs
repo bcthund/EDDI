@@ -51,7 +51,13 @@ namespace EddiEddnResponder.Toolkit
         {
             "CarrierJumpRequest", // CarrierJumpRequest events describing the system the carrier is jumping too rather than the system we are in
             "FSDTarget", // FSDTarget events describing the system we are targeting rather than the system we are in
-            "FSSSignalDiscovered"  // Scan events from the destination system can register after StartJump and before we actually leave the originating system
+            "FSSSignalDiscovered",  // Scan events from the destination system can register after StartJump and before we actually leave the originating system
+            "Outfitting", // Relies on an exterior file and contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
+            "Market", // Relies on an exterior file and contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
+            "Shipyard", // Relies on an exterior file and contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
+            "StartJump", // `StartJump` events list the destination star system name.
+            "StoredModules", // Contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
+            "StoredShips" // Contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
         };
 
         internal void GetLocationInfo(Status status)
@@ -287,7 +293,7 @@ namespace EddiEddnResponder.Toolkit
                 }
                 else
                 {
-                    system = StarSystemRepository.GetOrCreateStarSystem(systemName);
+                    system = StarSystemRepository.GetOrFetchStarSystem( systemName, true, true, false, false, false );
                 }
                 if (system != null)
                 {
