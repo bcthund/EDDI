@@ -41,7 +41,7 @@ namespace EddiVoiceAttackResponder
 
         public void Handle(Event @event)
         {
-            if (@event.fromLoad)
+            if ( @event.fromLoad || @event is UnhandledEvent )
             {
                 return;
             }
