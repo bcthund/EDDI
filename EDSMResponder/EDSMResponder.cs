@@ -3,9 +3,9 @@ using EddiCore;
 using EddiDataProviderService;
 using EddiEvents;
 using EddiStarMapService;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using Utilities;
@@ -133,8 +133,8 @@ namespace EddiEdsmResponder
         {
             // Prep transient game state info (metadata) per https://www.edsm.net/en/api-journal-v1.
             // Unpackage the event, add transient game state info as applicable, then repackage and send the event
-            IDictionary<string, object> eventObject = Deserializtion.DeserializeData(theEvent.raw);
-            string eventType = JsonParsing.getString(eventObject, "event");
+            var eventObject = Deserializtion.DeserializeData(theEvent.raw);
+            var eventType = JsonParsing.getString(eventObject, "event");
 
             if (ignoredEvents.Contains(eventType) || theEvent.raw == null)
             {
@@ -215,49 +215,46 @@ namespace EddiEdsmResponder
             }
 
             // Supplement with metadata from the tracked game state, as applicable
-            var currentStarSystem = EDDI.Instance.CurrentStarSystem?.Copy();
-            if (currentStarSystem != null)
+            var currentStarSystemAddress = EDDI.Instance.CurrentStarSystem?.systemAddress;
+            if ( currentStarSystemAddress != null && !eventObject.ContainsKey( "_systemAddress" ) )
             {
-                if (!eventObject.ContainsKey("_systemAddress"))
-                {
-                    eventObject.Add("_systemAddress", currentStarSystem.systemAddress);
-                }
-
-                if (!eventObject.ContainsKey("_systemName"))
-                {
-                    eventObject.Add("_systemName", currentStarSystem.systemname);
-                }
-
-                if (!eventObject.ContainsKey("_systemCoordinates"))
-                {
-                    List<decimal?> _coordinates = new List<decimal?>
-                    {
-                        currentStarSystem.x,
-                        currentStarSystem.y,
-                        currentStarSystem.z
-                    };
-                    eventObject.Add("_systemCoordinates", _coordinates);
-                }
+                eventObject.Add( "_systemAddress", currentStarSystemAddress );
             }
 
-            var currentStation = EDDI.Instance.CurrentStation?.Copy();
-            if (currentStation != null)
+            var currentStarSystemName = EDDI.Instance.CurrentStarSystem?.systemname;
+            if ( !string.IsNullOrEmpty( currentStarSystemName ) && !eventObject.ContainsKey( "_systemName" ) )
             {
-                if (!eventObject.ContainsKey("_marketId"))
-                {
-                    eventObject.Add("_marketId", currentStation.marketId);
-                }
-
-                if (!eventObject.ContainsKey("_stationName"))
-                {
-                    eventObject.Add("_stationName", currentStation.name);
-                }
+                eventObject.Add( "_systemName", currentStarSystemName );
             }
 
-            var currentShip = EDDI.Instance.CurrentShip?.Copy();
-            if (currentShip != null && !eventObject.ContainsKey("_shipId"))
+            var currentStarSystemCoordinates = new []
             {
-                eventObject.Add("_shipId", currentShip.LocalId);
+                EDDI.Instance.CurrentStarSystem?.x,
+                EDDI.Instance.CurrentStarSystem?.y,
+                EDDI.Instance.CurrentStarSystem?.z
+            };
+            if ( currentStarSystemCoordinates.All( c => c != null ) &&
+                 !eventObject.ContainsKey( "_systemCoordinates" ) )
+            {
+                eventObject.Add( "_systemCoordinates", currentStarSystemCoordinates );
+            }
+
+            var currentStationMarketID = EDDI.Instance.CurrentStation?.marketId;
+            if ( currentStationMarketID != null && !eventObject.ContainsKey( "_marketId" ) )
+            {
+                eventObject.Add( "_marketId", currentStationMarketID );
+            }
+
+            var currentStationName = EDDI.Instance.CurrentStation?.name;
+            if ( !string.IsNullOrEmpty( currentStationName ) && !eventObject.ContainsKey( "_stationName" ) )
+            {
+                eventObject.Add( "_stationName", currentStationName );
+            }
+
+            var currentShipID = EDDI.Instance.CurrentShip?.LocalId;
+            if (currentShipID != null && !eventObject.ContainsKey("_shipId"))
+            {
+                eventObject.Add("_shipId", currentShipID);
             }
 
             return eventObject;
