@@ -276,7 +276,8 @@ namespace EddiEddnResponder.Toolkit
                 if (!invalidState)
                 {
                     invalidState = true;
-                    Logging.Warn("The EDDN responder is in an invalid state and is unable to send messages.", JsonConvert.SerializeObject(this) + " Event: " + JsonConvert.SerializeObject(data));
+                    Logging.Warn( "The EDDN responder is in an invalid state and is unable to send messages.",
+                        new Dictionary<string, object> { { "EDDN State", this }, { "Event", data } } );
                 }
             }
             return false;
