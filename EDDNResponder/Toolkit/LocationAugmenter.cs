@@ -1,7 +1,6 @@
 ﻿using EddiCore;
 using EddiDataDefinitions;
 using EddiDataProviderService;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
