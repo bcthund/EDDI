@@ -3,7 +3,6 @@ using EddiCore;
 using EddiEvents;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace EddiVoiceAttackResponder
         private static readonly CancellationTokenSource consumerCancellationTS = new CancellationTokenSource(); // This must be static so that it is visible to child threads and tasks
 
         // We'll maintain a referenceable list of variables that we've set from events
-        private static List<VoiceAttackVariable> currentVariables = new List<VoiceAttackVariable>();
+        private static readonly ConcurrentBag<VoiceAttackVariable> currentVariables = new ConcurrentBag<VoiceAttackVariable>();
 
         // If running VoiceAttack version 1.7.4 or later then we should use the more modern API endpoints
         private static bool useLegacyVACommandAPI => EDDI.Instance.vaVersion?.CompareTo( new System.Version( 1, 7, 4 ) ) <= 0;
@@ -50,12 +49,8 @@ namespace EddiVoiceAttackResponder
                         if ( @event.type != null )
                         {
                             Logging.Debug( $"Passing event {@event.type} to VoiceAttack", @event );
-                            bool isCommandFound;
-                            lock ( VoiceAttackPlugin.vaProxyLock )
-                            {
-                                updateValuesOnEvent( @event );
-                                isCommandFound = TryTriggerVACommands( @event );
-                            }
+                            await Task.Run( () => updateValuesOnEvent( @event ) );
+                            var isCommandFound = TryTriggerVACommands( @event );
                             // We need to wait until each event is no longer active before moving to the next from the same
                             // queue / event type so that variables aren't overwritten before VoiceAttack can respond.
                             // Other queues / event types will be able to continue processing events while we wait.
@@ -96,19 +91,26 @@ namespace EddiVoiceAttackResponder
                 App.vaProxy.SetText( "EDDI event", @event.type );
 
                 // Retrieve and clear variables from prior iterations of the same event
-                clearPriorEventValues( @event.type, currentVariables );
-                currentVariables = currentVariables.Where( v => v.eventType != @event.type ).ToList();
+                clearPriorEventValues( @event.type );
+                while ( currentVariables.Any(v => v.eventType == @event.type) )
+                {
+                    if ( currentVariables.TryTake( out var currentVariable ) && currentVariable.eventType != @event.type )
+                    {
+                        currentVariables.Add( currentVariable );
+                    }
+                }
 
                 // Prepare and update this event's variable values
-                var eventVariables = new MetaVariables(@event.GetType(), @event)
-                .Results
-                .AsVoiceAttackVariables("EDDI", @event.type);
-                foreach ( var var in eventVariables ) { var.Set( App.vaProxy ); }
-                Logging.Debug( $"Set VoiceAttack variables for EDDI event {@event.type}", eventVariables );
-
                 // Save the updated state of our event variables
-                currentVariables.AddRange( eventVariables );
-
+                var eventVariables = new MetaVariables(@event.GetType(), @event)
+                    .Results
+                    .AsVoiceAttackVariables("EDDI", @event.type);
+                foreach ( var var in eventVariables )
+                {
+                    var.Set( App.vaProxy );
+                    currentVariables.Add( var );
+                }
+                Logging.Debug( $"Set VoiceAttack variables for EDDI event {@event.type}", eventVariables );
                 Logging.Debug( $"Processed EDDI event {@event.type} in {( DateTime.UtcNow - startTime ).Milliseconds} milliseconds:", @event );
             }
             catch ( Exception ex )
@@ -117,18 +119,17 @@ namespace EddiVoiceAttackResponder
             }
         }
 
-        private static void clearPriorEventValues ( string eventType, List<VoiceAttackVariable> eventVariables )
+        private static void clearPriorEventValues ( string eventType )
         {
             try
             {
-                // We set all values in our list from a prior version of the same event to null
-                foreach ( var variable in eventVariables
+                // We clear variable values by swapping the values to null and then instructing VA to set them again
+                foreach ( var variable in currentVariables
                              .Where( v => v.eventType == eventType && v.value != null ) )
                 {
                     variable.value = null;
+                    variable.Set( App.vaProxy );
                 }
-                // We clear variable values by swapping the values to null and then instructing VA to set them again
-                foreach ( var var in eventVariables ) { var.Set( App.vaProxy ); }
             }
             catch ( Exception ex )
             {
