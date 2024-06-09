@@ -16,7 +16,7 @@ namespace EddiVoiceAttackResponder
         private static readonly CancellationTokenSource consumerCancellationTS = new CancellationTokenSource(); // This must be static so that it is visible to child threads and tasks
 
         // We'll maintain a referenceable list of variables that we've set from events
-        private static readonly ConcurrentBag<VoiceAttackVariable> currentVariables = new ConcurrentBag<VoiceAttackVariable>();
+        private static readonly ConcurrentDictionary<string, VoiceAttackVariable> currentVariables = new ConcurrentDictionary<string, VoiceAttackVariable>();
 
         // If running VoiceAttack version 1.7.4 or later then we should use the more modern API endpoints
         private static bool useLegacyVACommandAPI => EDDI.Instance.vaVersion?.CompareTo( new System.Version( 1, 7, 4 ) ) <= 0;
@@ -92,13 +92,6 @@ namespace EddiVoiceAttackResponder
 
                 // Retrieve and clear variables from prior iterations of the same event
                 clearPriorEventValues( @event.type );
-                while ( currentVariables.Any(v => v.eventType == @event.type) )
-                {
-                    if ( currentVariables.TryTake( out var currentVariable ) && currentVariable.eventType != @event.type )
-                    {
-                        currentVariables.Add( currentVariable );
-                    }
-                }
 
                 // Prepare and update this event's variable values
                 // Save the updated state of our event variables
@@ -108,7 +101,7 @@ namespace EddiVoiceAttackResponder
                 foreach ( var var in eventVariables )
                 {
                     var.Set( App.vaProxy );
-                    currentVariables.Add( var );
+                    currentVariables[var.key] = var;
                 }
                 Logging.Debug( $"Set VoiceAttack variables for EDDI event {@event.type}", eventVariables );
                 Logging.Debug( $"Processed EDDI event {@event.type} in {( DateTime.UtcNow - startTime ).Milliseconds} milliseconds:", @event );
@@ -124,7 +117,7 @@ namespace EddiVoiceAttackResponder
             try
             {
                 // We clear variable values by swapping the values to null and then instructing VA to set them again
-                foreach ( var variable in currentVariables
+                foreach ( var variable in currentVariables.Values
                              .Where( v => v.eventType == eventType && v.value != null ) )
                 {
                     variable.value = null;
