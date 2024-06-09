@@ -1582,7 +1582,7 @@
     <comment>Commodity SiriusIndustrialEquipment</comment>
   </data>
   <data name="ThargoidScoutTissueSample" xml:space="preserve">
-    <value>八角侦查器组织样本 </value>
+    <value>八角侦察兵组织样本</value>
     <comment>Commodity ThargoidScoutTissueSample</comment>
   </data>
   <data name="UnmarkedWeapons" xml:space="preserve">
