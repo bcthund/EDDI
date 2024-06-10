@@ -508,16 +508,18 @@ namespace EddiSpeechService
             return false;
         }
 
-        private ISoundOut GetSoundOut ()
+        private ISoundOut GetSoundOut ( IWaveSource source )
         {
             if ( WasapiOut.IsSupportedOnCurrentPlatform )
             {
-                return new WasapiOut();
+                var soundOut = new WasapiOut();
+                if ( TryInitializeSoundOut( soundOut, source ) )
+                {
+                    return soundOut;
+                }
+                Logging.Warn( "Falling back to legacy DirectSoundOut." );
             }
-            else
-            {
-                return new DirectSoundOut();
-            }
+            return new DirectSoundOut();
         }
 
         private static bool TryInitializeSoundOut ( ISoundOut soundOut, IWaveSource source )
@@ -550,7 +552,7 @@ namespace EddiSpeechService
 
         #region Speech
 
-        private void PlaySpeechStream(IWaveSource source, int priority, bool useLegacySoundOut = false)
+        private void PlaySpeechStream(IWaveSource source, int priority)
         {
             try
             {
@@ -562,17 +564,8 @@ namespace EddiSpeechService
 
                 var waitTime = source.GetTime(source.Length);
 
-                using ( var soundOut = GetSoundOut() )
+                using ( var soundOut = GetSoundOut( source ) )
                 {
-                    if ( !TryInitializeSoundOut( soundOut, source ) )
-                    {
-                        if ( soundOut is WasapiOut && !useLegacySoundOut )
-                        {
-                            Logging.Warn( "Falling back to legacy DirectSoundOut." );
-                            PlaySpeechStream( source, priority, true );
-                        }
-                    }
-
                     var cancellationTokenSource = new CancellationTokenSource();
                     StartSpeech( soundOut, priority, cancellationTokenSource );
 
@@ -657,7 +650,7 @@ namespace EddiSpeechService
 
         #region Audio
 
-        public void PlayAudio ( string fileName, decimal? volumeOverride, bool useLegacySoundOut = false )
+        public void PlayAudio ( string fileName, decimal? volumeOverride )
         {
             try
             {
@@ -683,17 +676,9 @@ namespace EddiSpeechService
 
                 var waitTime = audioSource.GetTime( audioSource.Length );
 
-                using ( var soundOut = GetSoundOut() )
+                using ( var soundOut = GetSoundOut( audioSource ) )
                 {
                     Logging.Debug($"Beginning audio playback for {fileName}.");
-                    if ( !TryInitializeSoundOut( soundOut, audioSource ) )
-                    {
-                        if ( soundOut is WasapiOut && !useLegacySoundOut )
-                        {
-                            Logging.Warn( "Falling back to legacy DirectSoundOut." );
-                            PlayAudio( absolutePath, volumeOverride, true );
-                        }
-                    }
 
                     if ( volumeOverride != null )
                     {
