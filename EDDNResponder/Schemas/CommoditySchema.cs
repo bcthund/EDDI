@@ -47,11 +47,15 @@ namespace EddiEddnResponder.Schemas
                     handledData["stationName"] = data["StationName"];
                     handledData["stationType"] = data["StationType"]; // market.json specific
                     handledData["marketId"] = data["MarketID"];
-                    handledData["carrierDockingAccess"] = data["CarrierDockingAccess"];
                     handledData["commodities"] = JArray.FromObject(data["Items"])
                         .Where(c => ApplyJournalMarketFilter(c))
                         .Select(c => FormatCommodity(c, true))
                         .ToList();
+
+                    if ( data.TryGetValue("CarrierDockingAccess", out var dockingAccess) )
+                    {
+                        handledData[ "carrierDockingAccess" ] = dockingAccess;
+                    }
 
                     // Remove localized names
                     handledData = eddnState.PersonalData.Strip(handledData, edType);
