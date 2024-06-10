@@ -671,13 +671,13 @@ namespace EddiSpeechService
                 {
                     Say( null, $"Audio file not found at {fnfe.FileName}.", 0 );
                     Logging.Warn( fnfe.Message, fnfe );
-                    throw;
+                    return;
                 }
                 catch ( NotSupportedException e )
                 {
                     Say( null, "Audio file format not supported.", 0 );
                     Logging.Warn( $"Skipping unsupported audio file {fileName}.", e );
-                    throw;
+                    return;
                 }
                 if ( !( audioSource?.Length > 0 ) ) { return; }
 
