@@ -471,7 +471,13 @@ Common usage of this is to provide a pre-recorded custom audio file rather than 
 
     {Play('Sounds\\Kills\\doublekill.wav', true, 100)}
 
-The former uses an absolute file path and the latter uses a relative path. The relative path would resolve to C:\\Users\\CmdrMcDonald\\AppData\\Roaming\\EDDI\\Sounds\\Kills\\doublekill.wav.</value>
+The former uses an absolute file path and the latter uses a relative path. The relative path would resolve to C:\\Users\\CmdrMcDonald\\AppData\\Roaming\\EDDI\\Sounds\\Kills\\doublekill.wav. 
+
+After escaping separators, essentially:
+- A relative path starting with \\ indicates to construct a path relative to the root (C:) of the current working directory.
+- A relative path starting with .\\ indicates to construct a path relative to the current working directory` and is equivalent to a path without a leading .\\
+- A relative path starting with ..\\ indicates to construct a path relative to the parent of the current working directory
+- A relative path starting with ..\\..\\ indicates to construct a path relative to the grandparent of the current working directory</value>
   </data>
   <data name="RefreshProfile" xml:space="preserve">
     <value>This function will refresh the Frontier API profile.
