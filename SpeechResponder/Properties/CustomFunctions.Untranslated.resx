@@ -459,15 +459,19 @@ Common usage of this is to allow speech to sync up with in-game sounds, for exam
     Hello.  {Pause(2000)} Yes.</value>
   </data>
   <data name="Play" xml:space="preserve">
-    <value>This function will play an audio file as supplied in the argument. This function uses SSML tags.
+    <value>This function will play an audio file as supplied in the argument. This function uses SSML tags. Various common Windows file formats are supported.  Any backslashes for path separators must be escaped, so '\' must be written as '\\'.
 
-Play() takes one mandatory argument: the path to the file to play.  Various common Windows file formats are supported.  Any backslashes for path separators must be escaped, so '\\' must be written as '\\\\'
+Play() takes one mandatory argument: the path to the file to play.  This may be an absolute path or relative path. Relative paths are defined relative to the `%appdata%/EDDI` configuration directory. 
 
 Play() also takes two optional arguments. The first optional argument is a boolean value which if true will play the audio file asynchronously. The second optional argument is a number representing the volume of the audio, where 100 is normal volume.
 
 Common usage of this is to provide a pre-recorded custom audio file rather than use EDDI's text-to-speech, for example:
 
-    {Play('C:\\Users\\CmdrMcDonald\\Desktop\\Warning.wav', false, 125)}</value>
+    {Play('C:\\Users\\CmdrMcDonald\\Desktop\\Warning.wav', false, 125)}
+
+    {Play('Sounds\\Kills\\doublekill.wav', true, 100)}
+
+The former uses an absolute file path and the latter uses a relative path. The relative path would resolve to C:\\Users\\CmdrMcDonald\\AppData\\Roaming\\EDDI\\Sounds\\Kills\\doublekill.wav.</value>
   </data>
   <data name="RefreshProfile" xml:space="preserve">
     <value>This function will refresh the Frontier API profile.
