@@ -145,7 +145,7 @@ namespace EddiDataProviderService
                     }
                     else
                     {
-                        Logging.Warn("No new flight logs received.");
+                        Logging.Debug( "EDSM flight logs are already synchronized, no new flight logs since last sync." );
                     }
                 }
                 catch (EDSMException edsme)
