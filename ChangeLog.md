@@ -3,6 +3,10 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.0.4-b2
+  * Speech Responder
+    * Scripts
+      * `Ship targeted` updated to fix a typo. (o7 Darkcyde).
+      * `Entered normal space` updated to fix a typo. (o7 Darkcyde and Skip Intro) 
 
 ## 4.0.4-b1
   * Core
