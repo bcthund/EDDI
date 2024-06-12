@@ -5,8 +5,8 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.0.4-b2
   * Speech Responder
     * Scripts
+      * `Entered normal space` updated to fix a typo / missing quote mark. (o7 Darkcyde, GJ51/Skip Intro) 
       * `Ship targeted` updated to fix a typo. (o7 Darkcyde).
-      * `Entered normal space` updated to fix a typo. (o7 Darkcyde and Skip Intro) 
 
 ## 4.0.4-b1
   * Core
