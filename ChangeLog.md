@@ -5,8 +5,9 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.0.4-b2
   * Speech Responder
     * Scripts
+      * `Body volcanism report` updated to fix an escape character issue. (#2618, o7 johnny2trayz)
       * `Entered normal space` updated to fix a typo / missing quote mark. (o7 Darkcyde, GJ51/Skip Intro) 
-      * `Ship targeted` updated to fix a typo. (o7 Darkcyde).
+      * `Ship targeted` updated to fix an escape character issue. (o7 Darkcyde).
 
 ## 4.0.4-b1
   * Core
