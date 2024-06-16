@@ -10,6 +10,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Body volcanism report` updated to fix an escape character issue. (#2618)
       * `Destination arrived` updated to fix an escape character issue (#2614)
       * `Entered normal space` updated to fix a typo / missing quote mark. 
+      * `Mission faction state` updated to prevent overwriting the `state` map used for the `SetState` function. (#2607)
       * `Ship targeted` updated to fix an escape character issue.
 
 ## 4.0.4-b1
