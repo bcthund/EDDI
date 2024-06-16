@@ -23,16 +23,8 @@ namespace EddiDataDefinitions
                 .Where(m => m.greatpctbody != null)
                 .ToList().ToImmutableHashSet();
 
-            jumponiumElements = ImmutableHashSet.Create(
-                Carbon,
-                Germanium,
-                Vanadium,
-                Cadmium,
-                Niobium,
-                Arsenic,
-                Yttrium,
-                Polonium
-            );
+            jumponiumElements = new[] { Carbon, Germanium, Vanadium, Cadmium, Niobium, Arsenic, Yttrium, Polonium }
+                .ToImmutableHashSet();
         }
 
         #region Elements
