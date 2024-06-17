@@ -299,12 +299,13 @@ namespace EddiGalnetMonitor
         }
 
         public void PostHandle ( Event @event )
-        {
-        }
+        { }
 
         public void HandleProfile ( JObject profile )
-        {
-        }
+        { }
+
+        public void HandleStatus ( Status status )
+        { }
 
         public IDictionary<string, Tuple<Type, object>> GetVariables ()
         {

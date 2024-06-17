@@ -5,7 +5,6 @@ using EddiDataProviderService;
 using EddiEvents;
 using EddiNavigationService;
 using EddiStarMapService;
-using EddiStatusService;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using System;
@@ -75,7 +74,6 @@ namespace EddiNavigationMonitor
         public NavigationMonitor()
         {
             BindingOperations.CollectionRegistering += NavigationMonitor_CollectionRegistering;
-            StatusService.StatusUpdatedEvent += OnStatusUpdated;
             LoadMonitor();
             Logging.Info($"Initialized {MonitorName()}");
         }
@@ -721,19 +719,12 @@ namespace EddiNavigationMonitor
             EDDI.Instance.DestinationDistanceLy = distance;
         }
 
-        private void OnStatusUpdated(object sender, EventArgs e)
+        public void HandleStatus(Status status)
         {
-            if (sender is Status status)
+            currentStatus = status;
+            foreach ( var bookmark in Bookmarks )
             {
-                LockManager.GetLock(nameof(currentStatus), () => 
-                {
-                    currentStatus = status;
-                });
-
-                foreach (var bookmark in Bookmarks)
-                {
-                    CheckBookmarkPosition(bookmark, currentStatus);
-                }
+                CheckBookmarkPosition( bookmark, currentStatus );
             }
         }
 

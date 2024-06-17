@@ -1,5 +1,6 @@
 ﻿using EddiConfigService;
 using EddiCore;
+using EddiDataDefinitions;
 using EddiDataProviderService;
 using EddiEvents;
 using EddiStarMapService;
@@ -264,5 +265,8 @@ namespace EddiEdsmResponder
         {
             return new ConfigurationWindow(this);
         }
+
+        public void HandleStatus ( Status status )
+        { }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EddiConfigService;
 using EddiConfigService.Configurations;
 using EddiCore;
+using EddiDataDefinitions;
 using EddiEvents;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
@@ -298,16 +299,16 @@ namespace EddiEddpMonitor
         //}
 
         public void PreHandle(Event @event)
-        {
-        }
+        { }
 
         public void PostHandle(Event @event)
-        {
-        }
+        { }
 
         public void HandleProfile(JObject profile)
-        {
-        }
+        { }
+
+        public void HandleStatus ( Status status )
+        { }
 
         public IDictionary<string, Tuple<Type, object>> GetVariables()
         {

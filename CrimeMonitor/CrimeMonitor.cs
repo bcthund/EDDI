@@ -1,5 +1,4 @@
-﻿using Eddi;
-using EddiBgsService;
+﻿using EddiBgsService;
 using EddiConfigService;
 using EddiConfigService.Configurations;
 using EddiCore;
@@ -113,19 +112,11 @@ namespace EddiCrimeMonitor
             return new ConfigurationWindow();
         }
 
-        public void EnableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.EnableCollectionSynchronization(criminalrecord, recordLock); });
-        }
-
-        public void DisableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.DisableCollectionSynchronization(criminalrecord); });
-        }
-
         public void HandleProfile(JObject profile)
-        {
-        }
+        { }
+
+        public void HandleStatus ( Status status )
+        { }
 
         public void PostHandle(Event @event)
         {

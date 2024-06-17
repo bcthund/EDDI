@@ -5508,14 +5508,15 @@ namespace EddiJournalMonitor
         }
 
         public void PreHandle(Event @event)
-        {
-        }
+        { }
 
         public void PostHandle(Event @event)
-        {
-        }
+        { }
 
         public void HandleProfile(JObject profile)
+        { }
+
+        public void HandleStatus ( Status status )
         {
         }
 

@@ -634,7 +634,7 @@ namespace EddiVoiceAttackResponder
             }
         }
 
-        protected static void setStatusValues(Status status, string prefix, ref dynamic vaProxy)
+        public static void setStatusValues(Status status, string prefix, ref dynamic vaProxy)
         {
             if (status == null)
             {

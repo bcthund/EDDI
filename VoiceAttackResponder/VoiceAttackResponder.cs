@@ -1,5 +1,6 @@
 ﻿using Eddi;
 using EddiCore;
+using EddiDataDefinitions;
 using EddiEvents;
 using System;
 using System.Windows.Controls;
@@ -62,16 +63,22 @@ namespace EddiVoiceAttackResponder
         }
 
         public void Stop()
-        {
-        }
+        { }
 
         public void Reload()
-        {
-        }
+        { }
 
         public UserControl ConfigurationTabItem()
         {
             return new ConfigurationWindow();
+        }
+
+        public void HandleStatus ( Status status )
+        {
+            lock ( VoiceAttackPlugin.vaProxyLock )
+            {
+                VoiceAttackVariables.setStatusValues( status, "Status", ref App.vaProxy );
+            }
         }
     }
 }

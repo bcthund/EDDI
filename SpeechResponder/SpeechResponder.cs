@@ -358,6 +358,11 @@ namespace EddiSpeechResponder
             return new ConfigurationWindow(this);
         }
 
+        public void HandleStatus ( Status status )
+        {
+            CustomFunctions.OrbitalVelocity.currentAltitudeMeters = status.altitude;
+        }
+
         private static readonly object logLock = new object();
 
         private static void log(string speech)

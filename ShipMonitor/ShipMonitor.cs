@@ -1,5 +1,4 @@
-﻿using Eddi;
-using EddiConfigService;
+﻿using EddiConfigService;
 using EddiConfigService.Configurations;
 using EddiCore;
 using EddiDataDefinitions;
@@ -109,16 +108,6 @@ namespace EddiShipMonitor
         public UserControl ConfigurationTabItem()
         {
             return new ConfigurationWindow();
-        }
-
-        public void EnableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.EnableCollectionSynchronization(shipyard, shipyardLock); });
-        }
-
-        public void DisableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.DisableCollectionSynchronization(shipyard); });
         }
 
         public void Save()
@@ -1220,6 +1209,9 @@ namespace EddiShipMonitor
 
             writeShips();
         }
+
+        public void HandleStatus ( Status status )
+        { }
 
         public IDictionary<string, Tuple<Type, object>> GetVariables()
         {

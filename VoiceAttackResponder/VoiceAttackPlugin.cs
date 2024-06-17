@@ -10,7 +10,6 @@ using EddiShipMonitor;
 using EddiSpeechResponder;
 using EddiSpeechService;
 using EddiStarMapService;
-using EddiStatusService;
 using JetBrains.Annotations;
 using System;
 using System.Diagnostics;
@@ -110,17 +109,6 @@ namespace EddiVoiceAttackResponder
                             }
                         };
                     }
-
-                    StatusService.StatusUpdatedEvent += (s, e) =>
-                    {
-                        if (s is Status status)
-                        {
-                            lock (vaProxyLock)
-                            {
-                                setStatusValues(status, "Status", ref App.vaProxy );
-                            }
-                        }
-                    };
 
                     // Display instance information if available
                     if (EddiUpgrader.UpgradeRequired)

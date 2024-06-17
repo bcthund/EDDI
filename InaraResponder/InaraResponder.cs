@@ -98,6 +98,9 @@ namespace EddiInaraResponder
             return new ConfigurationWindow();
         }
 
+        public void HandleStatus ( Status status )
+        { }
+
         public void Handle(Event theEvent)
         {
             if (theEvent is null)

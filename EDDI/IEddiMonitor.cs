@@ -1,4 +1,5 @@
-﻿using EddiEvents;
+﻿using EddiDataDefinitions;
+using EddiEvents;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,11 @@ namespace EddiCore
         /// Called to receive information from the Frontier API
         /// </summary>
         void HandleProfile(JObject profile);
+
+        /// <summary>
+        /// Called to receive updates from the StatusService
+        /// </summary>
+        void HandleStatus ( Status status );
 
         /// <summary>
         /// Provide any local variables

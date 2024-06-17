@@ -1,5 +1,4 @@
-﻿using Eddi;
-using EddiConfigService;
+﻿using EddiConfigService;
 using EddiConfigService.Configurations;
 using EddiCore;
 using EddiDataDefinitions;
@@ -41,12 +40,12 @@ namespace EddiMaterialMonitor
 
         public string LocalizedMonitorName()
         {
-            return EddiMaterialMonitor.Properties.MaterialMonitor.name;
+            return Properties.MaterialMonitor.name;
         }
 
         public string MonitorDescription()
         {
-            return EddiMaterialMonitor.Properties.MaterialMonitor.name;
+            return Properties.MaterialMonitor.name;
         }
 
         public bool IsRequired()
@@ -98,16 +97,6 @@ namespace EddiMaterialMonitor
         public UserControl ConfigurationTabItem()
         {
             return new ConfigurationWindow();
-        }
-
-        public void EnableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.EnableCollectionSynchronization(inventory, inventoryLock); });
-        }
-
-        public void DisableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.DisableCollectionSynchronization(inventory); });
         }
 
         public void PreHandle(Event @event)
@@ -288,8 +277,10 @@ namespace EddiMaterialMonitor
         }
 
         public void HandleProfile(JObject profile)
-        {
-        }
+        { }
+
+        public void HandleStatus ( Status status )
+        { }
 
         /// <summary>
         /// Increment the current amount of a material, potentially triggering events as a result

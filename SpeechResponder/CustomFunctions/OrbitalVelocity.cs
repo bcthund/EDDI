@@ -3,7 +3,6 @@ using EddiCore;
 using EddiDataDefinitions;
 using EddiDataProviderService;
 using EddiSpeechResponder.Service;
-using EddiStatusService;
 using JetBrains.Annotations;
 using System;
 using System.Linq;
@@ -17,29 +16,28 @@ namespace EddiSpeechResponder.CustomFunctions
         public FunctionCategory Category => FunctionCategory.Utility;
         public string description => Properties.CustomFunctions_Untranslated.OrbitalVelocity;
         public Type ReturnType => typeof( decimal? );
+        public static decimal? currentAltitudeMeters = null;
         public NativeFunction function => new NativeFunction((values) =>
         {
             Body body;
-            decimal? altitudeMeters;
             if (values.Count == 0)
             {
-                altitudeMeters = StatusService.Instance?.CurrentStatus?.altitude;
                 body = EDDI.Instance.CurrentStellarBody;
             }
             else if (values.Count == 1 && values[0].AsNumber >= 0)
             {
-                altitudeMeters = values[0].AsNumber;
+                currentAltitudeMeters = values[0].AsNumber;
                 body = EDDI.Instance.CurrentStellarBody;
             }
             else if (values.Count == 2 && values[0].AsNumber >= 0 && !string.IsNullOrEmpty(values[1].AsString))
             {
-                altitudeMeters = values[0].AsNumber;
+                currentAltitudeMeters = values[0].AsNumber;
                 body = EDDI.Instance.CurrentStarSystem?.bodies?
                     .FirstOrDefault(b => b.bodyname == values[1].AsString);
             }
             else if (values.Count == 3 && values[0].AsNumber >= 0 && !string.IsNullOrEmpty(values[1].AsString) && !string.IsNullOrEmpty(values[2].AsString))
             {
-                altitudeMeters = values[0].AsNumber;
+                currentAltitudeMeters = values[0].AsNumber;
                 body = StarSystemSqLiteRepository.Instance.GetOrFetchStarSystem(values[2].AsString)?.bodies?
                     .FirstOrDefault(b => b.bodyname == values[1].AsString);
             }
@@ -47,7 +45,7 @@ namespace EddiSpeechResponder.CustomFunctions
             {
                 return "The OrbitalVelocity function is used improperly. Please review the documentation for correct usage.";
             }
-            if (altitudeMeters is null)
+            if ( currentAltitudeMeters is null)
             {
                 return "Altitude not found.";
             }
@@ -55,7 +53,7 @@ namespace EddiSpeechResponder.CustomFunctions
             {
                 return "Body not found.";
             }
-            return body?.GetOrbitalVelocityMetersPerSecond(altitudeMeters) ?? 0;
+            return body.GetOrbitalVelocityMetersPerSecond( currentAltitudeMeters ) ?? 0;
         }, 0, 3);
     }
 }

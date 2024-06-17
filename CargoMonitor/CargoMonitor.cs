@@ -116,6 +116,9 @@ namespace EddiCargoMonitor
         public void HandleProfile(JObject profile)
         { }
 
+        public void HandleStatus ( Status status )
+        { }
+
         public void PostHandle(Event @event)
         { }
 

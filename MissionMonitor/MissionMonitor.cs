@@ -1,4 +1,3 @@
-using Eddi;
 using EddiConfigService;
 using EddiConfigService.Configurations;
 using EddiCore;
@@ -162,19 +161,11 @@ namespace EddiMissionMonitor
             return new ConfigurationWindow();
         }
 
-        public void EnableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.EnableCollectionSynchronization(missions, missionsLock); });
-        }
-
-        public void DisableConfigBinding(MainWindow configWindow)
-        {
-            configWindow.Dispatcher.Invoke(() => { BindingOperations.DisableCollectionSynchronization(missions); });
-        }
-
         public void HandleProfile(JObject profile)
-        {
-        }
+        { }
+
+        public void HandleStatus ( Status status )
+        { }
 
         public void PostHandle(Event @event)
         {

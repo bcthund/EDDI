@@ -1,4 +1,5 @@
-﻿using EddiEvents;
+﻿using EddiDataDefinitions;
+using EddiEvents;
 using System.Windows.Controls;
 
 namespace EddiCore
@@ -43,6 +44,11 @@ namespace EddiCore
         /// Called when an event is found. Must not change global states.
         /// </summary>
         void Handle(Event theEvent);
+
+        /// <summary>
+        /// Called to receive updates from the StatusService
+        /// </summary>
+        void HandleStatus ( Status status );
 
         UserControl ConfigurationTabItem();
     }

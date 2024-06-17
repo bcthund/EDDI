@@ -426,7 +426,7 @@ namespace EddiCore
         public DateTime JournalTimeStamp { get; set; } = DateTime.MinValue;
 
         // Information from the last events of each type that we've received (for reference)
-        private SortedDictionary<string, Event> lastEvents { get; set; } = new SortedDictionary<string, Event>();
+        public ConcurrentDictionary<string, Event> lastEventOfType { get; set; } = new ConcurrentDictionary<string, Event>();
 
         // Current vehicle of player
         public string Vehicle
@@ -547,12 +547,58 @@ namespace EddiCore
                 }).ConfigureAwait(false);
 
                 CompanionAppService.Instance.StateChanged += OnCompanionAppServiceStateChanged;
+                StatusService.Instance.StatusChanged += OnStatusChangedAsync;
 
                 Logging.Info(Constants.EDDI_NAME + " " + Constants.EDDI_VERSION + " initialised");
             }
             catch (Exception ex)
             {
                 Logging.Error("Failed to initialise", ex);
+            }
+        }
+
+        private async void OnStatusChangedAsync ( object sender, EventArgs e )
+        {
+            if ( sender is Status status )
+            {
+                foreach ( var monitor in activeMonitors )
+                {
+                    await Task.Run( () =>
+                    {
+                        try
+                        {
+                            monitor.HandleStatus( status );
+                        }
+                        catch ( Exception exception )
+                        {
+                            var dict = new Dictionary<string, object>
+                            {
+                                [ "status" ] = status, [ "exception" ] = exception
+                            };
+                            Logging.Error( $"{monitor.MonitorName()} failed to handle status", dict );
+                        }
+                    } ).ConfigureAwait( false );
+                }
+
+                foreach ( var responder in activeResponders )
+                {
+                    await Task.Run( () =>
+                    {
+                        try
+                        {
+                            responder.HandleStatus( status );
+                        }
+                        catch ( Exception exception )
+                        {
+                            var dict = new Dictionary<string, object>
+                            {
+                                [ "status" ] = status,
+                                [ "exception" ] = exception
+                            };
+                            Logging.Error( $"{responder.ResponderName()} failed to handle status", dict );
+                        }
+                    } ).ConfigureAwait(false );
+                }
             }
         }
 
@@ -1145,6 +1191,8 @@ namespace EddiCore
                     {
                         OnEvent(@event);
                     }
+
+                    lastEventOfType[ @event.type ] = @event;
                 }
                 catch (Exception ex)
                 {
@@ -1297,21 +1345,13 @@ namespace EddiCore
 
         private bool eventUnderAttack(UnderAttackEvent underAttackEvent)
         {
-            bool passEvent = true;
             // Suppress repetitious `Under attack` events when loading or
             // when the target has already been reported as under attack within the last 10 seconds.
-            var lastEvent = lastEvents.TryGetValue(nameof(UnderAttackEvent), out Event ev) 
-                ? (UnderAttackEvent)ev 
-                : null;
-            if (underAttackEvent.fromLoad || (
-                lastEvent != null 
-                && lastEvent.target == underAttackEvent.target 
-                && (underAttackEvent.timestamp - lastEvent.timestamp).TotalSeconds < 10 
-                ))
-            {
-                passEvent = false;
-            }
-            lastEvents[nameof(UnderAttackEvent)] = underAttackEvent;
+            var passEvent = !(underAttackEvent.fromLoad || (
+                lastEventOfType.TryGetValue( underAttackEvent.type, out var ev ) && ev is UnderAttackEvent lastEvent
+                && lastEvent.target == underAttackEvent.target
+                && ( underAttackEvent.timestamp - lastEvent.timestamp ).TotalSeconds < 10
+            ));
             return passEvent;
         }
 
@@ -2443,9 +2483,6 @@ namespace EddiCore
             // Remove information about the current station and stellar body 
             CurrentStation = null;
             CurrentStellarBody = null;
-
-            // Save a copy of this event for later reference
-            lastEvents[nameof(FSDEngagedEvent)] = @event;;
 
             return true;
         }

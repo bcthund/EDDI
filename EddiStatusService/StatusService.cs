@@ -21,9 +21,9 @@ namespace EddiStatusService
         private static readonly string Directory = GetSavedGamesDir();
 
         // Public Read Variables
-        public Status CurrentStatus { get; private set; } = new Status();
-        public Status LastStatus { get; private set; } = new Status();
-        public static event EventHandler StatusUpdatedEvent;
+        private Status CurrentStatus { get; set; } = new Status();
+        private Status LastStatus { get; set; } = new Status();
+        public event EventHandler StatusChanged;
 
         // Public Write variables (set elsewhere to assist with various calculations)
         public Ship CurrentShip;
@@ -324,7 +324,7 @@ namespace EddiStatusService
             return null;
         }
 
-        public void handleStatus(Status thisStatus)
+        private void handleStatus(Status thisStatus)
         {
             if (thisStatus == null)
             {
@@ -340,7 +340,7 @@ namespace EddiStatusService
                     CurrentStatus = thisStatus;
 
                     // Pass the change in status to all subscribed processes
-                    OnStatus( StatusUpdatedEvent, CurrentStatus );
+                    OnStatus( StatusChanged, CurrentStatus );
                 }
             }
         }
