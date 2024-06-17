@@ -300,6 +300,33 @@ namespace EddiStatusMonitor
             {
                 handleMusicEvent( musicEvent );
             }
+            else if ( @event is SettlementApproachedEvent settlementApproachedEvent )
+            {
+                handleSettlementApproachedEvent( settlementApproachedEvent );
+            }
+        }
+
+        private void handleSettlementApproachedEvent ( SettlementApproachedEvent @event )
+        {
+            // Synthesize a `Destination arrived` event when approaching a settlement / location we've been tracking,
+            // if the journal hasn't already generated a `SupercruiseDestinationDrop` event
+            if ( !@event.fromLoad &&
+                 currentStatus?.destinationSystemAddress != null &&
+                 currentStatus.destinationSystemAddress == @event.systemAddress &&
+                 currentStatus.destinationBodyId == @event.bodyId &&
+                 ( currentStatus.destination_name == @event.name ||
+                   currentStatus.destination_localized_name == @event.name ) )
+            {
+                // Retrieve the last `SupercruiseDestinationDrop` event and verify that, if it exists, it does not match the settlement we may be approaching.
+                if ( !EDDI.Instance.lastEventOfType.TryGetValue( "SupercruiseDestinationDrop",
+                         out var supercruiseDestinationDrop ) ||
+                     !( supercruiseDestinationDrop is DestinationArrivedEvent destinationArrivedEvent ) ||
+                     destinationArrivedEvent.name != @event.name )
+                {
+                    destinationArrivedEvent = new DestinationArrivedEvent( currentStatus.timestamp, @event.name );
+                    EDDI.Instance.enqueueEvent( destinationArrivedEvent );
+                }
+            }
         }
 
         private void handleEnteredNormalSpaceEvent( EnteredNormalSpaceEvent @event )

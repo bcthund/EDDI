@@ -33,11 +33,11 @@ namespace EddiEvents
 
         public long? marketID { get; private set; }
 
-        public DestinationArrivedEvent ( DateTime timestamp, string invariantName, string localizedName, int threat, long? marketID = null) : base(timestamp, NAME)
+        public DestinationArrivedEvent ( DateTime timestamp, string invariantName, string localizedName = null, int? threat = null, long? marketID = null) : base(timestamp, NAME)
         {
             this.invariantName = invariantName;
             this.name = string.IsNullOrEmpty( localizedName ) ? invariantName : localizedName;
-            this.threat = threat;
+            this.threat = threat ?? 0;
             this.marketID = marketID;
         }
     }

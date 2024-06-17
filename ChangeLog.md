@@ -2,6 +2,10 @@
 
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
+## 4.0.4-b3
+  * Events
+    * `Destination arrived` event expanded to trigger when arriving at destination settlements / ground sites (#2623)
+
 ## 4.0.4-b2
   * Speech Responder
     * Core
