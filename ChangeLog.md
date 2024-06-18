@@ -10,6 +10,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Blueprint make report` updated to prevent overwriting the `inventory` map used for tracking cargo. (#2622)
       * `Material discard report` updated to prevent overwriting the `inventory` map used for tracking cargo. (#2622)
       * `Material inventory report` updated to prevent overwriting the `inventory` map used for tracking cargo. (#2622)
+      * `Material required report` updated to prevent overwriting the `inventory` map used for tracking cargo. (#2622)
       * `System materials report` updated to prevent overwriting the `inventory` map used for tracking cargo. (#2622)
 
 ## 4.0.4-b2
