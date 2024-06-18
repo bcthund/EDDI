@@ -4,7 +4,10 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.0.4-b3
   * Events
-    * `Destination arrived` event expanded to trigger when arriving at destination settlements / ground sites (#2623)
+    * `Destination arrived` event expanded to trigger when arriving at destination settlements / ground sites. (#2623)
+  * Speech Responder
+    * Scripts
+      * `System materials report` updated to prevent overwriting the `inventory` map used for tracking cargo. (#2622)
 
 ## 4.0.4-b2
   * Speech Responder
