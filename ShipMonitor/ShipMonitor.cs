@@ -469,7 +469,6 @@ namespace EddiShipMonitor
                     Logging.Debug("Unknown ship ID " + @event.shipid);
                     ship = @event.shipDefinition;
                     ship.LocalId = @event.shipid;
-                    ship.Role = Role.MultiPurpose;
                 }
 
                 // Save a copy of the raw event so that we can send it to other 3rd party apps
