@@ -42,7 +42,7 @@ namespace EddiVoiceAttackResponder
 
         public void Handle(Event @event)
         {
-            if ( @event.fromLoad || @event is UnhandledEvent )
+            if ( !App.FromVA || @event.fromLoad || @event is UnhandledEvent )
             {
                 return;
             }
@@ -75,9 +75,12 @@ namespace EddiVoiceAttackResponder
 
         public void HandleStatus ( Status status )
         {
-            lock ( VoiceAttackPlugin.vaProxyLock )
+            if ( App.FromVA )
             {
-                VoiceAttackVariables.setStatusValues( status, "Status", ref App.vaProxy );
+                lock ( VoiceAttackPlugin.vaProxyLock )
+                {
+                    VoiceAttackVariables.setStatusValues( status, "Status", ref App.vaProxy );
+                }
             }
         }
     }
