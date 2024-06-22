@@ -1226,15 +1226,15 @@ namespace EddiDataDefinitions
 
                 // Guardian fighter stuff
                 new Module(899990190, "ext_emitter_guardian", "ShieldGenerator", 1, "I", 0),
-                new Module(899990101, "gdn_hybrid_fighter_v1_cockpit", "CockpitCanopy", 1, "I", 0),
-                new Module(899990102, "gdn_hybrid_fighter_v2_cockpit", "CockpitCanopy", 1, "I", 0),
-                new Module(899990103, "gdn_hybrid_fighter_v3_cockpit", "CockpitCanopy", 1, "I", 0),
-                new Module(899990060, "gdn_hybrid_fighter_v1_armour_standard", "FighterArmour", 1, "I", 0),
-                new Module(899990060, "gdn_hybrid_fighter_v2_armour_standard", "FighterArmour", 1, "I", 0),
-                new Module(899990060, "gdn_hybrid_fighter_v3_armour_standard", "FighterArmour", 1, "I", 0),
-                new Module(899990050, "hpt_guardiangauss_fixed_gdn_fighter", "GuardianGaussCannon", 1, "I", 0),
-                new Module(899990050, "hpt_guardianplasma_fixed_gdn_fighter", "GuardianPlasmaCharger", 1, "I", 0),
-                new Module(899990050, "hpt_guardianshard_fixed_gdn_fighter", "ShardCannon", 1, "I", 0),
+                new Module(899990191, "gdn_hybrid_fighter_v1_cockpit", "CockpitCanopy", 1, "I", 0),
+                new Module(899990192, "gdn_hybrid_fighter_v2_cockpit", "CockpitCanopy", 1, "I", 0),
+                new Module(899990193, "gdn_hybrid_fighter_v3_cockpit", "CockpitCanopy", 1, "I", 0),
+                new Module(899990194, "gdn_hybrid_fighter_v1_armour_standard", "FighterArmour", 1, "I", 0),
+                new Module(899990195, "gdn_hybrid_fighter_v2_armour_standard", "FighterArmour", 1, "I", 0),
+                new Module(899990196, "gdn_hybrid_fighter_v3_armour_standard", "FighterArmour", 1, "I", 0),
+                new Module(899990197, "hpt_guardiangauss_fixed_gdn_fighter", "GuardianGaussCannon", 1, "I", 0),
+                new Module(899990198, "hpt_guardianplasma_fixed_gdn_fighter", "GuardianPlasmaCharger", 1, "I", 0),
+                new Module(899990199, "hpt_guardianshard_fixed_gdn_fighter", "ShardCannon", 1, "I", 0),
 
                 // Need pricing confirmed
             };

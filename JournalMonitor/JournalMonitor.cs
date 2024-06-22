@@ -2251,16 +2251,22 @@ namespace EddiJournalMonitor
                                     var legalStatus = LegalStatus.FromEDName(JsonParsing.getString(data, "LegalStatus"));
                                     var power = Power.FromEDName(JsonParsing.getString(data, "Power"));
                                     var bounty = JsonParsing.getOptionalInt(data, "Bounty");
-                                    Module subSystem = null;
+                                    string subsystemName = null;
                                     decimal? subSystemHealth = null;
                                     if ( data.ContainsKey( "Subsystem" ) )
                                     {
-                                        subSystem = Module.FromEDName( JsonParsing.getString( data, "Subsystem" ) );
-                                        subSystem.fallbackLocalizedName = JsonParsing.getString( data, "Subsystem_Localised" );
+                                        var subsystemEDName = JsonParsing.getString( data, "Subsystem" );
+                                        subsystemName = subsystemEDName.StartsWith( "$ext_drive" ) 
+                                            ? EddiDataDefinitions.Properties.Modules.Thrusters // The `ShipTargeted` event uses non-standard drive names
+                                            : Module.FromEDName( subsystemEDName )?.localizedName;
+                                        if ( string.IsNullOrEmpty(subsystemName) )
+                                        {
+                                            subsystemName = JsonParsing.getString( data, "Subsystem_Localised" );
+                                        }
                                         subSystemHealth = JsonParsing.getOptionalDecimal( data, "SubsystemHealth" );
                                     }
 
-                                    events.Add(new ShipTargetedEvent(timestamp, targetlocked, shipDef, fighterDef, scanstage, name, rank, faction, power, legalStatus, bounty, shieldHealth, hullHealth, subSystem, subSystemHealth) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add(new ShipTargetedEvent(timestamp, targetlocked, shipDef, fighterDef, scanstage, name, rank, faction, power, legalStatus, bounty, shieldHealth, hullHealth, subsystemName, subSystemHealth) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;

@@ -44,8 +44,8 @@ namespace EddiEvents
         [PublicAPI("The health of the hull")]
         public decimal? hullhealth { get; private set; }
 
-        [PublicAPI("The subsystem targeted")]
-        public string subsystem => SubSystem?.localizedName;
+        [ PublicAPI( "The subsystem targeted" ) ]
+        public string subsystem { get; private set; }
 
         [PublicAPI("The health of the subsystem targeted")]
         public decimal? subsystemhealth { get; private set; }
@@ -58,13 +58,11 @@ namespace EddiEvents
 
         public Power Power { get; }
 
-        public Module SubSystem { get; }
-
         public Ship ShipDef { get; }
 
         public VehicleDefinition FighterDef { get; }
 
-        public ShipTargetedEvent(DateTime timestamp, bool targetlocked, Ship shipDef, VehicleDefinition fighterDef, int? scanstage, string name, CombatRating rank, string faction, Power power, LegalStatus legalstatus, int? bounty, decimal? shieldhealth, decimal? hullhealth, Module subsystem, decimal? subsystemhealth) : base(timestamp, NAME)
+        public ShipTargetedEvent(DateTime timestamp, bool targetlocked, Ship shipDef, VehicleDefinition fighterDef, int? scanstage, string name, CombatRating rank, string faction, Power power, LegalStatus legalstatus, int? bounty, decimal? shieldhealth, decimal? hullhealth, string subsystem, decimal? subsystemhealth) : base(timestamp, NAME)
         {
             this.targetlocked = targetlocked;
             this.ShipDef = shipDef;
@@ -78,7 +76,7 @@ namespace EddiEvents
             this.bounty = bounty;
             this.shieldhealth = shieldhealth;
             this.hullhealth = hullhealth;
-            this.SubSystem = subsystem;
+            this.subsystem = subsystem;
             this.subsystemhealth = subsystemhealth;
         }
     }
