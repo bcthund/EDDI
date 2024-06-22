@@ -74,15 +74,13 @@ namespace EddiStatusMonitor
                     EDDI.Instance.Cmdr.credits = Convert.ToUInt64( currentStatus.credit_balance );
                 }
 
-                if ( currentStatus is null || lastStatus is null ) { return; }
-
                 // Update vehicle information
-                if ( !string.IsNullOrEmpty( currentStatus.vehicle ) && currentStatus.vehicle != lastStatus.vehicle )
+                if ( !string.IsNullOrEmpty( currentStatus.vehicle ) && currentStatus.vehicle != lastStatus?.vehicle )
                 {
                     if ( EDDI.Instance.Vehicle != currentStatus.vehicle )
                     {
                         var statusSummary = new Dictionary<string, Status> { { "isStatus", currentStatus }, { "wasStatus", lastStatus } };
-                        Logging.Debug( $"Status changed vehicle from {lastStatus.vehicle} to {currentStatus.vehicle}", statusSummary );
+                        Logging.Debug( $"Status changed vehicle from {lastStatus?.vehicle ?? "<NULL>"} to {currentStatus.vehicle}", statusSummary );
                         EDDI.Instance.Vehicle = currentStatus.vehicle;
                     }
                 }
@@ -92,6 +90,8 @@ namespace EddiStatusMonitor
                     EDDI.Instance.CurrentShip.fuelInTanks = currentStatus.fuelInTanks ?? 0;
                     EDDI.Instance.CurrentShip.fuelInReservoir = currentStatus.fuelInReservoir ?? 0;
                 }
+
+                if ( lastStatus is null ) { return; }
 
                 // Trigger events for changed status, as applicable
                 if ( currentStatus.shields_up != lastStatus.shields_up && currentStatus.vehicle == lastStatus.vehicle )
