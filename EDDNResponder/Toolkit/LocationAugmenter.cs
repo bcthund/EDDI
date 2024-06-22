@@ -53,6 +53,7 @@ namespace EddiEddnResponder.Toolkit
             "FSSSignalDiscovered",  // Scan events from the destination system can register after StartJump and before we actually leave the originating system
             "Outfitting", // Relies on an exterior file and contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
             "Market", // Relies on an exterior file and contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
+            "ScanOrganic", // May report incorrect location info if the player does not allow the animation to complete before boarding a ship.
             "Shipyard", // Relies on an exterior file and contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
             "StartJump", // `StartJump` events list the destination star system name.
             "StoredModules", // Contains `StarSystem` field without `SystemAddress` field. Safer to ignore.
