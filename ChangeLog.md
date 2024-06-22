@@ -3,6 +3,8 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.0.4-b3
+  * Core
+    * Speculative fix for a `Loadout` parsing exception that appears to have been impacting fuel level updates from the Status Monitor.
   * Events
     * `Destination arrived` expanded to trigger when arriving at destination settlements / ground sites. (#2623)
     * `Ship targeted` fixed to resolve an exception when 'Drive' subsystems were targeted. (#2624)
