@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -20,12 +21,17 @@ namespace EddiJournalMonitor
 {
     public class JournalMonitor : LogMonitor, IEddiMonitor
     {
-        private static readonly Regex JsonRegex = new Regex( @"^{.*}$", RegexOptions.Singleline );
-
         public JournalMonitor () : base( GetSavedGamesDir(), @"^Journal.*\.[0-9\.]+\.log$",
             ( result, isLogLoadEvent ) =>
                 ForwardJournalEntries( result.ToList(), EDDI.Instance.enqueueEvent, isLogLoadEvent ) )
         { }
+
+        private static readonly Regex JsonRegex = new Regex( @"^{.*}$", RegexOptions.Singleline );
+
+        /// <summary>
+        /// Holds a delayed event until we see an event of the type specified
+        /// </summary>
+        private static readonly ConcurrentDictionary<string, Event> DelayedEventHolder = new ConcurrentDictionary<string, Event>();
 
         private enum ShipyardType { [UsedImplicitly] ShipsHere, [UsedImplicitly] ShipsRemote }
 
@@ -39,6 +45,15 @@ namespace EddiJournalMonitor
             if ( !lines.Any() ) { return; }
 
             var events = ParseJournalEntries(lines, isLogLoadEventBatch);
+
+            // Append any delayed events
+            foreach ( var @event in events.ToList() )
+            {
+                if ( DelayedEventHolder.TryGetValue( @event.type, out var delayedEvent ) )
+                {
+                    events.Add( delayedEvent );
+                }
+            }
 
             // Enqueue events for processing
             events.ForEach(callback);
@@ -104,7 +119,7 @@ namespace EddiJournalMonitor
             return events;
         }
 
-        public static List<Event> ParseJournalEntry(string line, bool fromLogLoad = false)
+        public static List<Event> ParseJournalEntry(string line, bool fromLogLoad = false, bool fromSpeechResponderTest = false )
         {
             List<Event> events = new List<Event>();
             try
@@ -5023,6 +5038,56 @@ namespace EddiJournalMonitor
                                 }
                                 handled = true;
                                 break;
+                            case "CargoTransfer": // Could use for cargo transfers between ship and fleet carrier; the `Cargo` event already keeps ship and SRV cargo up to date.
+                                {
+                                    var toShip = new List<CommodityAmount>();
+                                    var toSRV = new List<CommodityAmount>();
+                                    var toCarrier = new List<CommodityAmount>();
+                                    if ( data.TryGetValue("Transfers", out var transfersVal) )
+                                    {
+                                        var transfersArray = JArray.FromObject( transfersVal );
+                                        foreach ( var transfer in transfersArray )
+                                        {
+                                            var direction = transfer[ "Direction" ].ToString();
+                                            var count = (int)transfer[ "Count" ];
+                                            var commodity = CommodityDefinition.FromEDName( transfer[ "Type" ].ToString() );
+                                            commodity.fallbackLocalizedName = transfer[ "Type_Localised" ]?.ToString();
+
+                                            // Objects may have a `MissionID` but the legalstatus is not identified so we rtat these items
+                                            // as CommodityAmount objects and use the `Cargo` event to update the CargoMonitor.
+
+                                            var commodityAmount = new CommodityAmount( commodity, count );
+                                            if ( direction.Equals( "toship", StringComparison.InvariantCultureIgnoreCase ) )
+                                            {
+                                                toShip.Add( commodityAmount );
+                                            }
+                                            else if ( direction.Equals( "tosrv", StringComparison.InvariantCultureIgnoreCase ) )
+                                            {
+                                                toSRV.Add( commodityAmount );
+                                            }
+                                            else if ( direction.Equals( "tocarrier", StringComparison.InvariantCultureIgnoreCase ) )
+                                            {
+                                                toCarrier.Add( commodityAmount );
+                                            }
+                                            else
+                                            {
+                                                throw new ArgumentException( "Unhandled CargoTransfer `Direction`." );
+                                            }
+                                        }
+                                    }
+
+                                    var cargoTransferEvent = new CargoTransferEvent( timestamp, toShip, toSRV, toCarrier ) { raw = line, fromLoad = fromLogLoad };
+                                    if ( fromSpeechResponderTest )
+                                    {
+                                        events.Add( cargoTransferEvent );
+                                    }
+                                    else
+                                    {
+                                        DelayedEventHolder[ CargoEvent.NAME ] = cargoTransferEvent;
+                                    }
+                                }
+                                handled = true;
+                                break;
 
                             // we silently ignore these, but forward them to the responders
                             case "CodexDiscovery":
@@ -5036,7 +5101,6 @@ namespace EddiJournalMonitor
                             // Low priority (for now)
                             case "BuyWeapon":
                             case "CarrierTradeOrder": // Implement when we are ready to handle fleet carrier cargo.
-                            case "CargoTransfer": // Could use for cargo transfers between ship and fleet carrier; the `Cargo` event already keeps ship and SRV cargo up to date.
                             case "CarrierModulePack": 
                             case "CarrierShipPack":
                             case "ClearImpound": // Sample: { "timestamp":"2022-10-20T18:01:17Z", "event":"ClearImpound", "ShipType":"asp", "ShipType_Localised":"Asp Explorer", "ShipID":34, "ShipMarketID":3705689344, "MarketID":3705689344 }

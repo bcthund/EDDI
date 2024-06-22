@@ -241,6 +241,15 @@
       "name": "Cargo scoop",
       "description": "Triggered when you deploy or retract your cargo scoop"
     },
+    "Cargo transfer": {
+      "enabled": true,
+      "priority": 3,
+      "responder": true,
+      "script": "{_ Set up a simple function to create descriptions for each transferred commodity }\r\n\r\n{set parseItem(cargo) to:\r\n    {if cargo.amount = 1: \r\n        {set tonnes to \" tonne \"}\r\n    |else: \r\n        {set tonnes to \" tonnes \"}\r\n    }\r\n    {set item to cat(cargo.amount, tonnes, \" of \", cargo.commodity)}\r\n    {return item}\r\n}\r\n\r\n{_ Generate lists of transfer descriptions for each of the possible locations }\r\n\r\n{if len(event.toship) > 0:\r\n    {set toShip to []}\r\n    {for cargo in event.toship:\r\n        {set toShip to cat(toShip, [parseItem(cargo)])}\r\n    }\r\n}\r\n\r\n{if len(event.tocarrier) > 0:\r\n    {set toCarrier to []}\r\n    {for cargo in event.tocarrier:\r\n        {set toCarrier to cat(toCarrier, [parseItem(cargo)])}\r\n    }\r\n}\r\n\r\n{if len(event.tosrv) > 0:\r\n    {set toSRV to []}\r\n    {for cargo in event.tosrv:\r\n        {set toSRV to cat(toSRV, [parseItem(cargo)])}\r\n    }\r\n}\r\n\r\n{_ Begin speaking }\r\n\r\nYou have transferred\r\n\r\n{if len(toShip) > 0:\r\n    {List(toShip)} to {OneOf(ShipName(), \"your ship\")}\r\n}\r\n\r\n{if len(toCarrier) > 0:\r\n    {if len(toShip) > 0: and }\r\n    {List(toCarrier)} to {OneOf(carrier.name, \"your carrier\")}\r\n}\r\n\r\n{if len(toSRV) > 0:\r\n    {if len(toShip) > 0: and }\r\n    {List(toSRV)} to your SRV\r\n}.\r\n",
+      "default": true,
+      "name": "Cargo transfer",
+      "description": "Triggered when transferring commodities between your ship, SRV, or carrier"
+    },
     "Cargo wingupdate": {
       "enabled": true,
       "priority": 3,
