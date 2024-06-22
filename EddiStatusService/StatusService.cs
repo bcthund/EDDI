@@ -330,18 +330,16 @@ namespace EddiStatusService
             {
                 return;
             }
-
-            lock ( statusLock )
+            if ( CurrentStatus != thisStatus )
             {
-                if ( CurrentStatus != thisStatus )
+                lock ( statusLock )
                 {
                     // Save our last status for reference and update our current status
                     LastStatus = CurrentStatus;
                     CurrentStatus = thisStatus;
-
-                    // Pass the change in status to all subscribed processes
-                    OnStatus( StatusChanged, CurrentStatus );
                 }
+                // Pass the change in status to all subscribed processes
+                OnStatus( StatusChanged, CurrentStatus );
             }
         }
 
