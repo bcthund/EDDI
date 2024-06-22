@@ -1730,7 +1730,7 @@
       "default": true,
       "name": "Near bookmark",
       "description": "Triggered when entering or departing the nearby radius of a bookmark"
-    },,
+    },
     "Near surface": {
       "enabled": true,
       "priority": 3,
@@ -2342,7 +2342,7 @@
       "default": true,
       "name": "Station no fire zone entered",
       "description": "Triggered when your ship enters a station's no fire zone"
-    }
+    },
     "Station no fire zone exited": {
       "enabled": true,
       "priority": 3,
