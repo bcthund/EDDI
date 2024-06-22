@@ -21,6 +21,7 @@ namespace EddiStatusMonitor
         private string lastMusicTrack;
         private Status currentStatus;
         private Status lastStatus;
+        private static readonly object statusLock = new object();
 
         public StatusMonitor ()
         {
@@ -61,8 +62,11 @@ namespace EddiStatusMonitor
         {
             if ( status != null )
             {
-                lastStatus = currentStatus;
-                currentStatus = status;
+                lock ( statusLock )
+                {
+                    lastStatus = currentStatus;
+                    currentStatus = status;
+                }
 
                 // Update the commander's credit balance
                 if ( currentStatus.credit_balance != null && EDDI.Instance.Cmdr != null )
@@ -371,7 +375,7 @@ namespace EddiStatusMonitor
 
         public IDictionary<string, Tuple<Type, object>> GetVariables()
         {
-            lock ( StatusService.Instance.statusLock )
+            lock ( statusLock )
             {
                 return new Dictionary<string, Tuple<Type, object>>
                 {
