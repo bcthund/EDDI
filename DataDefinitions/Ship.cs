@@ -727,7 +727,7 @@ namespace EddiDataDefinitions
             return null;
         }
 
-        private decimal JumpRange ( decimal currentFuel, int carriedCargo, double boostModifier = 1)
+        private decimal JumpRange ( decimal currentFuel, int carriedCargo, double boostModifier = 1 )
         {
             if ( frameshiftdrive is null || unladenmass == 0 ) { return 0; }
 
@@ -738,15 +738,42 @@ namespace EddiDataDefinitions
             var powerConstant = frameshiftdrive.GetFsdPowerConstant();
             var guardianFsdBoosterRange = compartments.FirstOrDefault(c => c.module.edname.Contains("Int_GuardianFSDBooster"))?.module?.GetGuardianFSDBoost() ?? 0;
 
-            // Calculate our base max range
-            var baseMaxRange = optimalMass / mass * Math.Pow( ( fuel * 1000 / linearConstant ), ( 1 / powerConstant ) );
-            if ( baseMaxRange == 0 ) { return 0; }
+            return JumpRange( optimalMass, mass, fuel, linearConstant, powerConstant, guardianFsdBoosterRange, boostModifier );
+        }
 
-            // Return the maximum range with the specified fuel and cargo levels, with a boost modifier if using synthesis or a jet cone boost
-            var guardianBoostedMaxRange = ( baseMaxRange + guardianFsdBoosterRange ) / baseMaxRange * optimalMass / mass * Math.Pow( ( fuel * 1000 / linearConstant ), ( 1 / powerConstant ) );
-            
-            var result = Convert.ToDecimal(guardianBoostedMaxRange * boostModifier);
-            return result;
+        private decimal JumpRange ( double optimalMass, double mass, double fuel, double linearConstant, double powerConstant, double guardianFsdBoosterRange, double boostModifier )
+        {
+            try
+            {
+                // Calculate our base max range
+                var baseMaxRange = optimalMass / mass * Math.Pow( ( fuel * 1000 / linearConstant ), ( 1 / powerConstant ) );
+                if ( baseMaxRange == 0 ) { return 0; }
+
+                // Return the maximum range with the specified fuel and cargo levels, with a boost modifier if using synthesis or a jet cone boost
+                var guardianBoostedMaxRange = ( baseMaxRange + guardianFsdBoosterRange ) / baseMaxRange * optimalMass / mass * Math.Pow( ( fuel * 1000 / linearConstant ), ( 1 / powerConstant ) );
+
+                var result = Convert.ToDecimal( guardianBoostedMaxRange * boostModifier );
+                return result;
+            }
+            catch ( Exception e )
+            {
+                var data = new Dictionary<string, object>
+                {
+                    [ "exception" ] = e,
+                    [ "inputs" ] = new Dictionary<string, object>
+                    {
+                        [ "optimalMass" ] = optimalMass,
+                        [ "mass" ] = mass,
+                        [ "fuel" ] = fuel,
+                        [ "linearConstant" ] = linearConstant,
+                        [ "powerConstant" ] = powerConstant,
+                        [ "guardianFsdBoosterRange" ] = guardianFsdBoosterRange,
+                        [ "boostModifier" ] = boostModifier
+                    }
+                };
+                Logging.Error( "Failed to calculate jump range", data );
+                return 0;
+            }
         }
 
         public static Ship FromShipyardInfo(ShipyardInfoItem item)
