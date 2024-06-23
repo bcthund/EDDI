@@ -361,17 +361,25 @@ namespace EddiCompanionAppService
             }
 
             CurrentState = State.TokenRefresh;
-            HttpWebRequest request = GetRequest(AUTH_SERVER + TOKEN_URL);
+            var request = GetRequest(AUTH_SERVER + TOKEN_URL);
             request.ContentType = "application/x-www-form-urlencoded";
             request.Method = "POST";
-            byte[] data = Encoding.UTF8.GetBytes($"grant_type=refresh_token&client_id={clientID}&refresh_token={Credentials.refreshToken}");
+            var data = Encoding.UTF8.GetBytes($"grant_type=refresh_token&client_id={clientID}&refresh_token={Credentials.refreshToken}");
             request.ContentLength = data.Length;
-            using (Stream dataStream = request.GetRequestStream())
+
+            try
             {
-                dataStream.Write(data, 0, data.Length);
+                using ( var dataStream = request.GetRequestStream() )
+                {
+                    dataStream.Write( data, 0, data.Length );
+                }
+            }
+            catch ( WebException webException )
+            {
+                Logging.Warn(webException.Message, webException);
             }
 
-            using (HttpWebResponse response = GetResponse(request))
+            using ( var response = GetResponse(request) )
             {
                 if (response == null)
                 {
@@ -379,8 +387,8 @@ namespace EddiCompanionAppService
                 }
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    string responseData = getResponseData(response);
-                    JObject json = JObject.Parse(responseData);
+                    var responseData = getResponseData(response);
+                    var json = JObject.Parse(responseData);
                     Credentials.refreshToken = (string)json["refresh_token"];
                     Credentials.accessToken = (string)json["access_token"];
                     Credentials.tokenExpiry = DateTime.UtcNow.AddSeconds((double)json["expires_in"]);
