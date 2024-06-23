@@ -3,6 +3,8 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.0.4-b4
+  * Cargo Monitor
+    * Fixed a crash that could occur when viewing the Cargo Monitor while it contains cargo.
 
 ## 4.0.4-b3
   * Core
