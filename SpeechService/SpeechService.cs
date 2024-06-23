@@ -203,7 +203,7 @@ namespace EddiSpeechService
         private static bool IsWindowsMediaSynthesizerSupported()
         {
             return OSInfo.TryGetWindowsVersion( out var osVersion ) &&
-                   osVersion >= new System.Version( 10, 0, 16299, 0 );
+                   osVersion >= new System.Version( 10, 0, 17763, 0 );
         }
 
         private void CompanionAppService_StateChanged(CompanionAppService.State oldState, CompanionAppService.State newState)
