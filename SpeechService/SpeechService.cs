@@ -519,7 +519,15 @@ namespace EddiSpeechService
                 }
                 Logging.Warn( "Falling back to legacy DirectSoundOut." );
             }
-            return new DirectSoundOut();
+
+            var directSoundOut = new DirectSoundOut();
+            if ( TryInitializeSoundOut( directSoundOut, source ) )
+            {
+                return directSoundOut;
+            }
+
+            Logging.Warn("Unable to initialize any playback device.");
+            return null;
         }
 
         private static bool TryInitializeSoundOut ( ISoundOut soundOut, IWaveSource source )
@@ -566,6 +574,7 @@ namespace EddiSpeechService
 
                 using ( var soundOut = GetSoundOut( source ) )
                 {
+                    if ( soundOut is null ) { return; }
                     var cancellationTokenSource = new CancellationTokenSource();
                     StartSpeech( soundOut, priority, cancellationTokenSource );
 
@@ -678,6 +687,8 @@ namespace EddiSpeechService
 
                 using ( var soundOut = GetSoundOut( audioSource ) )
                 {
+                    if ( soundOut is null ) { return; }
+
                     Logging.Debug($"Beginning audio playback for {fileName}.");
 
                     if ( volumeOverride != null )
