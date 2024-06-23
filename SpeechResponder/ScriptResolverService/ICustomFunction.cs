@@ -1,6 +1,6 @@
-﻿using Cottle.Functions;
-using Cottle.Stores;
+﻿using Cottle;
 using System;
+using System.Collections.Generic;
 
 namespace EddiSpeechResponder.Service
 {
@@ -10,7 +10,20 @@ namespace EddiSpeechResponder.Service
         FunctionCategory Category { get; }
         string description { get; }
         Type ReturnType { get; }
-        NativeFunction function { get; }
+        IFunction function { get; }
+    }
+
+    public class RecursiveFunction
+    {
+        public IContext Context { get; }
+
+        public Dictionary<string, Script> Scripts { get; }
+
+        public RecursiveFunction ( IContext context, Dictionary< string, Script > scripts )
+        {
+            this.Context = context;
+            this.Scripts = scripts;
+        }
     }
 
     public enum FunctionCategory
@@ -23,23 +36,5 @@ namespace EddiSpeechResponder.Service
         Tempo,
         Utility,
         Voice
-    }
-
-    public abstract class ResolverInstance<T1, T2>
-    {
-        protected ScriptResolver resolver { get; }
-        protected BuiltinStore store { get; }
-
-        protected ResolverInstance(T1 parameter1, T2 parameter2)
-        {
-            if (parameter1 is ScriptResolver resolverParameter)
-            {
-                resolver = resolverParameter;
-            }
-            if (parameter2 is BuiltinStore storeParameter)
-            {
-                store = storeParameter;
-            }
-        }
     }
 }

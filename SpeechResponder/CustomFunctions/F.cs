@@ -1,25 +1,29 @@
-﻿using Cottle.Functions;
-using Cottle.Stores;
+﻿using Cottle;
 using EddiSpeechResponder.Service;
 using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EddiSpeechResponder.CustomFunctions
 {
     [UsedImplicitly]
-    public class F : ResolverInstance<ScriptResolver, BuiltinStore>, ICustomFunction
+    public class F : RecursiveFunction, ICustomFunction
     {
         public string name => "F";
         public FunctionCategory Category => FunctionCategory.Utility;
         public string description => Properties.CustomFunctions_Untranslated.F;
         public Type ReturnType => typeof( string );
-        public NativeFunction function => new NativeFunction((values) =>
+        public IFunction function => Function.CreateNative1( ( runtime, scriptName, writer ) =>
         {
-            return resolver.resolveFromName(values[0].AsString, store, false)?.Trim();
-        }, 1);
-        
-        // Implement nesting
-        public F(ScriptResolver resolver, BuiltinStore store) : base(resolver, store)
+            // Use a cascading context consisting of variables set in the current document and variables set prior to resolving 
+            var context = Cottle.Context.CreateCascade(Cottle.Context.CreateCustom(runtime.Globals.ToDictionary(g => g.Key, g => g.Value)), Context );
+            var result = scriptName.AsString;
+            return ScriptResolver.resolveFromName( result, Scripts, context, false )?.Trim();
+        });
+
+        [UsedImplicitly]
+        public F ( IContext context, Dictionary<string, Script> scripts ) : base( context, scripts )
         { }
     }
 }
