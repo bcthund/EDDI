@@ -461,7 +461,7 @@ namespace EddiShipMonitor
             {
                 // Obtain the ship to which this loadout refers
                 Logging.Debug("Current Ship Id is: " + currentShipId + ", Loadout Ship Id is " + @event.shipid);
-                Ship ship = GetShip(@event.shipid);
+                var ship = GetShip(@event.shipid);
 
                 if (ship == null)
                 {
@@ -474,12 +474,15 @@ namespace EddiShipMonitor
                 // Save a copy of the raw event so that we can send it to other 3rd party apps
                 ship.raw = @event.raw;
 
-                // Update model (in case it was solely from the edname), name, ident & paintjob if required
-                ship.model = ship.model.ToLowerInvariant() == ship.EDName.ToLowerInvariant() ? @event.ship : ship.model;
+                // Update model (in case it was solely from the edname), name, ident, and paintjob if required
+                ship.model = @event.shipDefinition.model ?? @event.ship ?? @event.edModel;
                 setShipName(ship, @event.shipname);
                 setShipIdent(ship, @event.shipident);
                 ship.paintjob = @event.paintjob;
                 ship.hot = @event.hot;
+
+                // Augment with template values
+                ship.Augment();
 
                 // Write ship value, if given by the loadout event
                 if (@event.value != null)
