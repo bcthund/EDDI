@@ -4,7 +4,6 @@ using Eddi;
 using EddiCompanionAppService;
 using EddiCore;
 using EddiDataDefinitions;
-using EddiEvents;
 using EddiNavigationService;
 using EddiSpeechService;
 using JetBrains.Annotations;
@@ -175,7 +174,7 @@ namespace EddiSpeechResponder.Service
         }
 
         // Compile variables from the EDDI information
-        protected internal Dictionary<string, Tuple<Type, Value>> CompileVariables(Event theEvent = null)
+        protected internal Dictionary<string, Tuple<Type, Value>> CompileVariables(dynamic theEvent = null)
         {
             var dict = new Dictionary<string, Tuple<Type, Value>>
             {
@@ -263,9 +262,9 @@ namespace EddiSpeechResponder.Service
                 dict[ "carrier" ] = new Tuple<Type, Value>( typeof( FleetCarrier ), Value.FromReflection(EDDI.Instance.FleetCarrier, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
             }
 
-            if ( theEvent != null )
+            if ( theEvent != null ) // A dynamic type is used so that Value.FromReflection 
             {
-                dict[ "event" ] = new Tuple<Type, Value>( typeof( Event ), Value.FromReflection( theEvent, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
+                dict[ "event" ] = new Tuple<Type, Value>( theEvent.GetType(), Value.FromReflection( theEvent, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
             }
 
             if ( EDDI.Instance.State != null )
