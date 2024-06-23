@@ -7,6 +7,9 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * Further fixes for `Loadout` parsing exceptions that appear to have been impacting fuel level updates from the Status Monitor.
   * Cargo Monitor
     * Fixed a crash that could occur when viewing the Cargo Monitor while it contains cargo.
+  * Speech Responder
+    * Scripts
+      * `Star report` updated to fix incorrect invokation of the `Spacialise` function for some rare star types. (#2625)
 
 ## 4.0.4-b3
   * Core
