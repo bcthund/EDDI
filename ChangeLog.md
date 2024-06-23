@@ -2,7 +2,7 @@
 
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
-## 4.0.4-b4
+## 4.0.4
   * Core
     * Further fixes for `Loadout` parsing exceptions that appear to have been impacting fuel level updates from the Status Monitor.
   * Cargo Monitor
