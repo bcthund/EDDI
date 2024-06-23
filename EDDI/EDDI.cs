@@ -2591,9 +2591,9 @@ namespace EddiCore
                         CurrentStarSystem.factions = theEvent.factions;
 
                         // Update station controlling faction data
-                        foreach ( Station station in CurrentStarSystem.stations )
+                        foreach ( var station in CurrentStarSystem.stations )
                         {
-                            Faction stationFaction = theEvent.factions.Find(f => f.name == station.Faction.name);
+                            var stationFaction = theEvent.factions.Find(f => f.name == station?.Faction?.name);
                             if ( stationFaction != null )
                             {
                                 station.Faction = stationFaction;
@@ -2601,8 +2601,8 @@ namespace EddiCore
                         }
 
                         // Check if current system is inhabited by or HQ for squadron faction
-                        Faction squadronFaction = theEvent.factions.Find(f =>
-                        (f.presences.Find(p => p.systemName == CurrentStarSystem.systemname)?.squadronhomesystem ?? false) ||
+                        var squadronFaction = theEvent.factions.Find(f =>
+                        (f.presences?.Find(p => p.systemName == CurrentStarSystem?.systemname)?.squadronhomesystem ?? false) ||
                         f.squadronfaction);
                         if ( squadronFaction != null )
                         {
