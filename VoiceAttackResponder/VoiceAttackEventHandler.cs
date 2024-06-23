@@ -174,7 +174,7 @@ namespace EddiVoiceAttackResponder
                         await Task.Delay( TimeSpan.FromMilliseconds( 25 ) );
                     }
                 } ),
-                Task.Delay( 2000 )
+                Task.Delay( 500 )
             );
             foreach ( var q in taskQueues.Values ) { q.CompleteAdding(); q.Dispose(); }
         }
