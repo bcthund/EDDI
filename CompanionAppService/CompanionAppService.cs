@@ -189,8 +189,16 @@ namespace EddiCompanionAppService
             CurrentState = State.AwaitingCallback;
             string codeChallenge = createAndRememberChallenge();
             string webURL = $"{AUTH_SERVER}{AUTH_URL}" + $"?response_type=code&{AUDIENCE}&{SCOPE}&client_id={clientID}&code_challenge={codeChallenge}&code_challenge_method=S256&state={authSessionID}&redirect_uri={Uri.EscapeDataString(CALLBACK_URL)}";
-            Process.Start(webURL);
-            Logging.Debug( "Awaiting callback" );
+            try
+            {
+                Process.Start( webURL );
+                Logging.Debug( "Awaiting callback" );
+            }
+            catch ( Win32Exception win32Exception )
+            {
+                Logging.Warn("Unable to login: " + win32Exception.Message, win32Exception );
+                Logout();
+            }
         }
 
         private string createAndRememberChallenge()
