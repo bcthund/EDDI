@@ -730,7 +730,11 @@ namespace EddiMissionMonitor
             {
                 if (@event.missionid != null)
                 {
-                    Mission mission = missions.FirstOrDefault(m => m.missionid == @event.missionid);
+                    Mission mission;
+                    lock ( missionsLock )
+                    {
+                        mission = missions.FirstOrDefault( m => m.missionid == @event.missionid );
+                    }
                     if (mission != null)
                     {
                         RemoveMissionWithMissionId(@event.missionid ?? 0);
