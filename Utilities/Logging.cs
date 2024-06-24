@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using Utilities.TelemetryService;
 
 namespace Utilities
@@ -47,13 +48,13 @@ namespace Utilities
         {
             try
             {
-                System.Threading.Tasks.Task.Run(() =>
+                Task.Run(async () =>
                 {
                     Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
                     Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
                     var timestamp = DateTime.UtcNow.ToString("s", CultureInfo.InvariantCulture);
                     message = PrepareMessage( message, memberName, filePath );
-                    var preppedData = PrepareData( data );
+                    var preppedData = await PrepareData( data );
 
                     switch (errorlevel)
                     {
@@ -97,38 +98,41 @@ namespace Utilities
             return message;
         }
 
-        private static Dictionary<string, object> PrepareData ( [ CanBeNull ] JToken data )
+        private static async Task<Dictionary<string, object>> PrepareData ( [ CanBeNull ] JToken data )
         {
             if ( data == null ) { return null; }
 
-            if ( data.Type == JTokenType.String )
+            return await Task.Run( () =>
             {
-                if ( JsonRegex.IsMatch( data.ToString() ) )
+                if ( data.Type == JTokenType.String )
                 {
-                    var jToken = JToken.Parse( data.ToString() );
-                    data = jToken;
-                }
-                else
-                {
-                    return WrapData( "message", Redaction.RedactEnvironmentVariables( data.ToString() ) );
-                }
-            }
-
-            try
-            {
-                data = Redaction.RedactEnvironmentVariables( data );
-                data = Redaction.RedactPersonalProperties( data );
-                if ( data is JObject )
-                {
-                    return data.ToObject<Dictionary<string, object>>();
+                    if ( JsonRegex.IsMatch( data.ToString() ) )
+                    {
+                        var jToken = JToken.Parse( data.ToString() );
+                        data = jToken;
+                    }
+                    else
+                    {
+                        return WrapData( "message", Redaction.RedactEnvironmentVariables( data.ToString() ) );
+                    }
                 }
 
-                return WrapData( "data", data );
-            }
-            catch ( ObjectDisposedException )
-            {
-                return null;
-            }
+                try
+                {
+                    data = Redaction.RedactEnvironmentVariables( data );
+                    data = Redaction.RedactPersonalProperties( data );
+                    if ( data is JObject )
+                    {
+                        return data.ToObject<Dictionary<string, object>>();
+                    }
+
+                    return WrapData( "data", data );
+                }
+                catch ( ObjectDisposedException )
+                {
+                    return null;
+                }
+            } );
         }
 
         private static Dictionary<string, object> WrapData ( string key, object data )
