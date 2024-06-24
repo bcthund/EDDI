@@ -34,6 +34,11 @@ namespace EddiSpeechResponder.CustomFunctions
                     return d;
                 }
 
+                if ( @value is int i )
+                {
+                    return i;
+                }
+
                 if ( @value is string s )
             {
                     return s;
