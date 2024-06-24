@@ -15,6 +15,7 @@ using System.Resources;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml;
 using Utilities;
@@ -33,6 +34,7 @@ namespace EddiGalnetMonitor
         private GalnetConfiguration configuration;
         protected static ResourceManager resourceManager = Properties.GalnetMonitor.ResourceManager;
 
+        private CancellationTokenSource cancellationTokenSource;
         private bool running;
         private DateTime journalTimeStamp;
 
@@ -81,6 +83,7 @@ namespace EddiGalnetMonitor
         public void Start ()
         {
             EDDI.Instance.GameVersionUpdated += OnGameVersionUpdated;
+            cancellationTokenSource = new CancellationTokenSource();
             running = true;
             locales = GetGalnetLocales();
             Monitor();
@@ -110,6 +113,7 @@ namespace EddiGalnetMonitor
         /// </summary>
         public void Stop ()
         {
+            cancellationTokenSource.Cancel();
             running = false;
         }
 
@@ -133,34 +137,43 @@ namespace EddiGalnetMonitor
             var passiveIntervalMilliSecs = new TimeSpan( 0, 15, 0 ); // 15 mins
             var activeIntervalMilliSecs = new TimeSpan( 0, 5, 0 ); // 5 mins
 
-            bool firstRun = true;
-            while ( running )
+            try
             {
-                if ( configuration.galnetAlwaysOn )
+                cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                var firstRun = true;
+                while ( running && !cancellationTokenSource.IsCancellationRequested )
                 {
-                    FetchGalnet();
-                    Thread.Sleep( passiveIntervalMilliSecs );
-                }
-                else
-                {
-                    // We'll update the Galnet Monitor only if a journal event has taken place within the specified number of minutes
-                    if ( ( DateTime.UtcNow - journalTimeStamp ) < passiveIntervalMilliSecs )
+                    if ( configuration.galnetAlwaysOn )
                     {
-                        if ( firstRun )
-                        {
-                            // Wait at least 5 minutes after starting before polling for new articles
-                            firstRun = false;
-                            Thread.Sleep( inGameOnlyStartDelayMilliSecs );
-                        }
                         FetchGalnet();
-                        Thread.Sleep( activeIntervalMilliSecs );
+                        Task.WaitAll( new[] { Task.Delay( passiveIntervalMilliSecs ) }, cancellationTokenSource.Token );
                     }
                     else
                     {
-                        Logging.Debug( "No in-game activity detected, skipping galnet feed update" );
-                        Thread.Sleep( passiveIntervalMilliSecs );
+                        // We'll update the Galnet Monitor only if a journal event has taken place within the specified number of minutes
+                        if ( ( DateTime.UtcNow - journalTimeStamp ) < passiveIntervalMilliSecs )
+                        {
+                            if ( firstRun )
+                            {
+                                // Wait at least 5 minutes after starting before polling for new articles
+                                firstRun = false;
+                                Task.WaitAll( new [] { Task.Delay( inGameOnlyStartDelayMilliSecs ) }, cancellationTokenSource.Token);
+                            }
+
+                            FetchGalnet();
+                            Task.WaitAll( new[] { Task.Delay( activeIntervalMilliSecs ) }, cancellationTokenSource.Token );
+                        }
+                        else
+                        {
+                            Logging.Debug( "No in-game activity detected, skipping galnet feed update" );
+                            Task.WaitAll( new[] { Task.Delay( passiveIntervalMilliSecs ) }, cancellationTokenSource.Token );
+                        }
                     }
                 }
+            }
+            catch ( OperationCanceledException )
+            {
+                // Nothing to do here - monitoring task was cancelled.
             }
         }
 
@@ -268,15 +281,7 @@ namespace EddiGalnetMonitor
             }
             catch ( WebException wex )
             {
-                // FDev has in the past made available an alternate Galnet feed. We'll try the alternate feed.
-                // If the alternate feed fails, the page may not currently be available without an FDev login.
-                if ( url == GetGalnetResource( "sourceURL" ) )
-                {
-                    Logging.Warn( "Exception contacting primary Galnet feed: ", wex );
-                    url = GetGalnetResource( "alternateURL" );
-                    Logging.Warn( "Trying alternate Galnet feed (may not work)" + url );
-                    items = GetFeedItems( url, true );
-                }
+                Logging.Warn( $"The remote server at {url} has rejected the request: ", wex );
             }
             catch ( XmlException xex )
             {
