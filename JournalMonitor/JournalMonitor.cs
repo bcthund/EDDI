@@ -5038,7 +5038,7 @@ namespace EddiJournalMonitor
                                 }
                                 handled = true;
                                 break;
-                            case "CargoTransfer": // Could use for cargo transfers between ship and fleet carrier; the `Cargo` event already keeps ship and SRV cargo up to date.
+                            case "CargoTransfer":
                                 {
                                     var toShip = new List<CommodityAmount>();
                                     var toSRV = new List<CommodityAmount>();

@@ -3,7 +3,8 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.1.0-a1
-
+  * Events
+    * `Cargo Transfer` added. (#2621)
 
 ## 4.0.4
   * Core
