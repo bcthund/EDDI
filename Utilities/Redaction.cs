@@ -60,14 +60,12 @@ namespace Utilities
         {
             if ( data is JObject objectData )
             {
-                foreach ( string property in PersonalProperties )
-                {
-                    objectData.Descendants()
-                        .OfType<JProperty>()
-                        .Where( attr => attr.Name.StartsWith( property, StringComparison.OrdinalIgnoreCase ) )
-                        .ToList()
-                        .ForEach( attr => attr.Remove() );
-                }
+                objectData.Descendants()
+                    .OfType<JProperty>()
+                    .Where( attr => PersonalProperties.Any( property =>
+                        attr.Name.StartsWith( property, StringComparison.OrdinalIgnoreCase ) ) )
+                    .ToList()
+                    .ForEach( attr => attr.Remove() );
                 return objectData;
             }
             if ( data is JArray arrayData )
