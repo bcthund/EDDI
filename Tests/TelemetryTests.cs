@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Utilities;
 
 namespace UnitTests
@@ -13,8 +14,8 @@ namespace UnitTests
         private Dictionary<string, object> PrepTelemetryData(object data)
         {
             var privateType = new PrivateType(typeof(Logging));
-            var result = (Dictionary<string, object>)privateType.InvokeStatic("PrepareData", JToken.FromObject(data) );
-            return result;
+            var result = (Task<Dictionary<string, object>>)privateType.InvokeStatic("PrepareData", JToken.FromObject(data) );
+            return result.Result;
         }
 
         [TestMethod]
