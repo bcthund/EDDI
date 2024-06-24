@@ -96,6 +96,11 @@ namespace Utilities.TelemetryService
             }
         }
 
+        public static void Stop ()
+        {
+            RollbarInfrastructure.Instance.Stop(false);
+        }
+
         internal static void RecordTelemetryInfo ( ErrorLevel errorLevel, string message, IDictionary<string, object> preppedData = null )
         {
             if ( Enum.TryParse( errorLevel.ToString(), out TelemetryLevel telemetryLevel ) )

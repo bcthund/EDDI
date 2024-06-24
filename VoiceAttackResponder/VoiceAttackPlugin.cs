@@ -152,7 +152,7 @@ namespace EddiVoiceAttackResponder
                 }
             };
 
-            Thread appThread = new Thread(App.Main);
+            var appThread = new Thread(App.Main);
             appThread.SetApartmentState(ApartmentState.STA);
             appThread.Start();
         }
@@ -167,34 +167,20 @@ namespace EddiVoiceAttackResponder
             // Cancel event queue threads and wait for them to complete
             VoiceAttackEventHandler.StopEventHandling();
 
-            if (Application.Current?.Dispatcher != null)
-            {
-                try
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        Application.Current.Exit += OnExit;
-                        Application.Current.MainWindow?.Close();
-                        Application.Current.Shutdown();
-                    });
-                }
-                catch (ThreadAbortException)
-                {
-                    // Nothing to do if thread is already being aborted.
-                }
-                catch (Exception ex)
-                {
-                    Logging.Debug("EDDI configuration UI close from VA failed." + ex + ".");
-                }
-            }
-        }
+            // Stop all monitors and responders
+            EDDI.Instance.Stop();
 
-        private static void OnExit(object sender, ExitEventArgs e)
-        {
-            if (!App.eddiMutex.SafeWaitHandle.IsClosed)
+            // Release the mutex
+            if ( !App.eddiMutex.SafeWaitHandle.IsClosed )
             {
                 App.eddiMutex.ReleaseMutex();
             }
+
+            // Finish the shutdown
+            Application.Current.Dispatcher.Invoke( () =>
+            {
+                Application.Current.Shutdown();
+            } );
         }
 
         [UsedImplicitly]
@@ -325,7 +311,7 @@ namespace EddiVoiceAttackResponder
 
             SpeechService.Instance.Configuration.Volume = (int)volumeInt;
             SpeechService.Instance.Configuration.ToFile();
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.InvokeAsync( () =>
             {
                 ((MainWindow)Application.Current.MainWindow)?.ConfigureTTS();
             });
@@ -374,7 +360,7 @@ namespace EddiVoiceAttackResponder
                 case "configuration":
                     if (Application.Current?.Dispatcher != null)
                     {
-                        Application.Current.Dispatcher.Invoke(() =>
+                        Application.Current.Dispatcher.InvokeAsync( () =>
                         {
                             try
                             {
@@ -407,7 +393,7 @@ namespace EddiVoiceAttackResponder
                     setWindowState(ref vaProxy, WindowState.Normal);
                     break;
                 case "configurationclose":
-                    Application.Current?.Dispatcher?.Invoke(() => Application.Current?.MainWindow?.Hide());
+                    Application.Current?.Dispatcher?.InvokeAsync( () => Application.Current?.MainWindow?.Hide());
                     break;
                 default:
                     vaProxy.WriteToLog("Plugin context \"" + (string)vaProxy.Context + "\" not recognized.", "orange");
@@ -426,7 +412,7 @@ namespace EddiVoiceAttackResponder
             }
             else
             {
-                Application.Current?.Dispatcher?.Invoke(() =>
+                Application.Current?.Dispatcher?.InvokeAsync( () =>
                 {
                     MainWindow mainwindow = (MainWindow)Application.Current?.MainWindow;
                     mainwindow?.Dispatcher?.Invoke(mainwindow.VaWindowStateChange, newState, minimizeCheck);

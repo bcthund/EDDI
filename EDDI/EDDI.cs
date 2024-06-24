@@ -485,8 +485,8 @@ namespace EddiCore
                     // Tasks we can start asynchronously but need to complete before other dependent code is called
                     essentialAsyncTasks.AddRange(new List<Task>()
                     {
-                        Task.Run(() => responders = findResponders()), // Set up responders
-                        Task.Run(() => monitors = findMonitors()), // Set up monitors 
+                        Task.Run(() => responders = findResponders(), eventHandlerTS.Token), // Set up responders
+                        Task.Run(() => monitors = findMonitors(), eventHandlerTS.Token), // Set up monitors 
                     });
                 }
                 else
@@ -495,7 +495,7 @@ namespace EddiCore
                 }
 
                 // Make sure that our essential tasks have completed before we start
-                Task.WaitAll(essentialAsyncTasks.ToArray());
+                Task.WaitAll(essentialAsyncTasks.ToArray(), eventHandlerTS.Token );
 
                 // Tasks we can start asynchronously and don't need to wait for
 
@@ -512,16 +512,16 @@ namespace EddiCore
                 if (configuration.HomeSystem == configuration.SquadronSystem)
                 {
                     // Run both actions on the same thread
-                    Task.Run((Action)ActionUpdateHomeSystemStation + ActionUpdateSquadronSystem).ConfigureAwait(false);
+                    Task.Run((Action)ActionUpdateHomeSystemStation + ActionUpdateSquadronSystem, eventHandlerTS.Token ).ConfigureAwait(false);
                 }
                 else
                 {
                     // Run both actions on distinct threads
-                    Task.Run(() => ActionUpdateHomeSystemStation()).ConfigureAwait(false);
-                    Task.Run(() => ActionUpdateSquadronSystem()).ConfigureAwait(false);
+                    Task.Run(() => ActionUpdateHomeSystemStation(), eventHandlerTS.Token).ConfigureAwait(false);
+                    Task.Run(() => ActionUpdateSquadronSystem(), eventHandlerTS.Token ).ConfigureAwait(false);
                 }
 
-                Task.Run(() => updateDestinationSystem(configuration.DestinationSystem)).ConfigureAwait(false);
+                Task.Run(() => updateDestinationSystem(configuration.DestinationSystem), eventHandlerTS.Token).ConfigureAwait(false);
                 Task.Run(() =>
                 {
                     // Set up the Frontier API service
@@ -544,7 +544,7 @@ namespace EddiCore
                     {
                         Logging.Info("EDDI access to the Frontier API is not enabled.");
                     }
-                }).ConfigureAwait(false);
+                }, eventHandlerTS.Token ).ConfigureAwait(false);
 
                 CompanionAppService.Instance.StateChanged += OnCompanionAppServiceStateChanged;
                 StatusService.Instance.StatusChanged += OnStatusChangedAsync;
@@ -705,20 +705,17 @@ namespace EddiCore
         public void Stop()
         {
             running = false; // Otherwise keepalive restarts them
-            if (started)
-            {
+            Utilities.TelemetryService.Telemetry.Stop();
                 eventHandlerTS.Cancel();
-                foreach (IEddiResponder responder in responders)
+            foreach ( IEddiResponder responder in responders )
                 {
-                    DisableResponder(responder.ResponderName());
+                DisableResponder( responder.ResponderName() );
                 }
-                foreach (IEddiMonitor monitor in monitors)
+            foreach ( IEddiMonitor monitor in monitors )
                 {
-                    DisableMonitor(monitor.MonitorName());
+                DisableMonitor( monitor.MonitorName() );
                 }
-            }
 
-            started = false;
             Logging.Info(Constants.EDDI_NAME + " " + Constants.EDDI_VERSION + " stopped");
         }
 
@@ -926,7 +923,8 @@ namespace EddiCore
             }
 
             // Start (or restart) our event handler thread
-            if (eventConsumerThread?.Status != TaskStatus.Running)
+            if ( !eventHandlerTS.Token.IsCancellationRequested && 
+                 eventConsumerThread?.Status != TaskStatus.Running )
             {
                 eventConsumerThread = Task.Run(dequeueEvents, eventHandlerTS.Token);
             }
