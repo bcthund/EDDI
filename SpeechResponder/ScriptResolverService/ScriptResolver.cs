@@ -287,7 +287,7 @@ namespace EddiSpeechResponder.Service
                         }
                         else
                         {
-                            dict[ key ] = new Tuple<Type, Value>( monitorVariables[ key ].Item1, Value.FromReflection(monitorVariables[key]?.Item2, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
+                            dict[ key ] = new Tuple<Type, Value>( monitorVariables[ key ].Item1, Value.FromReflection((dynamic)monitorVariables[key]?.Item2, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
                         }
                     }
                 }
