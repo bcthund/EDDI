@@ -139,7 +139,7 @@ namespace EddiSpeechResponder
             } );
             standardMetaVariables = metaVars;
 
-            Dispatcher.Invoke( () =>
+            Dispatcher.InvokeAsync( () =>
             {
                 if ( editScriptWindow?.IsLoaded ?? false )
                 {

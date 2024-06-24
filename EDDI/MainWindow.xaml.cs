@@ -976,10 +976,10 @@ namespace Eddi
         private void companionApiStatusChanged(CompanionAppService.State oldState, CompanionAppService.State newState)
         {
             // The calling thread for this method may not have direct access to the MainWindow dispatcher so we invoke the dispatcher here.
-            Application.Current?.Dispatcher?.Invoke(() =>
+            Application.Current?.Dispatcher?.InvokeAsync( () =>
             {
                 MainWindow mainwindow = (MainWindow)Application.Current?.MainWindow;
-                mainwindow?.Dispatcher?.Invoke(setStatusInfo);
+                mainwindow?.Dispatcher?.InvokeAsync( setStatusInfo);
             });
 
             if (oldState == CompanionAppService.State.AwaitingCallback &&

@@ -77,7 +77,7 @@ namespace EddiInaraResponder
 
         private void OnInvalidAPIkey(InaraConfiguration inaraConfiguration)
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync( () =>
             {
                 SetAPIKeyValidity(inaraConfiguration.isAPIkeyValid);
             });

@@ -51,7 +51,7 @@ namespace EddiNavigationMonitor
         {
             if (e.PropertyName == nameof(FleetCarrier))
             {
-                Dispatcher.Invoke( () =>
+                Dispatcher.InvokeAsync( () =>
                 {
                     var fleetCarrier = navigationMonitor().FleetCarrier;
                     LastCarrierOriginArg = fleetCarrier?.currentStarSystem;
@@ -87,7 +87,7 @@ namespace EddiNavigationMonitor
             {
                 case nameof(NavWaypointCollection.Waypoints):
                 {
-                    Dispatcher.Invoke( () =>
+                    Dispatcher.InvokeAsync( () =>
                     {
                         ClearRouteButton.IsEnabled = navWaypointCollection.Waypoints.Count > 0;
                     } );
@@ -104,14 +104,14 @@ namespace EddiNavigationMonitor
                 {
                     if ( NavigationService.Instance.IsWorking )
                     {
-                        Dispatcher.Invoke( () =>
+                        Dispatcher.InvokeAsync( () =>
                         {
                             SearchProgressBar.Visibility = Visibility.Visible;
                         } );
                     }
                     else
                     {
-                        Dispatcher.Invoke( () =>
+                        Dispatcher.InvokeAsync( () =>
                         {
                             SearchProgressBar.Visibility = Visibility.Collapsed;
                         } );

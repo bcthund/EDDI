@@ -682,7 +682,7 @@ namespace EddiNavigationMonitor
                 }
             }
             // We need to refresh a collection view for galactic POIs
-            Application.Current.Dispatcher.Invoke( () =>
+            Application.Current.Dispatcher.InvokeAsync( () =>
             {
                 if ( ConfigurationWindow.Instance.TryFindResource( nameof( GalacticPOIControl.POIView ) ) is ICollectionView poiView )
                 {

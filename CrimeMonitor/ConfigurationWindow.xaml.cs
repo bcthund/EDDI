@@ -67,7 +67,7 @@ namespace EddiCrimeMonitor
                         record.Allegiance = Allegiance;
                     }
 
-                    Dispatcher?.Invoke(() =>
+                    Dispatcher?.InvokeAsync(() =>
                     {
                         updateButton.Foreground = Brushes.Black;
                         updateButton.FontWeight = FontWeights.Regular;

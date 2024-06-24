@@ -706,15 +706,15 @@ namespace EddiCore
         {
             running = false; // Otherwise keepalive restarts them
             Utilities.TelemetryService.Telemetry.Stop();
-                eventHandlerTS.Cancel();
+            eventHandlerTS.Cancel();
             foreach ( IEddiResponder responder in responders )
-                {
+            {
                 DisableResponder( responder.ResponderName() );
-                }
+            }
             foreach ( IEddiMonitor monitor in monitors )
-                {
+            {
                 DisableMonitor( monitor.MonitorName() );
-                }
+            }
 
             Logging.Info(Constants.EDDI_NAME + " " + Constants.EDDI_VERSION + " stopped");
         }
@@ -2790,7 +2790,7 @@ namespace EddiCore
             ConfigService.Instance.eddiConfiguration = configuration;
 
             // Update the squadron UI data
-            Application.Current?.Dispatcher?.Invoke(() =>
+            Application.Current?.Dispatcher?.InvokeAsync(() =>
             {
                 if (Application.Current?.MainWindow != null)
                 {
@@ -2823,7 +2823,7 @@ namespace EddiCore
                         configuration.SquadronRank = rank;
 
                         // Update the squadron UI data
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        Application.Current?.Dispatcher?.InvokeAsync( () =>
                         {
                             if (Application.Current?.MainWindow != null)
                             {
@@ -2847,7 +2847,7 @@ namespace EddiCore
                         configuration.SquadronName = theEvent.name;
 
                         // Update the squadron UI data
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        Application.Current?.Dispatcher?.InvokeAsync( () =>
                         {
                             if (Application.Current?.MainWindow != null)
                             {
@@ -2871,7 +2871,7 @@ namespace EddiCore
                         configuration.SquadronID = null;
 
                         // Update the squadron UI data
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        Application.Current?.Dispatcher?.InvokeAsync( () =>
                         {
                             if (Application.Current?.MainWindow != null)
                             {
@@ -2904,7 +2904,7 @@ namespace EddiCore
             ConfigService.Instance.eddiConfiguration = configuration;
 
             // Update the squadron UI data
-            Application.Current?.Dispatcher?.Invoke(() =>
+            Application.Current?.Dispatcher?.InvokeAsync( () =>
             {
                 if (Application.Current?.MainWindow != null)
                 {
@@ -3586,7 +3586,7 @@ namespace EddiCore
                 {
                     configuration.SquadronFaction = faction.name;
 
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    Application.Current?.Dispatcher?.InvokeAsync( () =>
                     {
                         if (Application.Current?.MainWindow != null)
                         {
@@ -3610,7 +3610,7 @@ namespace EddiCore
                         configuration.SquadronSystem = system;
 
                         var configurationCopy = configuration;
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        Application.Current?.Dispatcher?.InvokeAsync( () =>
                         {
                             if (Application.Current?.MainWindow != null)
                             {
@@ -3648,7 +3648,7 @@ namespace EddiCore
                         {
                             configuration.SquadronPower = power;
 
-                            Application.Current?.Dispatcher?.Invoke(() =>
+                            Application.Current?.Dispatcher?.InvokeAsync( () =>
                             {
                                 if (Application.Current?.MainWindow != null)
                                 {
