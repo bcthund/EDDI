@@ -3,7 +3,7 @@ using EddiCore;
 using EddiSpeechResponder.Service;
 using JetBrains.Annotations;
 using System;
-using System.Reflection;
+
 
 namespace EddiSpeechResponder.CustomFunctions
 {
@@ -17,9 +17,29 @@ namespace EddiSpeechResponder.CustomFunctions
         public IFunction function => Function.CreateNative1((runtime, variableName, writer) =>
         {
             var varName = variableName.AsString.ToLowerInvariant().Replace(" ", "_");
-            if ( EDDI.Instance.State.TryGetValue( varName, out var result )  )
+            if ( EDDI.Instance.State.TryGetValue( varName, out var @value )  )
             {
-                return result is null ? Value.EmptyMap : Value.FromReflection( result, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic );
+                if ( value is null )
+                {
+                    return "";
+                }
+
+                if ( @value is bool b )
+                {
+                    return b;
+                }
+
+                if ( @value is decimal d )
+                {
+                    return d;
+                }
+
+                if ( @value is string s )
+            {
+                    return s;
+                }
+
+                return $"State variable {varName} does not match any expected type.";
             }
             return "";
         });
