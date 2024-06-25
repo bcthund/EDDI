@@ -370,10 +370,10 @@ namespace EddiDiscoveryMonitor
                 {
                     // Save/Update Body data
                     body.surfaceSignals.lastUpdated = @event.timestamp;
-                    _currentSystem.AddOrUpdateBody( body );
-                    StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
-                    //EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                    //StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                    //_currentSystem.AddOrUpdateBody( body );
+                    //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                    EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                    StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
                 }
             }
 
@@ -597,10 +597,10 @@ namespace EddiDiscoveryMonitor
 
                     // Save/Update Body data
                     body.surfaceSignals.lastUpdated = @event.timestamp;
-                    _currentSystem.AddOrUpdateBody( body );
-                    StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
-                    //EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                    //StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                    //_currentSystem.AddOrUpdateBody( body );
+                    //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                    EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                    StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
                 }
             }
             catch ( Exception e )
@@ -628,10 +628,10 @@ namespace EddiDiscoveryMonitor
 
                     // Save/Update Body data
                     body.surfaceSignals.lastUpdated = @event.timestamp;
-                    _currentSystem.AddOrUpdateBody( body );
-                    StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
-                    //EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                    //StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                    //_currentSystem.AddOrUpdateBody( body );
+                    //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                    EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                    StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
                 }
             }
         }
@@ -660,10 +660,10 @@ namespace EddiDiscoveryMonitor
 
                         // Save/Update Body data
                         body.surfaceSignals.lastUpdated = @event.timestamp;
-                        _currentSystem.AddOrUpdateBody( body );
-                        StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
-                        //EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                        //StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                        //_currentSystem.AddOrUpdateBody( body );
+                        //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                        EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                        StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
                     }
                 }
             }
@@ -680,11 +680,6 @@ namespace EddiDiscoveryMonitor
                 body.surfaceSignals.reportedGeologicalCount = signal.geoCount;
             }
 
-            //if ( signal?.bioCount > 0 && 
-            //     body != null && 
-            //     !body.surfaceSignals.bioSignals.Any() && 
-            //     _currentSystem.TryGetParentStar(body.bodyId, out var parentStar))
-
             if ( signal?.bioCount > 0 && 
                  body != null && 
                  !body.surfaceSignals.bioSignals.Any() && 
@@ -697,14 +692,30 @@ namespace EddiDiscoveryMonitor
                        $"\tGeo Count is {signal.geoCount} ({body.surfaceSignals.reportedGeologicalCount})\r\n";
                 
                 // Predict possible biological genuses
-                HashSet<OrganicGenus> bios;
-                log += "Predicting organics (by species):\r\n";
+                //HashSet<OrganicGenus> bios;
+                List<OrganicGenus> bios;
+                //log += "Predicting organics (by species):\r\n";
                 //bios = new ExobiologyPredictions( _currentSystem, body, parentStar, configuration ).PredictBySpecies();
+                log += "Predicting organics (by variant):\r\n";
                 bios = new ExobiologyPredictions( _currentSystem, body, parentStar, configuration ).PredictByVariant();
+
+                // Account for predicting less than actual signals, lets player know that we don't know what one or more bios will be
+                if( bios?.Count()<signal.bioCount )
+                {
+                    for(int i=bios.Count(); i<signal.bioCount; i++)
+                    {
+                        log += $"\t[Adding Unknown Genus: ";
+                        OrganicGenus newGenus = OrganicGenus.Unknown;
+                        newGenus.predictedMinimumValue = 1000000;
+                        newGenus.predictedMaximumValue = 1000000;
+                        bios.Add( newGenus );
+                        log += $"count={bios.Count()}]\r\n";
+                    }
+                }
+
                 foreach ( var genus in bios )
                 {
                     log += $"\tAdding predicted bio {genus.invariantName}\r\n";
-                    //body.surfaceSignals.AddBioFromGenus( genus, true );
                     body.surfaceSignals.AddBioFromGenus( genus, true );
                 }
                 hasPredictedBios = true;

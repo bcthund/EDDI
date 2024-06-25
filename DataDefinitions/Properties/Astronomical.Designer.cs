@@ -367,7 +367,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green Class I Gas Giant.
+        ///   Looks up a localized string similar to Green Class 1 Gas Giant.
         /// </summary>
         public static string Green_Sudarsky_Class_I {
             get {
@@ -376,7 +376,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green Class II Gas Giant.
+        ///   Looks up a localized string similar to Green Class 2 Gas Giant.
         /// </summary>
         public static string Green_Sudarsky_Class_II {
             get {
@@ -385,7 +385,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green Class III Gas Giant.
+        ///   Looks up a localized string similar to Green Class 3 Gas Giant.
         /// </summary>
         public static string Green_Sudarsky_Class_III {
             get {
@@ -394,7 +394,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green Class IV Gas Giant.
+        ///   Looks up a localized string similar to Green Class 4 Gas Giant.
         /// </summary>
         public static string Green_Sudarsky_Class_IV {
             get {
@@ -403,7 +403,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green Class V Gas Giant.
+        ///   Looks up a localized string similar to Green Class 5 Gas Giant.
         /// </summary>
         public static string Green_Sudarsky_Class_V {
             get {
@@ -637,7 +637,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard Class I Gas Giant.
+        ///   Looks up a localized string similar to Standard Class 1 Gas Giant.
         /// </summary>
         public static string Standard_Sudarsky_Class_I {
             get {
@@ -646,7 +646,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard Class II Gas Giant.
+        ///   Looks up a localized string similar to Standard Class 2 Gas Giant.
         /// </summary>
         public static string Standard_Sudarsky_Class_II {
             get {
@@ -655,7 +655,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard Class III Gas Giant.
+        ///   Looks up a localized string similar to Standard Class 3 Gas Giant.
         /// </summary>
         public static string Standard_Sudarsky_Class_III {
             get {
@@ -664,7 +664,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard Class IV Gas Giant.
+        ///   Looks up a localized string similar to Standard Class 4 Gas Giant.
         /// </summary>
         public static string Standard_Sudarsky_Class_IV {
             get {
@@ -673,7 +673,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard Class V Gas Giant.
+        ///   Looks up a localized string similar to Standard Class 5 Gas Giant.
         /// </summary>
         public static string Standard_Sudarsky_Class_V {
             get {

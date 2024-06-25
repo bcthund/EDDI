@@ -211,19 +211,19 @@
     <value>Green Gas Giant with Ammonia Life</value>
   </data>
   <data name="Green_Sudarsky_Class_I" xml:space="preserve">
-    <value>Green Class I Gas Giant</value>
+    <value>Green Class 1 Gas Giant</value>
   </data>
   <data name="Green_Sudarsky_Class_II" xml:space="preserve">
-    <value>Green Class II Gas Giant</value>
+    <value>Green Class 2 Gas Giant</value>
   </data>
   <data name="Green_Sudarsky_Class_III" xml:space="preserve">
-    <value>Green Class III Gas Giant</value>
+    <value>Green Class 3 Gas Giant</value>
   </data>
   <data name="Green_Sudarsky_Class_IV" xml:space="preserve">
-    <value>Green Class IV Gas Giant</value>
+    <value>Green Class 4 Gas Giant</value>
   </data>
   <data name="Green_Sudarsky_Class_V" xml:space="preserve">
-    <value>Green Class V Gas Giant</value>
+    <value>Green Class 5 Gas Giant</value>
   </data>
   <data name="Green_Water_Giant" xml:space="preserve">
     <value>Green Water Giant</value>
@@ -304,19 +304,19 @@
     <value>Rocky Planet</value>
   </data>
   <data name="Standard_Sudarsky_Class_I" xml:space="preserve">
-    <value>Standard Class I Gas Giant</value>
+    <value>Standard Class 1 Gas Giant</value>
   </data>
   <data name="Standard_Sudarsky_Class_II" xml:space="preserve">
-    <value>Standard Class II Gas Giant</value>
+    <value>Standard Class 2 Gas Giant</value>
   </data>
   <data name="Standard_Sudarsky_Class_III" xml:space="preserve">
-    <value>Standard Class III Gas Giant</value>
+    <value>Standard Class 3 Gas Giant</value>
   </data>
   <data name="Standard_Sudarsky_Class_IV" xml:space="preserve">
-    <value>Standard Class IV Gas Giant</value>
+    <value>Standard Class 4 Gas Giant</value>
   </data>
   <data name="Standard_Sudarsky_Class_V" xml:space="preserve">
-    <value>Standard Class V Gas Giant</value>
+    <value>Standard Class 5 Gas Giant</value>
   </data>
   <data name="Standard_Ter_High_Metal_Content" xml:space="preserve">
     <value>High Metal Content Planet</value>

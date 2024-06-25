@@ -28,94 +28,9 @@ namespace EddiDiscoveryMonitor
             this.configuration = configuration;
         }
 
-        /// <summary>
-        /// This currently works and provides fairly accurate predictions
-        /// </summary>
-        //public HashSet<OrganicGenus> PredictBySpecies ()
-        //{
-        //    Logging.Debug( $"Generating predictions by species for {body.bodyname} in {_currentSystem.systemname}.");
-
-        //    // Create temporary list of ALL species possible
-        //    var predictedSpecies = new List<OrganicSpecies>();
-
-        //    // Iterate though species
-        //    foreach ( var species in OrganicSpecies.AllOfThem )
-        //    {
-        //        var log = $"Checking species {species.edname} (genus: {species.genus}): ";
-
-        //        if ( !species.isPredictable )
-        //        {
-        //            log += "SKIP. No known criteria.";
-        //            Logging.Debug( log );
-        //            continue;
-        //        }
-
-        //        if ( !TryCheckConfiguration( species.genus, ref log ) )
-        //        {
-        //            Logging.Debug( log );
-        //            continue;
-        //        }
-
-        //        if ( TryCheckGravity( 0, species.maxG, ref log ) && 
-        //             TryCheckTemperature( species.minK, species.maxK, ref log ) && 
-        //             TryCheckPlanetClass( species.planetClass, ref log ) && 
-        //             TryCheckAtmosphere( species.atmosphereClass, ref log ) && 
-        //             TryCheckVolcanism( species.volcanism, ref log ) && 
-        //             TryCheckPrimaryStar( species.starClass, ref log ) && 
-        //             TryCheckSpecialSpecies( species, ref log ) )
-        //        {
-        //            log += "OK";
-        //            predictedSpecies.Add( species );
-        //        }
-
-        //        Logging.Debug( log );
-        //    }
-
-        //    // Create a distinct genus list
-        //    List<OrganicGenus> listGenus = predictedSpecies.Select(s => s.genus).Distinct().ToList();
-
-        //    // Iterate over all predicted species, set the min/max values for the genus list from all predicted species
-        //    for ( int i = 0; i < listGenus.Count(); i++ )
-        //    {
-        //        foreach ( var species in predictedSpecies )
-        //        {
-        //            if ( listGenus[ i ].edname == species.genus.edname )
-        //            {
-        //                // Set initial value
-        //                if ( listGenus[ i ].predictedMinimumValue == 0 )
-        //                {
-        //                    listGenus[ i ].predictedMinimumValue = species.value;
-        //                }
-
-        //                if ( listGenus[ i ].predictedMaximumValue == 0 )
-        //                {
-        //                    listGenus[ i ].predictedMaximumValue = species.value;
-        //                }
-
-        //                // If new minimum detected, overwrite old
-        //                if ( species.value < listGenus[ i ].predictedMinimumValue )
-        //                {
-        //                    listGenus[ i ].predictedMinimumValue = species.value;
-        //                }
-
-        //                // If new maximum detected, overwrite old
-        //                if ( species.value > listGenus[ i ].predictedMaximumValue )
-        //                {
-        //                    listGenus[ i ].predictedMaximumValue = species.value;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    // Return a list of only the unique genus' found
-        //    //return predictedSpecies.Select(s => s.genus).Distinct().ToHashSet();
-        //    return listGenus.ToHashSet();
-        //}
-
-        /// <summary>
-        /// This currently works and provides fairly accurate predictions
-        /// </summary>
-        public HashSet<OrganicGenus> PredictByVariant ()
+        // This is a list so that we can have duplicate Genus, specifically for adding multiple 'Unknown' predictions
+        //public HashSet<OrganicGenus> PredictByVariant ()
+        public List<OrganicGenus> PredictByVariant ()
         {
             Logging.Debug( $"Generating predictions by variant for {body.bodyname} in {_currentSystem.systemname}.");
 
@@ -141,16 +56,6 @@ namespace EddiDiscoveryMonitor
                     Logging.Debug( log );
                     continue;
                 }
-
-                // TODO:2212_bt - This needs some tuning, there are some special conditions that include StarClass and Luminosity which will skip the normal StarClass logic below
-                // specialConditions contains a list separated by ";" which will contain groups matching the predictionType (i.e. predictionType="StarClass,StarLuminosty" => specialConditions="B,I;B,II;B,III")
-                // Both conditions in a group must be matched for successful prediction
-                //var predictionType = variant.predictionType;
-                //bool predictParentStar = predictionType.Count()==1 && predictionType[0] == "StarClass";
-                //bool predictMaterials = predictionType.Count()==1 && predictionType[0] == "Material";
-                //bool predictSpecial = !predictParentStar && !predictMaterials && predictionType.Count()>0;
-
-                //log += $"VARIANT SPECIALS=[{string.Join(";", variant.specialConditions)}] ";
 
                 if ( TryCheckGravity( variant.minG, variant.maxG, ref log ) && 
                      TryCheckTemperature( variant.minK, variant.maxK, ref log ) && 
@@ -178,14 +83,7 @@ namespace EddiDiscoveryMonitor
             // Create a distinct genus list
             List<OrganicGenus> listGenus = predictedVariants.Select(s => s.genus).Distinct().ToList();
 
-            if ( listGenus.Count()==0 )
-            {
-                log += $"No predictions were made, adding Unknown.";
-                listGenus.Add( OrganicGenus.Unknown );
-                listGenus[0].predictedMinimumValue = 0;
-                listGenus[0].predictedMaximumValue = 0;
-            }
-            else
+            if ( listGenus.Count() > 0 )
             {
                 log = $"Setting Min/Max values:\r\n";
 
@@ -200,9 +98,6 @@ namespace EddiDiscoveryMonitor
                             log += $"\t\t{variant.edname} ";
                             var species = OrganicSpecies.FromEDName( variant.species.edname );
                             if(species != null) {
-                                //listGenus[ i ].predictedMinimumValue = (listGenus[ i ].predictedMinimumValue==0 || species.value < listGenus[ i ].predictedMinimumValue) ? species.value : listGenus[ i ].predictedMinimumValue;
-                                //listGenus[ i ].predictedMaximumValue = (listGenus[ i ].predictedMaximumValue==0 || species.value > listGenus[ i ].predictedMaximumValue) ? species.value : listGenus[ i ].predictedMaximumValue;
-
                                 if(listGenus[ i ].predictedMinimumValue == 0 || species.value < listGenus[ i ].predictedMinimumValue) {
                                     listGenus[ i ].predictedMinimumValue = species.value;
                                 }
@@ -221,8 +116,7 @@ namespace EddiDiscoveryMonitor
             Logging.Debug( log );
 
             // Return an ordered list of only the unique genus' found
-            //return predictedSpecies.Select(s => s.genus).Distinct().ToHashSet();
-            return listGenus.OrderBy(o => o.invariantName).ToHashSet();
+            return listGenus.OrderBy(o => o.invariantName).ToList();
         }
 
         private bool TryCheckConfiguration ( OrganicGenus genus, ref string log )
@@ -230,7 +124,7 @@ namespace EddiDiscoveryMonitor
             // Check if species should be ignored per configuration settings
             try
             {
-                if ( ( configuration.exobiology.predictions.skipGroundStructIce && genus == OrganicGenus.GroundStructIce ) ||
+                if ( ( configuration.exobiology.predictions.skipGroundStructIce && genus == OrganicGenus.Ground_Struct_Ice ) ||
                      ( configuration.exobiology.predictions.skipBrancae && genus == OrganicGenus.Brancae ) ||
                      ( configuration.exobiology.predictions.skipCone && genus == OrganicGenus.Cone ) ||
                      ( configuration.exobiology.predictions.skipTubers && genus == OrganicGenus.Tubers ) ||
@@ -270,7 +164,7 @@ namespace EddiDiscoveryMonitor
                 var currentRegion = Utilities.RegionMap.RegionMap.FindRegion((double)_currentSystem.x, (double)_currentSystem.y, (double)_currentSystem.z);
                 if (checkRegions.Any( a => a == currentRegion.name ) )
                 {
-                    log += $"ACCEPT. '{currentRegion.name}' is in '{string.Join(",", checkRegions)}'. ";
+                    //log += $"ACCEPT. '{currentRegion.name}' is in '{string.Join(",", checkRegions)}'. ";
                     return true;
                 }
                 log += $"REJECT. Region: '{currentRegion.name}' not in '{string.Join(",", checkRegions)}'";
@@ -366,12 +260,54 @@ namespace EddiDiscoveryMonitor
             // Check if body has appropriate astmosphere
             if ( checkAtmosphereClasses.Count > 0 )
             {
-                if ( checkAtmosphereClasses.Any( c =>
-                        ( ( c == "None" || c == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
-                            c == "Any" ||
-                            c == body.atmosphereclass.edname ) )
+                foreach(var checkAtmosphereGroup in checkAtmosphereClasses)
                 {
-                    return true;
+
+                    var checkParts = checkAtmosphereGroup.Split( ',' );
+
+                    if( checkParts.Count() == 1 )
+                    {
+                        // Check Class only
+                        if ( 
+                            ( ( checkParts[0] == "None" || checkParts[0] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                            checkParts[0] == "Any" ||
+                            checkParts[0] == body.atmosphereclass.edname )
+                        {
+                            return true;
+                        }
+                    }
+                    else if(checkParts.Count() >= 2 ) {
+                        // Check Class and Thickness
+                        if ( 
+                            ( ( checkParts[0] == "None" || checkParts[0] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                            checkParts[0] == "Any" ||
+                            checkParts[0] == body.atmosphereclass.edname )
+                        {
+                            
+
+                            if ( 
+                            ( ( checkParts[1] == "None" || checkParts[1] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                            checkParts[1] == "Any" ||
+                            checkParts[1] == body.atmosphereclass.edname )
+                            {
+                                return true;
+                            }
+
+
+                        }
+                    }
+
+
+                    if ( checkAtmosphereClasses.Any( c =>
+                            ( ( c == "None" || c == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                                c == "Any" ||
+                                c == body.atmosphereclass.edname ) )
+                    {
+                        return true;
+                    }
+
+
+                    
                 }
                 log += $"REJECT. Atmosphere class: {( body.atmosphereclass ?? AtmosphereClass.None )?.edname} not in {string.Join( ",", checkAtmosphereClasses )}.";
                 return false;
@@ -389,7 +325,7 @@ namespace EddiDiscoveryMonitor
                 {
                     var checkParts = checkAtmosphereGroup.Split( ',' );
 
-                    if( checkParts.Count() >= 1 )
+                    if( checkParts.Count() == 1 )
                     {
                         // Check composition
                         if( body.atmospherecompositions.Any( x => x.edname == checkParts[0] ) )
@@ -439,9 +375,14 @@ namespace EddiDiscoveryMonitor
             if ( checkVolcanismCompositions.Count > 0 )
             {
                 foreach(var composition in checkVolcanismCompositions) {
-                    Volcanism volcanism = Volcanism.FromName(composition);
 
-                    if( ( composition=="Any" && body.volcanism != null) || (volcanism is null && body.volcanism is null) || volcanism == body.volcanism) {
+                    // This doesn't appear to work
+                    //Volcanism volcanism = Volcanism.FromName(composition);
+                    //if( ( composition=="Any" && body.volcanism != null) || (volcanism is null && body.volcanism is null) || volcanism == body.volcanism) {
+                    //    return true;
+                    //}
+
+                    if( ( composition=="None" && body.volcanism == null) || ( composition=="Any" && body.volcanism != null) || ( composition == body.volcanism?.ToString() ) ) {
                         return true;
                     }
                 }
@@ -453,59 +394,6 @@ namespace EddiDiscoveryMonitor
             return true;
         }
 
-        //private bool TryCheckPrimaryStar ( ICollection<string> checkStarClasses, ref string log )
-        //{
-        //    // Check if body has appropriate parent star
-        //    if ( checkStarClasses.Count > 0 )
-        //    {
-        //        HashSet<Body> parentStars = new HashSet<Body>();
-        //        var result = _currentSystem.TryGetParentStars( body.bodyId, out parentStars );
-
-        //        foreach ( var parentStar in parentStars ) {
-        //            if ( checkStarClasses.Any( c => c == parentStar.starClass.edname ) )
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //        log += $"REJECT. Parent star [{string.Join(",", parentStars)}] not in [{string.Join( ",", checkStarClasses )}].";
-
-        //        //List<string> checkedStarClass = new List<string>();
-        //        //foreach ( var parent in body.parents )
-        //        //{
-        //        //    // TODO:2212_bt - Currently assuming if there is a star
-        //        //    // If there is a star lets use that, otherwise use barycentre
-        //        //    if ( parent.ContainsKey( BodyType.Star.edname ) ) {
-        //        //        if ( checkStarClasses.Any( c => c == _currentSystem.BodyWithID( parent["Star"] ).starClass.edname ) )
-        //        //        {
-        //        //            return true;
-        //        //        }
-        //        //        checkedStarClass.Add( _currentSystem.BodyWithID( parent["Star"] ).starClass.edname );
-        //        //    }
-        //        //    else if ( parent.ContainsKey("Null") ) {
-        //        //        foreach ( var key in parent.Keys ) {
-        //        //            if ( key == BodyType.Barycenter.edname ) // Parent is a barycentre, check barycentre children
-        //        //            {
-        //        //                foreach ( var bodyId in _currentSystem.GetChildBodyIDs( parent[ key ] )
-        //        //                             .Where( bodyId => _currentSystem.BodyWithID( bodyId )?.bodyType == BodyType.Star ) )
-        //        //                {
-        //        //                    if ( checkStarClasses.Any( c => c == _currentSystem.BodyWithID( bodyId ).starClass.edname ) )
-        //        //                    {
-        //        //                        return true;
-        //        //                    }
-        //        //                    checkedStarClass.Add(_currentSystem.BodyWithID( bodyId ).starClass.edname);
-        //        //                }
-        //        //            }
-        //        //        }
-        //        //    }
-        //        //}
-
-        //        //log += $"REJECT. Parent star [{string.Join(",", checkedStarClass)}] not in [{string.Join( ",", checkStarClasses )}].";
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
         private bool TryCheckPrimaryStar ( ICollection<string> checkStar, ref string log )
         {
             if(checkStar.Count() > 0 ) {
@@ -513,29 +401,29 @@ namespace EddiDiscoveryMonitor
                 HashSet<Body> parentStars = new HashSet<Body>();
                 var result = _currentSystem.TryGetParentStars( body.bodyId, out parentStars );
                 
-                log += $"(CHECK STAR: '{string.Join(";", parentStars.Select( w => string.Join(",", (new { w.starClass.edname, w.luminosityclass }) ) ) )}')\r\n";
+                //log += $"(CHECK STAR: '{string.Join(";", parentStars.Select( w => string.Join(",", (new { w.starClass.edname, w.luminosityclass }) ) ) )}')\r\n";
 
                 if(parentStars.Count()>0) {
                     foreach( var starGroup in checkStar) {
                         IList<string> starParts = starGroup.Split( ',' ).ToList();
 
-                        log += $"\t[starParts={string.Join(",",starParts)}]\r\n";
+                        //log += $"\t[starParts={string.Join(",",starParts)}]\r\n";
 
                         foreach ( var parentStar in parentStars ) {
                             if ( starParts[0] == parentStar.starClass.edname )
                             {
-                                log += $"\t\tClass => {starParts[0]}=={parentStar.starClass.edname}, ";
+                                //log += $"\t\tClass => {starParts[0]}=={parentStar.starClass.edname}, ";
                                 if(starParts.Count >= 2) {
                                     if ( parentStar.luminosityclass.Contains(starParts[1]) ) {
-                                        log += $"Luminosity => {starParts[1]} ? {parentStar.luminosityclass}, ";
+                                        //log += $"Luminosity => {starParts[1]} ? {parentStar.luminosityclass}, ";
                                         return true;
                                     }
                                 }
                                 else {
-                                    log += $"Luminosity => SKIP, ";
+                                    //log += $"Luminosity => SKIP, ";
                                     return true;
                                 }
-                                log += "\r\n";
+                                //log += "\r\n";
                             }
                         }
                     }
@@ -716,154 +604,5 @@ namespace EddiDiscoveryMonitor
             }
             return true;
         }
-
-        //private bool TryCheckLocalStar ( ICollection<string> checkStarClasses, ref string log )
-        //{
-        //    // TODO:2212_bt - Possible future implementation, unknown if this would provide a benefit yet
-        //    return true;
-        //}
-
-        //private bool TryCheckSpecialSpecies ( OrganicSpecies species, ref string log )
-        //{
-        //    // TODO: Implement special case predictions where possible
-
-        //    // Brain Trees
-        //    //  - Near system with guardian structures
-        //    if ( species.genus == OrganicGenus.Brancae )
-        //    { }
-
-        //    // Electricae radialem:
-        //    //  - Near nebula (how close is near?)
-        //    if ( species.genus == OrganicGenus.Electricae )
-        //    { }
-
-        //    // Crystalline Shards:
-        //    //  - Must be >12000 Ls from nearest star.
-        //    if ( species.genus == OrganicGenus.GroundStructIce )
-        //    { }
-
-        //    // Bark Mounds
-        //    //  - Seems to always have 3 geologicals
-        //    //  - Should be within 150Ly from a nebula
-        //    if ( species.genus == OrganicGenus.Cone )
-        //    {
-        //        if ( body.surfaceSignals.reportedGeologicalCount < 3 )
-        //        {
-        //            log += $"REJECT. Body geological count: {body.surfaceSignals.reportedGeologicalCount} < 3.";
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-        //}
-
-        //private bool TryCheckSpecialVariants ( OrganicVariant variant, ref string log )
-        //{
-        //    // TODO: Implement special case predictions
-        //    // Special case predictions, these can vary and have multiple conditions so we need some extra logic here
-        //    //              None - No special conditions
-        //    //         StarClass - Required parent star must be present (Seems to be more restrictive than biostats would suggest)
-        //    //    StarLuminosity - Parent star must have this luminosity
-        //    //          Material - This rare material must be present
-        //    //   BodyTypePresent - Body types must be present in system (hard to predict if the system hasn't been fully scanned)
-        //    //        NearNebula - Must be within the distance (Ly) from nebula. Is this even possible to detect?
-        //    //  DistanceFromStar - Body must be this distance (Ls) from the nearest star
-        //    //        GeologyNum - Must have this amount of geological signals present
-
-        //    log += $"(SPECIAL: {string.Join( ";", variant.specialConditions)} [{variant.specialConditions.Count()}]) ";
-
-        //    if(variant.specialConditions.Count() > 0 ) {
-
-        //        // i.e. Loop over groups ["B","I"],["B","II"],["B","III"]
-        //        for(int r=0; r<variant.specialConditions.Count(); r++) {
-
-        //            // i.e. Create list ["B"],["I"]
-        //            IList<string> partConditions = variant.specialConditions[r].Split( ',' ).ToList();
-
-        //            // The size of the group and the size of the predictions types should match
-        //            if( partConditions.Count == variant.predictionType.Count() ) {
-
-        //                int predictionPartsPassed = 0;
-
-        //                log += $"[Special Conditions] ";
-
-        //                // i.e. Loop over ["StarClass","StarLuminosity"]
-        //                for(int s=0; s<variant.predictionType.Count(); s++) {
-        //                    var predictionType = variant.predictionType[s];
-
-        //                    // Do Checks
-        //                    if( predictionType == "StarClass") {
-        //                        predictionPartsPassed += TryCheckPrimaryStar( partConditions[s], ref log ) ? 1 : 0;
-        //                    }
-        //                    else if ( predictionType == "StarLuminosity" ) {
-        //                        predictionPartsPassed += TryCheckPrimaryStarLuminosity( partConditions[s], ref log ) ? 1 : 0;
-        //                    }
-        //                    else if ( predictionType == "Material" ) {
-        //                        predictionPartsPassed += TryCheckMaterial( partConditions[s], ref log ) ? 1 : 0;
-        //                    }
-        //                    else if ( predictionType == "BodyTypePresent" ) {
-        //                        // TODO: This is limited, can only check bodies that have actually been scanned in system
-        //                        predictionPartsPassed += TryCheckBodyTypePresent( partConditions[s].Split( ',' ).ToList(), ref log ) ? 1 : 0;
-        //                    }
-        //                    else if ( predictionType == "GeologyNum" ) {
-        //                        // TODO: This may not be simple to determine, possibly only need to check the parent star of the body?
-        //                        predictionPartsPassed += TryCheckGeologyNum( partConditions[s], ref log ) ? 1 : 0;
-        //                    }
-        //                    else if ( predictionType == "DistanceFromStar" ) {
-        //                        // TODO: This may not be simple to determine, possibly only need to check the parent star of the body?
-        //                        predictionPartsPassed += 1;
-        //                    }
-        //                    else if ( predictionType == "NearNebula" ) {
-        //                        // TODO: Is this detectable? Just pass it for now.
-        //                        predictionPartsPassed += 1;
-        //                    }
-        //                    else {
-        //                        // Unknown condition, reject it so we can see it in logs.
-        //                        //predictionPartsPassed += 1;
-        //                        log += $"REJECT. Unknown prediction type: {predictionType}.";
-        //                    }
-        //                }
-
-        //                // If the number of passed prediction parts matches the number of parts in the group, then it was successful
-        //                if(predictionPartsPassed == partConditions.Count() ) {
-        //                    return true;
-        //                }
-        //            }
-        //        }
-
-        //        //log += $"REJECT. Special conditions: prediction types='{string.Join( ",", variant.predictionType)}', prediction conditions='{string.Join( ",", variant.specialConditions)}.'";
-        //        return false;
-        //    }
-
-
-        //    //// Brain Trees
-        //    ////  - Near system with guardian structures
-        //    //if ( variant.genus == OrganicGenus.Brancae )
-        //    //{ }
-
-        //    //// Electricae radialem:
-        //    ////  - Near nebula (how close is near?)
-        //    //if ( variant.genus == OrganicGenus.Electricae )
-        //    //{ }
-
-        //    //// Crystalline Shards:
-        //    ////  - Must be >12000 Ls from nearest star.
-        //    //if ( variant.genus == OrganicGenus.GroundStructIce )
-        //    //{ }
-
-        //    //// Bark Mounds
-        //    ////  - Seems to always have 3 geologicals
-        //    ////  - Should be within 150Ly from a nebula
-        //    //if ( variant.genus == OrganicGenus.Cone )
-        //    //{
-        //    //    if ( body.surfaceSignals.reportedGeologicalCount < 3 )
-        //    //    {
-        //    //        log += $"REJECT. Body geological count: {body.surfaceSignals.reportedGeologicalCount} < 3.";
-        //    //        return false;
-        //    //    }
-        //    //}
-
-        //    return true;
-        //}
     }
 }

@@ -26,8 +26,8 @@ namespace EddiDataDefinitions
         [ PublicAPI( "True if the current biologicals are predicted (but not confirmed) " ) ]
         public bool hasPredictedBios => bioSignals.Any( s => s.scanState == Exobiology.State.Predicted );
 
-        public HashSet<Exobiology> bioSignalsRemaining =>
-            bioSignals.Where( e => e.scanState < Exobiology.State.SampleComplete ).ToHashSet();
+        public List<Exobiology> bioSignalsRemaining =>
+            bioSignals.Where( e => e.scanState < Exobiology.State.SampleComplete ).ToList();
 
         [ PublicAPI( "True if the current biologicals are predicted (but not confirmed) " ) ]
         public bool predicted => bioSignals.Any( s => s.scanState == Exobiology.State.Predicted );

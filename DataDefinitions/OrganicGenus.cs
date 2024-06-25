@@ -25,7 +25,7 @@ namespace EddiDataDefinitions
         public static readonly OrganicGenus Cactoid = new OrganicGenus( "Cactoid", 300 );
         public static readonly OrganicGenus Clypeus = new OrganicGenus( "Clypeus", 150 );
         public static readonly OrganicGenus Conchas = new OrganicGenus( "Conchas", 150 );
-        public static readonly OrganicGenus GroundStructIce = new OrganicGenus( "GroundStructIce", 100 );
+        public static readonly OrganicGenus Ground_Struct_Ice = new OrganicGenus( "Ground_Struct_Ice", 100 );
         public static readonly OrganicGenus Electricae = new OrganicGenus( "Electricae", 1000 );
         public static readonly OrganicGenus Fonticulus = new OrganicGenus( "Fonticulus", 500 );
         public static readonly OrganicGenus Shrubs = new OrganicGenus( "Shrubs", 150 );

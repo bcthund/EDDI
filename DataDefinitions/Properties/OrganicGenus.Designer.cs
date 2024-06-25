@@ -207,9 +207,9 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Crystalline Shards.
         /// </summary>
-        public static string GroundStructIce {
+        public static string Ground_Struct_Ice {
             get {
-                return ResourceManager.GetString("GroundStructIce", resourceCulture);
+                return ResourceManager.GetString("Ground_Struct_Ice", resourceCulture);
             }
         }
         

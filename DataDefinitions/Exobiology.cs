@@ -36,13 +36,6 @@ namespace EddiDataDefinitions
             this.scanState = isPrediction ? State.Predicted : State.Confirmed;
         }
 
-        //public Exobiology ( OrganicGenus genus, long value, bool isPrediction = false ) : base ( genus )
-        //{
-        //    this.genus = genus;
-        //    this.valuePredicted = value;
-        //    this.scanState = isPrediction ? State.Predicted : State.Confirmed;
-        //}
-
         public Exobiology ( OrganicSpecies species, bool isPrediction = false ) : base( species )
         {
             this.species = species;
