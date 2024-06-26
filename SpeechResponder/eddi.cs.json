@@ -1405,7 +1405,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Fetch material from state }\r\n{set material to state.material}\r\n{if material:\r\n    {_ Fetch full material details }\r\n    {set material to MaterialDetails(material)}\r\n\r\n    {_ Context }\r\n    {SetState('eddi_context_last_subject', 'material')}\r\n    {SetState('eddi_context_material_name', material.name)}\r\n}\r\n\r\n{if !material:\r\n    {_ Fetch from context }\r\n    {set material to MaterialDetails(state.eddi_context_material_name)}\r\n}\r\n\r\n{if material.name:\r\n    {if material.location:\r\n        {material.name} can be {material.location}\r\n    |else:\r\n        No information available on where to find {material.name}\r\n    }\r\n|else:\r\n    I don't have any information about that material\r\n}.\r\n",
+      "script": "{_ Context }\r\n{SetState('eddi_context_last_subject', 'material')}\r\n{SetState('eddi_context_last_subject_action', 'location')}\r\n    \r\n{_ Fetch from context }\r\n{set material to MaterialDetails(state.eddi_context_material_name)}\r\n\r\n{if material.name:\r\n    {if material.location:\r\n        {material.name} can be {material.location}\r\n    |else:\r\n        No information available on where to find {material.name}\r\n    }\r\n|else:\r\n    I don't have any information about that material\r\n}.\r\n",
       "default": true,
       "name": "Material location report",
       "description": "Report on the where to obtain a particular material"
