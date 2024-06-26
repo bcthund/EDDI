@@ -5,6 +5,23 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.1.0-a1
   * Events
     * `Cargo Transfer` added. (#2621)
+  * Speech Responder
+    * Update Cottle to latest available experimental version.
+    * Custom Functions
+      * `SetState` no longer is able to retrieve a state variable from from the same script / context where it was set.
+      * `GetState` has been added to allow retrieval of state variables in the same script / context where it was set. 
+    * Scripts
+      * `Blueprint make report` updated to simplify state retrieval.
+      * `Blueprint material report` updated to simplify state retrieval.
+      * `Galnet news` updated to simplify state retrieval.
+      * `Material discard report` updated to simplify state retrieval.
+      * `Material inventory report` updated to simplify state retrieval.
+      * `Material required report` updated to simplify state retrieval.
+      * `Material location report` updated to simplify state retrieval.
+      * `Material use report` updated to simplify state retrieval.
+      * `System materials report` updated to use `factionState` variable name rather than reserved `state` variable name.
+  * VoiceAttack
+    * EDDI.vap commands updated to synchronize state variable names with updated scripts.
 
 ## 4.0.4
   * Core
