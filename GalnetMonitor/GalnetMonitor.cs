@@ -113,7 +113,7 @@ namespace EddiGalnetMonitor
         /// </summary>
         public void Stop ()
         {
-            cancellationTokenSource.Cancel();
+            cancellationTokenSource?.Cancel();
             running = false;
         }
 
