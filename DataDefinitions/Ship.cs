@@ -743,6 +743,11 @@ namespace EddiDataDefinitions
 
         private decimal JumpRange ( double optimalMass, double mass, double fuel, double linearConstant, double powerConstant, double guardianFsdBoosterRange, double boostModifier )
         {
+            if ( linearConstant == 0 || powerConstant == 0 )
+            {
+                Logging.Warn("Unable to acquire frameshift drive information required to calculate jump range. Please revisit Outfitting to update your ship's loadout definition.");
+                return 0;
+            }
             try
             {
                 // Calculate our base max range
