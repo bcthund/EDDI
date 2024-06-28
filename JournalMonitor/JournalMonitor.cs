@@ -49,7 +49,7 @@ namespace EddiJournalMonitor
             // Append any delayed events
             foreach ( var @event in events.ToList() )
             {
-                if ( DelayedEventHolder.TryGetValue( @event.type, out var delayedEvent ) )
+                if ( DelayedEventHolder.TryRemove( @event.type, out var delayedEvent ) )
                 {
                     events.Add( delayedEvent );
                 }
