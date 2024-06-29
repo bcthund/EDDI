@@ -13,7 +13,7 @@ namespace EddiSpeechResponder.CustomFunctions
         public string name => "VoiceDetails";
         public FunctionCategory Category => FunctionCategory.Details;
         public string description => Properties.CustomFunctions_Untranslated.VoiceDetails;
-        public Type ReturnType => typeof( VoiceDetails );
+        public Type ReturnType => typeof( EddiSpeechService.VoiceDetails );
         public IFunction function => Function.CreateNativeMinMax( ( runtime, values, writer ) =>
         {
             if (values.Count == 0)

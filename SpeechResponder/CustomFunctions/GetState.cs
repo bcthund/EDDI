@@ -40,7 +40,7 @@ namespace EddiSpeechResponder.CustomFunctions
                 }
 
                 if ( @value is string s )
-            {
+                {
                     return s;
                 }
 
