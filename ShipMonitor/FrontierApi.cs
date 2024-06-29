@@ -256,13 +256,18 @@ namespace EddiShipMonitor
                     if ( fsdOptimalMassMultiplier != null )
                     {
                         var baseOptimalMass = Convert.ToDecimal( module.GetFsdOptimalMass() );
-                        module.modifiers.Add( new EngineeringModifier
+                        var modifier = module.modifiers.FirstOrDefault( m => m.EDName == "FSDOptimalMass" );
+                        if ( modifier is null )
                         {
-                            EDName = "FSDOptimalMass",
-                            currentValue = baseOptimalMass * (decimal)fsdOptimalMassMultiplier[ "value" ],
-                            originalValue = baseOptimalMass,
-                            lessIsGood = false,
-                        } );
+                            modifier = new EngineeringModifier
+                            {
+                                EDName = "FSDOptimalMass",
+                                lessIsGood = false,
+                            };
+                            module.modifiers.Add( modifier );
+                        }
+                        modifier.currentValue = baseOptimalMass * (decimal)fsdOptimalMassMultiplier[ "value" ];
+                        modifier.originalValue = baseOptimalMass;
                     }
 
                     // Get the ship FSD's max fuel per jump for jump calculations
@@ -270,13 +275,18 @@ namespace EddiShipMonitor
                     if ( fsdMaxFuelPerJumpMultiplier != null )
                     {
                         var baseMaxFuelPerJump = module.GetFsdMaxFuelPerJump();
-                        module.modifiers.Add( new EngineeringModifier
+                        var modifier = module.modifiers.FirstOrDefault( m => m.EDName == "MaxFuelPerJump" );
+                        if ( modifier is null )
                         {
-                            EDName = "MaxFuelPerJump",
-                            currentValue = baseMaxFuelPerJump * (decimal)fsdMaxFuelPerJumpMultiplier[ "value" ],
-                            originalValue = baseMaxFuelPerJump,
-                            lessIsGood = false,
-                        } );
+                            modifier = new EngineeringModifier
+                            {
+                                EDName = "MaxFuelPerJump",
+                                lessIsGood = false,
+                            };
+                            module.modifiers.Add( modifier );
+                        }
+                        modifier.currentValue = baseMaxFuelPerJump * (decimal)fsdMaxFuelPerJumpMultiplier[ "value" ];
+                        modifier.originalValue = baseMaxFuelPerJump;
                     }
                 }
             }
