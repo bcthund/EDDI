@@ -1985,10 +1985,9 @@ namespace EddiCore
                     CurrentStarSystem.conflicts = theEvent.conflicts;
 
                     // Update station controlling faction data
-                    foreach ( Station station in CurrentStarSystem.stations )
+                    foreach ( var station in CurrentStarSystem.stations )
                     {
-                        Faction stationFaction =
-                            theEvent.factions.FirstOrDefault( f => f.name == station.Faction.name );
+                        var stationFaction = theEvent.factions.FirstOrDefault( f => f.name == station?.Faction?.name );
                         if ( stationFaction != null )
                         {
                             station.Faction = stationFaction;
@@ -1996,9 +1995,9 @@ namespace EddiCore
                     }
 
                     // Check if current system is inhabited by or HQ for squadron faction
-                    Faction squadronFaction = theEvent.factions.FirstOrDefault( f =>
-                        ( f.presences.FirstOrDefault( p => p.systemName == CurrentStarSystem.systemname )
-                            ?.squadronhomesystem ?? false ) || f.squadronfaction );
+                    var squadronFaction = theEvent.factions.FirstOrDefault( f => ( f.presences
+                        ?.FirstOrDefault( p => p.systemName == CurrentStarSystem?.systemname )
+                        ?.squadronhomesystem ?? false ) || f.squadronfaction );
                     if ( squadronFaction != null )
                     {
                         updateSquadronData( squadronFaction, CurrentStarSystem.systemname );
