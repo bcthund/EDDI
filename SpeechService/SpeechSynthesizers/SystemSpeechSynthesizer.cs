@@ -57,7 +57,8 @@ namespace EddiSpeechService.SpeechSynthesizers
                 systemSpeechVoices = synth
                     .GetInstalledVoices()
                     .Where( v => v.Enabled &&
-                                 !v.VoiceInfo.Name.Contains( "Microsoft Server Speech Text to Speech Voice" ) )
+                                 !v.VoiceInfo.Name.Contains( "Microsoft Server Speech Text to Speech Voice" ) && 
+                                 !v.VoiceInfo.Name.Contains( "eSpeak" ) )
                     .ToList();
             }
 
