@@ -157,11 +157,17 @@ namespace EddiSpeechService
             {
                 systemSpeechSynth = new SystemSpeechSynthesizer( ref voiceStore, lexiconSchemas );
             }
+            catch ( ThreadAbortException )
+            {
+                // Nothing to do here
+            }
             catch ( Exception e )
             {
-                Logging.Error( $"Unable to initialize System.Speech.Synthesis.SpeechSynthesizer, {RuntimeInformation.OSDescription}", e );
+                Logging.Error(
+                    $"Unable to initialize System.Speech.Synthesis.SpeechSynthesizer, {RuntimeInformation.OSDescription}",
+                    e );
             }
-            
+
             // Sort results alphabetically by voice name
             allVoices = voiceStore.OrderBy(v => v.name).ToList();
 
