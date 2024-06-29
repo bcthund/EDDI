@@ -541,6 +541,12 @@ namespace EddiSpeechService
                 Logging.Warn( $"Failed to initialize. {ce.Source} not registered. Installation may be corrupt or Windows version may be incompatible. ", ce );
                 return false;
             }
+            catch ( InvalidCastException ice )
+            {
+                Logging.Warn( $"Failed to initialize. {ice.Message} ", ice );
+                return false;
+            }
+
             return true;
         }
 
