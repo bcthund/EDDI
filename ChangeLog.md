@@ -3,14 +3,18 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.1.0-a2
+  * Speech Responder
+    * Increased the render cycle limit (<https://cottle.readthedocs.io/en/latest/page/04-configuration.html#render-cycle-limit>) from 10,0000 to 100,000.
+    * Scripts
+      * `System materials report` updated to more efficiently identify volcanic bodies.
 
 ## 4.1.0-a1
   * Events
     * `Cargo Transfer` added. (#2621)
   * Speech Responder
-    * Update Cottle to latest available experimental version.
+    * Update Cottle to latest available experimental version. Variables which are set in a script are now being stored in an immutable context. While these variables can still be passed to a child script / context, variables in a child script / context cannot be set and passed back to a parent script / context.
     * Custom Functions
-      * `SetState` no longer is able to retrieve a state variable from from the same script / context where it was set.
+      * A variable set with `SetState` can no longer be retrieved using `state` from the same script / context where it was set. 
       * `GetState` has been added to allow retrieval of state variables in the same script / context where it was set. 
     * Scripts
       * `Blueprint make report` updated to simplify state retrieval.

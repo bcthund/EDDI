@@ -21,7 +21,7 @@ namespace EddiSpeechResponder.Service
         public readonly Dictionary<string, Script> Scripts;
         public static readonly DocumentConfiguration documentConfiguration = new DocumentConfiguration
         {
-            Trimmer = DocumentConfiguration.TrimRepeatedWhitespaces, NbCycleMax = 10000
+            Trimmer = DocumentConfiguration.TrimRepeatedWhitespaces, NbCycleMax = 100000
         };
 
         // The file to log speech
