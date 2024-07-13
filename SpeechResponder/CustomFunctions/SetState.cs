@@ -23,14 +23,7 @@ namespace EddiSpeechResponder.CustomFunctions
             }
             else if (value.Type == ValueContent.Number)
             {
-                if ( Math.Abs(value.AsNumber - Convert.ToInt32(value.AsNumber)) < .000000001 )
-                {
-                    EDDI.Instance.State[ varName ] = Convert.ToInt32( value.AsNumber );
-                }
-                else
-                {
-                    EDDI.Instance.State[ varName ] = Convert.ToDecimal( value.AsNumber );
-                }
+                EDDI.Instance.State[ varName ] = Convert.ToDecimal( value.AsNumber );
             }
             else if (value.Type == ValueContent.String)
             {

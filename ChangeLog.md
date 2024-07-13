@@ -2,6 +2,10 @@
 
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
+## 4.1.0-b1
+  * VoiceAttack
+    * Variables set with SetState are now set to as types as possible (e.g. TXT, DEC, INT, SMALL, BOOL) in VoiceAttack.
+
 ## 4.1.0-a2
   * Speech Responder
     * Increased the render cycle limit (<https://cottle.readthedocs.io/en/latest/page/04-configuration.html#render-cycle-limit>) from 10,0000 to 100,000.

@@ -770,6 +770,13 @@ namespace EddiVoiceAttackResponder
                     return;
                 }
 
+                int? shortValue = vaProxy.GetSmallInt(name);
+                if ( shortValue != null )
+                {
+                    EDDI.Instance.State[ stateVariableName ] = shortValue;
+                    return;
+                }
+
                 int? intValue = vaProxy.GetInt(name);
                 if (intValue != null)
                 {
