@@ -3,6 +3,15 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.1.0-b1
+  * Speech Responder
+    * Scripts
+      * `Blueprint make report` updated to fix a typo (stray letter).
+      * `Material discard report` updated to tidy context.
+      * `Material inventory report` updated to tidy context.
+      * `Mission check galaxy` updated to make `allmissions()` function pure.
+      * `Mission check system` updated to make `addstation()` function pure.
+      * `Star scanned` updated to fix a typo (missing comma).
+      * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
   * VoiceAttack
     * Variables set with SetState are now set to as types as possible (e.g. TXT, DEC, INT, SMALL, BOOL) in VoiceAttack.
 
@@ -32,6 +41,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `System materials report` updated to use `factionState` variable name rather than reserved `state` variable name.
   * VoiceAttack
     * EDDI.vap commands updated to synchronize state variable names with updated scripts.
+    * Whole number variables set with SetState are now set as INT values rather than DEC values in VoiceAttack.
 
 ## 4.0.4
   * Core
