@@ -339,8 +339,9 @@ namespace EddiMissionMonitor
                                 }
                                 else if (missionEntry.statusDef == MissionStatus.Active)
                                 {
-                                    // Update status on a missed 'redirect'
-                                    update = UpdateRedirectStatus(missionEntry);
+                                    missionEntry.expiry = mission.expiry;
+                                    UpdateRedirectStatus(missionEntry);
+                                    update = true;
                                 }
                             }
                             break;

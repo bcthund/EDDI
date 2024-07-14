@@ -99,7 +99,7 @@ namespace EddiDataDefinitions
             set
             {
                 _statusDef = value;
-                if ( value != MissionStatus.Active && !onfoot )
+                if ( value != null && value != MissionStatus.Active && !onfoot )
                 {
                     // Missions are time constrained when active, and on-foot missions
                     // continue to be time constrained even after they are claimable.
