@@ -177,14 +177,8 @@
   <data name="RankEmp" xml:space="preserve">
     <value>帝国海軍の契約</value>
   </data>
-  <data name="DisableMegaship" xml:space="preserve">
-    <value>メガシップの無効化</value>
-  </data>
   <data name="Founder" xml:space="preserve">
     <value>ファウンダー</value>
-  </data>
-  <data name="HackMegaship" xml:space="preserve">
-    <value>メガシップのハッキング</value>
   </data>
   <data name="Skimmer" xml:space="preserve">
     <value>標的のスキマー</value>
