@@ -3,7 +3,6 @@ using EddiSpeechResponder.Service;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace EddiSpeechResponder.CustomFunctions
 {
@@ -19,8 +18,7 @@ namespace EddiSpeechResponder.CustomFunctions
             if (!string.IsNullOrEmpty( input.AsString) )
             {
                 var result = @"<transmit>" + input.AsString + "</transmit>";
-                var context = Cottle.Context.CreateCascade(Cottle.Context.CreateCustom(runtime.Globals.ToDictionary(g => g.Key, g => g.Value)), Context );
-                return ScriptResolver.resolveFromValue( result, context, false );
+                return ScriptResolver.resolveFromValue( result, GetContext( runtime.Globals ), false );
             }
             return "The Transmit function is used improperly. Please review the documentation for correct usage.";
         });

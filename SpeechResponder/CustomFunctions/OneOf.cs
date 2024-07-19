@@ -3,7 +3,6 @@ using EddiSpeechResponder.Service;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace EddiSpeechResponder.CustomFunctions
 {
@@ -30,8 +29,7 @@ namespace EddiSpeechResponder.CustomFunctions
                 var rand = random.Next( values.Count );
                 result = values[ rand ];
             }
-            var context = Cottle.Context.CreateCascade(Cottle.Context.CreateCustom(runtime.Globals.ToDictionary(g => g.Key, g => g.Value)), Context );
-            return ScriptResolver.resolveFromValue( result.AsString, context, false );
+            return ScriptResolver.resolveFromValue( result.AsString, GetContext( runtime.Globals ), false );
         } );
 
         [UsedImplicitly]
