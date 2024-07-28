@@ -4,12 +4,13 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.1.0-b1
   * Speech Responder
+    * Fixed a bug that could prevent variables set with `set` from being available in some contexts. 
     * Scripts
       * `Blueprint make report` updated to fix a typo (stray letter).
       * `Material discard report` updated to tidy context.
       * `Material inventory report` updated to tidy context.
-      * `Mission check galaxy` updated to make `allmissions()` function pure.
-      * `Mission check system` updated to make `addstation()` function pure.
+      * `Mission check galaxy` updated to make `allmissions()` internal function pure.
+      * `Mission check system` updated to make `addstation()` internal function pure.
       * `Star scanned` updated to fix a typo (missing comma).
       * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
   * VoiceAttack
