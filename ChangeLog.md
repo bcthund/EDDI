@@ -3,6 +3,8 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.1.0-b1
+  * Core
+    * Commodities now have a `corrosive` boolean property
   * Speech Responder
     * Fixed a bug that could prevent variables set with `set` from being available in some contexts. 
     * Scripts
