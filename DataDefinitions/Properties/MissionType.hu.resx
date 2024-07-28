@@ -143,10 +143,10 @@
     <value>Bányászat</value>
   </data>
   
-  <data name="PassengerBulk" xml:space="preserve">
+  <data name="Bulk" xml:space="preserve">
     <value>Szállítás</value>
   </data>
-  <data name="PassengerVIP" xml:space="preserve">
+  <data name="VIP" xml:space="preserve">
     <value>Szállítás</value>
   </data>
   

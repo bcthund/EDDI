@@ -339,8 +339,9 @@ namespace EddiMissionMonitor
                                 }
                                 else if (missionEntry.statusDef == MissionStatus.Active)
                                 {
-                                    // Update status on a missed 'redirect'
-                                    update = UpdateRedirectStatus(missionEntry);
+                                    missionEntry.expiry = mission.expiry;
+                                    UpdateRedirectStatus(missionEntry);
+                                    update = true;
                                 }
                             }
                             break;
@@ -952,7 +953,7 @@ namespace EddiMissionMonitor
             if (mission.originreturn && mission.originsystem == mission.destinationsystem
                 && mission.originstation == mission.destinationstation)
             {
-                if (mission.edTags.Any(t => Mission.ORGRETURN.Contains(t, StringComparer.InvariantCultureIgnoreCase)))
+                if (mission.tagsList.Any(t => t.ClaimAtOrigin))
                 {
                     if (mission.statusDef != MissionStatus.Claim)
                     {

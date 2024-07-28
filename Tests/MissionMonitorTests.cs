@@ -169,7 +169,7 @@ namespace UnitTests
             Assert.IsTrue(events.Count == 1);
             missionMonitor._handleMissionsEvent((MissionsEvent)events[0]);
             Assert.AreEqual(3, missionMonitor.missions.Count);
-            Assert.AreEqual(3, missionMonitor.missions.Where(m => m.statusEDName == "Active").Count());
+            Assert.AreEqual(3, missionMonitor.missions.Count( m => m.statusEDName == "Active" ));
 
             //CargoDepotEvent - 'Shared'
             line = @"{ ""timestamp"":""2018-08-26T02:55:10Z"", ""event"":""CargoDepot"", ""MissionID"":413748365, ""UpdateType"":""WingUpdate"", ""CargoType"":""Gold"", ""Count"":20, ""StartMarketID"":0, ""EndMarketID"":3224777216, ""ItemsCollected"":0, ""ItemsDelivered"":20, ""TotalItemsToDeliver"":54, ""Progress"":0.000000 }";
@@ -179,7 +179,8 @@ namespace UnitTests
             var mission = missionMonitor.missions.ToList().FirstOrDefault(m => m.missionid == 413748365);
             Assert.AreEqual(4, missionMonitor.missions.Count);
             Assert.IsNotNull(mission);
-            Assert.IsTrue(mission.edTags.Contains("CollectWing"));
+            Assert.IsTrue( mission.edTags.Contains( "Collect" ) );
+            Assert.IsTrue( mission.edTags.Contains( "Wing" ) );
             Assert.AreEqual("Active", mission.statusEDName);
             Assert.IsTrue(mission.originreturn);
             Assert.IsTrue(mission.wing);
@@ -225,7 +226,7 @@ namespace UnitTests
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
             missionMonitor._handleMissionAcceptedEvent((MissionAcceptedEvent)events[0]);
-            Assert.AreEqual(1, missionMonitor.missions.ToList().Where(m => m.missionid == 413748324).Count());
+            Assert.AreEqual(1, missionMonitor.missions.Count( m => m.missionid == 413748324 ));
             Assert.AreEqual(4, missionMonitor.missions.Count);
 
             //CargoDepotEvent - 'Collect'
