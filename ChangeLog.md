@@ -12,7 +12,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Material inventory report` updated to tidy context.
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
       * `Mission check system` updated to make `addstation()` internal function pure.
-      * `Star scanned` updated to fix a typo (missing comma).
+      * `Star scanned` updated to fix a typo (missing comma) and to improve the context passed to child scripts.
       * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
   * VoiceAttack
     * Variables set with SetState are now set to as types as possible (e.g. TXT, DEC, INT, SMALL, BOOL) in VoiceAttack.
