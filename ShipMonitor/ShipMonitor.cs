@@ -1044,7 +1044,10 @@ namespace EddiShipMonitor
             if (@event.timestamp > updatedAt)
             {
                 updatedAt = @event.timestamp;
-                Ship ship = GetCurrentShip();
+                // Committing a crime while in multicrew will apply a fine or bounty to your most valuable ship.
+                var ship = EDDI.Instance.Vehicle == Constants.VEHICLE_MULTICREW 
+                    ? shipyard.ToList().OrderByDescending(s => s.value).FirstOrDefault() 
+                    : GetCurrentShip();
                 if (ship != null)
                 {
                     ship.hot = true;
