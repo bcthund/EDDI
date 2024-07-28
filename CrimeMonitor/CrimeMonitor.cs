@@ -880,22 +880,23 @@ namespace EddiCrimeMonitor
             var total = record.fines + record.bounties + report.amount;
             var powerRecord = GetRecordWithFaction(record.allegiance);
 
-            if (powerRecord == null && total <= 2000000) 
+            // Minor faction crimes are converted to an interstellar power record, owned by the faction's aligned
+            // superpower, when total fines & bounties incurred exceed 10,000 credits
+            if (powerRecord == null && total <= 10000) 
             {
                 // Add new report to the minor faction record
                 _AddReportToRecord(record, report);
             }
             else
             {
-                // Minor faction crimes are converted to an interstellar power record, owned by the faction's aligned
-                // superpower, when total fines & bounties incurred exceed 2 million credits
+                // We've exceeded the threshold for an interstellar bounty
                 if (powerRecord == null) 
                 {
                     // Add a new interstellar bounty. 
                     // Transfer existing fines and bounties incurred to the interstellar power record
                     // Collect all minor faction fines and bounties incurred
                     powerRecord = AddRecord(record.allegiance);
-                    List<FactionReport> reports = record.factionReports
+                    var reports = record.factionReports
                         .Where(r => r.crimeDef != Crime.None && r.crimeDef != Crime.Claim).ToList();
                     powerRecord.factionReports.AddRange(reports);
                     powerRecord.fines += record.fines;

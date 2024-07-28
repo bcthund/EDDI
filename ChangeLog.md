@@ -5,6 +5,8 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.1.0-b1
   * Core
     * Commodities now have a `corrosive` boolean property
+  * Crime Monitor
+    * An interstellar bounty applies when fines or bounties for factions aligned with a superpower exceed 10,000 credits.
   * Speech Responder
     * Fixed a bug that could prevent variables set with `set` from being available in some contexts. 
     * Scripts
