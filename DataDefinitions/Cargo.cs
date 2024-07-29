@@ -71,6 +71,7 @@ namespace EddiDataDefinitions
         public int other => owned;
 
         // Mission items on board (with MissionID and count)
+        [PublicAPI("A dictionary where the key is a mission ID and the value is the amount of cargo associated with that mission ID")]
         public Dictionary<long, int> missionCargo
         {
             get => _missionCargo;

@@ -5,7 +5,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.1.0-b1
   * Core
     * Added `sourcesystem`, `sourcebody`, `collected`, and `delivered`, properties to the `mission` object.
-    * Removed `haulageData` map from the `cargo` object.
+    * Removed `haulageData` map from the `cargo` object, add `missionCargo` dictionary object in its place.
     * The `need` property of `cargo` is now calculated after resolvers have handled events (to minimize cross linking between the Cargo and Mission Monitors).
     * Commodities now have a `corrosive` boolean property
   * Crime Monitor
@@ -27,6 +27,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Material inventory report` updated to tidy context.
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
       * `Mission check system` updated to make `addstation()` internal function pure.
+      * `Mission expired` updated to demo the `missionCargo` property and add more clarity when cargo shall be marked as stolen. 
       * `Star scanned` updated to fix a typo (missing comma) and to improve the context passed to child scripts.
       * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
   * VoiceAttack
