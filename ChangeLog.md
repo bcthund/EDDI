@@ -28,6 +28,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
       * `Mission check system` updated to make `addstation()` internal function pure.
       * `Mission expired` updated to demo the `missionCargo` property and add more clarity when cargo shall be marked as stolen. 
+      * `Route details` updated to replace `HaulageDetails()` function with `MissionDetails()`.
       * `Star scanned` updated to fix a typo (missing comma) and to improve the context passed to child scripts.
       * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
   * VoiceAttack
