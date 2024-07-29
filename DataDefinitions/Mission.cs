@@ -158,7 +158,7 @@ namespace EddiDataDefinitions
             t == MissionType.Piracy ||
             t == MissionType.Smuggle );
 
-        [Utilities.PublicAPI, JsonIgnore]
+        [Utilities.PublicAPI, JsonIgnore] // On-foot missions are always shareable.
         public bool wing => tagsList.Contains( MissionType.Wing ) || onfoot;
 
         #endregion
@@ -173,35 +173,6 @@ namespace EddiDataDefinitions
 
         [Utilities.PublicAPI("Credits awarded upon successful completion")]
         public long? reward { get; set; }
-
-        [Utilities.PublicAPI, JsonProperty( "commodity" )]
-        public string commodity
-        {
-            get => CommodityDefinition?.localizedName;
-            set
-            {
-                var comDef = CommodityDefinition.FromName(value);
-                this.CommodityDefinition = comDef;
-            }
-        }
-        [JsonIgnore]
-        public CommodityDefinition CommodityDefinition { get; set; }
-
-        [Utilities.PublicAPI, JsonProperty( "microresource" )]
-        public string microresource
-        {
-            get => MicroResourceDefinition?.localizedName;
-            set
-            {
-                var resDef = MicroResource.FromName(value);
-                this.MicroResourceDefinition = resDef;
-            }
-        }
-        [JsonIgnore]
-        public MicroResource MicroResourceDefinition { get; set; }
-
-        [Utilities.PublicAPI]
-        public int? amount { get; set; }
 
         #endregion
 
@@ -437,8 +408,61 @@ namespace EddiDataDefinitions
 
         #endregion
 
+        #region Mission Haulage Data
+
+        [Utilities.PublicAPI( "The localized name of the commodity required to complete the mission, as applicable" ), JsonProperty( "commodity" )]
+        public string commodity
+        {
+            get => CommodityDefinition?.localizedName;
+            set
+            {
+                var comDef = CommodityDefinition.FromName(value);
+                this.CommodityDefinition = comDef;
+            }
+        }
+
+        [Utilities.PublicAPI( "The commodity object for the commodity required to complete the mission, as applicable" ), JsonIgnore]
+        public CommodityDefinition CommodityDefinition { get; set; }
+
+        [Utilities.PublicAPI( "The localized name of the micro-resource required to complete the mission, as applicable" ), JsonProperty( "microresource" )]
+        public string microresource
+        {
+            get => MicroResourceDefinition?.localizedName;
+            set
+            {
+                var resDef = MicroResource.FromName(value);
+                this.MicroResourceDefinition = resDef;
+            }
+        }
+
+        [Utilities.PublicAPI( "The micro-resource object for the micro-resource required to complete the mission, as applicable" ), JsonIgnore]
+        public MicroResource MicroResourceDefinition { get; set; }
+
+        [Utilities.PublicAPI( "The amount of the commodity or micro-resource required to complete the mission." )] 
+        public int? amount { get; set; }
+
+        [Utilities.PublicAPI( "The system where the mission cargo has been found, as applicable" )]
+        public string sourcesystem { get; set; }
+
+        [Utilities.PublicAPI ( "The body or station where the mission cargo has been found, as applicable" )]
+        public string sourcebody { get; set; }
+
+        [Utilities.PublicAPI( "The quantity of mission cargo which has been collected at a cargo depot" )]
+        public int collected { get; set; }
+
+        [Utilities.PublicAPI( "The quantity of mission cargo which has been delivered to a cargo depot" )]
+        public int delivered { get; set; }
+
+        public int wingCollected { get; set; } // The quantity of mission cargo which has been collected and not delivered by wing members
+
+        public long startmarketid { get; set; } // The cargo depot where mission cargo is collected
+
+        public long endmarketid { get; set; } // The cargo depot where mission cargo is delivered
+
+        #endregion
+
         // Default Constructor
-        public Mission() { }
+        public Mission () { }
 
         [JsonConstructor]
         // Main Constructor

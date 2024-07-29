@@ -4,11 +4,16 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.1.0-b1
   * Core
+    * Added `sourcesystem`, `sourcebody`, `collected`, and `delivered`, properties to the `mission` object.
+    * Removed `cargoHaulage` properties from the `cargo` object.
+    * The `need` property of `cargo` is now calculated after resolvers have handled events (to minimize cross linking between the Cargo and Mission Monitors).
     * Commodities now have a `corrosive` boolean property
   * Crime Monitor
     * An interstellar bounty applies when fines or bounties for factions aligned with a superpower exceed 10,000 credits.
   * Speech Responder
     * Fixed a bug that could prevent variables set with `set` from being available in some contexts. 
+    * Custom Functions
+      * `HaulageDetails` function has been removed. 
     * Scripts
       * `Body scanned` updated to improve the context passed to child scripts. 
       * `Blueprint make report` updated to fix a typo (stray letter).

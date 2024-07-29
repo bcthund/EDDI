@@ -665,13 +665,11 @@ namespace EddiCrimeMonitor
 
         private bool _handleMissionAbandonedEvent(MissionAbandonedEvent @event)
         {
-            bool update = false;
-
-            if (@event.fine > 0 && @event.missionid != null)
+            if (@event.fine > 0)
             {
-                update = handleMissionFine(@event.timestamp, @event.missionid ?? 0, @event.fine);
+                return handleMissionFine(@event.timestamp, @event.missionid, @event.fine);
             }
-            return update;
+            return false;
         }
 
         private void handleMissionFailedEvent(MissionFailedEvent @event)
@@ -688,11 +686,10 @@ namespace EddiCrimeMonitor
 
         private bool _handleMissionFailedEvent(MissionFailedEvent @event)
         {
-            bool update = false;
-
-            if (@event.fine > 0 && @event.missionid != null)
+            var update = false;
+            if (@event.fine > 0)
             {
-                update = handleMissionFine(@event.timestamp, @event.missionid ?? 0, @event.fine);
+                update = handleMissionFine(@event.timestamp, @event.missionid, @event.fine);
             }
             return update;
         }

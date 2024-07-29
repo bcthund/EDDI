@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800">
     <UserControl.Resources>
-        <DataTemplate x:Key="missionDataTemplate" DataType="{x:Type defs:Mission}">
+        <DataTemplate x:Key="defaultMissionTemplate" DataType="{x:Type defs:Mission}">
             <Grid Background="Azure">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -33,7 +33,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding originstation}" Margin="5, 0" />
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="communityGoalDataTemplate" DataType="{x:Type defs:Mission}">
+        <DataTemplate x:Key="communityGoalTemplate" DataType="{x:Type defs:Mission}">
             <Grid Background="Azure">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -147,10 +147,10 @@
                         <ContentControl.Style>
                             <Style TargetType="ContentControl">
                                 <Setter Property="ContentTemplate"
-                                        Value="{StaticResource missionDataTemplate}" />
+                                        Value="{StaticResource defaultMissionTemplate}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding communal}" Value="True">
-                                        <Setter Property="ContentTemplate" Value="{StaticResource communityGoalDataTemplate}" />
+                                        <Setter Property="ContentTemplate" Value="{StaticResource communityGoalTemplate}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

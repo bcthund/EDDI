@@ -28,7 +28,7 @@ namespace EddiSpeechResponder.CustomFunctions
             }
             else if (input.Type == ValueContent.Number)
             {
-                result = cargoInventory?.FirstOrDefault(c => c.haulageData.FirstOrDefault(h => h.missionid == Convert.ToInt64(input.AsNumber)) != null);
+                result = cargoInventory?.FirstOrDefault(c => c.missionCargo.Any(h => h.Key == Convert.ToInt64(input.AsNumber)));
             }
             return result is null ? Value.EmptyMap : Value.FromReflection( result, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic );
         });

@@ -305,19 +305,6 @@ GovernmentDetails() takes a single argument of the government for which you want
 
 At current this does not have a lot of use as the government object only contains its name but this may be expanded in future.</value>
   </data>
-  <data name="HaulageDetails" xml:space="preserve">
-    <value>This function will provide 'haulage' information for a mission-related cargo. See the 'haulage' object for variable details.
-
-HaulageDetails() takes one mandatory argument, a mission ID associated with the haulage. If the mission ID is not associated with haulage, a 'null' is returned.
-
-Common usage of this is to provide further information about a particular mission haulage, for example:
-
-    {set haulage to HaulageDetails(event.missionid)}
-    {if haulage &amp;&amp; haulage.deleivered &gt; 0:
-        {set total to haulage.amount + haulage.deleivered}
-     {haulage.type} mission to the cargo depot is {round(haulage.delivered / total * 100, 0)} percent complete.
-    }</value>
-  </data>
   <data name="Humanise" xml:space="preserve">
     <value>This function will turn its argument into a more human number, for example turning 31245 in to \"just over thirty thousand\".
 

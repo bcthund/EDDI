@@ -185,10 +185,29 @@ namespace UnitTests
             Assert.IsTrue(mission.originreturn);
             Assert.IsTrue(mission.wing);
             Assert.IsTrue(mission.shared);
+            Assert.AreEqual( "Gold", mission.CommodityDefinition.invariantName );
+            Assert.AreEqual( 0, mission.collected );
+            Assert.AreEqual( 20, mission.delivered );
+            Assert.AreEqual( 54, mission.amount );
+            Assert.AreEqual( 0, mission.startmarketid );
+            Assert.AreEqual( 3224777216, mission.endmarketid );
             line = @"{ ""timestamp"":""2018-08-27T02:56:16Z"", ""event"":""CargoDepot"", ""MissionID"":413748365, ""UpdateType"":""Deliver"", ""CargoType"":""Gold"", ""Count"":34, ""StartMarketID"":0, ""EndMarketID"":3224777216, ""ItemsCollected"":0, ""ItemsDelivered"":54, ""TotalItemsToDeliver"":54, ""Progress"":0.000000 }";
             events = JournalMonitor.ParseJournalEntry(line);
             missionMonitor._handleCargoDepotEvent((CargoDepotEvent)events[0]);
-            Assert.AreEqual(3, missionMonitor.missions.Count);
+            mission = missionMonitor.missions.ToList().FirstOrDefault(m => m.missionid == 413748365);
+            Assert.AreEqual(MissionStatus.Claim, mission?.statusDef);
+            Assert.AreEqual( 4, missionMonitor.missions.Count );
+            Assert.IsNotNull( mission );
+            Assert.AreEqual( "Gold", mission.CommodityDefinition.invariantName );
+            Assert.AreEqual( 0, mission.collected );
+            Assert.AreEqual( 54, mission.delivered );
+            Assert.AreEqual( 54, mission.amount );
+            Assert.AreEqual( 0, mission.startmarketid );
+            Assert.AreEqual( 3224777216, mission.endmarketid );
+            line = @"{ ""timestamp"":""2018-08-27T02:56:36Z"", ""event"":""MissionCompleted"", ""Faction"":""Sanctuary Inc"", ""Name"":""Mission_Collect_CivilLiberty_name"", ""LocalisedName"":""Supplier needs 54 units of Gold"", ""MissionID"":413748365, ""Commodity"":""$Gold_Name;"", ""Commodity_Localised"":""Gold"", ""Count"":54, ""DestinationSystem"":""Xi Wangda"", ""DestinationStation"":""Cartier City"", ""Reward"":30448920, ""FactionEffects"":[ { ""Faction"":""Sanctuary Inc"", ""Effects"":[ { ""Effect"":""$MISSIONUTIL_Interaction_Summary_EP_up;"", ""Effect_Localised"":""The economic status of $#MinorFaction; has improved in the $#System; system."", ""Trend"":""UpGood"" } ], ""Influence"":[ { ""SystemAddress"":2869708727713, ""Trend"":""UpGood"", ""Influence"":""+++++"" } ], ""ReputationTrend"":""UpGood"", ""Reputation"":""++"" } ] }";
+            events = JournalMonitor.ParseJournalEntry( line );
+            missionMonitor._postHandleMissionCompletedEvent( (MissionCompletedEvent)events[ 0 ] );
+            Assert.AreEqual( 3, missionMonitor.missions.Count );
 
             //MissionAbandonedEvent
             line = @"{ ""timestamp"":""2018-08-28T00:50:48Z"", ""event"":""MissionAbandoned"", ""Name"":""Mission_Courier_Elections_name"", ""Fine"":50000, ""MissionID"":413563499 }";
