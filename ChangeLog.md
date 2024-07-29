@@ -5,7 +5,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.1.0-b1
   * Core
     * Added `sourcesystem`, `sourcebody`, `collected`, and `delivered`, properties to the `mission` object.
-    * Removed `cargoHaulage` properties from the `cargo` object.
+    * Removed `haulageData` map from the `cargo` object.
     * The `need` property of `cargo` is now calculated after resolvers have handled events (to minimize cross linking between the Cargo and Mission Monitors).
     * Commodities now have a `corrosive` boolean property
   * Crime Monitor
@@ -20,6 +20,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Cargo depot` updated to replace `HaulageDetails()` function with `MissionDetails()`.
       * `Carrier jump engaged` updated to better separate carrier context from commander context.
       * `Carrier jumped` updated to better separate carrier context from commander context.
+      * `Commodity sale check` updated to remove unnecessary reference to `haulageData`.
       * `Material discard report` updated to tidy context.
       * `Material inventory report` updated to tidy context.
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
