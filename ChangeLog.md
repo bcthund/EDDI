@@ -30,6 +30,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Mission expired` updated to demo the `missionCargo` property and add more clarity when cargo shall be marked as stolen. 
       * `Route details` updated to replace `HaulageDetails()` function with `MissionDetails()`.
       * `Star scanned` updated to fix a typo (missing comma) and to improve the context passed to child scripts.
+      * `System distance report` updated to tidy context.
       * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
       * `System state changed` updated to tidy context.
   * VoiceAttack

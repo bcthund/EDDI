@@ -2422,7 +2422,7 @@
       "enabled": true,
       "priority": 3,
       "responder": false,
-      "script": "{_ Fetch from context }\r\n{set reportsystem to SystemDetails(state.eddi_context_system_system)}\r\n\r\n{if !reportsystem.name || reportsystem.name = \"\":\r\n    I'm not sure which system you are asking about.\r\n|else:\r\n    Distance to {P(reportsystem.name, \"starsystem\")} is {Humanise(Distance(reportsystem.x, reportsystem.y, reportsystem.z, system.x, system.y, system.z))} light years.\r\n}",
+      "script": "{_ Fetch from context }\r\n{set reportsystem to SystemDetails(state.eddi_context_selected_system_name)}\r\n\r\n{if !reportsystem.name || reportsystem.name = \"\":\r\n    I'm not sure which system you are asking about.\r\n|else:\r\n    Distance to {P(reportsystem.name, \"starsystem\")} is {Humanise(Distance(reportsystem.x, reportsystem.y, reportsystem.z, system.x, system.y, system.z))} light years.\r\n}",
       "default": true,
       "name": "System distance report",
       "description": "Function to report on the distance to the contextual system"
