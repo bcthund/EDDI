@@ -19,6 +19,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Blueprint make report` updated to fix a typo (stray letter).
       * `Cargo depot` updated to replace `HaulageDetails()` function with `MissionDetails()`.
       * `Carrier jump engaged` updated to better separate carrier context from commander context.
+      * `Carrier jumped` updated to better separate carrier context from commander context.
       * `Material discard report` updated to tidy context.
       * `Material inventory report` updated to tidy context.
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
