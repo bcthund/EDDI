@@ -22,6 +22,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Carrier jumped` updated to better separate carrier context from commander context.
       * `Commodity sale check` updated to remove unnecessary reference to `haulageData`.
       * `FSD engaged` updated to tidy context.
+      * `Jumped` updated to tidy context.
       * `Material discard report` updated to tidy context.
       * `Material inventory report` updated to tidy context.
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
