@@ -5,9 +5,10 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.1.0-b1
   * Core
     * Added `sourcesystem`, `sourcebody`, `collected`, and `delivered`, properties to the `mission` object.
+    * Commodities now have a `corrosive` boolean property.
     * Removed `haulageData` map from the `cargo` object, add `missionCargo` dictionary object in its place.
+    * Suppressed a repetitious `Body scanned` event which could occur after mapping. (#2633)
     * The `need` property of `cargo` is now calculated after resolvers have handled events (to minimize cross linking between the Cargo and Mission Monitors).
-    * Commodities now have a `corrosive` boolean property
   * Crime Monitor
     * An interstellar bounty applies when fines or bounties for factions aligned with a superpower exceed 10,000 credits.
   * Speech Responder
