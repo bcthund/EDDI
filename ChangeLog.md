@@ -13,10 +13,11 @@ Full details of the variables available for each noted event, and VoiceAttack in
   * Speech Responder
     * Fixed a bug that could prevent variables set with `set` from being available in some contexts. 
     * Custom Functions
-      * `HaulageDetails` function has been removed. 
+      * `HaulageDetails()` function has been removed. 
     * Scripts
       * `Body scanned` updated to improve the context passed to child scripts. 
       * `Blueprint make report` updated to fix a typo (stray letter).
+      * `Cargo depot` updated to replace `HaulageDetails()` function with `MissionDetails()`.
       * `Material discard report` updated to tidy context.
       * `Material inventory report` updated to tidy context.
       * `Mission check galaxy` updated to make `allmissions()` internal function pure.
