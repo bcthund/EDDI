@@ -109,7 +109,7 @@ namespace EddiJournalMonitor
                             // The ship reboots about 30 seconds after the shutdown occurs unless canceled early.
                             await Task.Delay( TimeSpan.FromSeconds( 30 ), ShipShutdownCancellationTokenSource.Token );
                             EDDI.Instance.enqueueEvent( new ShipShutdownRebootEvent( shipShutdownEvent.timestamp + ( DateTime.UtcNow - startTime ) ) );
-                            ShipShutdownCancellationTokenSource.Dispose();
+                            ShipShutdownCancellationTokenSource?.Dispose();
                             ShipShutdownCancellationTokenSource = null;
                         } ).ConfigureAwait( false );
                     }
