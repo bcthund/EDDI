@@ -31,6 +31,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
       * `Route details` updated to replace `HaulageDetails()` function with `MissionDetails()`.
       * `Star scanned` updated to fix a typo (missing comma) and to improve the context passed to child scripts.
       * `System materials report` updated to fix an error with the `isSeleniumSpecialCase` helper function.
+      * `System state changed` updated to tidy context.
   * VoiceAttack
     * Variables set with SetState are now set to as types as possible (e.g. TXT, DEC, INT, SMALL, BOOL) in VoiceAttack.
 
