@@ -278,7 +278,7 @@ namespace UnitTests
             Assert.AreEqual(4, missionMonitor.missions.Count);
 
             //MissionFailedEvent
-            line = @"{ ""timestamp"":""2018-09-23T00:50:48Z"", ""event"":""MissionFailed"", ""Name"":""Mission_Collect_Industrial"", ""Fine"":50000, ""MissionID"":413748324 }";
+            line = @"{ ""timestamp"":""2018-09-23T00:50:48Z"", ""event"":""MissionFailed"", ""Name"":""Mission_Collect_Industrial"", ""Fine"":5000, ""MissionID"":413748324 }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
 
@@ -289,10 +289,10 @@ namespace UnitTests
             crimeMonitor._handleMissionFine(events[0].timestamp, mission, fine);
             FactionRecord record = crimeMonitor.criminalrecord.ToList().FirstOrDefault(r => r.faction == mission?.faction);
             Assert.IsNotNull(record);
-            Assert.AreEqual(50000, record.fines);
+            Assert.AreEqual(5000, record.fines);
             FactionReport report = record.factionReports.FirstOrDefault(r => r.crimeDef == Crime.MissionFine);
             Assert.IsNotNull(report);
-            Assert.AreEqual(50000, report.amount);
+            Assert.AreEqual(5000, report.amount);
             ConfigService.Instance.crimeMonitorConfiguration = crimeData;
 
             missionMonitor.handleMissionFailedEvent((MissionFailedEvent)events[0]);
