@@ -741,7 +741,10 @@ namespace EddiShipMonitor
             if (@event.itemEDNames.Contains("All") || @event.itemEDNames.Contains("Wear"))
             {
                 var currentShip = GetCurrentShip();
-                currentShip.health = 100M;
+                if ( currentShip != null )
+                {
+                    currentShip.health = 100M;
+                }
             }
             if (!@event.fromLoad) { writeShips(); }
         }
