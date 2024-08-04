@@ -187,14 +187,19 @@ namespace EddiDataDefinitions
         public string originstation { get; set; }
 
         // Mission returns to origin
-        [Utilities.PublicAPI]
+        [Utilities.PublicAPI, JsonIgnore]
         public bool originreturn => tagsList.Any(t => t.ClaimAtOrigin);
+
+        // Mission delivers to a cargo depot
+        [Utilities.PublicAPI, JsonIgnore]
+        public bool cargodepot => tagsList.Any(t => t.ClaimAtCargoDepot);
 
         [Utilities.PublicAPI]
         public string faction { get; set; }
 
         // The state of the minor faction
-        [ JsonIgnore ] public FactionState FactionState => GetFactionState( name );
+        [ JsonIgnore ] 
+        public FactionState FactionState => GetFactionState( name );
 
         private FactionState GetFactionState ( string missionName )
         {

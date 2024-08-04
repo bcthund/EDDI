@@ -45,25 +45,25 @@ namespace EddiDataDefinitions
 
         // PRIMARY mission types (typically listed first in mission name)
 
-        public static MissionType Altruism = new MissionType( "Altruism", true, true );
-        public static MissionType Assassinate = new MissionType( "Assassinate", true, true );
-        public static MissionType Collect = new MissionType( "Collect", true, true );
-        public static MissionType CommunityGoal = new MissionType( "CommunityGoal", true );
-        public static MissionType Courier = new MissionType( "Courier", false, true );
-        public static MissionType Delivery = new MissionType( "Delivery", true, true );
-        public static MissionType Disable = new MissionType( "Disable", true, true );
-        public static MissionType Hack = new MissionType( "Hack", true, true );
-        public static MissionType LongDistanceExpedition = new MissionType( "LongDistanceExpedition", true, true );
-        public static MissionType Massacre = new MissionType( "Massacre", true, true );
-        public static MissionType Mining = new MissionType( "Mining", true, true );
-        public static MissionType OnFoot = new MissionType( "OnFoot", true, true );
-        public static MissionType Passenger = new MissionType( "Passenger", false, true );
-        public static MissionType Piracy = new MissionType( "Piracy", true, true );
-        public static MissionType Rescue = new MissionType( "Rescue", true, true ); // Horizons / surface salvage missions
-        public static MissionType Salvage = new MissionType( "Salvage", true, true );
-        public static MissionType Scan = new MissionType( "Scan", true, true ); // Surface scan
-        public static MissionType SightSeeing = new MissionType( "Sightseeing", true, true );
-        public static MissionType Smuggle = new MissionType( "Smuggle", false, true );
+        public static MissionType Altruism = new MissionType( "Altruism", true, false, true );
+        public static MissionType Assassinate = new MissionType( "Assassinate", true, false, true );
+        public static MissionType Collect = new MissionType( "Collect", true, true, true );
+        public static MissionType CommunityGoal = new MissionType( "CommunityGoal", false, false, true );
+        public static MissionType Courier = new MissionType( "Courier", false, false, true );
+        public static MissionType Delivery = new MissionType( "Delivery", false, true, true );
+        public static MissionType Disable = new MissionType( "Disable", true, false, true );
+        public static MissionType Hack = new MissionType( "Hack", true, false, true );
+        public static MissionType LongDistanceExpedition = new MissionType( "LongDistanceExpedition", true, false, true );
+        public static MissionType Massacre = new MissionType( "Massacre", true, false, true );
+        public static MissionType Mining = new MissionType( "Mining", true, true, true );
+        public static MissionType OnFoot = new MissionType( "OnFoot", true, false, true );
+        public static MissionType Passenger = new MissionType( "Passenger", false, false, true );
+        public static MissionType Piracy = new MissionType( "Piracy", true, false, true );
+        public static MissionType Rescue = new MissionType( "Rescue", true, true, true ); // Horizons / surface salvage missions
+        public static MissionType Salvage = new MissionType( "Salvage", true, true, true );
+        public static MissionType Scan = new MissionType( "Scan", true, false, true ); // Surface scan
+        public static MissionType SightSeeing = new MissionType( "Sightseeing", true, false, true );
+        public static MissionType Smuggle = new MissionType( "Smuggle", false, true, true );
 
         // SECONDARY mission types
 
@@ -117,14 +117,17 @@ namespace EddiDataDefinitions
 
         public bool ClaimAtOrigin { get; set; }
 
+        public bool ClaimAtCargoDepot { get; set; }
+
         // dummy used to ensure that the static constructor has run
         public MissionType () : this( "" )
         { }
 
-        private MissionType ( string edname, bool claimAtOrigin = false, bool includeInMissionRouting = false ) : base(
+        private MissionType ( string edname, bool claimAtOrigin = false, bool claimAtCargoDepot = false, bool includeInMissionRouting = false ) : base(
             edname, edname )
         {
             ClaimAtOrigin = claimAtOrigin;
+            ClaimAtCargoDepot = claimAtCargoDepot;
             IncludeInMissionRouting = includeInMissionRouting;
         }
     }

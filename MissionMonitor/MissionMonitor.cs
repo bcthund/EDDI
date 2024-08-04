@@ -387,9 +387,9 @@ namespace EddiMissionMonitor
         public bool _handleMissionsEvent(MissionsEvent @event)
         {
             bool update = false;
-            foreach (Mission mission in @event.missions)
+            foreach (var mission in @event.missions)
             {
-                Mission missionEntry = missions.FirstOrDefault(m => m.missionid == mission.missionid);
+                var missionEntry = missions.FirstOrDefault(m => m.missionid == mission.missionid);
 
                 // If the mission exists in the log, update status
                 if (missionEntry != null)
@@ -1032,12 +1032,18 @@ namespace EddiMissionMonitor
 
         public bool UpdateRedirectStatus(Mission mission)
         {
-            if (mission.originreturn && mission.originsystem == mission.destinationsystem
+            if ( mission.originreturn && mission.originsystem == mission.destinationsystem
                 && mission.originstation == mission.destinationstation)
             {
-                if (mission.tagsList.Any(t => t.ClaimAtOrigin))
+                // Mission is claimed at a cargo depot - do not redirect until all cargo has been delivered.
+                if ( mission.cargodepot &&
+                     mission.delivered < mission.amount )
+                { return false; }
+
+                // Redirect based on origin and destination info.
+                if ( mission.tagsList.Any( t => t.ClaimAtOrigin ) )
                 {
-                    if (mission.statusDef != MissionStatus.Claim)
+                    if ( mission.statusDef != MissionStatus.Claim )
                     {
                         mission.statusDef = MissionStatus.Claim;
                         return true;
