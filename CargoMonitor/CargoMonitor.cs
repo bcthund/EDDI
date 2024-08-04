@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -172,7 +173,11 @@ namespace EddiCargoMonitor
             // Calculate cargo needs using the post handler (so that mission configuration information is already updated)
             if ( @event.type.Contains("Depot") || @event.type.Contains("Mission") )
             {
-                CalculateCargoNeeds();
+                Task.Run( async () =>
+                {
+                    await Task.Delay( TimeSpan.FromMilliseconds( 250 ) );
+                    CalculateCargoNeeds();
+                } ).ConfigureAwait( false );
             }
         }
 
@@ -644,7 +649,8 @@ namespace EddiCargoMonitor
         {
             try
             {
-                var missionsConfig = ConfigService.Instance.missionMonitorConfiguration.missions
+                var missionsConfig = ConfigService.Instance.missionMonitorConfiguration.missions.ToList();
+                var missions = missionsConfig
                         .Where(m =>
                             m.statusDef == MissionStatus.Active &&
                             m.CommodityDefinition != null &&
@@ -653,12 +659,12 @@ namespace EddiCargoMonitor
                 lock ( inventoryLock )
                 {
                     // Add any mission commodities we need and do not currently possess
-                    foreach ( var mission in missionsConfig )
+                    foreach ( var mission in missions )
                     {
                         if ( inventory.SelectMany( c => c.missionCargo ).All( kv => kv.Key != mission.missionid ) )
                         {
                             var cargo = new Cargo( mission.CommodityDefinition.edname );
-                            cargo.AddDetailedQty( mission.missionid, mission.amount ?? 0 );
+                            cargo.need += mission.amount ?? 0;
                             AddOrUpdateCargo( cargo );
                         }
                     }
@@ -666,7 +672,7 @@ namespace EddiCargoMonitor
                     // Update need for mission commodities we do possess
                     foreach ( var cargo in inventory )
                     {
-                        var missionsData = missionsConfig
+                        var missionsData = missions
                                 .Where( m => m.CommodityDefinition.edname == cargo.commodityDef.edname)
                                 .ToList();
                         var missionNeeds = missionsData.Sum( m => m.amount - m.delivered ) ?? 0;

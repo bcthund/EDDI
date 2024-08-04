@@ -87,7 +87,6 @@ namespace EddiDataDefinitions
         [ JsonProperty(nameof(missionCargo)) ]
         private Dictionary<long, int> _missionCargo = new Dictionary<long, int>();
 
-        // TODO: Calculate need periodically referencing the mission monitor saved configuration?
         [ PublicAPI ] public int need { get; set; }
 
         // Total amount of the commodity
