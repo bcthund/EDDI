@@ -1,4 +1,5 @@
 ﻿using Eddi;
+using EddiCore.Upgrader;
 using EddiCargoMonitor;
 using EddiCompanionAppService;
 using EddiCore;
