@@ -66,6 +66,11 @@ namespace EddiCargoMonitor
         {
             BindingOperations.CollectionRegistering += Inventory_CollectionRegistering;
             readInventory( configuration );
+            Task.Run( async () =>
+            {
+                await Task.Delay( TimeSpan.FromMilliseconds( 500 ) );
+                CalculateCargoNeeds();
+            } ).ConfigureAwait( false );
             Logging.Info( $"Initialized {MonitorName()}" );
         }
 
