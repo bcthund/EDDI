@@ -144,11 +144,6 @@
   
   
   
-  
-  
-  
-  
-  
   <data name="OnFoot" xml:space="preserve">
     <value>徒歩</value>
   </data>
@@ -192,12 +187,12 @@
     <value>隠密</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>ダウンロード</value>
-    <comment>Hack type</comment>
+	  <value>ダウンロード</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>アップロード</value>
-    <comment>Hack type</comment>
+	  <value>アップロード</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Offline" xml:space="preserve">
     <value>セトルメントの電源切断</value>
@@ -236,6 +231,8 @@
     <value>政治犯</value>
     <comment>Bulk passenger type</comment>
   </data>
+  
+  
   
   
   

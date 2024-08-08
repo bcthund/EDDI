@@ -126,6 +126,9 @@
   <data name="Assassinate" xml:space="preserve">
     <value>Mordauftrag</value>
   </data>
+  <data name="Wing" xml:space="preserve">
+	  <value>Wing</value>
+  </data>
   <data name="Collect" xml:space="preserve">
     <value>Beschaffungsmission</value>
   </data>
@@ -157,10 +160,10 @@
     <value>Bergbaumission</value>
   </data>
   <data name="Bulk" xml:space="preserve">
-    <value>Passagiertransport</value>
+	  <value>Massentransport</value><comment>e.g. of passengers</comment>
   </data>
   <data name="VIP" xml:space="preserve">
-    <value>VIP-Transport</value>
+	  <value>VIP Transport</value><comment>e.g. VIP passenger</comment>
   </data>
   <data name="Piracy" xml:space="preserve">
     <value>Piraterie</value>
@@ -229,12 +232,12 @@
     <value>Verdeckte Mission</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Download</value>
-    <comment>Hack type</comment>
+	  <value>Download</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Upload</value>
-    <comment>Hack type</comment>
+	  <value>Upload</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Offline" xml:space="preserve">
     <value>Siedlung ausschalten</value>
@@ -298,7 +301,7 @@
     <comment>e.g. rescue from a burning station</comment>
   </data>
   <data name="Evacuation" xml:space="preserve">
-    <value>Passagier-Evakuierung</value>
+	  <value>Evakuierung</value><comment>e.g. of passengers</comment>
   </data>
   <data name="Alert" xml:space="preserve">
     <value>Alarm</value>
@@ -306,5 +309,11 @@
   <data name="Scout" xml:space="preserve">
     <value>Thargoid Späher Ziele</value>
     <comment>Massacre type</comment>
+  </data>
+  <data name="Contact" xml:space="preserve">
+	  <value>Kontakt</value><comment>e.g. mission assigned by an on-foot contact</comment>
+  </data>
+  <data name="Sabotage" xml:space="preserve">
+	  <value>Sabotage</value><comment>e.g. on-foot settlement sabotage mission</comment>
   </data>
 </root>

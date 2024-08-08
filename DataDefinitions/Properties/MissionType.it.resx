@@ -126,6 +126,9 @@
   <data name="Assassinate" xml:space="preserve">
     <value>Assassinio</value>
   </data>
+  <data name="Wing" xml:space="preserve">
+	  <value>Stormo</value>
+  </data>
   <data name="Collect" xml:space="preserve">
     <value>Raccolta</value>
   </data>
@@ -229,12 +232,12 @@
     <value>Segreto</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Download</value>
-    <comment>Hack type</comment>
+	  <value>Download</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Upload</value>
-    <comment>Hack type</comment>
+	  <value>Upload</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Offline" xml:space="preserve">
     <value>Insediamento disattivato</value>
@@ -307,4 +310,6 @@
     <value>Obiettivi dell'esploratore Thargoid</value>
     <comment>Massacre type</comment>
   </data>
+  
+  
 </root>

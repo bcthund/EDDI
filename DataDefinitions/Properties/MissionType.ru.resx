@@ -227,12 +227,12 @@
     <value>Тайный</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Загрузка</value>
-    <comment>Hack type</comment>
+	  <value>Загрузка</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Загрузить</value>
-    <comment>Hack type</comment>
+	  <value>Загрузить</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Offline" xml:space="preserve">
     <value>Отключённое поселение</value>
@@ -280,6 +280,8 @@
   <data name="POI" xml:space="preserve">
     <value>Точка интереса</value>
   </data>
+  
+  
   
   
   

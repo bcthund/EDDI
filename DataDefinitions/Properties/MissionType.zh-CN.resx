@@ -229,12 +229,12 @@
     <value>隐蔽的</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>下载</value>
-    <comment>Hack type</comment>
+	  <value>下载</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>上传</value>
-    <comment>Hack type</comment>
+	  <value>上传</value>
+	  <comment>On-foot hack type</comment>
   </data>
   <data name="Offline" xml:space="preserve">
     <value>离线地面据点</value>
@@ -307,4 +307,6 @@
     <value>八角侦查兵目标</value>
     <comment>Massacre type</comment>
   </data>
+  
+  
 </root>

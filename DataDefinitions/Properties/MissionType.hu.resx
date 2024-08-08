@@ -124,19 +124,15 @@
   
   
   
-  
   <data name="Delivery" xml:space="preserve">
     <value>Szállítás</value>
   </data>
   
   
   
-  
-  
   <data name="LongDistanceExpedition" xml:space="preserve">
     <value>Expedíció</value>
   </data>
-  
   
   
   <data name="Mining" xml:space="preserve">
@@ -158,6 +154,7 @@
   <data name="Sightseeing" xml:space="preserve">
     <value>Körutazás</value>
   </data>
+  
   
   
   
