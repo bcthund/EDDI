@@ -4,6 +4,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.1.0-b1
   * Core
+    * Added support for the Type-8 Transporter.
     * Added `sourcesystem`, `sourcebody`, `collected`, and `delivered`, properties to the `mission` object.
     * Commodities now have a `corrosive` boolean property.
     * Removed `haulageData` map from the `cargo` object, add `missionCargo` dictionary object in its place.
@@ -11,6 +12,8 @@ Full details of the variables available for each noted event, and VoiceAttack in
     * The `need` property of `cargo` is now calculated after resolvers have handled events (to minimize cross linking between the Cargo and Mission Monitors).
   * Crime Monitor
     * An interstellar bounty applies when fines or bounties for factions aligned with a superpower exceed 10,000 credits.
+  * Mission Monitor
+    * The drop-down on missions now includes a "Notes" section where you can record notes about ongoing missions. (#2410)
   * Speech Responder
     * Fixed a bug that could prevent variables set with `set` from being available in some contexts. 
     * Custom Functions

@@ -120,6 +120,20 @@ namespace EddiDataDefinitions
         [Utilities.PublicAPI]
         public bool shared { get; set; }
 
+        [Utilities.PublicAPI ("Notes you have recorded about the mission.")]
+        public string notes
+        {
+            get => _notes;
+            set
+            {
+                if ( _notes == value ) { return; }
+                _notes = value;
+                OnPropertyChanged( nameof( notes ) );
+            }
+        }
+        [JsonIgnore]
+        private string _notes;
+
         #endregion
 
         #region Mission Tags / MetaData
@@ -471,13 +485,14 @@ namespace EddiDataDefinitions
 
         [JsonConstructor]
         // Main Constructor
-        public Mission(long MissionId, string Name, DateTime? expiry, MissionStatus Status, bool Shared = false)
+        public Mission(long MissionId, string Name, DateTime? expiry, MissionStatus Status, string notes = null, bool Shared = false)
         {
             this.missionid = MissionId;
             this.name = Name;
             this.expiry = expiry?.ToUniversalTime();
             this.statusDef = Status;
             this.shared = Shared;
+            this.notes = notes;
             this.expiring = false;
             destinationsystems = new List<NavWaypoint>();
         }
