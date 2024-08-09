@@ -2,6 +2,11 @@
 
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
+## 4.1.0-b2
+  * Speech Responder
+    * Scripts
+      * `Commodity sale check` updated fix a typo.
+
 ## 4.1.0-b1
   * Core
     * Added support for the Type-8 Transporter.
