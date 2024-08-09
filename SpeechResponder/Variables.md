@@ -119,6 +119,7 @@ A commodity.
   - *name* - the name of the commodity (e.g. Tea)
   - *category* - the category of the commodity (e.g. Foods, Machinery, Technology)
   - *rare* - the rarity of the commodity (boolean true or false)
+  - *corrosive* - true if the commodity is known to be corrosive (boolean true or false)
 
 Additional properties may become available in station, via *station.commodities.[property]*  
 (see Commodity sale check and Commodity purchase check for sample usages).
