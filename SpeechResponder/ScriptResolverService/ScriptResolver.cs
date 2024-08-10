@@ -76,7 +76,9 @@ namespace EddiSpeechResponder.Service
         {
             try
             {
-                Logging.Debug( $"Resolving {( isTopLevelScript ? "top level " : "" )}script {scriptObject?.Name}: {script}", context );
+                Logging.Debug(
+                    $"Resolving {( isTopLevelScript ? "top level " : "" )}script {scriptObject?.Name}: {script}",
+                    context );
 
                 //If this is not a top level script then we need to preserve escape sequence characters (\).
                 if ( !isTopLevelScript )
@@ -94,12 +96,14 @@ namespace EddiSpeechResponder.Service
                         {
                             Logging.Warn( @"Cottle Parser Warning", report );
                         }
+
                         if ( report.Severity is DocumentSeverity.Notice )
                         {
                             Logging.Debug( @"Cottle Parser Suggestion", report );
                         }
                     }
                 }
+
                 var document = documentResult.DocumentOrThrow;
 
                 var result = document.Render( context );
@@ -144,6 +148,11 @@ namespace EddiSpeechResponder.Service
 
                 Logging.Warn( $"Failed to resolve {scriptName} at line {e.Line}. {e}" );
                 return $"There is a problem with {scriptName} at line {e.Line}. {errorTranslation( e.Message )}";
+            }
+            catch ( ArgumentOutOfRangeException aoore )
+            {
+                Logging.Warn( aoore.Message, aoore );
+                return $"Error with {scriptObject?.Name ?? "this"} script: {aoore.Message}";
             }
             catch ( ConfigException ce )
             {
