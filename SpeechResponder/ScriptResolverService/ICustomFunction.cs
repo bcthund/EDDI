@@ -19,6 +19,7 @@ namespace EddiSpeechResponder.Service
         private IContext TopLevelContext { get; }
 
         private static Dictionary<Value, Value> RuntimeGlobals { get; set; } = new Dictionary<Value, Value>();
+        private static readonly object globalsLock = new object();
 
         protected Dictionary<string, Script> Scripts { get; }
 
@@ -26,23 +27,30 @@ namespace EddiSpeechResponder.Service
         {
             this.TopLevelContext = context;
             this.Scripts = scripts;
-            RuntimeGlobals.Clear();
+            lock ( globalsLock )
+            {
+                RuntimeGlobals.Clear();
+            }
         }
 
         protected IContext GetContext ( IMap globals )
         {
-            RuntimeGlobals = new[]
-                {
-                    globals.ToDictionary( g => g.Key, g => g.Value ),
-                    RuntimeGlobals.Where( g => !globals.Contains( g.Key ) )
-                }
-                .SelectMany( dict => dict )
-                .ToDictionary( pair => pair.Key, pair => pair.Value );
-            var runtimeState = new Dictionary<Value, Value> { [ "state" ] = ScriptResolver.buildState() }
-                .Where( pair => !RuntimeGlobals.ContainsKey( pair.Key ) );
-            var latestContext = Context.CreateBuiltin( new[] { RuntimeGlobals, runtimeState }
-                .SelectMany( dict => dict )
-                .ToDictionary( pair => pair.Key, pair => pair.Value ) );
+            IContext latestContext;
+            lock ( globalsLock )
+            {
+                RuntimeGlobals = new[]
+                    {
+                        globals.ToDictionary( g => g.Key, g => g.Value ),
+                        RuntimeGlobals.Where( g => !globals.Contains( g.Key ) )
+                    }
+                    .SelectMany( dict => dict )
+                    .ToDictionary( pair => pair.Key, pair => pair.Value );
+                var runtimeState = new Dictionary<Value, Value> { [ "state" ] = ScriptResolver.buildState() }
+                    .Where( pair => !RuntimeGlobals.ContainsKey( pair.Key ) );
+                latestContext = Context.CreateBuiltin( new[] { RuntimeGlobals, runtimeState }
+                    .SelectMany( dict => dict )
+                    .ToDictionary( pair => pair.Key, pair => pair.Value ) );
+            }
             return Context.CreateCascade( latestContext, TopLevelContext );
         }
     }
