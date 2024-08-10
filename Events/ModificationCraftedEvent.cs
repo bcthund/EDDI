@@ -19,7 +19,7 @@ namespace EddiEvents
         public string blueprint { get; private set; }
 
         [PublicAPI("The module being crafted")]
-        public string module => compartment?.module?.localizedName;
+        public string module => Module?.localizedName;
 
         [PublicAPI("The level of the blueprint being crafted")]
         public int level { get; private set; }
@@ -42,9 +42,11 @@ namespace EddiEvents
 
         public long blueprintId { get; private set; }
 
-        public Compartment compartment { get; private set; }
+        public string slot { get; private set; }
 
-        public ModificationCraftedEvent(DateTime timestamp, string engineer, long engineerId, string blueprint, long blueprintId, int level, decimal? quality, string experimentalEffect, List<MaterialAmount> materials, List<CommodityAmount> commodities, Compartment compartment) : base(timestamp, NAME)
+        public Module Module { get; private set; }
+
+        public ModificationCraftedEvent(DateTime timestamp, string engineer, long engineerId, string blueprint, long blueprintId, int level, decimal? quality, string experimentalEffect, List<MaterialAmount> materials, List<CommodityAmount> commodities, string slot, Module module) : base(timestamp, NAME)
         {
             this.engineer = engineer;
             this.engineerId = -engineerId;
@@ -55,7 +57,8 @@ namespace EddiEvents
             this.experimentaleffect = experimentalEffect;
             this.materials = materials;
             this.commodities = commodities;
-            this.compartment = compartment;
+            this.slot = slot;
+            this.Module = Module;
         }
     }
 }

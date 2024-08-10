@@ -2592,24 +2592,20 @@ namespace EddiJournalMonitor
                                 break;
                             case "EngineerCraft":
                                 {
-                                    string engineer = JsonParsing.getString(data, "Engineer");
-                                    long engineerId = JsonParsing.getLong(data, "EngineerID");
-                                    string blueprintpEdName = JsonParsing.getString(data, "BlueprintName");
-                                    long blueprintId = JsonParsing.getLong(data, "BlueprintID");
+                                    var engineer = JsonParsing.getString(data, "Engineer");
+                                    var engineerId = JsonParsing.getLong(data, "EngineerID");
+                                    var blueprintpEdName = JsonParsing.getString(data, "BlueprintName");
+                                    var blueprintId = JsonParsing.getLong(data, "BlueprintID");
 
                                     data.TryGetValue("Level", out object val);
-                                    int level = (int)(long)val;
+                                    var level = (int)(long)val;
 
-                                    decimal? quality = JsonParsing.getOptionalDecimal(data, "Quality"); //
-                                    string experimentalEffect = JsonParsing.getString(data, "ApplyExperimentalEffect"); //
+                                    var quality = JsonParsing.getOptionalDecimal(data, "Quality");
+                                    var experimentalEffect = JsonParsing.getString(data, "ApplyExperimentalEffect");
 
-                                    var ship = EDDI.Instance.CurrentShip?.EDName;
-                                    Compartment compartment = null;
-                                    if (!string.IsNullOrEmpty(ship))
-                                    {
-                                        compartment = parseShipCompartment(ship, JsonParsing.getString(data, "Slot"));
-                                        compartment.module = Module.FromEDName(JsonParsing.getString(data, "Module"));
-                                    }
+                                    var slot = JsonParsing.getString( data, "Slot" );
+                                    var module = Module.FromEDName( JsonParsing.getString( data, "Module" ) );
+                                    
                                     var commodities = new List<CommodityAmount>();
                                     var materials = new List<MaterialAmount>();
                                     if (data.TryGetValue("Ingredients", out val))
@@ -2629,7 +2625,7 @@ namespace EddiJournalMonitor
                                                 else
                                                 {
                                                     // Probably a material then
-                                                    Material material = Material.FromEDName(used.Key);
+                                                    var material = Material.FromEDName(used.Key);
                                                     materials.Add(new MaterialAmount(material, (int)(long)used.Value));
                                                 }
                                             }
@@ -2638,12 +2634,12 @@ namespace EddiJournalMonitor
                                         {
                                             foreach (Dictionary<string, object> materialJson in materialsJson)
                                             {
-                                                Material material = Material.FromEDName(JsonParsing.getString(materialJson, "Name"));
+                                                var material = Material.FromEDName(JsonParsing.getString(materialJson, "Name"));
                                                 materials.Add(new MaterialAmount(material, (int)(long)materialJson["Count"]));
                                             }
                                         }
                                     }
-                                    events.Add(new ModificationCraftedEvent(timestamp, engineer, engineerId, blueprintpEdName, blueprintId, level, quality, experimentalEffect, materials, commodities, compartment) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add(new ModificationCraftedEvent(timestamp, engineer, engineerId, blueprintpEdName, blueprintId, level, quality, experimentalEffect, materials, commodities, slot, module) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;
