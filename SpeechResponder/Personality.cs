@@ -85,6 +85,9 @@ namespace EddiSpeechResponder
         [JsonIgnore]
         private string dataPath;
 
+        [ JsonIgnore ] 
+        private static Personality _defaultPersonality;
+
         private static readonly string[] obsoleteScriptKeys = 
         {
             "Entered signal source", // Replaced by "Destination arrived" script
@@ -174,7 +177,7 @@ namespace EddiSpeechResponder
         /// </summary>
         public static Personality Default()
         {
-            return FromFile(DEFAULT_PATH, true);
+            return _defaultPersonality ?? ( _defaultPersonality = FromFile( DEFAULT_PATH, true ) );
         }
 
         /// <summary>
@@ -225,6 +228,13 @@ namespace EddiSpeechResponder
                 if ( !isDefault )
                 {
                     fixPersonalityInfo( personality );
+                }
+                else
+                {
+                    foreach ( var script in personality.Scripts.Values )
+                    {
+                        script.defaultValue = script.Value;
+                    }
                 }
             }
 

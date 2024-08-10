@@ -65,7 +65,7 @@ namespace EddiSpeechResponder
 
         [JsonProperty("defaultValue")]
 
-        public string defaultValue { get; set; }
+        public string defaultValue { get; internal set; }
 
         [JsonProperty("default")]
         // Determine whether the script matches the default, treating empty strings and null values as equal

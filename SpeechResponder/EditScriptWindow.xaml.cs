@@ -44,8 +44,9 @@ namespace EddiSpeechResponder
         private readonly List<MetaVariable> metaVars = new List<MetaVariable>();
         private readonly List<ICustomFunction> customFunctions;
         private static readonly object metaVarLock = new object();
+        private readonly SpeechResponder speechResponder;
 
-        public EditScriptWindow ( ScriptResolver scriptResolver, Script script, Dictionary<string, Script> scripts, [NotNull][ItemNotNull] IEnumerable<MetaVariable> metaVars, [NotNull] CottleHighlighting cottleHighlighting, bool isNewOrRecoveredScript )
+        public EditScriptWindow ( SpeechResponder speechResponder, Script script, Dictionary<string, Script> scripts, [NotNull][ItemNotNull] IEnumerable<MetaVariable> metaVars, [NotNull] CottleHighlighting cottleHighlighting, bool isNewOrRecoveredScript )
         {
             InitializeComponent();
             DataContext = this;
@@ -55,6 +56,7 @@ namespace EddiSpeechResponder
             _scripts = scripts;
             this.script = script;
             this.metaVars.AddRange(metaVars);
+            this.speechResponder = speechResponder;
 
             if ( script == null )
             {
@@ -133,8 +135,8 @@ namespace EddiSpeechResponder
         private void EditScriptWindow_SourceInitialized ( object sender, EventArgs e )
         {
             // Validate window position on opening
-            int designedHeight = (int)MinHeight;
-            int designedWidth = (int)MinWidth;
+            var designedHeight = (int)MinHeight;
+            var designedWidth = (int)MinWidth;
 
             // WPF uses DPI scaled units rather than true pixels.
             // Retrieve the DPI scaling for the controlling monitor (where the top left pixel is located).
@@ -161,8 +163,8 @@ namespace EddiSpeechResponder
                 }
 
                 // Check whether the rectangle is completely visible on-screen
-                bool testUpperLeft = false;
-                bool testLowerRight = false;
+                var testUpperLeft = false;
+                var testLowerRight = false;
                 foreach ( Screen screen in Screen.AllScreens )
                 {
                     if ( rect.X >= applyDpiScale( screen.Bounds.X, dpi.DpiScaleX ) && rect.Y >= applyDpiScale( screen.Bounds.Y, dpi.DpiScaleY ) ) // The upper and left bounds fall on a valid screen
@@ -456,7 +458,7 @@ namespace EddiSpeechResponder
 
         private void variablesButtonClick ( object sender, RoutedEventArgs e )
         {
-            VariablesWindow variablesWindow = new VariablesWindow(editorScript);
+            var variablesWindow = new VariablesWindow(editorScript);
             variablesWindow.Show();
         }
 
@@ -481,13 +483,11 @@ namespace EddiSpeechResponder
 
                     // Splice the new script in to the existing scripts
                     editorScript.Value = scriptView.Text;
-                    Dictionary<string, Script> newScripts = new Dictionary<string, Script>(_scripts);
-                    Script testScript = new Script(editorScript.Name, editorScript.Description, false, editorScript.Value);
+                    var newScripts = new Dictionary<string, Script>(_scripts);
+                    var testScript = new Script(editorScript.Name, editorScript.Description, false, editorScript.Value);
                     newScripts.Remove( editorScript.Name );
                     newScripts.Add( editorScript.Name, testScript );
 
-                    SpeechResponder speechResponder = new SpeechResponder();
-                    speechResponder.Start();
                     speechResponder.TestScript( editorScript.Name, newScripts );
                 }
                 else

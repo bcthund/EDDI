@@ -340,6 +340,16 @@ namespace UnitTests
             Assert.AreEqual(@"<break time=""100ms""/>Shinrarta Dezhra & Co's shop", result);
         }
 
+        [ TestMethod ]
+        public void TestDefaultPersonalityHasDefaultValues ()
+        {
+            var defaultPersonality = Personality.Default();
+            foreach ( var script in defaultPersonality.Scripts.Values )
+            {
+                Assert.AreEqual(script.defaultValue, script.Value);
+            }
+        }
+
         [TestMethod]
         public void TestPersonalityLocalizedScriptsAreComplete()
         {
