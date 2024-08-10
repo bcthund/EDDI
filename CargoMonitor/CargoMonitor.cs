@@ -656,48 +656,52 @@ namespace EddiCargoMonitor
             {
                 var missionsConfig = ConfigService.Instance.missionMonitorConfiguration.missions.ToList();
                 var missions = missionsConfig
-                        .Where(m =>
-                            m.statusDef == MissionStatus.Active &&
-                            m.CommodityDefinition != null &&
-                            m.amount != null )
-                        .ToList();
+                    .Where( m =>
+                        m.statusDef == MissionStatus.Active &&
+                        m.CommodityDefinition != null &&
+                        m.amount != null )
+                    .ToList();
+
+                List<Cargo> currentCargo;
                 lock ( inventoryLock )
                 {
-                    // Add any mission commodities we need and do not currently possess
-                    foreach ( var mission in missions )
-                    {
-                        if ( inventory.SelectMany( c => c.missionCargo ).All( kv => kv.Key != mission.missionid ) )
-                        {
-                            var cargo = new Cargo( mission.CommodityDefinition.edname );
-                            cargo.need += mission.amount ?? 0;
-                            AddOrUpdateCargo( cargo );
-                        }
-                    }
+                    currentCargo = inventory.ToList();
+                }
 
-                    // Update need for mission commodities we do possess
-                    foreach ( var cargo in inventory )
+                // Add any mission commodities we need and do not currently possess
+                foreach ( var mission in missions )
+                {
+                    if ( currentCargo.SelectMany( c => c.missionCargo ).All( kv => kv.Key != mission.missionid ) )
                     {
-                        var missionsData = missions
-                                .Where( m => m.CommodityDefinition.edname == cargo.commodityDef.edname)
-                                .ToList();
-                        var missionNeeds = missionsData.Sum( m => m.amount - m.delivered ) ?? 0;
-                        var shipCargo = cargo.missionCargo
-                                .Where( kv => missionsData.Select( m => m.missionid ).Contains( kv.Key ) )
-                                .Sum( kv => kv.Value );
-                        var wingCargo = missionsData
-                                .Sum( m => m.wingCollected );
-
-                        cargo.need = missionNeeds - shipCargo - wingCargo;
-                        TryRemoveCargo( cargo );
+                        var cargo = new Cargo( mission.CommodityDefinition.edname );
+                        cargo.need += mission.amount ?? 0;
+                        AddOrUpdateCargo( cargo );
                     }
                 }
+
+                // Update need for mission commodities we do possess
+                foreach ( var cargo in currentCargo )
+                {
+                    var missionsData = missions
+                        .Where( m => m.CommodityDefinition.edname == cargo.commodityDef.edname )
+                        .ToList();
+                    var missionNeeds = missionsData.Sum( m => m.amount - m.delivered ) ?? 0;
+                    var shipCargo = cargo.missionCargo
+                        .Where( kv => missionsData.Select( m => m.missionid ).Contains( kv.Key ) )
+                        .Sum( kv => kv.Value );
+                    var wingCargo = missionsData
+                        .Sum( m => m.wingCollected );
+
+                    cargo.need = missionNeeds - shipCargo - wingCargo;
+                    TryRemoveCargo( cargo );
+                }
+
                 writeInventory();
             }
             catch ( Exception e )
             {
                 Logging.Error( "Failed to update cargo needs", e );
             }
-
         }
 
         static void RaiseOnUIThread(EventHandler handler, object sender)
