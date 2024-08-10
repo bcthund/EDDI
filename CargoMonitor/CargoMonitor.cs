@@ -413,8 +413,11 @@ namespace EddiCargoMonitor
         private void _handleMissionAbandonedEvent(MissionAbandonedEvent @event)
         {
             var cargo = GetCargoWithMissionId(@event.missionid, out var amount);
-            cargo.RemoveDetailedQty( @event.missionid, amount );
-            cargo.AddDetailedQty(CargoType.stolen, amount, cargo.price);
+            if ( cargo != null )
+            {
+                cargo.RemoveDetailedQty( @event.missionid, amount );
+                cargo.AddDetailedQty( CargoType.stolen, amount, cargo.price );
+            }
         }
 
         // Check to see if this is a cargo mission and update our inventory accordingly
@@ -628,6 +631,7 @@ namespace EddiCargoMonitor
             return inventory.FirstOrDefault(c => c.edname.ToLowerInvariant() == edname);
         }
 
+        [CanBeNull]
         public Cargo GetCargoWithMissionId ( long missionid, out int amount )
         {
             amount = 0;
