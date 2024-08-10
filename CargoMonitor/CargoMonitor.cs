@@ -258,7 +258,8 @@ namespace EddiCargoMonitor
 
         private void _handleCommodityCollectedEvent(CommodityCollectedEvent @event)
         {
-            var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname) ?? new Cargo(@event.commodityDefinition?.edname);
+            var cargo = GetCargoWithEDName( @event.commodityDefinition?.edname ) ??
+                        new Cargo( @event.commodityDefinition?.edname );
             if ( @event.missionid != null )
             {
                 cargo.AddDetailedQty( (long)@event.missionid, 1 );
@@ -287,14 +288,13 @@ namespace EddiCargoMonitor
         private void _handleCommodityEjectedEvent(CommodityEjectedEvent @event)
         {
             var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
-            if ( cargo == null ) { return; }
             if ( @event.missionid != null )
             {
-                cargo.RemoveDetailedQty( (long)@event.missionid, @event.amount );
+                cargo?.RemoveDetailedQty( (long)@event.missionid, @event.amount );
             }
             else
             {
-                cargo.RemoveDetailedQty( CargoType.legal, @event.amount );
+                cargo?.RemoveDetailedQty( CargoType.legal, @event.amount );
             }
             TryRemoveCargo( cargo );
         }
@@ -311,7 +311,8 @@ namespace EddiCargoMonitor
 
         private void _handleCommodityPurchasedEvent(CommodityPurchasedEvent @event)
         {
-            var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname) ?? new Cargo(@event.commodityDefinition?.edname);
+            var cargo = GetCargoWithEDName( @event.commodityDefinition?.edname ) ??
+                        new Cargo( @event.commodityDefinition?.edname );
             cargo.AddDetailedQty( CargoType.legal, @event.amount, @event.price );
             AddOrUpdateCargo( cargo );
         }
@@ -328,7 +329,8 @@ namespace EddiCargoMonitor
 
         private void _handleCommodityRefinedEvent(CommodityRefinedEvent @event)
         {
-            var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
+            var cargo = GetCargoWithEDName( @event.commodityDefinition?.edname ) ??
+                        new Cargo( @event.commodityDefinition?.edname );
             cargo.AddDetailedQty( CargoType.legal, 1, 0 );
             AddOrUpdateCargo( cargo );
         }
@@ -621,6 +623,7 @@ namespace EddiCargoMonitor
             }
         }
 
+        [CanBeNull]
         public Cargo GetCargoWithEDName(string edname)
         {
             if (edname == null)
