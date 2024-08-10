@@ -3728,63 +3728,17 @@ namespace EddiJournalMonitor
                             case "RebootRepair":
                                 {
                                     // This event returns a list of slots rather than actual module ednames.
-                                    List<string> slotsJson = null;
+                                    List<string> compartmentsJson = null;
                                     data.TryGetValue( "Modules", out var val );
                                     if ( val is List<string> ls )
                                     {
-                                        slotsJson = ls;
+                                        compartmentsJson = ls;
                                     }
                                     else if ( val is List<object> lo )
                                     {
-                                        slotsJson = lo.Select( o => o.ToString() ).ToList();
+                                        compartmentsJson = lo.Select( o => o.ToString() ).ToList();
                                     }
-
-                                    var ship = EDDI.Instance.CurrentShip;
-                                    List<Module> modules = new List<Module>();
-                                    foreach (var slot in slotsJson)
-                                    {
-                                        Module module = null;
-                                        if (slot.Contains("CargoHatch"))
-                                        {
-                                            module = ship.cargohatch;
-                                        }
-                                        else if (slot.Contains("FrameShiftDrive"))
-                                        {
-                                            module = ship.frameshiftdrive;
-                                        }
-                                        else if (slot.Contains("LifeSupport"))
-                                        {
-                                            module = ship.lifesupport;
-                                        }
-                                        else if (slot.Contains("MainEngines"))
-                                        {
-                                            module = ship.thrusters;
-                                        }
-                                        else if (slot.Contains("PowerDistributor"))
-                                        {
-                                            module = ship.powerdistributor;
-                                        }
-                                        else if (slot.Contains("PowerPlant"))
-                                        {
-                                            module = ship.powerplant;
-                                        }
-                                        else if (slot.Contains("Radar"))
-                                        {
-                                            module = ship.sensors;
-                                        }
-                                        else if (slot.Contains("Hardpoint"))
-                                        {
-                                            module = ship.hardpoints.SingleOrDefault(h => h.name == slot)?.module;
-                                        }
-                                        else if (slot.Contains("Slot") || slot.Contains("Military"))
-                                        {
-                                            module = ship.compartments.SingleOrDefault(c => c.name == slot)?.module;
-                                        }
-
-                                        if (module != null) { modules.Add(module); }
-                                    }
-
-                                    events.Add(new ShipRebootedEvent(timestamp, modules) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add(new ShipRebootedEvent( timestamp, compartmentsJson ) { raw = line, fromLoad = fromLogLoad });
                                 }
                                 handled = true;
                                 break;

@@ -665,64 +665,72 @@ namespace EddiShipMonitor
             if (@event.timestamp > updatedAt)
             {
                 updatedAt = @event.timestamp;
-                Ship ship = GetCurrentShip();
-                if (ship == null)
-                {
-                    return;
-                }
-                foreach (string modulename in @event.modules)
+                var ship = GetCurrentShip();
+                if (ship == null) { return; }
+                foreach (var compartmentName in @event.compartments)
                 {
                     // Find the matching module and set health to 1%
-                    if (modulename == "ShipCockpit" && ship.canopy != null)
+                    // Update the event with a list of the repaired modules.
+                    if (compartmentName == "ShipCockpit" && ship.canopy != null)
                     {
                         ship.canopy.health = 1;
+                        @event.Modules.Add( ship.canopy );
                     }
-                    else if (modulename == "PowerPlant" && ship.powerplant != null)
+                    else if (compartmentName == "PowerPlant" && ship.powerplant != null)
                     {
                         ship.powerplant.health = 1;
+                        @event.Modules.Add( ship.powerplant );
                     }
-                    else if (modulename == "MainEngines" && ship.thrusters != null)
+                    else if (compartmentName == "MainEngines" && ship.thrusters != null)
                     {
                         ship.thrusters.health = 1;
+                        @event.Modules.Add( ship.thrusters );
                     }
-                    else if (modulename == "PowerDistributor" && ship.powerdistributor != null)
+                    else if (compartmentName == "PowerDistributor" && ship.powerdistributor != null)
                     {
                         ship.powerdistributor.health = 1;
+                        @event.Modules.Add( ship.powerdistributor );
                     }
-                    else if (modulename == "FrameShiftDrive" && ship.frameshiftdrive != null)
+                    else if (compartmentName == "FrameShiftDrive" && ship.frameshiftdrive != null)
                     {
                         ship.frameshiftdrive.health = 1;
+                        @event.Modules.Add( ship.frameshiftdrive );
                     }
-                    else if (modulename == "LifeSupport" && ship.lifesupport != null)
+                    else if (compartmentName == "LifeSupport" && ship.lifesupport != null)
                     {
                         ship.lifesupport.health = 1;
+                        @event.Modules.Add( ship.lifesupport );
                     }
-                    else if (modulename == "Radar" && ship.sensors != null)
+                    else if (compartmentName == "Radar" && ship.sensors != null)
                     {
                         ship.sensors.health = 1;
+                        @event.Modules.Add( ship.sensors );
                     }
-                    else if (modulename == "CargoHatch" && ship.cargohatch != null)
+                    else if (compartmentName == "CargoHatch" && ship.cargohatch != null)
                     {
                         ship.cargohatch.health = 1;
+                        @event.Modules.Add( ship.cargohatch );
                     }
-                    else if (modulename.Contains("Hardpoint"))
+                    else if (compartmentName.Contains("Hardpoint"))
                     {
-                        foreach (Hardpoint hardpoint in ship.hardpoints)
+                        foreach (var hardpoint in ship.hardpoints)
                         {
-                            if (hardpoint.name == modulename && hardpoint.module != null)
+                            if (hardpoint.name == compartmentName && hardpoint.module != null)
                             {
                                 hardpoint.module.health = 1;
+                                @event.Modules.Add( hardpoint.module );
                                 break;
                             }
                         }
                     }
                     else
                     {
-                        foreach (Compartment compartment in ship.compartments)
+                        foreach (var compartment in ship.compartments)
                         {
-                            if (compartment.name == modulename && compartment.module != null)
+                            if (compartment.name == compartmentName && compartment.module != null)
                             {
                                 compartment.module.health = 1;
+                                @event.Modules.Add( compartment.module );
                                 break;
                             }
                         }
