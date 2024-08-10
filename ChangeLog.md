@@ -2,6 +2,10 @@
 
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
+## 4.1.0-b3
+  * Speech Responder
+    * Fixed a bug that made the default EDDI personality editable.
+
 ## 4.1.0-b2
   * Speech Responder
     * Scripts
