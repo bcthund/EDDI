@@ -560,6 +560,11 @@ namespace EddiInaraResponder
             {
                 eventData.Add( "starsystemNameOrigin", @event.Mission.originsystem );
             }
+            else
+            {
+                // `starsystemNameOrigin` is a required property to submit this data to Inara
+                return;
+            }
             if ( !string.IsNullOrEmpty(@event.Mission.originstation))
             {
                 eventData.Add("stationNameOrigin", @event.Mission.originstation);
