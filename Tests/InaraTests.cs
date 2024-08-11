@@ -46,17 +46,17 @@ namespace UnitTests
         [TestMethod]
         public void TestInvalidAPIkey()
         {
+            var invalidAPIkeyTestPassed = false;
             InaraService.invalidAPIkey += OnInvalidAPIkey;
-            var inaraConfiguration = new InaraConfiguration() { apiKey = "invalidAPIkey!@#", isAPIkeyValid = false };
-            PrivateObject privateInaraService = new PrivateObject(inaraService);
-            privateInaraService.Invoke("checkAPIcredentialsOk", inaraConfiguration );
+            var inaraConfiguration = new InaraConfiguration { apiKey = "invalidAPIkey!@#", isAPIkeyValid = false };
+            inaraService.checkAPIcredentialsOk( inaraConfiguration );
             System.Threading.Thread.Sleep(50);
             Assert.IsTrue(invalidAPIkeyTestPassed);
-        }
-        private bool invalidAPIkeyTestPassed;
-        private void OnInvalidAPIkey(object sender, EventArgs e)
-        {
-            invalidAPIkeyTestPassed = true;
+
+            void OnInvalidAPIkey ( object sender, EventArgs e )
+            {
+                invalidAPIkeyTestPassed = true;
+            }
         }
 
         [TestMethod]

@@ -8,10 +8,12 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiInaraService
 {
     public partial class InaraService : IInaraService
@@ -288,7 +290,7 @@ namespace EddiInaraService
             }
         }
 
-        private bool checkAPIcredentialsOk(InaraConfiguration inaraConfiguration)
+        public bool checkAPIcredentialsOk(InaraConfiguration inaraConfiguration)
         {
             // Check for a valid API key
             // Note that we don't check for a valid Inara commander name here -

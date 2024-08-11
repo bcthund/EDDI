@@ -1,6 +1,8 @@
 ﻿using EddiConfigService.Configurations;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiInaraService
 {
     public interface IInaraService
@@ -16,5 +18,8 @@ namespace EddiInaraService
         // Commander Profiles
         InaraCmdr GetCommanderProfile(string cmdrName = null);
         List<InaraCmdr> GetCommanderProfiles(IList<string> cmdrNames);
+
+        // API Credentials
+        bool checkAPIcredentialsOk ( InaraConfiguration inaraConfiguration );
     }
 }
