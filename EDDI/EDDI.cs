@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiCore
 {
     /// <summary>
@@ -152,7 +153,7 @@ namespace EddiCore
         private static readonly object instanceLock = new object();
 
         public List<IEddiMonitor> monitors = new List<IEddiMonitor>();
-        private ConcurrentBag<IEddiMonitor> activeMonitors = new ConcurrentBag<IEddiMonitor>();
+        internal ConcurrentBag<IEddiMonitor> activeMonitors = new ConcurrentBag<IEddiMonitor>();
         private static readonly object monitorLock = new object();
 
         public List<IEddiResponder> responders = new List<IEddiResponder>();
@@ -281,8 +282,8 @@ namespace EddiCore
         [CanBeNull]
         public StarSystem CurrentStarSystem 
         { 
-            get => currentStarSystem; 
-            private set
+            get => currentStarSystem;
+            internal set
             {
                 setSystemDistanceFromHome(value);
                 setSystemDistanceFromDestination(value);
@@ -1780,7 +1781,7 @@ namespace EddiCore
             }
         }
 
-        private bool eventSystemScanComplete(SystemScanComplete @event)
+        internal bool eventSystemScanComplete(SystemScanComplete @event)
         {
             // There is a bug in the player journal output (as of player journal v.25) that can cause the `SystemScanComplete` event to fire multiple times 
             // in rapid succession when performing a system scan of a star system with only stars and no other bodies.
@@ -1932,7 +1933,7 @@ namespace EddiCore
             await Task.WhenAll(monitorTasks.ToArray());
         }
 
-        private bool eventLocation(LocationEvent theEvent)
+        internal bool eventLocation(LocationEvent theEvent)
         {
             Logging.Info("Location StarSystem: " + theEvent.systemname);
 
@@ -2399,7 +2400,7 @@ namespace EddiCore
             return false;
         }
 
-        private void updateCurrentSystem(string systemName, ulong systemAddress)
+        internal void updateCurrentSystem(string systemName, ulong systemAddress)
         {
             if ( string.IsNullOrEmpty(systemName) || CurrentStarSystem?.systemname == systemName )
             {
@@ -2535,7 +2536,7 @@ namespace EddiCore
             return true;
         }
 
-        private bool eventJumped(JumpedEvent theEvent)
+        internal bool eventJumped(JumpedEvent theEvent)
         {
             if ( theEvent.taxi is true )
             {
@@ -3024,7 +3025,7 @@ namespace EddiCore
             return false;
         }
 
-        private bool eventBodyScanned(BodyScannedEvent theEvent)
+        internal bool eventBodyScanned(BodyScannedEvent theEvent)
         {
             // We just scanned a body.  We can only proceed if we know our current star system
             if (CurrentStarSystem == null) { return false; }
@@ -3044,7 +3045,7 @@ namespace EddiCore
             return true;
         }
 
-        private bool eventBodyMapped(BodyMappedEvent theEvent)
+        internal bool eventBodyMapped(BodyMappedEvent theEvent)
         {
             if (CurrentStarSystem != null && theEvent.systemAddress == CurrentStarSystem.systemAddress)
             {
