@@ -32,8 +32,7 @@ namespace UnitTests
             StarSystemSqLiteRepository.unitTesting = true;
 
             // Set ourselves as in a beta game session to stop automatic sending of data to remote systems
-            PrivateObject privateObject = new PrivateObject(EDDI.Instance);
-            privateObject.SetFieldOrProperty("gameIsBeta", true);
+            EDDI.Instance.gameIsBeta = true;
         }
 
         public static T DeserializeJsonResource<T>(byte[] data, JsonSerializerSettings settings = null) where T : class

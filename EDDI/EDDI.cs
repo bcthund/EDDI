@@ -69,7 +69,7 @@ namespace EddiCore
         } 
         private bool _inOdyssey = true;
 
-        public bool gameIsBeta { get; private set; } = false;
+        public bool gameIsBeta { get; internal set; } = false;
 
         public string gameVersion
         {
@@ -322,7 +322,7 @@ namespace EddiCore
         public StarSystem NextStarSystem
         {
             get => nextStarSystem;
-            private set
+            internal set
             {
                 setSystemDistanceFromHome(value);
                 void childPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
@@ -947,7 +947,7 @@ namespace EddiCore
             }
         }
 
-        private void eventHandler(Event @event)
+        internal void eventHandler(Event @event)
         {
             if (@event != null)
             {
@@ -1830,7 +1830,7 @@ namespace EddiCore
             return true;
         }
 
-        private bool eventFriends(FriendsEvent @event)
+        internal bool eventFriends(FriendsEvent @event)
         {
             var passEvent = false;
             var friend = new Friend
