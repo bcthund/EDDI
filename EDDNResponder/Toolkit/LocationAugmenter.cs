@@ -13,11 +13,11 @@ namespace EddiEddnResponder.Toolkit
         // We keep track of location information locally to minimize influence from other EDDI systems
 
         // Star System
-        public string systemName { get; private set; }
-        public ulong? systemAddress { get; private set; }
-        public decimal? systemX { get; private set; }
-        public decimal? systemY { get; private set; }
-        public decimal? systemZ { get; private set; }
+        public string systemName { get; internal set; }
+        public ulong? systemAddress { get; internal set; }
+        public decimal? systemX { get; internal set; }
+        public decimal? systemY { get; internal set; }
+        public decimal? systemZ { get; internal set; }
 
         // Station (Market)
         public string stationName { get; private set; }
@@ -283,7 +283,7 @@ namespace EddiEddnResponder.Toolkit
             return false;
         }
 
-        private bool ConfirmAddressAndCoordinates()
+        internal bool ConfirmAddressAndCoordinates()
         {
             if (systemName != null)
             {
@@ -317,7 +317,7 @@ namespace EddiEddnResponder.Toolkit
             return systemAddress != null && systemX != null && systemY != null && systemZ != null;
         }
 
-        private bool ConfirmScan(string scannedBodyName)
+        internal bool ConfirmScan(string scannedBodyName)
         {
             if (scannedBodyName != null && systemName != null)
             {

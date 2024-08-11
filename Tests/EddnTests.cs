@@ -137,27 +137,22 @@ namespace UnitTests
         [TestMethod]
         public void TestEddnSchemaInitialization()
         {
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder);
-            var schemas = (IEnumerable<object>)privateObject.GetField("schemas");
-            var capiSchemas = (IEnumerable<object>)privateObject.GetField("capiSchemas");
-
-            Assert.IsTrue(schemas?.Any());
-            Assert.IsTrue(capiSchemas?.Any());
+            var responder = makeTestEDDNResponder();
+            Assert.IsTrue( responder.schemas?.Any() );
+            Assert.IsTrue( responder.capiSchemas?.Any() );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void TestEDDNResponderGoodMatch()
         {
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.Location);
-            privateObject.SetFieldOrProperty("systemName", "Sol");
-            privateObject.SetFieldOrProperty("systemAddress", (ulong)10477373803);
-            privateObject.SetFieldOrProperty("systemX", 0.0M);
-            privateObject.SetFieldOrProperty("systemY", 0.0M);
-            privateObject.SetFieldOrProperty("systemZ", 0.0M);
+            var responder = makeTestEDDNResponder();
+            responder.eddnState.Location.systemName = "Sol";
+            responder.eddnState.Location.systemAddress = 10477373803;
+            responder.eddnState.Location.systemX = 0.0M;
+            responder.eddnState.Location.systemY = 0.0M;
+            responder.eddnState.Location.systemZ = 0.0M;
 
-            var confirmed = (bool?)privateObject.Invoke("ConfirmAddressAndCoordinates");
+            var confirmed = responder.eddnState.Location.ConfirmAddressAndCoordinates();
 
             Assert.IsTrue(confirmed);
             Assert.AreEqual("Sol", responder.eddnState.Location.systemName);
@@ -167,20 +162,19 @@ namespace UnitTests
             Assert.AreEqual(0.0M, responder.eddnState.Location.systemZ);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void TestEDDNResponderBadStarPos()
         {
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.Location);
+            var responder = makeTestEDDNResponder();
             // Intentionally place our EDDN responder in a state with incorrect coordinates (from Sol).
             // The 'Docked' event does include systemName and systemAddress, so we set those here.
-            privateObject.SetFieldOrProperty("systemName", "Artemis");
-            privateObject.SetFieldOrProperty("systemAddress", (ulong)3107509474002);
-            privateObject.SetFieldOrProperty("systemX", 0.0M);
-            privateObject.SetFieldOrProperty("systemY", 0.0M);
-            privateObject.SetFieldOrProperty("systemZ", 0.0M);
+            responder.eddnState.Location.systemName = "Artemis";
+            responder.eddnState.Location.systemAddress = 3107509474002;
+            responder.eddnState.Location.systemX = 0.0M;
+            responder.eddnState.Location.systemY = 0.0M;
+            responder.eddnState.Location.systemZ = 0.0M;
 
-            var confirmed = (bool?)privateObject.Invoke("ConfirmAddressAndCoordinates");
+            var confirmed = responder.eddnState.Location.ConfirmAddressAndCoordinates();
 
             Assert.IsFalse(confirmed);
             Assert.AreEqual("Artemis", responder.eddnState.Location.systemName);
@@ -190,19 +184,18 @@ namespace UnitTests
             Assert.IsNull(responder.eddnState.Location.systemZ);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void TestEDDNResponderBadSystemAddress()
         {
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.Location);
+            var responder = makeTestEDDNResponder();
             // Intentionally place our EDDN responder in a state with incorrect SystemAddress (from Artemis).
-            privateObject.SetFieldOrProperty("systemName", "Sol");
-            privateObject.SetFieldOrProperty("systemAddress", (ulong)3107509474002);
-            privateObject.SetFieldOrProperty("systemX", 0.0M);
-            privateObject.SetFieldOrProperty("systemY", 0.0M);
-            privateObject.SetFieldOrProperty("systemZ", 0.0M);
+            responder.eddnState.Location.systemName = "Sol";
+            responder.eddnState.Location.systemAddress = 3107509474002;
+            responder.eddnState.Location.systemX = 0.0M;
+            responder.eddnState.Location.systemY = 0.0M;
+            responder.eddnState.Location.systemZ = 0.0M;
 
-            var confirmed =(bool?) privateObject.Invoke("ConfirmAddressAndCoordinates");
+            var confirmed = responder.eddnState.Location.ConfirmAddressAndCoordinates();
 
             Assert.IsFalse(confirmed);
             Assert.AreEqual("Sol", responder.eddnState.Location.systemName);
@@ -212,32 +205,31 @@ namespace UnitTests
             Assert.AreEqual(0.0M, responder.eddnState.Location.systemZ);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void TestEDDNResponderBadName()
         {
+            var responder = makeTestEDDNResponder();
             // Tests that procedurally generated body names match the procedurally generated system name
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.Location);
-            privateObject.SetFieldOrProperty("systemName", "Pleiades Sector HR-W d1-79");
-            privateObject.SetFieldOrProperty("systemAddress", (ulong)2724879894859);
-            privateObject.SetFieldOrProperty("systemX", -80.62500M);
-            privateObject.SetFieldOrProperty("systemY", -146.65625M);
-            privateObject.SetFieldOrProperty("systemZ", -343.25000M);
+            responder.eddnState.Location.systemName = "Pleiades Sector HR-W d1-79";
+            responder.eddnState.Location.systemAddress = 2724879894859;
+            responder.eddnState.Location.systemX = -80.62500M;
+            responder.eddnState.Location.systemY = -146.65625M;
+            responder.eddnState.Location.systemZ = -343.25000M;
 
-            var confirmed = (bool?)privateObject.Invoke("ConfirmScan", new object[] { "Hyades Sector DL-X b1-2 A 1" });
+            var confirmed = responder.eddnState.Location.ConfirmScan( "Hyades Sector DL-X b1-2 A 1" );
 
-            Assert.IsFalse(confirmed);
-            Assert.IsNull(responder.eddnState.Location.systemName);
-            Assert.IsNull(responder.eddnState.Location.systemAddress);
-            Assert.IsNull(responder.eddnState.Location.systemX);
-            Assert.IsNull(responder.eddnState.Location.systemY);
-            Assert.IsNull(responder.eddnState.Location.systemZ);
+            Assert.IsFalse( confirmed );
+            Assert.IsNull( responder.eddnState.Location.systemAddress );
+            Assert.IsNull( responder.eddnState.Location.systemX );
+            Assert.IsNull( responder.eddnState.Location.systemY );
+            Assert.IsNull( responder.eddnState.Location.systemZ );
+            Assert.IsNull( responder.eddnState.Location.systemName );
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void TestEDDNResponderDockedEvent()
         {
-            string line = @"{
+            var line = @"{
                 ""timestamp"": ""2018-07-30T04:50:32Z"",
                 ""event"": ""FSDJump"",
                 ""StarSystem"": ""Diaguandri"",
@@ -342,7 +334,7 @@ namespace UnitTests
                 }
             }";
 
-            string line2 = @"{
+            var line2 = @"{
                 ""timestamp"": ""2018-07-30T06:07:47Z"",
                 ""event"": ""Docked"",
                 ""StationName"": ""Ray Gateway"",
@@ -393,15 +385,15 @@ namespace UnitTests
                 ""DistFromStarLS"": 566.487976
             }";
 
-            List<Event> events = JournalMonitor.ParseJournalEntry(line);
+            var events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            JumpedEvent @jumpedEvent = (JumpedEvent)events[0];
+            var @jumpedEvent = (JumpedEvent)events[0];
 
             events = JournalMonitor.ParseJournalEntry(line2);
             Assert.IsTrue(events.Count == 1);
-            DockedEvent @dockedEvent = (DockedEvent)events[0];
+            var @dockedEvent = (DockedEvent)events[0];
 
-            EDDNResponder responder = makeTestEDDNResponder();
+            var responder = makeTestEDDNResponder();
             responder.Handle(@jumpedEvent);
             responder.Handle(@dockedEvent);
 
@@ -420,7 +412,7 @@ namespace UnitTests
         [TestMethod()]
         public void TestMyReputationDataStripping()
         {
-            string line = @"{
+            var line = @"{
                 ""timestamp"": ""2018-11-19T01:06:17Z"",
                 ""event"": ""Location"",
                 ""Docked"": false,
@@ -509,11 +501,9 @@ namespace UnitTests
                 }
             }";
 
-            IDictionary<string, object> data = Deserializtion.DeserializeData(line);
-
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.PersonalData);
-            data = (IDictionary<string, object>)privateObject.Invoke("Strip", new object[] { data, "Location" });
+            var data = Deserializtion.DeserializeData(line);
+            var responder = makeTestEDDNResponder();
+            data = responder.eddnState.PersonalData.Strip( data, "Location" );
 
             if ( data == null )
             {
@@ -569,9 +559,8 @@ namespace UnitTests
                 }
             };
 
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.PersonalData);
-            data = (IDictionary<string, object>)privateObject.Invoke("Strip", new object[] { data, null });
+            var responder = makeTestEDDNResponder();
+            data = responder.eddnState.PersonalData.Strip( data, null );
 
             void testKeyValuePair(KeyValuePair<string, object> kvp)
             {
@@ -583,7 +572,7 @@ namespace UnitTests
 
             void testDictionary(IDictionary<string, object> dict)
             {
-                foreach (KeyValuePair<string, object> kvp in dict)
+                foreach (var kvp in dict)
                 {
                     var value = kvp.Value;
                     if (value is string)
@@ -594,7 +583,7 @@ namespace UnitTests
                     {
                         IList<object> list = value as List<object>;
                         Assert.IsNotNull(list);
-                        foreach (object item in list)
+                        foreach (var item in list)
                         {
                             testDictionary((IDictionary<string, object>)item);
                         }
@@ -615,14 +604,11 @@ namespace UnitTests
             string jump2 = @"{ ""timestamp"":""2019-01-27T07:23:38Z"", ""event"":""FSDJump"", ""StarSystem"":""Omega Sector OO-G a11-0"", ""SystemAddress"":5213552532472, ""StarPos"":[-1433.53125,-94.15625,5326.34375], ""SystemAllegiance"":"""", ""SystemEconomy"":""$economy_None;"", ""SystemEconomy_Localised"":""None"", ""SystemSecondEconomy"":""$economy_None;"", ""SystemSecondEconomy_Localised"":""None"", ""SystemGovernment"":""$government_None;"", ""SystemGovernment_Localised"":""None"", ""SystemSecurity"":""$GAlAXY_MAP_INFO_state_anarchy;"", ""SystemSecurity_Localised"":""Anarchy"", ""Population"":0, ""JumpDist"":56.848, ""FuelUsed"":4.741170, ""FuelLevel"":21.947533 }";
             string scan3 = @"{""timestamp"":""2019-01-27T07:07:46Z"",""event"":""Scan"",""ScanType"":""AutoScan"",""BodyName"":""Omega Sector DM-M b7-16 A B Belt Cluster 8"",""BodyID"":23,""Parents"":[{""Ring"":15},{""Star"":1},{""Null"":0}],""DistanceFromArrivalLS"":646.57074}";
 
-            EDDNResponder responder = makeTestEDDNResponder();
-            var privateObject = new PrivateObject(responder.eddnState.Location);
-            object[] arguments;
+            var responder = makeTestEDDNResponder();
 
             var unhandledLocation = Deserializtion.DeserializeData(location);
-            arguments = new object[] { "Location", unhandledLocation };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsTrue(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "Location", unhandledLocation );
+            Assert.IsTrue( responder.eddnState.Location.CheckLocationData( "Location", unhandledLocation ) );
             Assert.AreEqual("Pleiades Sector GW-W c1-4", responder.eddnState.Location.systemName);
             Assert.AreEqual((ulong)1183229809290, responder.eddnState.Location.systemAddress);
             Assert.AreEqual(-81.62500M, responder.eddnState.Location.systemX);
@@ -632,9 +618,8 @@ namespace UnitTests
             Assert.IsNull(responder.eddnState.Location.marketId);
 
             var unhandledJump = Deserializtion.DeserializeData(jump);
-            arguments = new object[] { "FSDJump", unhandledJump };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsTrue(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "FSDJump", unhandledJump );
+            Assert.IsTrue( responder.eddnState.Location.CheckLocationData( "FSDJump", unhandledJump ) );
             Assert.AreEqual("Pleiades Sector HR-W d1-79", responder.eddnState.Location.systemName);
             Assert.AreEqual((ulong)2724879894859, responder.eddnState.Location.systemAddress);
             Assert.AreEqual(-80.62500M, responder.eddnState.Location.systemX);
@@ -644,9 +629,8 @@ namespace UnitTests
             Assert.IsNull(responder.eddnState.Location.marketId);
 
             var unhandledScan = Deserializtion.DeserializeData(scan);
-            arguments = new object[] { "Scan", unhandledScan };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsTrue(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "Scan", unhandledScan );
+            Assert.IsTrue( responder.eddnState.Location.CheckLocationData( "Scan", unhandledScan ) );
             Assert.AreEqual("Pleiades Sector HR-W d1-79", responder.eddnState.Location.systemName);
             Assert.AreEqual((ulong)2724879894859, responder.eddnState.Location.systemAddress);
             Assert.AreEqual(-80.62500M, responder.eddnState.Location.systemX);
@@ -657,9 +641,8 @@ namespace UnitTests
 
             // Deliberately scan a procedurally generated body that doesn't match our last known location & verify heuristics catch it
             var unhandledScan2 = Deserializtion.DeserializeData(scan2);
-            arguments = new object[] { "Scan", unhandledScan2 };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsFalse(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "Scan", unhandledScan2 );
+            Assert.IsFalse( responder.eddnState.Location.CheckLocationData( "Scan", unhandledScan2 ) );
             Assert.IsNull(responder.eddnState.Location.systemName);
             Assert.IsNull(responder.eddnState.Location.systemAddress);
             Assert.IsNull(responder.eddnState.Location.systemX);
@@ -669,50 +652,44 @@ namespace UnitTests
             Assert.IsNull(responder.eddnState.Location.marketId);
 
             // Reset our position by re-stating the `FSDJump` event
-            arguments = new object[] { "FSDJump", unhandledJump };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsTrue(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "FSDJump", unhandledJump );
+            Assert.IsTrue( responder.eddnState.Location.CheckLocationData( "FSDJump", unhandledJump ) );
 
             // Deliberately create a mismatch between the system and coordinates, 
             // using the coordinates from our Location event and other data from our FSDJump event
-            privateObject.SetFieldOrProperty("systemX", -81.62500M);
-            privateObject.SetFieldOrProperty("systemY", -151.31250M);
-            privateObject.SetFieldOrProperty("systemZ", -383.53125M);
+            responder.eddnState.Location.systemX = -81.62500M;
+            responder.eddnState.Location.systemY = -151.31250M;
+            responder.eddnState.Location.systemZ = -383.53125M;
 
             // Deliberately scan a body while our coordinates are in a bad state
-            arguments = new object[] { "Scan", unhandledScan };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsFalse(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "Scan", unhandledScan );
+            Assert.IsFalse( responder.eddnState.Location.CheckLocationData( "Scan", unhandledScan ) );
             Assert.IsNull(responder.eddnState.Location.systemX);
             Assert.IsNull(responder.eddnState.Location.systemY);
             Assert.IsNull(responder.eddnState.Location.systemZ);
 
             // Reset our position by re-stating the `FSDJump` event
-            arguments = new object[] { "FSDJump", unhandledJump };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsTrue(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "FSDJump", unhandledJump );
+            Assert.IsTrue( responder.eddnState.Location.CheckLocationData( "FSDJump", unhandledJump ) );
 
             // Deliberately create a mismatch between the system name and address, 
             // using the address from our Location event and other data from our FSDJump event
-            privateObject.SetFieldOrProperty("systemAddress", (ulong)1183229809290);
+            responder.eddnState.Location.systemAddress = 1183229809290;
 
             // Deliberately scan a body while our system address is in a bad state
-            arguments = new object[] { "Scan", unhandledScan };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsFalse(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "Scan", unhandledScan );
+            Assert.IsFalse( responder.eddnState.Location.CheckLocationData( "Scan", unhandledScan ) );
             Assert.IsNull(responder.eddnState.Location.systemAddress);
 
-            // Reset our position by stating another `FSDJump` event
+            // Set ourselves to a new position using another `FSDJump` event
             var unhandledJump2 = Deserializtion.DeserializeData(jump2);
-            arguments = new object[] { "FSDJump", unhandledJump2 };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsTrue(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "FSDJump", unhandledJump2 );
+            Assert.IsTrue( responder.eddnState.Location.CheckLocationData( "FSDJump", unhandledJump2 ) );
 
             // Scan a belt cluster from a different star system
             var unhandledScan3 = Deserializtion.DeserializeData(scan3);
-            arguments = new object[] { "Scan", unhandledScan3 };
-            privateObject.Invoke("GetLocationInfo", arguments);
-            Assert.IsFalse(privateObject.Invoke("CheckLocationData", arguments) as bool? ?? false);
+            responder.eddnState.Location.GetLocationInfo( "Scan", unhandledScan3 );
+            Assert.IsFalse( responder.eddnState.Location.CheckLocationData( "Scan", unhandledScan3 ) );
             Assert.IsNull(responder.eddnState.Location.systemName);
             Assert.IsNull(responder.eddnState.Location.systemAddress);
             Assert.IsNull(responder.eddnState.Location.systemX);
