@@ -52,10 +52,9 @@ namespace IntegrationTests
         public void TestNavQuery(QueryType query, string stringArg0, string stringArg1, double numericArg, bool prioritizeOrbitalStations, string expectedStarSystem, string expectedStationName)
         {
             // Setup
-            var privateObject = new PrivateObject(EDDI.Instance);
             var sol = new StarSystem { systemname = "Sol", systemAddress = 10477373803, x = 0.0M, y = 0.0M, z = 0.0M };
-            privateObject.SetFieldOrProperty(nameof(EDDI.Instance.CurrentStarSystem), sol);
-            privateObject.SetFieldOrProperty( nameof( EDDI.Instance.CurrentShip ), ShipDefinitions.FromEDModel( "Anaconda" ) );
+            EDDI.Instance.CurrentStarSystem = sol;
+            EDDI.Instance.CurrentShip = ShipDefinitions.FromEDModel( "Anaconda" );
 
             var result = navigationService.NavQuery(query, stringArg0, stringArg1, Convert.ToDecimal(numericArg), prioritizeOrbitalStations);
             Assert.IsNotNull(result);
