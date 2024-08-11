@@ -4,7 +4,6 @@ using EddiSpeechService.SpeechPreparation;
 using EddiVoiceAttackResponder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,22 +30,19 @@ namespace UnitTests
         [DataRow( "Priority 3", "Priority 1", 3, 1, "Priority 1", "Priority 3" )] // Queued out of order
         public void TestSpeechPriority(string message1, string message2, int priority1, int priority2, string expectedResult1, string expectedResult2 )
         {
-            var speechService = new PrivateObject(new SpeechService());
-            speechService.SetFieldOrProperty("speechQueue", new SpeechQueue());
-            var speechQueue = (SpeechQueue)speechService.GetFieldOrProperty("speechQueue");
-
+            var speechService = new SpeechService();
             var speech1 = new EddiSpeech(message1, null, priority1);
             var speech2 = new EddiSpeech(message2, null, priority2);
 
-            if ( speechQueue is null )
+            if ( speechService.speechQueue is null )
             {
                 Assert.Fail();
             }
 
-            speechQueue.Enqueue(speech1);
-            speechQueue.Enqueue(speech2);
+            speechService.speechQueue.Enqueue(speech1);
+            speechService.speechQueue.Enqueue(speech2);
 
-            if ( speechQueue.TryDequeue( out var result1 ))
+            if ( speechService.speechQueue.TryDequeue( out var result1 ))
             {
                 Assert.IsNotNull( result1 );
             }
@@ -55,7 +51,7 @@ namespace UnitTests
                 Assert.Fail();
             }
 
-            if ( speechQueue.TryDequeue( out var result2 ))
+            if ( speechService.speechQueue.TryDequeue( out var result2 ))
             {
                 Assert.IsNotNull( result2 );
             }
@@ -71,7 +67,7 @@ namespace UnitTests
         [TestMethod]
         public void TestActiveSpeechPriority()
         {
-            var speechService = new PrivateObject(new SpeechService());
+            var speechService = new SpeechService();
 
             var priority5speech = new EddiSpeech("Priority 5", null, 5);
             var priority4speech = new EddiSpeech("Priority 2", null, 4);
@@ -79,21 +75,21 @@ namespace UnitTests
             var priority1speech = new EddiSpeech("Priority 1", null, 1);
 
             // Set up priority 5 speech
-            speechService.SetFieldOrProperty("activeSpeechPriority", priority5speech.priority);
-            Assert.AreEqual(5, (int?)speechService.GetFieldOrProperty("activeSpeechPriority"));
+            speechService.activeSpeechPriority = priority5speech.priority;
+            Assert.AreEqual(5, speechService.activeSpeechPriority );
 
             // Check that priority 5 speech IS interrupted by priority 4 speech.
-            Assert.IsTrue((bool?)speechService.Invoke("checkSpeechInterrupt", priority4speech.priority ));
+            Assert.IsTrue( speechService.checkSpeechInterrupt( priority4speech.priority ) );
 
             // Set up priority 4 speech
-            speechService.SetFieldOrProperty("activeSpeechPriority", priority4speech.priority);
-            Assert.AreEqual(4, (int?)speechService.GetFieldOrProperty("activeSpeechPriority"));
+            speechService.activeSpeechPriority = priority4speech.priority;
+            Assert.AreEqual(4, speechService.activeSpeechPriority );
 
             // Check that priority 4 speech IS NOT interrupted by priority 2 speech.
-            Assert.IsFalse((bool?)speechService.Invoke("checkSpeechInterrupt", priority2speech.priority ));
+            Assert.IsFalse( speechService.checkSpeechInterrupt( priority2speech.priority ) );
 
             // Check that priority 4 speech IS interrupted by priority 1 speech.
-            Assert.IsTrue((bool?)speechService.Invoke("checkSpeechInterrupt", priority1speech.priority ));
+            Assert.IsTrue( speechService.checkSpeechInterrupt( priority1speech.priority ) );
         }
 
         [TestMethod]
@@ -289,28 +285,27 @@ namespace UnitTests
         [TestMethod]
         public void TestSpeechQueue_DequeueSpeechOfType()
         {
-            var privateObject = new PrivateObject(new SpeechQueue());
-            privateObject.Invoke("DequeueAllSpeech", Array.Empty<object>());
-            privateObject.Invoke("Enqueue", new EddiSpeech("Test speech 1", null, 3, null, false, null) );
-            privateObject.Invoke("Enqueue", new EddiSpeech("Test speech 2", null, 4, null, false, "Hull damaged") );
-            privateObject.Invoke("Enqueue", new EddiSpeech("Test speech 3", null, 3, null, false, "Body scanned") );
+            var speechQueue = new SpeechQueue();
+            speechQueue.DequeueAllSpeech();
+            speechQueue.Enqueue(new EddiSpeech("Test speech 1", null, 3, null, false, null) );
+            speechQueue.Enqueue(new EddiSpeech("Test speech 2", null, 4, null, false, "Hull damaged"));
+            speechQueue.Enqueue(new EddiSpeech("Test speech 3", null, 3, null, false, "Body scanned"));
 
-            var priorityQueues = (List<ConcurrentQueue<EddiSpeech>>)privateObject.GetFieldOrProperty("priorityQueues");
-            Assert.AreEqual(3, priorityQueues?.SelectMany(q => q).Count());
+            Assert.AreEqual(3, speechQueue.priorityQueues?.SelectMany(q => q).Count());
             try
             {
                 // Only the speech of type "Hull damaged" should be removed, null types and other types should remain in place.
-                privateObject.Invoke("DequeueSpeechOfType", "Hull damaged" );
-                Assert.AreEqual(2, priorityQueues?.SelectMany(q => q).Count());
+                speechQueue.DequeueSpeechOfType("Hull damaged");
+                Assert.AreEqual(2, speechQueue.priorityQueues?.SelectMany(q => q).Count());
                 // Verify that the order of remaining speech of the same priority is unchanged.
-                Assert.AreEqual("Test speech 1", priorityQueues?[3].First().message);
-                Assert.AreEqual("Test speech 3", priorityQueues?[3].Last().message);
+                Assert.AreEqual("Test speech 1", speechQueue.priorityQueues?[3].First().message);
+                Assert.AreEqual("Test speech 3", speechQueue.priorityQueues?[3].Last().message);
             }
             catch (Exception)
             {
                 Assert.Fail();
             }
-            privateObject.Invoke("DequeueAllSpeech", Array.Empty<object>());
+            speechQueue.DequeueAllSpeech();
         }
 
         [DataTestMethod]

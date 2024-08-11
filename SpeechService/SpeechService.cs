@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Xml.Schema;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiSpeechService
 {
     /// <summary>Provide speech services with a varying amount of alterations to the voice</summary>
@@ -60,7 +61,7 @@ namespace EddiSpeechService
         private static readonly object activeAudioLock = new object();
         private static readonly object activeSpeechLock = new object();
 
-        private int activeSpeechPriority;
+        internal int activeSpeechPriority;
         private static bool discardPendingSegments;
 
         private readonly ConcurrentDictionary<ISoundOut, CancellationTokenSource> activeSpeechTS = new ConcurrentDictionary<ISoundOut, CancellationTokenSource>();
@@ -296,7 +297,7 @@ namespace EddiSpeechService
             }
         }
 
-        private bool checkSpeechInterrupt ( int priority )
+        internal bool checkSpeechInterrupt ( int priority )
         {
             // Priority 0 speech (system messages) and priority 1 speech and will interrupt current speech
             // Priority 5 speech in interruptable by any higher priority speech. 
