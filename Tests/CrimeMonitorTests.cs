@@ -189,8 +189,6 @@ namespace UnitTests
             // Save original data
             var data = ConfigService.Instance.crimeMonitorConfiguration;
 
-            var privateObject = new PrivateObject(crimeMonitor);
-
             var config = ConfigService.FromJson<CrimeMonitorConfiguration>(crimeConfigJson);
             crimeMonitor.readRecord(config);
 
@@ -198,7 +196,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-22T11:51:30Z\", \"event\":\"FactionKillBond\", \"Reward\":32473, \"AwardingFaction\":\"Constitution Party of Aerial\", \"VictimFaction\":\"Ankou Blue Federal Holdings\" }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBondAwardedEvent", new object[] { events[0] });
+            crimeMonitor._handleBondAwardedEvent( (BondAwardedEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Constitution Party of Aerial");
             Assert.IsNotNull(record);
             Assert.AreEqual(3, record.factionReports.Count);
@@ -208,7 +206,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-22T03:13:36Z\", \"event\":\"Bounty\", \"Rewards\":[ { \"Faction\":\"Calennero State Industries\", \"Reward\":22265 } ], \"Target\":\"adder\", \"TotalReward\":22265, \"VictimFaction\":\"Natural Amemakarna Movement\" }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBountyAwardedEvent", new object[] { events[0], true });
+            crimeMonitor._handleBountyAwardedEvent( (BountyAwardedEvent)events[ 0 ], true );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Calennero State Industries");
             Assert.IsNotNull(record);
             Assert.AreEqual(2, record.factionReports.Count(r => r.bounty && r.crimeDef == Crime.None));
@@ -218,7 +216,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-22T03:21:46Z\", \"event\":\"CommitCrime\", \"CrimeType\":\"dockingMinorTresspass\", \"Faction\":\"Constitution Party of Aerial\", \"Fine\":400 }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleFineIncurredEvent", new object[] { events[0] });
+            crimeMonitor._handleFineIncurredEvent( (FineIncurredEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Constitution Party of Aerial");
             Assert.IsNotNull(record);
             Assert.AreEqual(1, record.factionReports.Count(r => !r.bounty && r.crimeDef != Crime.None));
@@ -228,7 +226,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-13T03:58:29Z\", \"event\":\"CommitCrime\", \"CrimeType\":\"assault\", \"Faction\":\"Calennero State Industries\", \"Victim\":\"Christofer\", \"Bounty\":400 }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBountyIncurredEvent", new object[] { events[0] });
+            crimeMonitor._handleBountyIncurredEvent( (BountyIncurredEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Calennero State Industries");
             // The fine should be converted to a bounty, resulting in two bounty records.
             Assert.IsNotNull(record);
@@ -239,7 +237,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-09T10:31:31Z\", \"event\":\"RedeemVoucher\", \"Type\":\"CombatBond\", \"Amount\":94492, \"Factions\":[ { \"Faction\":\"Constitution Party of Aerial\", \"Amount\":94492 } ] }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBondRedeemedEvent", new object[] { events[0] });
+            crimeMonitor._handleBondRedeemedEvent( (BondRedeemedEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Constitution Party of Aerial");
             Assert.IsNotNull(record);
             Assert.AreEqual(0, record.factionReports.Count(r => !r.bounty && r.crimeDef == Crime.None));
@@ -248,7 +246,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-09T10:31:31Z\", \"event\":\"RedeemVoucher\", \"Type\":\"bounty\", \"Amount\":213896, \"Factions\":[ { \"Faction\":\"Calennero State Industries\", \"Amount\":105168 }, { \"Faction\":\"HIP 20277 Inc\", \"Amount\":108728 } ] }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBountyRedeemedEvent", new object[] { events[0] });
+            crimeMonitor._handleBountyRedeemedEvent( (BountyRedeemedEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Calennero State Industries");
             Assert.IsNotNull(record);
             Assert.AreEqual(0, record.factionReports.Count(r => r.bounty && r.crimeDef == Crime.None));
@@ -259,7 +257,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-09T15:12:10Z\", \"event\":\"PayFines\", \"Amount\":800, \"AllFines\":true, \"ShipID\":10 }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleFinePaidEvent", new object[] { events[0] });
+            crimeMonitor._handleFinePaidEvent( (FinePaidEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Calennero State Industries");
             Assert.IsNull(record);
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Constitution Party of Aerial");
@@ -272,11 +270,10 @@ namespace UnitTests
         [TestMethod, DoNotParallelize]
         public void TestCrimeShipTargeted()
         {
-            var privateObject = new PrivateObject(crimeMonitor);
             line = "{ \"timestamp\":\"2019-04-24T00:13:35Z\", \"event\":\"ShipTargeted\", \"TargetLocked\":true, \"Ship\":\"federation_corvette\", \"Ship_Localised\":\"Federal Corvette\", \"ScanStage\":3, \"PilotName\":\"$npc_name_decorate:#name=Kurt Pettersen;\", \"PilotName_Localised\":\"Kurt Pettersen\", \"PilotRank\":\"Deadly\", \"ShieldHealth\":100.000000, \"HullHealth\":100.000000, \"Faction\":\"Calennero Crew\", \"LegalStatus\":\"Wanted\", \"Bounty\":295785 }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("handleShipTargetedEvent", new object[] { events[0] });
+            crimeMonitor.handleShipTargetedEvent( (ShipTargetedEvent)events[ 0 ] );
             Assert.IsNotNull(crimeMonitor.shipTargets);
             Assert.AreEqual(1, crimeMonitor.shipTargets.Count);
             Target target = crimeMonitor.shipTargets.FirstOrDefault(t => t.name == "Kurt Pettersen");
@@ -289,7 +286,7 @@ namespace UnitTests
             line = "{ \"timestamp\":\"2019-04-24T00:44:32Z\", \"event\":\"FSDJump\", \"StarSystem\":\"HIP 20277\", \"SystemAddress\":84053791442, \"StarPos\":[106.43750,-95.68750,-0.18750], \"SystemAllegiance\":\"Empire\", \"SystemEconomy\":\"$economy_Industrial;\", \"SystemEconomy_Localised\":\"Industrial\", \"SystemSecondEconomy\":\"$economy_Extraction;\", \"SystemSecondEconomy_Localised\":\"Extraction\", \"SystemGovernment\":\"$government_Corporate;\", \"SystemGovernment_Localised\":\"Corporate\", \"SystemSecurity\":\"$SYSTEM_SECURITY_high;\", \"SystemSecurity_Localised\":\"High Security\", \"Population\":11247202, \"Body\":\"HIP 20277\", \"BodyID\":0, \"BodyType\":\"Star\", \"JumpDist\":7.473, \"FuelUsed\":1.140420, \"FuelLevel\":61.122398, \"SystemFaction\":{ \"Name\":\"Calennero State Industries\", \"FactionState\":\"Boom\" } }";
             events = JournalMonitor.ParseJournalEntry(line);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleJumpedEvent", new object[] { events[0] });
+            crimeMonitor._handleJumpedEvent( (JumpedEvent)events[ 0 ] );
             Assert.AreEqual(0, crimeMonitor.shipTargets.Count);
         }
 
@@ -304,14 +301,13 @@ namespace UnitTests
             var data = ConfigService.Instance.crimeMonitorConfiguration;
 
             // Load a known empty state
-            var privateObject = new PrivateObject(crimeMonitor);
             var config = new CrimeMonitorConfiguration();
             crimeMonitor.readRecord(config);
 
             // Set a bounty with `Radio Sidewinder Crew`
             events = JournalMonitor.ParseJournalEntry(line1);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBountyIncurredEvent", events[0]);
+            crimeMonitor._handleBountyIncurredEvent( (BountyIncurredEvent)events[ 0 ] );
             Assert.AreEqual(1, crimeMonitor.criminalrecord.Count);
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Radio Sidewinder Crew");
             Assert.IsNotNull(record);
@@ -321,7 +317,7 @@ namespace UnitTests
             // Test whether we're able to identify and remove the bounty after it has been converted to an interstellar bounty
             events = JournalMonitor.ParseJournalEntry(line2);
             Assert.IsTrue(events.Count == 1);
-            privateObject.Invoke("_handleBountyPaidEvent", new object[] { events[0] });
+            crimeMonitor._handleBountyPaidEvent( (BountyPaidEvent)events[ 0 ] );
             record = crimeMonitor.criminalrecord.FirstOrDefault(r => r.faction == "Radio Sidewinder Crew");
             Assert.IsNull(record);
             Assert.AreEqual(0, crimeMonitor.criminalrecord.Count);

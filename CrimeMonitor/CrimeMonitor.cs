@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -18,6 +19,7 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiCrimeMonitor
 {
     /**
@@ -212,12 +214,12 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private void _handleJumpedEvent(JumpedEvent @event)
+        internal void _handleJumpedEvent(JumpedEvent @event)
         {
             shipTargets.Clear();
         }
 
-        private void handleShipTargetedEvent(ShipTargetedEvent @event)
+        internal void handleShipTargetedEvent(ShipTargetedEvent @event)
         {
             // System targets list may be 're-built' for the current system from Log Load
             var currentSystem = EDDI.Instance?.CurrentStarSystem;
@@ -255,7 +257,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private void _handleBondAwardedEvent(BondAwardedEvent @event)
+        internal void _handleBondAwardedEvent(BondAwardedEvent @event)
         {
             string currentSystem = EDDI.Instance?.CurrentStarSystem?.systemname;
 
@@ -288,7 +290,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private bool _handleBondRedeemedEvent(BondRedeemedEvent @event)
+        internal bool _handleBondRedeemedEvent(BondRedeemedEvent @event)
         {
             bool update = false;
 
@@ -359,7 +361,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private void _handleBountyAwardedEvent(BountyAwardedEvent @event, bool test = false)
+        internal void _handleBountyAwardedEvent(BountyAwardedEvent @event, bool test = false)
         {
             // 20% bonus for Arissa Lavigny-Duval 'controlled' and 'exploited' systems
             StarSystem currentSystem = EDDI.Instance?.CurrentStarSystem;
@@ -400,7 +402,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private bool _handleBountyRedeemedEvent(BountyRedeemedEvent @event)
+        internal bool _handleBountyRedeemedEvent(BountyRedeemedEvent @event)
         {
             bool update = false;
 
@@ -469,7 +471,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private void _handleBountyIncurredEvent(BountyIncurredEvent @event)
+        internal void _handleBountyIncurredEvent(BountyIncurredEvent @event)
         {
             crimeAuthorityFaction = @event.faction;
             var crime = Crime.FromEDName(@event.crimetype);
@@ -503,7 +505,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private bool _handleBountyPaidEvent(BountyPaidEvent @event)
+        internal bool _handleBountyPaidEvent(BountyPaidEvent @event)
         {
             void PayBounty(FactionRecord record)
             {
@@ -580,7 +582,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private void _handleFineIncurredEvent(FineIncurredEvent @event)
+        internal void _handleFineIncurredEvent(FineIncurredEvent @event)
         {
             crimeAuthorityFaction = @event.faction;
             Crime crime = Crime.FromEDName(@event.crimetype);
@@ -608,7 +610,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private bool _handleFinePaidEvent(FinePaidEvent @event)
+        internal bool _handleFinePaidEvent(FinePaidEvent @event)
         {
             // This event may trigger for both bounties paid and fines paid (FDev bug)
             bool update = false;
@@ -663,7 +665,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private bool _handleMissionAbandonedEvent(MissionAbandonedEvent @event)
+        internal bool _handleMissionAbandonedEvent(MissionAbandonedEvent @event)
         {
             if (@event.fine > 0)
             {
@@ -684,7 +686,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private bool _handleMissionFailedEvent(MissionFailedEvent @event)
+        internal bool _handleMissionFailedEvent(MissionFailedEvent @event)
         {
             var update = false;
             if (@event.fine > 0)
@@ -704,7 +706,7 @@ namespace EddiCrimeMonitor
             }
         }
 
-        private void _handleRespawnedEvent(RespawnedEvent @event)
+        internal void _handleRespawnedEvent(RespawnedEvent @event)
         {
             void RemoveCriminalRecords(string faction = null)
             {
@@ -955,7 +957,7 @@ namespace EddiCrimeMonitor
             return update;
         }
 
-        public bool _handleMissionFine(DateTime timestamp, Mission mission, long fine)
+        internal bool _handleMissionFine(DateTime timestamp, Mission mission, long fine)
         {
             bool update = false;
 
