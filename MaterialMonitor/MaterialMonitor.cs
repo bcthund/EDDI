@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiMaterialMonitor
 {
     /// <summary>
@@ -373,14 +375,14 @@ namespace EddiMaterialMonitor
             }
         }
 
-        private bool incMaterialThreshold(int previous, int amount, int? target)
+        internal bool incMaterialThreshold(int previous, int amount, int? target)
         {
             // For the comparison operators <, >, <=, and >=, if one or both operands are null, the result is false
             // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/nullable-value-types
             return previous < target && target <= amount;
         }
 
-        private bool decMaterialThreshold(int previous, int amount, int? target)
+        internal bool decMaterialThreshold(int previous, int amount, int? target)
         {
             // For the comparison operators <, >, <=, and >=, if one or both operands are null, the result is false
             // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/nullable-value-types

@@ -82,11 +82,11 @@ namespace UnitTests
         [TestMethod]
         public void TestMaterialThresholds()
         {
-            var privateObject = new PrivateObject(new MaterialMonitor());
+            var materialMonitor = new MaterialMonitor();
 
             bool? TestIncThreshold(int previous, int amount, int? target)
             {
-                return (bool?)privateObject.Invoke("incMaterialThreshold", previous, amount, target);
+                return materialMonitor.incMaterialThreshold( previous, amount, target );
             }
 
             // If no threshold target is specified, the result must be false
@@ -103,7 +103,7 @@ namespace UnitTests
 
             bool? TestDecThreshold(int previous, int amount, int? target)
             {
-                return (bool?)privateObject.Invoke("decMaterialThreshold", previous, amount, target);
+                return materialMonitor.decMaterialThreshold( previous, amount, target );
             }
 
             // If no threshold target is specified, the result must be false
