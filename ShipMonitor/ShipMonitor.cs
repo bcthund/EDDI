@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiShipMonitor
 {
     public class ShipMonitor : IEddiMonitor
@@ -26,19 +28,19 @@ namespace EddiShipMonitor
         private static readonly List<string> HARDPOINT_SIZES = new List<string>() { "Huge", "Large", "Medium", "Small", "Tiny" };
 
         // Observable collection for us to handle changes
-        public ObservableCollection<Ship> shipyard { get; private set; }
+        public ObservableCollection<Ship> shipyard { get; internal set; }
 
         // List of stored modules from 'Stored modules' event
         public List<StoredModule> storedmodules { get; private set; }
 
         // The ID of the current ship; can be null
-        private int? currentShipId;
+        internal int? currentShipId;
 
         private const int profileRefreshDelaySeconds = 20;
 
         private static readonly object shipyardLock = new object();
         public event EventHandler ShipyardUpdatedEvent;
-        private DateTime updatedAt;
+        internal DateTime updatedAt;
 
         public string MonitorName()
         {
@@ -435,7 +437,7 @@ namespace EddiShipMonitor
             }
         }
 
-        private void handleShipLoadoutEvent(ShipLoadoutEvent @event)
+        internal void handleShipLoadoutEvent(ShipLoadoutEvent @event)
         {
             if (@event.timestamp > updatedAt)
             {
@@ -455,7 +457,7 @@ namespace EddiShipMonitor
             }
         }
 
-        private Ship ParseShipLoadoutEvent(ShipLoadoutEvent @event)
+        internal Ship ParseShipLoadoutEvent(ShipLoadoutEvent @event)
         {
             lock (shipyardLock)
             {
@@ -849,7 +851,7 @@ namespace EddiShipMonitor
             }
         }
 
-        private void handleModuleSwappedEvent(ModuleSwappedEvent @event)
+        internal void handleModuleSwappedEvent(ModuleSwappedEvent @event)
         {
             if (@event.timestamp > updatedAt)
             {
@@ -1282,7 +1284,7 @@ namespace EddiShipMonitor
             }
         }
 
-        private void AddShip(Ship ship)
+        internal void AddShip(Ship ship)
         {
             if (ship == null)
             {
@@ -1321,7 +1323,7 @@ namespace EddiShipMonitor
         /// <summary>
         /// Remove a ship from the shipyard
         /// </summary>
-        private void RemoveShip(int? localid)
+        internal void RemoveShip(int? localid)
         {
             if (localid == null)
             {
@@ -1464,7 +1466,7 @@ namespace EddiShipMonitor
             }
         }
 
-        private void AddModule(Ship ship, string slot, Module module)
+        internal void AddModule(Ship ship, string slot, Module module)
         {
             if (ship != null && slot != null && module != null)
             {
@@ -1671,7 +1673,7 @@ namespace EddiShipMonitor
             return -1;
         }
 
-        private void RemoveModule(Ship ship, string slot, Module replacement = null)
+        internal void RemoveModule(Ship ship, string slot, Module replacement = null)
         {
             if (ship != null && slot != null)
             {

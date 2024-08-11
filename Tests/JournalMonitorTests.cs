@@ -2500,5 +2500,112 @@ namespace UnitTests
             events.AddRange( JournalMonitor.ParseJournalEntries( new[] { autoscan, honk, secondstar } ) );
             Assert.IsTrue( events.LastOrDefault() is DiscoveryScanEvent );
         }
+
+        [TestMethod]
+        public void TestModulePurchasedEvent ()
+        {
+            var line = @"{ ""timestamp"":""2018 - 07 - 24T05: 49:15Z"", ""event"":""ModuleBuy"", ""Slot"":""TinyHardpoint1"", ""BuyItem"":""$hpt_crimescanner_size0_class3_name;"", ""BuyItem_Localised"":""K-Warrant Scanner"", ""MarketID"":3223343616, ""BuyPrice"":101025, ""Ship"":""krait_mkii"", ""ShipID"":81 }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            var @event = (ModulePurchasedEvent)events[0];
+
+            Assert.AreEqual( "hpt_crimescanner_size0_class3", @event.buymodule.edname.ToLowerInvariant() );
+            Assert.AreEqual( 3223343616, @event.marketId );
+            Assert.AreEqual( 101025, @event.buyprice );
+            Assert.IsNull( @event.sellmodule );
+            Assert.IsNull( @event.sellprice );
+            Assert.AreEqual( "Krait Mk. II", @event.ship );
+            Assert.AreEqual( 81, @event.shipid );
+        }
+
+        [TestMethod]
+        public void TestModuleRetrievedEvent ()
+        {
+            var line = @"{ ""timestamp"":""2018 - 06 - 29T04: 45:21Z"", ""event"":""ModuleRetrieve"", ""MarketID"":3223343616, ""Slot"":""PowerPlant"", ""RetrievedItem"":""$int_powerplant_size6_class5_name;"", ""RetrievedItem_Localised"":""Power Plant"", ""Ship"":""krait_mkii"", ""ShipID"":81, ""Hot"":false, ""EngineerModifications"":""PowerPlant_Boosted"", ""Level"":4, ""Quality"":0.000000, ""SwapOutItem"":""$int_powerplant_size6_class5_name;"", ""SwapOutItem_Localised"":""Power Plant"" }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            var @event = (ModuleRetrievedEvent)events[0];
+
+            Assert.AreEqual( "int_powerplant_size6_class5", @event.module.edname.ToLowerInvariant() );
+            Assert.AreEqual( 3223343616, @event.marketId );
+            Assert.AreEqual( "PowerPlant", @event.slot );
+            Assert.AreEqual( "Krait Mk. II", @event.ship );
+            Assert.AreEqual( 81, @event.shipid );
+            Assert.AreEqual( "int_powerplant_size6_class5", @event.swapoutmodule.edname.ToLowerInvariant() );
+        }
+
+        [TestMethod]
+        public void TestModuleSoldEvent ()
+        {
+            var line = @"{ ""timestamp"":""2018 - 06 - 29T02: 37:33Z"", ""event"":""ModuleSell"", ""MarketID"":128132856, ""Slot"":""Slot04_Size5"", ""SellItem"":""$int_fighterbay_size5_class1_name;"", ""SellItem_Localised"":""Fighter Hangar"", ""SellPrice"":561252, ""Ship"":""krait_mkii"", ""ShipID"":81 }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            var @event = (ModuleSoldEvent)events[0];
+
+            Assert.AreEqual( "int_fighterbay_size5_class1", @event.module.edname.ToLowerInvariant() );
+            Assert.AreEqual( 561252, @event.price );
+            Assert.AreEqual( 128132856, @event.marketId );
+            Assert.AreEqual( "Slot04_Size5", @event.slot );
+            Assert.AreEqual( "Krait Mk. II", @event.ship );
+            Assert.AreEqual( 81, @event.shipid );
+        }
+
+        [TestMethod]
+        public void TestModuleStoredEvent ()
+        {
+            var line = @"{ ""timestamp"":""2018 - 07 - 22T23: 51:31Z"", ""event"":""ModuleStore"", ""MarketID"":3223343616, ""Slot"":""Slot06_Size3"", ""StoredItem"":""$int_dronecontrol_collection_size3_class5_name;"", ""StoredItem_Localised"":""Collector"", ""Ship"":""krait_mkii"", ""ShipID"":81, ""Hot"":false, ""EngineerModifications"":""Misc_LightWeight"", ""Level"":5, ""Quality"":1.000000 }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            var @event = (ModuleStoredEvent)events[0];
+
+            Assert.AreEqual( 3223343616, @event.marketId );
+            Assert.AreEqual( "Slot06_Size3", @event.slot );
+            Assert.AreEqual( "int_dronecontrol_collection_size3_class5", @event.module.edname.ToLowerInvariant() );
+            Assert.AreEqual( "Krait Mk. II", @event.ship );
+            Assert.AreEqual( 81, @event.shipid );
+            Assert.AreEqual( true, @event.engineermodifications.Length > 0 );
+        }
+
+        [TestMethod]
+        public void TestStoredModulesEvent ()
+        {
+            var line = "{ \"timestamp\":\"2019-01-25T00:06:36Z\", \"event\":\"StoredModules\", \"MarketID\":128928173, \"StationName\":\"Rock of Isolation\", \"StarSystem\":\"Omega Sector OD-S b4-0\", \"Items\":[ { \"Name\":\"$int_shieldgenerator_size7_class3_fast_name;\", \"Name_Localised\":\"Bi-Weave Shield\", \"StorageSlot\":52, \"StarSystem\":\"Omega Sector VE-Q b5-15\", \"MarketID\":128757071, \"TransferCost\":9729, \"TransferTime\":480, \"BuyPrice\":7501033, \"Hot\":false, \"EngineerModifications\":\"ShieldGenerator_Thermic\", \"Level\":5, \"Quality\":0.000000 }, { \"Name\":\"$int_cargorack_size7_class1_name;\", \"Name_Localised\":\"Cargo Rack\", \"StorageSlot\":101, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":976616, \"Hot\":false }, { \"Name\":\"$int_hyperdrive_size6_class5_name;\", \"Name_Localised\":\"FSD\", \"StorageSlot\":53, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":4535529, \"TransferTime\":55231, \"BuyPrice\":13752602, \"Hot\":false, \"EngineerModifications\":\"FSD_LongRange\", \"Level\":5, \"Quality\":0.000000 }, { \"Name\":\"$int_shieldgenerator_size5_class3_fast_name;\", \"Name_Localised\":\"Bi-Weave Shield\", \"StorageSlot\":116, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":280636, \"TransferTime\":55231, \"BuyPrice\":850659, \"Hot\":false, \"EngineerModifications\":\"ShieldGenerator_Optimised\", \"Level\":3, \"Quality\":0.000000 }, { \"Name\":\"$hpt_multicannon_gimbal_huge_name;\", \"Name_Localised\":\"Multi-Cannon\", \"StorageSlot\":107, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":1787862, \"TransferTime\":55231, \"BuyPrice\":5420960, \"Hot\":false, \"EngineerModifications\":\"Weapon_Overcharged\", \"Level\":4, \"Quality\":0.838000 }, { \"Name\":\"$int_repairer_size4_class5_name;\", \"Name_Localised\":\"AFM Unit\", \"StorageSlot\":114, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":1367146, \"TransferTime\":55231, \"BuyPrice\":4145240, \"Hot\":false, \"EngineerModifications\":\"Misc_Shielded\", \"Level\":3, \"Quality\":1.000000 }, { \"Name\":\"$int_refinery_size4_class5_name;\", \"Name_Localised\":\"Refinery\", \"StorageSlot\":102, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":3730077, \"Hot\":false }, { \"Name\":\"$int_fsdinterdictor_size4_class3_name;\", \"Name_Localised\":\"FSD Interdictor\", \"StorageSlot\":110, \"InTransit\":true, \"BuyPrice\":2311546, \"Hot\":false, \"EngineerModifications\":\"FSDinterdictor_Expanded\", \"Level\":4, \"Quality\":0.979500 }, { \"Name\":\"$int_hullreinforcement_size4_class2_name;\", \"Name_Localised\":\"Hull Reinforcement\", \"StorageSlot\":105, \"InTransit\":true, \"BuyPrice\":171113, \"Hot\":false, \"EngineerModifications\":\"HullReinforcement_HeavyDuty\", \"Level\":4, \"Quality\":0.000000 }, { \"Name\":\"$int_shieldgenerator_size3_class3_fast_name;\", \"Name_Localised\":\"Bi-Weave Shield\", \"StorageSlot\":113, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":24597, \"TransferTime\":55231, \"BuyPrice\":74284, \"Hot\":false, \"EngineerModifications\":\"ShieldGenerator_Optimised\", \"Level\":5, \"Quality\":0.956700 }, { \"Name\":\"$int_modulereinforcement_size3_class2_name;\", \"Name_Localised\":\"Module Reinforcement\", \"StorageSlot\":120, \"StarSystem\":\"HIP 21066\", \"MarketID\":3221959680, \"TransferCost\":27804, \"TransferTime\":56644, \"BuyPrice\":81900, \"Hot\":false }, { \"Name\":\"$int_hullreinforcement_size3_class2_name;\", \"Name_Localised\":\"Hull Reinforcement\", \"StorageSlot\":115, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":24408, \"TransferTime\":55231, \"BuyPrice\":73710, \"Hot\":false, \"EngineerModifications\":\"HullReinforcement_HeavyDuty\", \"Level\":4, \"Quality\":0.605000 }, { \"Name\":\"$int_dronecontrol_collection_size3_class2_name;\", \"Name_Localised\":\"Collector\", \"StorageSlot\":118, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":10530, \"Hot\":false, \"EngineerModifications\":\"CollectionLimpet_LightWeight\", \"Level\":5, \"Quality\":0.000000 }, { \"Name\":\"$int_dronecontrol_fueltransfer_size3_class2_name;\", \"Name_Localised\":\"Fuel Transfer\", \"StorageSlot\":57, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":3225, \"TransferTime\":55231, \"BuyPrice\":9477, \"Hot\":false, \"EngineerModifications\":\"FuelTransferLimpet_LightWeight\", \"Level\":4, \"Quality\":0.000000 }, { \"Name\":\"$hpt_mining_seismchrgwarhd_turret_medium_name;\", \"Name_Localised\":\"Seismic Charge\", \"StorageSlot\":111, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":390988, \"Hot\":false }, { \"Name\":\"$hpt_mining_subsurfdispmisle_turret_medium_name;\", \"Name_Localised\":\"Disp. Missile\", \"StorageSlot\":109, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":334986, \"Hot\":false }, { \"Name\":\"$int_modulereinforcement_size2_class2_name;\", \"Name_Localised\":\"Module Reinforcement\", \"StorageSlot\":112, \"StarSystem\":\"Wayutabal\", \"MarketID\":3224777984, \"TransferCost\":11773, \"TransferTime\":55696, \"BuyPrice\":35100, \"Hot\":false }, { \"Name\":\"$hpt_mininglaser_turret_medium_name;\", \"Name_Localised\":\"Mining Laser\", \"StorageSlot\":108, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":28587, \"Hot\":false }, { \"Name\":\"$int_dronecontrol_prospector_size1_class5_name;\", \"Name_Localised\":\"Prospector\", \"StorageSlot\":104, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":8424, \"Hot\":false }, { \"Name\":\"$hpt_mining_abrblstr_turret_small_name;\", \"Name_Localised\":\"Abrasion Blaster\", \"StorageSlot\":106, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":24114, \"Hot\":false }, { \"Name\":\"$int_corrosionproofcargorack_size1_class2_name;\", \"Name_Localised\":\"Corrosion Resistant Cargo Rack\", \"StorageSlot\":59, \"StarSystem\":\"Maia\", \"MarketID\":128679559, \"TransferCost\":4376, \"TransferTime\":58455, \"BuyPrice\":12249, \"Hot\":false }, { \"Name\":\"$int_corrosionproofcargorack_size1_class2_name;\", \"Name_Localised\":\"Corrosion Resistant Cargo Rack\", \"StorageSlot\":51, \"StarSystem\":\"Maia\", \"MarketID\":128679559, \"TransferCost\":4376, \"TransferTime\":58455, \"BuyPrice\":12249, \"Hot\":false }, { \"Name\":\"$int_corrosionproofcargorack_size1_class2_name;\", \"Name_Localised\":\"Corrosion Resistant Cargo Rack\", \"StorageSlot\":58, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":3621, \"TransferTime\":55231, \"BuyPrice\":10679, \"Hot\":false }, { \"Name\":\"$hpt_mrascanner_size0_class5_name;\", \"Name_Localised\":\"Pulse Wave\", \"StorageSlot\":100, \"StarSystem\":\"Omega Sector OD-S b4-0\", \"MarketID\":128928173, \"TransferCost\":0, \"TransferTime\":0, \"BuyPrice\":909217, \"Hot\":false }, { \"Name\":\"$hpt_heatsinklauncher_turret_tiny_name;\", \"Name_Localised\":\"Heatsink\", \"StorageSlot\":119, \"StarSystem\":\"Shinrarta Dezhra\", \"MarketID\":128666762, \"TransferCost\":1254, \"TransferTime\":55231, \"BuyPrice\":3500, \"Hot\":false, \"EngineerModifications\":\"HeatSinkLauncher_HeatSinkCapacity\", \"Level\":3, \"Quality\":0.000000 } ] }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            var @event = (StoredModulesEvent)events[0];
+
+            Assert.AreEqual( "Omega Sector OD-S b4-0", @event.system );
+            Assert.AreEqual( "Rock of Isolation", @event.station );
+            Assert.AreEqual( 128928173, @event.marketId );
+            var storedModule = @event.storedmodules.FirstOrDefault(m => m.module.edname.ToLowerInvariant() == "int_hyperdrive_size6_class5");
+            Assert.IsNotNull( storedModule );
+            Assert.AreEqual( "Shinrarta Dezhra", storedModule.system );
+            Assert.AreEqual( 128666762, storedModule.marketid );
+            Assert.AreEqual( "Jameson Memorial", storedModule.station );
+        }
+
+
+        [TestMethod]
+        public void TestShipTransferEvent ()
+        {
+            var line = @"{ ""timestamp"":""2018 - 07 - 30T04: 57:09Z"", ""event"":""ShipyardTransfer"", ""ShipType"":""TypeX"", ""ShipType_Localised"":""Alliance Chieftain"", ""ShipID"":76, ""System"":""Balante"", ""ShipMarketID"":3223259392, ""Distance"":8.017741, ""TransferPrice"":70213, ""TransferTime"":380, ""MarketID"":3223343616 }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            var @event = (ShipTransferInitiatedEvent)events[0];
+
+            Assert.AreEqual( "Alliance Chieftain", @event.ship );
+            Assert.AreEqual( 76, @event.shipid );
+            Assert.AreEqual( 3223259392, @event.fromMarketId );
+            Assert.AreEqual( 8.017741M, @event.distance );
+            Assert.AreEqual( 70213, @event.price );
+            Assert.AreEqual( 380, @event.time );
+            Assert.AreEqual( 3223343616, @event.toMarketId );
+        }
+
+        [TestMethod]
+        public void TestShipModel ()
+        {
+            var line = "{ \"timestamp\":\"2016-09-20T18:14:26Z\", \"event\":\"ShipyardBuy\", \"ShipType\":\"Empire_Eagle\", \"ShipPrice\":10000, \"SellOldShip\":\"CobraMkIII\", \"SellShipID\":42, \"SellPrice\":950787, \"MarketID\":128132856 }";
+            var events = JournalMonitor.ParseJournalEntry(line);
+            Assert.AreEqual( 1, events.Count );
+
+            var @event = (ShipPurchasedEvent)events[0];
+            Assert.AreEqual( "Imperial Eagle", @event.ship );
+            Assert.AreEqual( 128132856, @event.marketId );
+        }
     }
 }
