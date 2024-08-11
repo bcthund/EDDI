@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +18,7 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiCargoMonitor
 {
     /// Monitor cargo for the current ship
@@ -197,7 +199,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleCargoEvent(CargoEvent @event)
+        internal void _handleCargoEvent(CargoEvent @event)
         {
             if (@event.vessel == Constants.VEHICLE_SHIP)
             {
@@ -285,7 +287,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleCommodityEjectedEvent(CommodityEjectedEvent @event)
+        internal void _handleCommodityEjectedEvent(CommodityEjectedEvent @event)
         {
             var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
             if ( @event.missionid != null )
@@ -309,7 +311,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleCommodityPurchasedEvent(CommodityPurchasedEvent @event)
+        internal void _handleCommodityPurchasedEvent(CommodityPurchasedEvent @event)
         {
             var cargo = GetCargoWithEDName( @event.commodityDefinition?.edname ) ??
                         new Cargo( @event.commodityDefinition?.edname );
@@ -345,7 +347,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleCommoditySoldEvent ( CommoditySoldEvent @event )
+        internal void _handleCommoditySoldEvent ( CommoditySoldEvent @event )
         {
             var cargo = GetCargoWithEDName(@event.commodityDefinition?.edname);
             cargo?.RemoveDetailedQty( @event.stolen ? CargoType.stolen : CargoType.legal, @event.amount );
@@ -363,7 +365,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleCargoDepotEvent ( CargoDepotEvent @event )
+        internal void _handleCargoDepotEvent ( CargoDepotEvent @event )
         {
             var cargo = GetCargoWithMissionId( @event.missionid, out _ ) ??
                         new Cargo( @event.commodityDefinition.edname );
@@ -394,7 +396,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleLimpetPurchasedEvent(LimpetPurchasedEvent @event)
+        internal void _handleLimpetPurchasedEvent(LimpetPurchasedEvent @event)
         {
             var cargo = GetCargoWithEDName("Drones") ?? new Cargo("Drones");
             cargo.AddDetailedQty(CargoType.legal, @event.amount, @event.price);
@@ -412,7 +414,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private void _handleMissionAbandonedEvent(MissionAbandonedEvent @event)
+        internal void _handleMissionAbandonedEvent(MissionAbandonedEvent @event)
         {
             var cargo = GetCargoWithMissionId(@event.missionid, out var amount);
             if ( cargo != null )
@@ -496,7 +498,7 @@ namespace EddiCargoMonitor
             }
         }
 
-        private bool _handleSynthesisedEvent(SynthesisedEvent @event)
+        internal bool _handleSynthesisedEvent(SynthesisedEvent @event)
         {
             if (@event.synthesis.Contains("Limpet"))
             {
