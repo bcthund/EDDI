@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiStatusService
 {
     public class StatusService
@@ -34,7 +36,7 @@ namespace EddiStatusService
         private static StatusService instance;
         private static readonly object instanceLock = new object();
         public readonly object statusLock = new object();
-        private bool running;
+        internal bool running;
 
         public static StatusService Instance
         {

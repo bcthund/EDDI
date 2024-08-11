@@ -1,4 +1,5 @@
 ﻿using EddiDataDefinitions;
+using EddiStatusMonitor;
 using EddiStatusService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -10,7 +11,8 @@ namespace UnitTests
     public class StatusMonitorTests : TestBase
     {
         readonly StatusService statusService = new StatusService();
-        
+        readonly StatusMonitor statusMonitor = new StatusMonitor();
+
         [TestInitialize]
         public void start()
         {
@@ -735,8 +737,8 @@ namespace UnitTests
         [TestMethod]
         public void TestParseStatusFlagsNightMode()
         {
-            string line = "{ \"timestamp\":\"2018 - 11 - 15T04: 58:37Z\", \"event\":\"Status\", \"Flags\":422117640, \"Pips\":[4,4,4], \"FireGroup\":2, \"GuiFocus\":0, \"Fuel\":{ \"FuelMain\":29.0, \"FuelReservoir\":0.564209 }, \"Cargo\":39.000000, \"Latitude\":88.365417, \"Longitude\":99.356514, \"Heading\":29, \"Altitude\":36 }";
-            Status status = statusService.ParseStatusEntry(line);
+            var line = "{ \"timestamp\":\"2018 - 11 - 15T04: 58:37Z\", \"event\":\"Status\", \"Flags\":422117640, \"Pips\":[4,4,4], \"FireGroup\":2, \"GuiFocus\":0, \"Fuel\":{ \"FuelMain\":29.0, \"FuelReservoir\":0.564209 }, \"Cargo\":39.000000, \"Latitude\":88.365417, \"Longitude\":99.356514, \"Heading\":29, \"Altitude\":36 }";
+            var status = statusService.ParseStatusEntry(line);
 
             Assert.AreEqual(true, status.night_vision);
             Assert.AreEqual(true, status.lights_on);
@@ -744,5 +746,37 @@ namespace UnitTests
             Assert.AreEqual(29.564209M, status.fuel);
             Assert.AreEqual(39, status.cargo_carried);
         }
+
+        [ TestMethod ]
+        public void TestStatusMonitorConfiguration ()
+        {
+            Assert.IsTrue( statusMonitor.IsRequired() );
+            Assert.IsTrue( statusMonitor.NeedsStart() );
+        }
+
+        [ DataTestMethod ]
+        [ DataRow ( "{ \"timestamp\":\"2021-05-01T21:00:10Z\", \"event\":\"Status\", \"Flags\":0, \"Flags2\":9, \"Oxygen\":1.000000, \"Health\":1.000000, \"Temperature\":293.000000, \"SelectedWeapon\":\"\", \"LegalState\":\"Clean\", \"BodyName\":\"Savitskaya Vision\" }" ) ]
+        [ DataRow ( "{ \"timestamp\":\"2018-03-25T00:39:48Z\", \"event\":\"Status\", \"Flags\":69255432, \"Pips\":[2,8,2], \"FireGroup\":0, \"GuiFocus\":0, \"Latitude\":-5.683115, \"Longitude\":-10.957623, \"Heading\":249, \"Altitude\":0}" ) ]
+        [ DataRow ( "{ \"timestamp\":\"2018 - 11 - 15T04: 41:06Z\", \"event\":\"Status\", \"Flags\":151519320, \"Pips\":[4,4,4], \"FireGroup\":2, \"GuiFocus\":9, \"Fuel\":{ \"FuelMain\":15.260000, \"FuelReservoir\":0.444812 }, \"Cargo\":39.000000 }" ) ]
+        [ DataRow ( "{ \"timestamp\":\"2018 - 11 - 15T04: 58:37Z\", \"event\":\"Status\", \"Flags\":422117640, \"Pips\":[4,4,4], \"FireGroup\":2, \"GuiFocus\":0, \"Fuel\":{ \"FuelMain\":29.0, \"FuelReservoir\":0.564209 }, \"Cargo\":39.000000, \"Latitude\":88.365417, \"Longitude\":99.356514, \"Heading\":29, \"Altitude\":36 }" ) ]
+        [ DataRow ( "{ \"timestamp\":\"2018 - 11 - 15T04: 47:51Z\", \"event\":\"Status\", \"Flags\":150995032, \"Pips\":[4,4,4], \"FireGroup\":2, \"GuiFocus\":10, \"Fuel\":{ \"FuelMain\":15.260000, \"FuelReservoir\":0.444812 }, \"Cargo\":39.000000 }" ) ]
+        public void TestStatusMonitorHandleStatus (string line)
+        {
+            var currentStatus = statusService.ParseStatusEntry( line );
+            statusMonitor.HandleStatus( currentStatus );
+            var variables = statusMonitor.GetVariables();
+            Assert.IsNotNull( variables[ "status" ] );
+            Assert.AreEqual( typeof(Status), variables[ "status" ].Item1 );
+            Assert.AreEqual( currentStatus, (Status)variables[ "status" ].Item2 );
+
+            if ( lastStatus != null )
+            {
+                Assert.IsNotNull( variables[ "lastStatus" ] );
+                Assert.AreEqual( typeof( Status ), variables[ "lastStatus" ].Item1 );
+                Assert.AreEqual( lastStatus, (Status)variables[ "lastStatus" ].Item2 );
+            }
+            lastStatus = currentStatus;
+        }
+        private Status lastStatus = null;
     }
 }

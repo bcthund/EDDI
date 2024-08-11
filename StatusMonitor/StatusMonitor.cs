@@ -6,10 +6,13 @@ using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using Utilities;
 
+[assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiStatusMonitor
 {
     [UsedImplicitly]
@@ -19,25 +22,29 @@ namespace EddiStatusMonitor
         private bool jumping;
         private string lastDestinationPOI;
         private string lastMusicTrack;
-        private Status currentStatus;
-        private Status lastStatus;
+        internal Status currentStatus;
+        internal Status lastStatus;
         private static readonly object statusLock = new object();
 
+        [ExcludeFromCodeCoverage]
         public StatusMonitor ()
         {
             Logging.Info($"Initialized {MonitorName()}");
         }
 
+        [ExcludeFromCodeCoverage]
         public string MonitorName()
         {
             return "Status monitor";
         }
 
+        [ExcludeFromCodeCoverage]
         public string LocalizedMonitorName()
         {
             return "Status monitor";
         }
 
+        [ExcludeFromCodeCoverage]
         public string MonitorDescription()
         {
             return "Monitor Elite: Dangerous' Status.json for current status.  This should not be disabled unless you are sure you know what you are doing, as it will result in many functions inside EDDI no longer working";
@@ -53,6 +60,7 @@ namespace EddiStatusMonitor
             return true;
         }
 
+        [ExcludeFromCodeCoverage]
         public void Start()
         {
             StatusService.Instance.Start();
@@ -276,14 +284,17 @@ namespace EddiStatusMonitor
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public void Stop()
         {
             StatusService.Instance.Stop();
         }
 
+        [ExcludeFromCodeCoverage]
         public void Reload()
         { }
 
+        [ExcludeFromCodeCoverage]
         public UserControl ConfigurationTabItem()
         {
             return null;
@@ -310,7 +321,7 @@ namespace EddiStatusMonitor
             }
         }
 
-        private void handleSettlementApproachedEvent ( SettlementApproachedEvent @event )
+        internal void handleSettlementApproachedEvent ( SettlementApproachedEvent @event )
         {
             // Synthesize a `Destination arrived` event when approaching a settlement / location we've been tracking,
             // if the journal hasn't already generated a `SupercruiseDestinationDrop` event
@@ -333,13 +344,13 @@ namespace EddiStatusMonitor
             }
         }
 
-        private void handleEnteredNormalSpaceEvent( EnteredNormalSpaceEvent @event )
+        internal void handleEnteredNormalSpaceEvent( EnteredNormalSpaceEvent @event )
         {
             // We can derive a "Glide" event from the context in our status
             StatusService.Instance.lastEnteredNormalSpaceEvent = @event;
         }
 
-        private void handleFSDEngagedEvent( FSDEngagedEvent @event )
+        internal void handleFSDEngagedEvent( FSDEngagedEvent @event )
         {
             if (@event.target == "Hyperspace")
             {
@@ -348,7 +359,7 @@ namespace EddiStatusMonitor
             EDDI.Instance.enqueueEvent(new ShipFsdEvent( @event.timestamp, "charging complete" ) { fromLoad = @event.fromLoad });
         }
 
-        private void handleMusicEvent ( MusicEvent @event )
+        internal void handleMusicEvent ( MusicEvent @event )
         {
             // Derive a "Station mailslot" event from changes to music tracks
             Status status = null;
@@ -367,9 +378,11 @@ namespace EddiStatusMonitor
             lastMusicTrack = @event.musictrack;
         }
 
+        [ExcludeFromCodeCoverage]
         public void PostHandle(Event @event)
         { }
 
+        [ExcludeFromCodeCoverage]
         public void HandleProfile(JObject profile)
         { }
 
