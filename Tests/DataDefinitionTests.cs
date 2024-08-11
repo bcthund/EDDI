@@ -826,5 +826,32 @@ namespace UnitTests
                 Assert.Fail("Serialization should not fail - body has `distance` property set.");
             }
         }
+
+        [TestMethod]
+        public void TestShipSpokenName1 ()
+        {
+            var ship = new Ship();
+            var spokenName = ship.SpokenName();
+            Assert.AreEqual( "your ship", spokenName );
+        }
+
+        [TestMethod]
+        public void TestShipSpokenName2 ()
+        {
+            var ship = new Ship { name = "" };
+            var spokenName = ship.SpokenName();
+            Assert.AreEqual( "your ship", spokenName );
+        }
+
+        [DataTestMethod]
+        [DataRow( null, "your Anaconda" )]
+        [DataRow( "Testy", "Testy" )]
+        public void TestShipSpokenName3 ( string testName, string result )
+        {
+            var ship = ShipDefinitions.FromModel( "Anaconda" );
+            ship.name = testName;
+            var spokenName = ship.SpokenName();
+            Assert.AreEqual( result, spokenName );
+        }
     }
 }

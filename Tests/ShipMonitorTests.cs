@@ -23,33 +23,6 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestShipSpokenName1 ()
-        {
-            var ship = new Ship();
-            var spokenName = ship.SpokenName();
-            Assert.AreEqual( "your ship", spokenName );
-        }
-
-        [TestMethod]
-        public void TestShipSpokenName2 ()
-        {
-            var ship = new Ship { name = "" };
-            var spokenName = ship.SpokenName();
-            Assert.AreEqual( "your ship", spokenName );
-        }
-
-        [ DataTestMethod ]
-        [ DataRow( null, "your Anaconda" ) ]
-        [ DataRow( "Testy", "Testy" ) ]
-        public void TestShipSpokenName3 ( string testName, string result )
-        {
-            var ship = ShipDefinitions.FromModel( "Anaconda" );
-            ship.name = testName;
-            var spokenName = ship.SpokenName();
-            Assert.AreEqual( result, spokenName );
-        }
-
-        [TestMethod]
         public void TestLoadoutParsingEmpireTrader()
         {
             var data = DeserializeJsonResource<string>(Resources.loadout_empire_trader);
