@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Sockets;
 using System.Threading;
 using Utilities;
@@ -16,7 +17,7 @@ namespace EddiEddpMonitor
     /// <summary>
     /// An EDDI monitor to watch the EDDP feed for changes to the state of systems and stations
     /// </summary>
-    [UsedImplicitly]
+    [UsedImplicitly, ExcludeFromCodeCoverage]
     public class EddpMonitor : IEddiMonitor
     {
         private bool running;

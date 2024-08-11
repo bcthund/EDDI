@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
 
 namespace EddiEddpMonitor
 {
+    [ExcludeFromCodeCoverage]
     public class DataGridNumericColumn : DataGridTextColumn
     {
         protected override object PrepareCellForEdit(System.Windows.FrameworkElement editingElement, System.Windows.RoutedEventArgs editingEventArgs)
