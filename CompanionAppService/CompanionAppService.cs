@@ -441,9 +441,6 @@ namespace EddiCompanionAppService
                     Logout();
                     return null;
                 }
-
-                // Looks like login worked; try again
-                return obtainData(url);
             }
 
             try
@@ -545,8 +542,8 @@ namespace EddiCompanionAppService
             }
             catch (WebException wex)
             {
-                Logging.Warn(wex.Message);
                 response = (HttpWebResponse)wex.Response;
+                Logging.Warn( wex.Message, response );
             }
             Logging.Debug($"Response from {request.Address} is: ", response);
             return response;
