@@ -1,5 +1,5 @@
 ﻿using Cottle;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;

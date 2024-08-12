@@ -1,5 +1,5 @@
 ﻿using Cottle;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using EddiSpeechService;
 using System;
 using System.Linq;

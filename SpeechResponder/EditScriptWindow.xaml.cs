@@ -1,6 +1,6 @@
 ﻿using EddiSpeechResponder.AvalonEdit;
 using EddiSpeechResponder.Properties;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using EddiSpeechService;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Folding;
@@ -30,7 +30,7 @@ namespace EddiSpeechResponder
         private readonly Dictionary<string, Script> _scripts;
         private readonly bool isNewOrRecoveredScript;
 
-        public ScriptRecoveryService ScriptRecoveryService { get; set; }
+        public ScriptRecoveryService.ScriptRecoveryService ScriptRecoveryService { get; set; }
 
 #pragma warning disable IDE0052 // Remove unused private members -- this may be used later
         private readonly DocumentHighlighter documentHighlighter;
@@ -84,7 +84,7 @@ namespace EddiSpeechResponder
             scriptView.Options.ConvertTabsToSpaces = true;
 
             // Set up our Script Recovery Service
-            ScriptRecoveryService = new ScriptRecoveryService( this );
+            ScriptRecoveryService = new ScriptRecoveryService.ScriptRecoveryService( this );
             ScriptRecoveryService.BeginScriptRecovery();
             scriptView.TextChanged += ScriptView_TextChanged;
 

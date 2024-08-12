@@ -1,9 +1,8 @@
 ﻿using Cottle;
 using EddiCore;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using JetBrains.Annotations;
 using System;
-
 
 namespace EddiSpeechResponder.CustomFunctions
 {

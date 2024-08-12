@@ -1,7 +1,7 @@
 ﻿using EddiConfigService;
 using EddiCore;
 using EddiEvents;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using EddiSpeechService;
 using System;
 using System.Collections.Generic;
@@ -103,7 +103,7 @@ namespace EddiSpeechResponder
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                var recoveredScript = ScriptRecoveryService.GetRecoveredScript();
+                var recoveredScript = ScriptRecoveryService.ScriptRecoveryService.GetRecoveredScript();
                 if (recoveredScript != null)
                 {
                     var messageBoxResult = MessageBox.Show(Properties.SpeechResponder.messagebox_recoveredScript,

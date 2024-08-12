@@ -149,8 +149,9 @@ namespace EddiSpeechResponder.Properties {
         /// <summary>
         ///   Looks up a localized string similar to This function will provide the distance (in light years) between two systems.
         ///
-        ///Distance() takes either two or six arguments.
-        ///- Two argurments, the names of the two systems.
+        ///Distance() takes either one, two, or six arguments.
+        ///- One argument, the name of the target system (distance calculated relative to the current system)
+        ///- Two arguments, the names of the two systems.
         ///- Six arguments, the x, y, z coordinates of the two systems.
         ///
         ///Examples of each usage:
@@ -169,7 +170,7 @@ namespace EddiSpeechResponder.Properties {
         ///
         ///EconomyDetails() takes a single argument of the economy for which you want more information.
         ///
-        ///At current this does not have a lot of use as the economy object only contains its name, but expect it to be expanded in future..
+        ///At current this does not have a lot of use as the economy object only contains its name, but this may be expanded in future..
         /// </summary>
         public static string EconomyDetails {
             get {
@@ -350,52 +351,33 @@ namespace EddiSpeechResponder.Properties {
                 return ResourceManager.GetString("GalnetNewsMarkUnread", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This function will retrieve a session state value. 
         ///
-        /// GetState takes one argument: the name of the state value to retrieve.  The name of the state value shall be converted to lower-case with spaces changed to underscores.
+        ///GetState takes one argument: the name of the state value to retrieve.  The name of the state value shall be converted to lower-case with spaces changed to underscores. 
         ///
-        /// Common usage of this is to retrieve cumulative or persistent information stored using `SetState` during a session, for example:
-        /// 
-        ///     {SetState("distance_travelled_today", state.distance_travelled_today + event.distance)}
-        ///    {set distance to GetState("distance_travelled_today")}.
+        ///Common usage of this is to retrieve cumulative or persistent information stored using `SetState` during a session, for example:
+        ///
+        ///    {SetState(&quot;distance_travelled_today&quot;, state.distance_travelled_today + event.distance)}
+        ///    {set distance to GetState(&quot;distance_travelled_today&quot;)}.
         /// </summary>
-        public static string GetState
-        {
-            get
-            {
-                return ResourceManager.GetString( "GetState", resourceCulture );
+        public static string GetState {
+            get {
+                return ResourceManager.GetString("GetState", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This function will provide full information for a government given its name.
         ///
         ///GovernmentDetails() takes a single argument of the government for which you want more information.
         ///
-        ///At current this does not have a lot of use as the government object only contains its name, but expect it to be expanded in future..
+        ///At current this does not have a lot of use as the government object only contains its name but this may be expanded in future..
         /// </summary>
         public static string GovernmentDetails {
             get {
                 return ResourceManager.GetString("GovernmentDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This function will provide &apos;haulage&apos; information for a mission-related cargo. See the &apos;haulage&apos; object for variable details.
-        ///
-        ///HaulageDetails() takes one mandatory argument, a mission ID associated with the haulage. If the mission ID is not associated with haulage, a &apos;null&apos; is returned.
-        ///
-        ///Common usage of this is to provide further information about a particular mission haulage, for example:
-        ///
-        ///    {set haulage to HaulageDetails(event.missionid)}
-        ///    {if haulage &amp;&amp; haulage.deleivered &gt; 0:
-        ///        {set to [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string HaulageDetails {
-            get {
-                return ResourceManager.GetString("HaulageDetails", resourceCulture);
             }
         }
         
@@ -612,11 +594,11 @@ namespace EddiSpeechResponder.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This function will play an audio file as supplied in the argument. This function uses SSML tags.
+        ///   Looks up a localized string similar to This function will play an audio file as supplied in the argument. This function uses SSML tags. Various common Windows file formats are supported.  Any backslashes for path separators must be escaped, so &apos;\&apos; must be written as &apos;\\&apos;.
         ///
-        ///Play() takes one mandatory argument: the path to the file to play.  Various common Windows file formats are supported.  Any backslashes for path separators must be escaped, so &apos;\\&apos; must be written as &apos;\\\\&apos;
+        ///Play() takes one mandatory argument: the path to the file to play.  This may be an absolute path or relative path. Relative paths are defined relative to the `%appdata%/EDDI` configuration directory. 
         ///
-        ///Play() also takes two optional arguments. The first optional argument is a boolean value which if true will play the audio file asynchronously. The second optional argument is a number representing the  [rest of string was truncated]&quot;;.
+        ///Play() also takes two optional arguments. The first optional argument i [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Play {
             get {
@@ -670,7 +652,7 @@ namespace EddiSpeechResponder.Properties {
         ///
         ///SecurityLevelDetails() takes a single argument of the security level for which you want more information.
         ///
-        ///At current this does not have a lot of use as the security level object only contains its name, but expect it to be expanded in future..
+        ///At current this does not have a lot of use as the security level object only contains its name, but this may be expanded in future..
         /// </summary>
         public static string SecurityLevelDetails {
             get {
@@ -694,11 +676,9 @@ namespace EddiSpeechResponder.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This function will set a session state value.  The value will be available as a property of the &apos;state&apos; object in future templates within the same EDDI session.
+        ///   Looks up a localized string similar to This function will set a session state value. The value will be available in future scripts or child scripts throughout the remainder of the EDDI session as a property of the persistent &apos;state&apos; object. If you wish to refer to the stored value in the same script where it was stored then please retrieve the value using the &apos;GetState&apos; function.
         ///
-        ///SetState takes two arguments: the name of the state value to set, and its value.  The name of the state value will be converted to lower-case and spaces changed to underscores.  The value must be either a boolean, a number, or a string; other values will be ignored.
-        ///
-        ///Common usage of this is to keep track of the cumulative or persistent informat [rest of string was truncated]&quot;;.
+        ///SetState takes two arguments: the name of the state value to set, and its value.  The name of the state value will be converted to lower-case and spaces changed to u [rest of string was truncated]&quot;;.
         /// </summary>
         public static string SetState {
             get {
@@ -798,8 +778,8 @@ namespace EddiSpeechResponder.Properties {
         ///   Looks up a localized string similar to This function allows you to dynamically adjust the volume of the spoken speech. This function uses SSML tags.
         ///
         ///##### Please take care with decibel values. If you accidentally blow out your speakers, that&apos;s totally on you. 
-        ///SpeechRate() takes two mandatory arguments: the text to speak and the valume at which to speak it (legal values for the speech volume include &quot;silent&quot;, &quot;x-soft&quot;, &quot;soft&quot;, &quot;medium&quot;, &quot;loud&quot;, &quot;x-loud&quot;, &quot;default&quot;, as well as relative decibel values like &quot;-6dB&quot;).
-        ///A value of &quot;+0dB&quot; means no  [rest of string was truncated]&quot;;.
+        ///SpeechVolume() takes two mandatory arguments: the text to speak and the volume at which to speak it (legal values for the speech volume include &quot;silent&quot;, &quot;x-soft&quot;, &quot;soft&quot;, &quot;medium&quot;, &quot;loud&quot;, &quot;x-loud&quot;, &quot;default&quot;, as well as relative decibel values like &quot;-6dB&quot;).
+        ///A value of &quot;+0dB&quot; means n [rest of string was truncated]&quot;;.
         /// </summary>
         public static string SpeechVolume {
             get {
@@ -823,11 +803,11 @@ namespace EddiSpeechResponder.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This function will provide full information for a state given its name.
+        ///   Looks up a localized string similar to This function will provide full information for a faction state given its name.
         ///
-        ///StateDetails() takes a single argument of the state for which you want more information.
+        ///StateDetails() takes a single argument of the faction state for which you want more information.
         ///
-        ///At current this does not have a lot of use as the state object only contains its name, but expect it to be expanded in future..
+        ///At current this does not have a lot of use as the state object only contains its name but this may be expanded in future..
         /// </summary>
         public static string StateDetails {
             get {
@@ -856,7 +836,7 @@ namespace EddiSpeechResponder.Properties {
         ///
         ///SuperpowerDetails() takes a single argument of the superpower for which you want more information.
         ///
-        ///At current this does not have a lot of use as the superpower object only contains its name, but expect it to be expanded in future..
+        ///At current this does not have a lot of use as the superpower object only contains its name but this may be expanded in future..
         /// </summary>
         public static string SuperpowerDetails {
             get {

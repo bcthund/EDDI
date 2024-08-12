@@ -1,6 +1,6 @@
 ﻿using Cottle;
 using EddiDataDefinitions;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using JetBrains.Annotations;
 using System;
 using System.Reflection;

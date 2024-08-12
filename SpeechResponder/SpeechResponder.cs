@@ -4,7 +4,7 @@ using EddiCore;
 using EddiDataDefinitions;
 using EddiEvents;
 using EddiJournalMonitor;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using EddiSpeechService;
 using System;
 using System.Collections.Generic;

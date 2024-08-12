@@ -2,7 +2,7 @@
 using EddiConfigService;
 using EddiCore;
 using EddiDataDefinitions;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using EddiSpeechService;
 using JetBrains.Annotations;
 using System;

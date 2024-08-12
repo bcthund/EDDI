@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EddiSpeechResponder.Service
+namespace EddiSpeechResponder.ScriptResolverService
 {
     public interface ICustomFunction
     {

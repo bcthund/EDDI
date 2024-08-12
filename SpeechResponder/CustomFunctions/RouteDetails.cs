@@ -1,7 +1,7 @@
 ﻿using Cottle;
 using EddiCore;
 using EddiNavigationService;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using JetBrains.Annotations;
 using System;
 using System.Linq;

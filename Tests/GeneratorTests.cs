@@ -1,5 +1,5 @@
 ﻿using EddiEvents;
-using EddiSpeechResponder.Service;
+using EddiSpeechResponder.ScriptResolverService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

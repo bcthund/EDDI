@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EddiSpeechResponder.Service
+namespace EddiSpeechResponder.ScriptRecoveryService
 {
     public class ScriptRecoveryService
     {
