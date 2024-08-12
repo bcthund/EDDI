@@ -244,5 +244,45 @@ namespace UnitTests
             testThread.Start();
             testThread.Join();
         }
+
+        [ DataTestMethod ]
+        [DataRow( "{", "", 0, 1, "{{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 0 }\r\n{set i to i + 1}" )]
+        [DataRow( "", "}", 1, 1, "{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 0 }\r\n{set i to i + 1}}\r\n{set j to j + 2}\r\n{_ End of prepended script 1 }\r\n{set i to i + 1}" )]
+        [DataRow( "{", "", 2, 2, "{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 0 }\r\n{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 1 }\r\n{set i to i + 1}\r\n{{set j to j + 2}\r\n{_ End of prepended script 2 }\r\n{set i to i + 1}" )]
+        [DataRow( "", "}", 1, 2, "{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 0 }\r\n{set i to i + 1}\r\n{set j to j + 2}}\r\n{_ End of prepended script 1 }\r\n{set i to i + 1}" )]
+        [DataRow( "", "", 0, 0, "{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 0 }\r\n{set i to i + 1}" )]
+        [DataRow( "", "", 1, 0, "{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 0 }\r\n{set i to i + 1}\r\n{set j to j + 2}\r\n{_ End of prepended script 1 }\r\n{set i to i + 1}" )]
+        public void TestTemplateBuilder (string flaw_start, string flaw_end, int flawedTemplateNumber, int flawedTemplateLine, string expectedOutout )
+        {
+            var templateBuilder = new TemplateBuilder ();
+            int i;
+            for ( i = 0; i < (flawedTemplateNumber + 1); i++ )
+            {
+                templateBuilder.Append( i.ToString(), 
+                    ( i == flawedTemplateNumber && flawedTemplateLine == 1 ? flaw_start : "" ) + 
+                    @"{set i to i + 1}" +
+                    ( i == flawedTemplateNumber && flawedTemplateLine == 1 ? flaw_end : "" ) + 
+                    Environment.NewLine +
+                    ( i == flawedTemplateNumber && flawedTemplateLine == 2 ? flaw_start : "" ) + 
+                    "{set j to j + 2}" +
+                    ( i == flawedTemplateNumber && flawedTemplateLine == 2 ? flaw_end : "" ), true );
+            }
+            templateBuilder.Append( i.ToString(), @"{set i to i + 1}", false );
+            var combinedTemplates = templateBuilder.Render();
+
+            Assert.AreEqual(expectedOutout, combinedTemplates);
+
+            // Verify that error locations are captured correctly
+            try
+            {
+                Render( combinedTemplates, new Dictionary<Value, Value>() );
+            }
+            catch ( Cottle.Exceptions.ParseException e )
+            {
+                templateBuilder.FetchTemplateItemFromOffset( combinedTemplates, e.LocationStart, out var scriptName, out var scriptLine );
+                Assert.AreEqual(flawedTemplateNumber.ToString(), scriptName);
+                Assert.AreEqual(flawedTemplateLine, scriptLine);
+            }
+        }
     }
 }
