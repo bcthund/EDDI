@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Utilities;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace EddiSpeechResponder
 {
@@ -418,6 +419,18 @@ namespace EddiSpeechResponder
 
         private void acceptButtonClick ( object sender, RoutedEventArgs e )
         {
+            // Validate script name before we close
+            if ( string.IsNullOrWhiteSpace( revisedScript.Name ) )
+            {
+                MessageBox.Show( Properties.SpeechResponder.messagebox_script_name_required, Properties.SpeechResponder.messagebox_unable_to_save_script, MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+            if ( _scripts.Keys.Except( new[] { originalScript?.Name } ).Contains( revisedScript.Name ) )
+            {
+                MessageBox.Show( Properties.SpeechResponder.messagebox_script_name_already_in_use, Properties.SpeechResponder.messagebox_unable_to_save_script, MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
             if ( isNewOrRecoveredScript
                  || originalScript?.Name != revisedScript.Name
                  || originalScript?.Description != revisedScript.Description

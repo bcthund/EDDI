@@ -313,6 +313,33 @@ namespace EddiSpeechResponder.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The script name is already in use..
+        /// </summary>
+        public static string messagebox_script_name_already_in_use {
+            get {
+                return ResourceManager.GetString("messagebox_script_name_already_in_use", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A script name is required..
+        /// </summary>
+        public static string messagebox_script_name_required {
+            get {
+                return ResourceManager.GetString("messagebox_script_name_required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save script..
+        /// </summary>
+        public static string messagebox_unable_to_save_script {
+            get {
+                return ResourceManager.GetString("messagebox_unable_to_save_script", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Speech Responder.
         /// </summary>
         public static string name {

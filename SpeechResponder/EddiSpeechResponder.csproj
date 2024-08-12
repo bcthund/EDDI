@@ -136,6 +136,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Properties\SpeechResponder.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SpeechResponder.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Tooltips.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -146,6 +151,10 @@
     <EmbeddedResource Update="Properties\CustomFunctions.Untranslated.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomFunctions.Untranslated.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\SpeechResponder.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SpeechResponder.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Tooltips.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

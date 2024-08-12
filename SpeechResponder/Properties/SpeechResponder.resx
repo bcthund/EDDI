@@ -255,4 +255,13 @@
     <value>Filter results by script name, description, or full text.</value>
     <comment>tooltip that appears when the search filter textbox is selected</comment>
   </data>
+  <data name="messagebox_unable_to_save_script" xml:space="preserve">
+	  <value>Unable to save script.</value>
+  </data>
+  <data name="messagebox_script_name_required" xml:space="preserve">
+	  <value>A script name is required.</value>
+  </data>
+  <data name="messagebox_script_name_already_in_use" xml:space="preserve">
+	  <value>The script name is already in use.</value>
+  </data>
 </root>
