@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EddiSpeechResponder"
         xmlns:resx="clr-namespace:EddiSpeechResponder.Properties"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Edit script" 
         ResizeMode="CanResizeWithGrip"
@@ -102,6 +103,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -110,24 +114,45 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Margin="10, 5, 10, 0" Grid.Row="0" Grid.Column="0" Text="{x:Static resx:SpeechResponder.header_name}"/>
+            <TextBlock Margin="10, 5, 10, 0" 
+                       Grid.Row="0" 
+                       Grid.Column="0" 
+                       VerticalAlignment="Center" 
+                       Text="{x:Static resx:SpeechResponder.header_name}"
+                       />
             <TextBox Margin="10, 5, 10, 0" 
                      Grid.Row="0" 
-                     Grid.Column="1" 
-                     Text="{Binding Path=editorScript.Name, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}" 
-                     IsReadOnly="{Binding Path=editorScript.Responder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}"
+                     Grid.Column="1" Grid.ColumnSpan="4"
+                     Text="{Binding Path=revisedScript.Name, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}" 
+                     IsReadOnly="{Binding Path=revisedScript.Responder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}"
                      />
             <TextBlock Margin="10, 5, 10, 0" 
                        Grid.Row="1" 
                        Grid.Column="0" 
+                       VerticalAlignment="Center" 
                        Text="{x:Static resx:SpeechResponder.header_description}"
                        />
             <TextBox Margin="10, 5, 10, 0" 
                      Grid.Row="1" 
-                     Grid.Column="1" 
-                     Text="{Binding Path=editorScript.Description, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}" 
-                     IsReadOnly="{Binding Path=editorScript.Responder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}"/>
-            <avalonEdit:TextEditor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" 
+                     Grid.Column="1" Grid.ColumnSpan="2"
+                     Text="{Binding Path=revisedScript.Description, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}" 
+                     IsReadOnly="{Binding Path=revisedScript.Responder, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window }}"
+                     />
+            <TextBlock Margin="10, 5, 10, 0" 
+                       Grid.Row="1" 
+                       Grid.Column="3" 
+                       VerticalAlignment="Center" 
+                       Text="{x:Static resx:SpeechResponder.header_include}"
+                       />
+            <TextBox Margin="10, 5, 10, 0" 
+                     Grid.Row="1" 
+                     Grid.Column="4" 
+                     Text="{Binding Path=revisedScript.includes, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, TargetNullValue={x:Static System:String.Empty}}" 
+                     ToolTip="{x:Static resx:SpeechResponder.tooltip_include}"
+                     TextChanged="IncludesTextBox_OnTextChanged" 
+                     LostFocus="IncludesTextBox_OnLostFocus"
+                     />
+            <avalonEdit:TextEditor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10" 
                                    Name="scriptView"
                                    Foreground="DarkSlateGray"
                                    Background="White"
@@ -152,12 +177,12 @@
                     </ContextMenu>
                 </avalonEdit:TextEditor.ContextMenu>
             </avalonEdit:TextEditor>
-            <UniformGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Rows="1" Columns="3" Width="770" Margin="0,0,0,10" HorizontalAlignment="Center">
+            <UniformGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Rows="1" Columns="3" Width="770" Margin="0,0,0,10" HorizontalAlignment="Center">
                 <Button x:Name="testButton" FontSize="18" Content="{x:Static resx:SpeechResponder.test_script_button}" VerticalAlignment="Top" Click="testButtonClick" Margin="0,0,5,0"/>
                 <Button x:Name="resetToDefaultButton" FontSize="18" Content="{x:Static resx:SpeechResponder.reset_script_button}" VerticalAlignment="Top" Click="resetButtonClick" Margin="5,0,5,0"/>
                 <Button x:Name="showDiffButton" FontSize="18" Content="{x:Static resx:SpeechResponder.compare_script_button}" VerticalAlignment="Top" Click="showDiffButtonClick" Margin="5,0,0,0"/>
             </UniformGrid>
-            <UniformGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Rows="1" Columns="4" Width="770" Margin="0,0,0,10" HorizontalAlignment="Center">
+            <UniformGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Rows="1" Columns="4" Width="770" Margin="0,0,0,10" HorizontalAlignment="Center">
                 <Button x:Name="acceptButton" IsDefault="True" FontSize="18" Content="{x:Static resx:SpeechResponder.button_ok}" VerticalAlignment="Top" Click="acceptButtonClick" Margin="0,0,5,0"/>
                 <Button x:Name="helpButton" FontSize="18" Content="{x:Static resx:SpeechResponder.help_button}" VerticalAlignment="Top" Click="helpButtonClick" Margin="5,0,5,0"/>
                 <Button x:Name="variablesButton" FontSize="18" Content="{x:Static resx:SpeechResponder.script_variables_button}" VerticalAlignment="Top" Click="variablesButtonClick" Margin="5,0,5,0"/>

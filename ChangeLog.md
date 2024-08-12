@@ -3,9 +3,13 @@
 Full details of the variables available for each noted event, and VoiceAttack integrations, are available in the individual [event pages](https://github.com/EDCD/EDDI/wiki/Events).
 
 ## 4.1.0-b3
+  * Core
+    * Miscellaneous minor bug fixes.
   * Speech Responder
     * Fixed a bug that made the default EDDI personality editable.
-
+    * The `Edit script` window now contains an option to specify other scripts to include (prepend) to the triggered script. If your personality uses "helper" scripts to set preferences or create common functions then you can use this option to prepend the contents of your helper scripts before the triggered script is rendered.
+    * "Error with this script" messages have been updated to provide better information about the script location which could not be parsed.    
+    
 ## 4.1.0-b2
   * Speech Responder
     * Scripts

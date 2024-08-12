@@ -246,12 +246,21 @@ namespace EddiSpeechResponder
                     var updatedScript = speechResponder.CurrentPersonality.Scripts[script.Name];
                     updatedScript.Value = editScriptWindow.revisedScript.Value;
                     updatedScript.Description = editScriptWindow.revisedScript.Description;
+                    updatedScript.includes = editScriptWindow.revisedScript.includes;
                 }
                 else
                 {
                     // The script has been renamed.
                     speechResponder.CurrentPersonality.Scripts.Remove(script.Name);
                     speechResponder.CurrentPersonality.Scripts.Add(editScriptWindow.revisedScript.Name, editScriptWindow.revisedScript );
+
+                    // Update any included script references
+                    foreach (var currentPersonalityScript in speechResponder.CurrentPersonality.Scripts.Values)
+                    {
+                        currentPersonalityScript.includes =
+                            (currentPersonalityScript.includes ?? string.Empty).Replace( script.Name,
+                                editScriptWindow.revisedScript.Name );
+                    }
                 }
 
                 speechResponder.SavePersonality();
@@ -324,7 +333,13 @@ namespace EddiSpeechResponder
             {
                 case MessageBoxResult.Yes:
                     // Remove the script from the list
-                    SpeechResponder.CurrentPersonality.Scripts.Remove(script.Name);
+                    SpeechResponder.CurrentPersonality.Scripts.Remove( script.Name );
+
+                    // Remove any references to the removed script in the `includes` scring of other scripts
+                    SpeechResponder.CurrentPersonality.Scripts.AsParallel().ForAll( kv =>
+                        kv.Value.includes = string.Join( "; ",
+                            kv.Value.includes.Split( ';' ).Select( s => s.Trim() ).Except( new[] { script.Name } ) ) );
+
                     SpeechResponder.SavePersonality();
                     scriptsView.Refresh();
                     break;

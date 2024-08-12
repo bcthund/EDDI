@@ -259,6 +259,15 @@ namespace EddiSpeechResponder.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include.
+        /// </summary>
+        public static string header_include {
+            get {
+                return ResourceManager.GetString("header_include", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string header_name {
@@ -318,6 +327,15 @@ namespace EddiSpeechResponder.Properties {
         public static string messagebox_script_name_already_in_use {
             get {
                 return ResourceManager.GetString("messagebox_script_name_already_in_use", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The script name may not contain.
+        /// </summary>
+        public static string messagebox_script_name_may_not_contain {
+            get {
+                return ResourceManager.GetString("messagebox_script_name_may_not_contain", resourceCulture);
             }
         }
         
@@ -453,6 +471,15 @@ namespace EddiSpeechResponder.Properties {
         public static string test_script_button {
             get {
                 return ResourceManager.GetString("test_script_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scripts identified here shall be executed prior to the top-level script. This can be used to set preferences or create functions that can be re-used between multiple scripts. Separate multiple script names using &apos;;&apos; as the separator..
+        /// </summary>
+        public static string tooltip_include {
+            get {
+                return ResourceManager.GetString("tooltip_include", resourceCulture);
             }
         }
         

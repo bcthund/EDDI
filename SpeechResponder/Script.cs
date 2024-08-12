@@ -72,6 +72,10 @@ namespace EddiSpeechResponder
             ? string.IsNullOrWhiteSpace(defaultValue)
             : string.Equals(Value, defaultValue);
 
+        [ JsonProperty( "includes" ) ]
+        // Other scripts which should be prepended when this script is rendered
+        public string includes { get; set; }
+
         [JsonIgnore]
         public bool IsResettableOrDeletable
         {

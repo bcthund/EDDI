@@ -12,11 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Utilities;
+using CheckBox = System.Windows.Forms.CheckBox;
 using MessageBox = System.Windows.Forms.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace EddiSpeechResponder
 {
@@ -425,6 +428,11 @@ namespace EddiSpeechResponder
                 MessageBox.Show( Properties.SpeechResponder.messagebox_script_name_required, Properties.SpeechResponder.messagebox_unable_to_save_script, MessageBoxButtons.OK, MessageBoxIcon.Error );
                 return;
             }
+            if ( revisedScript.Name.Contains(';') )
+            {
+                MessageBox.Show( Properties.SpeechResponder.messagebox_script_name_may_not_contain + @"';'.", Properties.SpeechResponder.messagebox_unable_to_save_script, MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
             if ( _scripts.Keys.Except( new[] { originalScript?.Name } ).Contains( revisedScript.Name ) )
             {
                 MessageBox.Show( Properties.SpeechResponder.messagebox_script_name_already_in_use, Properties.SpeechResponder.messagebox_unable_to_save_script, MessageBoxButtons.OK, MessageBoxIcon.Error );
@@ -434,7 +442,7 @@ namespace EddiSpeechResponder
             if ( isNewOrRecoveredScript
                  || originalScript?.Name != revisedScript.Name
                  || originalScript?.Description != revisedScript.Description
-                || script?.Value != editorScript.Value )
+                 || originalScript?.includes != revisedScript.includes
                  || originalScript?.Value != revisedScript.Value )
             {
                 // Make sure default values are set as required
@@ -546,21 +554,28 @@ namespace EddiSpeechResponder
             }
         }
 
-        // TODO: Variable descriptions on mouse hover?
-        /*
-        private void ScriptView_OnMouseHover ( object sender, MouseEventArgs e )
+        private void IncludesTextBox_OnTextChanged ( object sender, TextChangedEventArgs e )
         {
-            if ( sender is TextEditor textEditor  )
+            // TODO: Type ahead for script names?
+        }
+
+        private void IncludesTextBox_OnLostFocus ( object sender, RoutedEventArgs e )
+        {
+            if ( sender is TextBox textBox && textBox.IsLoaded )
             {
-                var mousePoint = e.GetPosition( textEditor );
-                var textLocation = textEditor.GetPositionFromPoint( mousePoint )?.Location;
-                if ( textLocation != null )
-                {
-                    if ( !textLocation.Value.IsEmpty ) { return; }
-                    var line = textEditor.TextArea.TextView.Document.GetLineByNumber( textLocation.Value.Line );
-                }
+                var separatedIncludes = textBox.Text
+                    .Split( new[] { ';' }, StringSplitOptions.RemoveEmptyEntries )
+                    .Select( t => t.Trim() ).ToList();
+                var scriptsExceptCurrent = _scripts
+                    .Where(s => s.Key != revisedScript.Name )
+                    .ToDictionary(s => s.Key, s => s.Value);
+                var validatedIncludes = scriptsExceptCurrent
+                    .Select(kv => kv.Key)
+                    .Where(k => separatedIncludes.Any( s => 
+                        s.Equals( k, StringComparison.InvariantCultureIgnoreCase ) ) )
+                    .ToList();
+                revisedScript.includes = string.Join( "; ", validatedIncludes );
             }
         }
-        */
     }
 }

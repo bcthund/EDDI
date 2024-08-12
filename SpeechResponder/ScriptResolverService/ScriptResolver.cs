@@ -11,10 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Utilities;
 
-namespace EddiSpeechResponder.Service
+[assembly: InternalsVisibleTo( "Tests" )]
+namespace EddiSpeechResponder.ScriptResolverService
 {
     public class ScriptResolver
     {
@@ -59,8 +61,22 @@ namespace EddiSpeechResponder.Service
                 Logging.Debug($"{name} script disabled");
                 return null;
             }
+            var scriptValue = script.Value;
 
-            return resolveFromValue(script.Value, context, isTopLevelScript, script);
+            // Prepend included scripts as appropriate
+            var includedScriptNames = (script.includes ?? string.Empty).Split( ';' ).Select( i => i.Trim() ).ToList();
+            var includedScripts = new Dictionary<string, string>();
+            foreach ( var scriptName in includedScriptNames )
+            {
+                var includedScript = scripts.FirstOrDefault( s =>
+                    s.Key.Equals( scriptName, StringComparison.InvariantCultureIgnoreCase ) ).Value;
+                if ( includedScript != null )
+                {
+                    includedScripts.Add( includedScript.Name, includedScript.Value );
+                }
+            }
+
+            return resolveFromValue(scriptValue, context, isTopLevelScript, script, includedScripts );
         }
 
         /// <summary> From the default dictionary of variable values in the default context </summary>
@@ -72,10 +88,23 @@ namespace EddiSpeechResponder.Service
         }
 
         /// <summary> From a custom context </summary>
-        public static string resolveFromValue(string script, IContext context, bool isTopLevelScript, Script scriptObject = null)
+        public static string resolveFromValue(string script, IContext context, bool isTopLevelScript, Script scriptObject = null, Dictionary<string, string> includedScripts = null)
         {
+            var templateBuilder = new TemplateBuilder();
+
             try
             {
+                // Combine any included scripts with our main script
+                if ( includedScripts != null )
+                {
+                    foreach ( var includedScript in includedScripts )
+                    {
+                        templateBuilder.Append(includedScript.Key, includedScript.Value, true);
+                    }
+                }
+                templateBuilder.Append(scriptObject?.Name, script, false);
+                script = templateBuilder.Render();
+
                 Logging.Debug(
                     $"Resolving {( isTopLevelScript ? "top level " : "" )}script {scriptObject?.Name}: {script}",
                     context );
@@ -94,12 +123,12 @@ namespace EddiSpeechResponder.Service
                         // Errors will be handled through the ParseException class so we're only concerned with warnings and notices here.
                         if ( report.Severity is DocumentSeverity.Warning )
                         {
-                            Logging.Warn( @"Cottle Parser Warning", report );
+                            Logging.Warn( @"Cottle Parser Warning:", report );
                         }
 
                         if ( report.Severity is DocumentSeverity.Notice )
                         {
-                            Logging.Debug( @"Cottle Parser Suggestion", report );
+                            Logging.Debug( @"Cottle Parser Suggestion:", report );
                         }
                     }
                 }
@@ -137,17 +166,27 @@ namespace EddiSpeechResponder.Service
             {
                 // Report the failing the script name, if it is available
                 string scriptName;
-                if ( scriptObject != null )
+                int scriptLine;
+                if ( e.Line > 0 )
                 {
-                    scriptName = "the script \"" + scriptObject.Name + "\"";
+                    templateBuilder.FetchTemplateItemFromLine( e.Line, out scriptName, out scriptLine );
+                }
+                else
+                {
+                    templateBuilder.FetchTemplateItemFromOffset( script, e.LocationStart, out scriptName, out scriptLine );
+                }
+                if ( !string.IsNullOrEmpty(scriptName) )
+                {
+                    scriptName = "the script \"" + scriptName + "\"";
                 }
                 else
                 {
                     scriptName = "this script";
                 }
 
-                Logging.Warn( $"Failed to resolve {scriptName} at line {e.Line}. {e}" );
-                return $"There is a problem with {scriptName} at line {e.Line}. {errorTranslation( e.Message )}";
+                var rejectedSubstring = script.Substring( e.LocationStart, e.LocationLength );
+                Logging.Warn( $"Failed to resolve {scriptName} at line {scriptLine}. {e}" );
+                return $"There is a problem with {scriptName} at line {scriptLine}. {errorTranslation( e.Message + rejectedSubstring )}";
             }
             catch ( ArgumentOutOfRangeException aoore )
             {

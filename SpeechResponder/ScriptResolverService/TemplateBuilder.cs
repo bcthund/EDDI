@@ -35,7 +35,6 @@ namespace EddiSpeechResponder.ScriptResolverService
                 if ( ( cumulativeLines + template.itemLines ) >= line)
                 {
                     scriptLine = line - cumulativeLines;
-                    Logging.Info( $"Template {scriptName} rejected at line {scriptLine}." );
                     return;
                 }
                 cumulativeLines += template.itemLines;
@@ -50,7 +49,6 @@ namespace EddiSpeechResponder.ScriptResolverService
 			var lines = script.Split(new[] { "\r\n" }, StringSplitOptions.None);
             var cumulativeLength = 0;
 
-            Logging.Info( $"Template script rejected with offset {offset}." );
             var lineNumber = 1; 
             foreach (var line in lines)
             {
