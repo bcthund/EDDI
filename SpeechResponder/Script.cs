@@ -64,7 +64,6 @@ namespace EddiSpeechResponder
         }
 
         [JsonProperty("defaultValue")]
-
         public string defaultValue { get; internal set; }
 
         [JsonProperty("default")]

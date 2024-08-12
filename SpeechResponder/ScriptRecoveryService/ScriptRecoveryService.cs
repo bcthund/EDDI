@@ -54,13 +54,13 @@ namespace EddiSpeechResponder.ScriptRecoveryService
                 File.Delete(_tempFileName);
             }
 
-            _scriptWindow.editorScript.PropertyChanged += _scriptWindow_PropertyChanged;
+            _scriptWindow.revisedScript.PropertyChanged += _scriptWindow_PropertyChanged;
             cancellationTS = new CancellationTokenSource();
         }
 
         private void _scriptWindow_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(EditScriptWindow.editorScript.Value))
+            if (e.PropertyName == nameof(EditScriptWindow.revisedScript.Value))
             {
                 //the script value has changed. Begin the callguard and save the script value
                 BeginScriptSave(_scriptWindow);
@@ -82,7 +82,7 @@ namespace EddiSpeechResponder.ScriptRecoveryService
                 try
                 {
                     await Task.Delay(TimeSpan.FromSeconds(3));
-                    SaveRecoveryScript(window.editorScript);
+                    SaveRecoveryScript(window.revisedScript);
                 }
                 finally
                 {
@@ -117,7 +117,7 @@ namespace EddiSpeechResponder.ScriptRecoveryService
                 }
             }
 
-            _scriptWindow.editorScript.PropertyChanged -= _scriptWindow_PropertyChanged;
+            _scriptWindow.revisedScript.PropertyChanged -= _scriptWindow_PropertyChanged;
         }
     }
 }

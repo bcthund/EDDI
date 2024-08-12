@@ -24,8 +24,9 @@ namespace EddiSpeechResponder
     /// </summary>
     public partial class EditScriptWindow : Window
     {
-        public Script script { get; private set; }
-        public Script editorScript { get; private set; }
+        [CanBeNull]
+        public Script originalScript { get; private set; }
+        public Script revisedScript { get; private set; }
 
         private readonly Dictionary<string, Script> _scripts;
         private readonly bool isNewOrRecoveredScript;
@@ -46,7 +47,7 @@ namespace EddiSpeechResponder
         private static readonly object metaVarLock = new object();
         private readonly SpeechResponder speechResponder;
 
-        public EditScriptWindow ( SpeechResponder speechResponder, Script script, Dictionary<string, Script> scripts, [NotNull][ItemNotNull] IEnumerable<MetaVariable> metaVars, [NotNull] CottleHighlighting cottleHighlighting, bool isNewOrRecoveredScript )
+        public EditScriptWindow ( SpeechResponder speechResponder, Script originalScript, Dictionary<string, Script> scripts, [NotNull][ItemNotNull] IEnumerable<MetaVariable> metaVars, [NotNull] CottleHighlighting cottleHighlighting, bool isNewOrRecoveredScript )
         {
             InitializeComponent();
             DataContext = this;
@@ -54,23 +55,23 @@ namespace EddiSpeechResponder
             this.customFunctions = ScriptResolver.GetCustomFunctions();
             this.isNewOrRecoveredScript = isNewOrRecoveredScript;
             _scripts = scripts;
-            this.script = script;
+            this.originalScript = originalScript;
             this.metaVars.AddRange(metaVars);
             this.speechResponder = speechResponder;
 
-            if ( script == null )
+            if ( originalScript == null )
             {
                 // This is a new script
-                editorScript = new Script( "New script", null, false, null );
+                revisedScript = new Script( "New script", null, false, null );
             }
             else
             {
                 // This is an existing script
-                editorScript = script.Copy();
+                revisedScript = originalScript.Copy();
             }
 
             // See if there is the default value for this script is empty
-            if ( string.IsNullOrWhiteSpace( editorScript.defaultValue ) )
+            if ( string.IsNullOrWhiteSpace( revisedScript.defaultValue ) )
             {
                 // No default; disable reset and show
                 showDiffButton.IsEnabled = false;
@@ -78,7 +79,7 @@ namespace EddiSpeechResponder
             }
 
             // Set our editor content
-            scriptView.Text = editorScript.Value;
+            scriptView.Text = revisedScript.Value;
 
             // Convert tabs to spaces
             scriptView.Options.ConvertTabsToSpaces = true;
@@ -197,7 +198,7 @@ namespace EddiSpeechResponder
 
         private void ScriptView_TextChanged ( object sender, EventArgs e )
         {
-            editorScript.Value = scriptView.Text;
+            revisedScript.Value = scriptView.Text;
             InitializeOrUpdateFolding();
         }
 
@@ -418,21 +419,19 @@ namespace EddiSpeechResponder
         private void acceptButtonClick ( object sender, RoutedEventArgs e )
         {
             if ( isNewOrRecoveredScript
-                || script?.Name != editorScript.Name
-                || script?.Description != editorScript.Description
+                 || originalScript?.Name != revisedScript.Name
+                 || originalScript?.Description != revisedScript.Description
                 || script?.Value != editorScript.Value )
+                 || originalScript?.Value != revisedScript.Value )
             {
-                // Update the output script
-                script = editorScript;
-
                 // Make sure default values are set as required
                 // ReSharper disable once InlineOutVariableDeclaration - Continuous Integration seems to require this variable be declared separately rather than in-line
 #pragma warning disable IDE0018 // Inline variable declaration
                 Script defaultScript = null;
 #pragma warning restore IDE0018 // Inline variable declaration
-                if ( Personality.Default().Scripts?.TryGetValue( script.Name, out defaultScript ) ?? false )
+                if ( Personality.Default().Scripts?.TryGetValue( revisedScript.Name, out defaultScript ) ?? false )
                 {
-                    script = Personality.UpgradeScript( script, defaultScript );
+                    revisedScript = Personality.UpgradeScript( revisedScript, defaultScript );
                 }
 
                 DialogResult = true;
@@ -458,15 +457,15 @@ namespace EddiSpeechResponder
 
         private void variablesButtonClick ( object sender, RoutedEventArgs e )
         {
-            var variablesWindow = new VariablesWindow(editorScript);
+            var variablesWindow = new VariablesWindow(revisedScript);
             variablesWindow.Show();
         }
 
         private void resetButtonClick ( object sender, RoutedEventArgs e )
         {
             // Resetting the script resets it to its value in the default personality
-            editorScript.Value = editorScript.defaultValue;
-            scriptView.Text = editorScript.Value;
+            revisedScript.Value = revisedScript.defaultValue;
+            scriptView.Text = revisedScript.Value;
         }
 
         private void testButtonClick ( object sender, RoutedEventArgs e )
@@ -479,16 +478,14 @@ namespace EddiSpeechResponder
             {
                 if ( !SpeechService.Instance.eddiSpeaking )
                 {
-                    ScriptRecoveryService.SaveRecoveryScript( editorScript );
+                    ScriptRecoveryService.SaveRecoveryScript( revisedScript );
 
-                    // Splice the new script in to the existing scripts
-                    editorScript.Value = scriptView.Text;
+                    // Splice the revised script into the existing scripts
                     var newScripts = new Dictionary<string, Script>(_scripts);
-                    var testScript = new Script(editorScript.Name, editorScript.Description, false, editorScript.Value);
-                    newScripts.Remove( editorScript.Name );
-                    newScripts.Add( editorScript.Name, testScript );
+                    newScripts.Remove( revisedScript.Name );
+                    newScripts.Add( revisedScript.Name, revisedScript );
 
-                    speechResponder.TestScript( editorScript.Name, newScripts );
+                    speechResponder.TestScript( revisedScript.Name, newScripts );
                 }
                 else
                 {
@@ -500,10 +497,10 @@ namespace EddiSpeechResponder
 
         private void showDiffButtonClick ( object sender, RoutedEventArgs e )
         {
-            editorScript.Value = scriptView.Text;
-            if ( !string.IsNullOrWhiteSpace( editorScript.defaultValue ) )
+            revisedScript.Value = scriptView.Text;
+            if ( !string.IsNullOrWhiteSpace( revisedScript.defaultValue ) )
             {
-                new ShowDiffWindow( editorScript.defaultValue, editorScript.Value ).Show();
+                new ShowDiffWindow( revisedScript.defaultValue, revisedScript.Value ).Show();
             }
         }
 

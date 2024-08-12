@@ -241,17 +241,17 @@ namespace EddiSpeechResponder
             if (editScriptWindow.DialogResult ?? false)
             {
                 // Non-responder scripts can be renamed, handle that here.
-                if (script.Name == editScriptWindow.script.Name)
+                if (script.Name == editScriptWindow.revisedScript.Name)
                 {
                     var updatedScript = speechResponder.CurrentPersonality.Scripts[script.Name];
-                    updatedScript.Value = editScriptWindow.script.Value;
-                    updatedScript.Description = editScriptWindow.script.Description;
+                    updatedScript.Value = editScriptWindow.revisedScript.Value;
+                    updatedScript.Description = editScriptWindow.revisedScript.Description;
                 }
                 else
                 {
                     // The script has been renamed.
                     speechResponder.CurrentPersonality.Scripts.Remove(script.Name);
-                    speechResponder.CurrentPersonality.Scripts.Add(editScriptWindow.script.Name, editScriptWindow.script);
+                    speechResponder.CurrentPersonality.Scripts.Add(editScriptWindow.revisedScript.Name, editScriptWindow.revisedScript );
                 }
 
                 speechResponder.SavePersonality();
@@ -365,7 +365,7 @@ namespace EddiSpeechResponder
             {
                 if ( editScriptWindow.ShowDialog() == true )
                 {
-                    var newScript = editScriptWindow.script;
+                    var newScript = editScriptWindow.revisedScript;
                     SpeechResponder.CurrentPersonality.Scripts[ newScript.Name ] = newScript;
                     SpeechResponder.SavePersonality();
                     scriptsView.Refresh();
