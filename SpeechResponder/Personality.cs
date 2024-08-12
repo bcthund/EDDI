@@ -399,11 +399,10 @@ namespace EddiSpeechResponder
                 !upgradeableScripts.ContainsKey( key ) &&
                 !fixedScripts.ContainsKey( key ) ), false );
 
-
             // Next, try to upgrade each personality script referencing a matching script in the default personality.
             foreach ( var kv in upgradeableScripts )
             {
-                if ( ( defaultPersonality.Scripts.TryGetValue( kv.Key, out var defaultScript ) ) && defaultScript != null )
+                if ( defaultPersonality.Scripts.TryGetValue( kv.Key, out var defaultScript ) && defaultScript != null )
                 {
                     var script = UpgradeScript(kv.Value, defaultScript);
                     fixedScripts.Add( kv.Key, script );
