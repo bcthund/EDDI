@@ -26,9 +26,7 @@ namespace System
 
             try
             {
-                var objJson = JsonConvert.SerializeObject(obj);
-                var anotherJson = JsonConvert.SerializeObject(another);
-                return objJson == anotherJson;
+                return JsonConvert.SerializeObject( obj ) == JsonConvert.SerializeObject( another );
             }
             catch ( Exception e )
             {

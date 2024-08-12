@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 
 namespace Utilities
 {
@@ -8,14 +9,7 @@ namespace Utilities
 
         public static bool IsProcessRunning(string processName)
         {
-            foreach (Process process in Process.GetProcesses())
-            {
-                if (process.ProcessName.Contains(processName))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Process.GetProcesses().Any( p => p.ProcessName.Contains( processName ) );
         }
 
         public static bool IsEliteRunning()
