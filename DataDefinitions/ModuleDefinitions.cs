@@ -1064,6 +1064,7 @@ namespace EddiDataDefinitions
                 new Module(128935982, "Hpt_DumbfireMissileRack_Fixed_Small_Advanced", "AdvancedMissileRack", 1, "B", 32175, ModuleMount.Fixed),
                 new Module(128935983, "Hpt_DumbfireMissileRack_Fixed_Medium_Advanced", "AdvancedMissileRack", 2, "B", 240000, ModuleMount.Fixed),
                 new Module(128957069, "Int_CorrosionProofCargoRack_Size5_Class1", "CorrosionResistantCargoRack", 5, "E", 0),
+                new Module(128957070, "Int_CorrosionProofCargoRack_Size6_Class1", "CorrosionResistantCargoRack", 6, "E", 0),
                 new Module(128975719, "Int_PlanetApproachSuite_Advanced", "PlanetaryApproachSuite", 1, "I", 500),
                 new Module(129001921, "Int_MultiDroneControl_Mining_Size3_Class1", "MultiDroneControl_Mining", 3, "E", 15000),
                 new Module(129001922, "Int_MultiDroneControl_Mining_Size3_Class3", "MultiDroneControl_Mining", 3, "C", 50000),
@@ -1104,13 +1105,11 @@ namespace EddiDataDefinitions
                 new Module(129030485, "int_hyperdrive_overcharge_size4_class3", "FrameShiftDrive_SCO", 4, "C", 214677 ),
                 new Module(129030486, "int_hyperdrive_overcharge_size3_class3", "FrameShiftDrive_SCO", 3, "C", 67722 ),
                 new Module(129030487, "int_hyperdrive_overcharge_size2_class3", "FrameShiftDrive_SCO", 2, "C", 21363 ),
-
                 new Module(129030535, "type8_armour_grade1", "LightweightAlloy", 1, "I", 0 ),
                 new Module(129030536, "type8_armour_grade2", "ReinforcedAlloy", 1, "I", 0 ),
                 new Module(129030537, "type8_armour_grade3", "MilitaryGradeComposite", 1, "I", 0 ),
                 new Module(129030538, "type8_armour_mirrored", "MirroredSurfaceComposite", 1, "I", 0 ),
                 new Module(129030539, "type8_armour_reactive", "ReactiveSurfaceComposite", 1, "I", 0 ),
-
                 new Module(129030577, "int_hyperdrive_overcharge_size2_class1", "FrameShiftDrive_SCO", 2, "E", 21363 ),
                 new Module(129030578, "int_hyperdrive_overcharge_size2_class2", "FrameShiftDrive_SCO", 2, "D", 64090 ),
                 new Module(129030579, "int_hyperdrive_overcharge_size2_class4", "FrameShiftDrive_SCO", 2, "B", 64090 ),
@@ -1153,7 +1152,6 @@ namespace EddiDataDefinitions
                 new Module(999999901, "VoicePack_Verity", "Verity", 1, "I", 0),
                 new Module(999999902, "VoicePack_Victor", "Victor", 1, "I", 0),
                 new Module(999999904, "VoicePack_Celeste", "Celeste", 1, "I", 0),
-                new Module(999999906, "Int_CorrosionProofCargoRack_Size6_Class1", "CorrosionResistantCargoRack", 6, "E", 0),
 
                 // The FDL has its own cargo bay door.  The FDL is like that (now the Mamba uses it too!)
                 new Module(999999907, "ModularCargoBayDoorFDL", "CargoHatch", 1, "H", 0),
