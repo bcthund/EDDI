@@ -2530,23 +2530,23 @@ namespace EddiJournalMonitor
                                 break;
                             case "MarketSell":
                                 {
-                                    long marketId = JsonParsing.getLong(data, "MarketID");
-                                    string commodityName = JsonParsing.getString(data, "Type");
-                                    CommodityDefinition commodity = CommodityDefinition.FromEDName(commodityName);
+                                    var marketId = JsonParsing.getLong(data, "MarketID");
+                                    var commodityName = JsonParsing.getString(data, "Type");
+                                    var commodity = CommodityDefinition.FromEDName(commodityName);
                                     if (commodity == null)
                                     {
                                         Logging.Error("Failed to map cargo type " + commodityName + " to commodity definition", line);
                                     }
-                                    int amount = JsonParsing.getInt(data, "Count");
-                                    int sellPrice = JsonParsing.getInt(data, "SellPrice");
+                                    var amount = JsonParsing.getInt(data, "Count");
+                                    var sellPrice = JsonParsing.getLong(data, "SellPrice");
 
-                                    long buyPrice = JsonParsing.getLong(data, "AvgPricePaid");
+                                    var buyPrice = JsonParsing.getLong(data, "AvgPricePaid");
                                     // We don't care about buy price, we care about profit per unit
-                                    long profit = sellPrice - buyPrice;
+                                    var profit = sellPrice - buyPrice;
 
-                                    bool illegal = JsonParsing.getOptionalBool(data, "IllegalGoods") ?? false;
-                                    bool stolen = JsonParsing.getOptionalBool(data, "StolenGoods") ?? false;
-                                    bool blackmarket = JsonParsing.getOptionalBool(data, "BlackMarket") ?? false;
+                                    var illegal = JsonParsing.getOptionalBool(data, "IllegalGoods") ?? false;
+                                    var stolen = JsonParsing.getOptionalBool(data, "StolenGoods") ?? false;
+                                    var blackmarket = JsonParsing.getOptionalBool(data, "BlackMarket") ?? false;
 
                                     events.Add(new CommoditySoldEvent(timestamp, marketId, commodity, amount, sellPrice, profit, illegal, stolen, blackmarket) { raw = line, fromLoad = fromLogLoad });
                                 }
@@ -2763,10 +2763,22 @@ namespace EddiJournalMonitor
                                 break;
                             case "NpcCrewPaidWage":
                                 {
-                                    string name = JsonParsing.getString(data, "NpcCrewName");
-                                    long crewid = JsonParsing.getLong(data, "NpcCrewId");
-                                    long amount = JsonParsing.getLong(data, "Amount");
-                                    events.Add(new CrewPaidWageEvent(timestamp, name, crewid, amount) { raw = line, fromLoad = fromLogLoad });
+                                    var name = JsonParsing.getString(data, "NpcCrewName");
+                                    var crewid = JsonParsing.getLong(data, "NpcCrewId");
+                                    var amount = JsonParsing.getLong(data, "Amount");
+                                    if ( !fromLogLoad )
+                                    {
+                                        var lineCopied = line;
+                                        Task.Run( async () =>
+                                        {
+                                            await Task.Delay( TimeSpan.FromSeconds(6) );
+                                            EDDI.Instance.enqueueEvent( new CrewPaidWageEvent( timestamp, name, crewid, amount ) { raw = lineCopied, fromLoad = fromLogLoad } );
+                                        } ).ConfigureAwait( false );
+                                    }
+                                    else
+                                    {
+                                        events.Add( new CrewPaidWageEvent( timestamp, name, crewid, amount ) { raw = line, fromLoad = fromLogLoad } );
+                                    }
                                 }
                                 handled = true;
                                 break;
