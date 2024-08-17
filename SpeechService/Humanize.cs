@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Utilities;
 
 namespace EddiSpeechService
 {
@@ -15,7 +16,12 @@ namespace EddiSpeechService
         {
             if (rawValue == null) {return null;}
             decimal value = (decimal)rawValue;
-            if (value == 0) {return Properties.Phrases.zero;}
+            if ( value == 0 )
+            {
+                var result = Properties.Phrases.zero;
+                Logging.Debug( $"Converted raw value '{rawValue.ToString()}' to '{result}'" );
+                return result;
+            }
 
             bool wantIntegerMantissa = forceIntegerMantissa ?? Properties.FormatOverrides.forceIntegerMantissa.Equals("true");
 
@@ -36,8 +42,10 @@ namespace EddiSpeechService
                 }
 
                 // Now round it to 2sf
-                return (isNegative ? Properties.Phrases.minus + " " : "") +
-                       (Math.Round(value * 10) / (decimal) Math.Pow(10, numzeros + 2));
+                var result = ( isNegative ? Properties.Phrases.minus + " " : "" ) +
+                             ( Math.Round( value * 10 ) / (decimal)Math.Pow( 10, numzeros + 2 ) );
+                Logging.Debug($"Converted raw value '{rawValue.ToString()}' to '{result}'");
+                return result;
             }
 
             double magnitude = Math.Log10((double) value);
@@ -49,16 +57,22 @@ namespace EddiSpeechService
             {
                 // Some languages render these differently than others. "1000" in English is "one thousand" but in Italian is simply "mille".
                 // Consequently, we leave the interpretation to the culture-specific voice.
-                return FormatVerbatim(number, isNegative, orderMultiplier);
+                var result = FormatVerbatim(number, isNegative, orderMultiplier);
+                Logging.Debug( $"Converted raw value '{rawValue.ToString()}' to '{result}'" );
+                return result;
             }
 
             if (number < 100)
             {
-                return FormatWith2SignificantDigits(number, isNegative, orderMultiplier, nextDigit, value, wantIntegerMantissa);
+                var result = FormatWith2SignificantDigits(number, isNegative, orderMultiplier, nextDigit, value, wantIntegerMantissa);
+                Logging.Debug( $"Converted raw value '{rawValue.ToString()}' to '{result}'" );
+                return result;
             }
             else // Describe (less precisely) values for numbers where the largest order number exceeds one hundred
             {
-                return FormatWith3SignificantDigits(number, isNegative, orderMultiplier, nextDigit, value);
+                var result = FormatWith3SignificantDigits(number, isNegative, orderMultiplier, nextDigit, value);
+                Logging.Debug( $"Converted raw value '{rawValue.ToString()}' to '{result}'" );
+                return result;
             }
         }
 
