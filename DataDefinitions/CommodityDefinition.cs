@@ -10,19 +10,18 @@ namespace EddiDataDefinitions
 
     public class CommodityDefinition : ResourceBasedLocalizedEDName<CommodityDefinition>
     {
-        static CommodityDefinition()
+        private static readonly Dictionary<long, CommodityDefinition> CommoditiesByEliteID = new Dictionary<long, CommodityDefinition>();
+
+        static CommodityDefinition ()
         {
             resourceManager = Properties.Commodities.ResourceManager;
             resourceManager.IgnoreCase = true;
-            missingEDNameHandler = (edname) => new CommodityDefinition(0, edname, Unknown);
-            CommoditiesByEliteID = new Dictionary<long, CommodityDefinition>();
+            missingEDNameHandler = ( edname ) => new CommodityDefinition( 0, edname, CommodityCategory.Unknown );
 
             // 2xxxxxxxx & 3xxxxxxxx series Frontier IDs are placeholders, to use until an actual Frontier ID is identified
             // Check https://github.com/EDCD/FDevIDs (for any undefined FDevID's)
             var _ = new List<CommodityDefinition>
             {
-                new CommodityDefinition(0, "Unknown", Unknown, 0, false),
-
                 new CommodityDefinition(128049152, "Platinum", Metals, 19279, false),
                 new CommodityDefinition(128049153, "Palladium", Metals, 13298, false),
                 new CommodityDefinition(128049154, "Gold", Metals, 9401, false),
@@ -463,7 +462,8 @@ namespace EddiDataDefinitions
                 // Items for which we do not have Elite IDs
             };
         }
-        private static readonly Dictionary<long, CommodityDefinition> CommoditiesByEliteID;
+
+        public static CommodityDefinition Unknown = new CommodityDefinition( 0, "Unknown", CommodityCategory.Unknown, 0, false, false );
 
         [PublicAPI, JsonProperty("category")]
         public readonly CommodityCategory Category;
@@ -486,7 +486,7 @@ namespace EddiDataDefinitions
         public readonly long EliteID;
 
         // dummy used to ensure that the static constructor has run
-        public CommodityDefinition() : this(0, "", Unknown)
+        public CommodityDefinition() : this(0, "", CommodityCategory.Unknown)
         { }
 
         internal CommodityDefinition ( long EliteID, string edname, CommodityCategory Category, int AveragePrice = 0, bool Rare = false, bool Corrosive = false ) : base(edname, edname)

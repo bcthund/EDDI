@@ -15,7 +15,7 @@ namespace EddiEvents
         public long marketid { get; }
         
         [PublicAPI ("The name of the commodity sold")]
-        public string commodity => commodityDefinition?.localizedName ?? "unknown commodity";
+        public string commodity => commodityDefinition?.localizedName ?? CommodityDefinition.Unknown.localizedName;
 
         [PublicAPI("The amount of the commodity sold")]
         public int amount { get; }
