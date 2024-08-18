@@ -286,6 +286,15 @@ namespace EddiDataDefinitions
             }
 
             // No modified value exists, use a base value
+            return GetFsdBaseOptimalMass();
+        }
+
+        /// <summary>
+        /// Gets the base optimal mass of this FSD
+        /// </summary>
+        /// <returns></returns>
+        public double GetFsdBaseOptimalMass ()
+        {
             double baseOptimalMass;
             if ( edname?.Contains( "hyperdrive_overcharge" ) ?? false )
             {
@@ -302,7 +311,7 @@ namespace EddiDataDefinitions
             }
             else
             {
-               var baseOptimalMasses = new Dictionary<string, double>
+                var baseOptimalMasses = new Dictionary<string, double>
                 {
                     { "2E", 48.000 }, { "2D", 54.000 }, { "2C", 60.000 }, { "2B", 75.000 }, { "2A", 90.000 },
                     { "3E", 80.000 }, { "3D", 90.000 }, { "3C", 100.00 }, { "3B", 125.00 }, { "3A", 150.00 },

@@ -255,7 +255,7 @@ namespace EddiShipMonitor
                     var fsdOptimalMassMultiplier = json[ "WorkInProgress_modifications" ]?["OutfittingFieldType_FSDOptimalMass"];
                     if ( fsdOptimalMassMultiplier != null )
                     {
-                        var baseOptimalMass = Convert.ToDecimal( module.GetFsdOptimalMass() );
+                        var baseOptimalMass = Convert.ToDecimal( module.GetFsdBaseOptimalMass() );
                         var modifier = module.modifiers.FirstOrDefault( m => m.EDName == "FSDOptimalMass" );
                         if ( modifier is null )
                         {
