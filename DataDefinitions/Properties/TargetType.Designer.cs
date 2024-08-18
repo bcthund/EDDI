@@ -160,6 +160,15 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Politician.
+        /// </summary>
+        internal static string Politician {
+            get {
+                return ResourceManager.GetString("Politician", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thargoid Scout.
         /// </summary>
         internal static string Scout {
