@@ -107,15 +107,15 @@ namespace EddiSpeechResponder
         private static readonly string[] ignoredEventKeys =
         {
             // Shares updates with monitors / responders but are not intended to be user facing
-            "Cargo",
-            "Fleet carrier materials",
-            "Market",
-            "Outfitting",
-            "Shipyard",
-            "Squadron startup",
-            "Stored ships",
-            "Stored modules",
-            "Unhandled event"
+            CargoEvent.NAME,
+            FleetCarrierMaterialsEvent.NAME,
+            MarketEvent.NAME,
+            OutfittingEvent.NAME,
+            ShipyardEvent.NAME,
+            SquadronStartupEvent.NAME,
+            StoredShipsEvent.NAME,
+            StoredModulesEvent.NAME,
+            UnhandledEvent.NAME
         };
 
         private static readonly string DIRECTORYPATH = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
