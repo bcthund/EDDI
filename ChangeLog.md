@@ -5,6 +5,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
 ## 4.1.0-b3
   * Core
     * Miscellaneous minor bug fixes.
+    * The `Crew paid wage` event has been reconfigured with a delay (so that it triggers after other events deducting commander credits).
   * Speech Responder
     * Fixed a bug that made the default EDDI personality editable.
     * The `Edit script` window now contains an option to specify other scripts to include (prepend) to the triggered script. If your personality uses "helper" scripts to set preferences or create common functions then you can use this option to prepend the contents of your helper scripts before the triggered script is rendered.

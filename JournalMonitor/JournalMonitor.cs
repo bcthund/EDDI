@@ -2766,18 +2766,22 @@ namespace EddiJournalMonitor
                                     var name = JsonParsing.getString(data, "NpcCrewName");
                                     var crewid = JsonParsing.getLong(data, "NpcCrewId");
                                     var amount = JsonParsing.getLong(data, "Amount");
-                                    if ( !fromLogLoad )
+                                    // Delay `Crew paid wage` events to occur after events where the commander receives a payment.
+                                    if ( amount > 0 )
                                     {
-                                        var lineCopied = line;
-                                        Task.Run( async () =>
+                                        var crewPaidWageEvent = new CrewPaidWageEvent( timestamp, name, crewid, amount ) { raw = line, fromLoad = fromLogLoad };
+                                        if ( fromSpeechResponderTest )
                                         {
-                                            await Task.Delay( TimeSpan.FromSeconds(6) );
-                                            EDDI.Instance.enqueueEvent( new CrewPaidWageEvent( timestamp, name, crewid, amount ) { raw = lineCopied, fromLoad = fromLogLoad } );
-                                        } ).ConfigureAwait( false );
-                                    }
-                                    else
-                                    {
-                                        events.Add( new CrewPaidWageEvent( timestamp, name, crewid, amount ) { raw = line, fromLoad = fromLogLoad } );
+                                            events.Add( crewPaidWageEvent );
+                                        }
+                                        else
+                                        {
+                                            Task.Run( async () =>
+                                            {
+                                                await Task.Delay( TimeSpan.FromSeconds( 6 ) ).ConfigureAwait( false );
+                                                EDDI.Instance.enqueueEvent( crewPaidWageEvent );
+                                            } );
+                                        }
                                     }
                                 }
                                 handled = true;
