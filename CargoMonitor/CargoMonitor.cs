@@ -596,7 +596,7 @@ namespace EddiCargoMonitor
 
         private bool TryRemoveCargo ( Cargo cargo )
         {
-            if ( ( cargo.total + cargo.need ) < 1 )
+            if ( cargo != null && ( cargo.total + cargo.need ) < 1 )
             {
                 // All of the commodity was either expended, ejected, or sold
                 _RemoveCargoWithEDName( cargo.edname );
