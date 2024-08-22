@@ -24,11 +24,12 @@ namespace EddiSpeechResponder.CustomFunctions
                 {
                     try
                     {
+                        Clipboard.Clear();
                         Clipboard.SetData(DataFormats.Text, text);
                     }
                     catch ( Exception e )
                     {
-                        Logging.Error( "Failed to set clipboard", e );
+                        Logging.Warn( "Failed to set clipboard", e );
                     }
                 });
                 clipboardThread.SetApartmentState( ApartmentState.STA );
