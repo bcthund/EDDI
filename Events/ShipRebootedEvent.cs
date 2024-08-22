@@ -21,13 +21,13 @@ namespace EddiEvents
 
         // Not intended to be user facing
 
-        public List<string> compartments { get; set; }
+        public List<string> compartments { get; private set; }
 
         public List<Module> Modules { get; set; } = new List<Module>(); // Set via the Ship Monitor, referencing the current ship
 
         public ShipRebootedEvent ( DateTime timestamp, List<string> compartments ) : base( timestamp, NAME )
         {
-            this.Modules = Modules;
+            this.compartments = compartments;
         }
     }
 }

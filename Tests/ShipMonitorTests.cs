@@ -580,5 +580,49 @@ namespace UnitTests
             Assert.AreEqual("SRV", @event.shipEDModel);
             Assert.AreEqual(9999, shipMonitor.currentShipId, @"Because the ""ship"" reported by the event is an SRV, the `currentShipId` property of the ship monitor should be unchanged");
         }
+
+        [ TestMethod ]
+        public void TestShipRebootedEvent ()
+        {
+            // Set up our `Ship monitor`
+            var shipMonitor = new ShipMonitor
+            {
+                updatedAt = DateTime.MinValue,
+                currentShipId = 9999 // Set up our `currentShipId` property with a value of "9999"
+            };
+
+            // Set up our Loadout event
+            var line = @"{ ""timestamp"":""2024-08-20T01:22:19Z"", ""event"":""Loadout"", ""Ship"":""viper_mkiv"", ""ShipID"":949, ""ShipName"":""Aisling guard"", ""ShipIdent"":""HN-74"", ""HullValue"":437931, ""ModulesValue"":10685968, ""HullHealth"":0.058691, ""Hot"":true, ""UnladenMass"":304.600006, ""CargoCapacity"":6, ""MaxJumpRange"":25.832956, ""FuelCapacity"":{ ""Main"":16.000000, ""Reserve"":0.460000 }, ""Rebuy"":556196, ""Modules"":[ { ""Slot"":""MediumHardpoint1"", ""Item"":""hpt_beamlaser_gimbal_medium"", ""On"":true, ""Priority"":2, ""Health"":0.000000, ""Value"":500600 }, { ""Slot"":""MediumHardpoint2"", ""Item"":""hpt_beamlaser_gimbal_medium"", ""On"":true, ""Priority"":3, ""Health"":0.000000, ""Value"":500600 }, { ""Slot"":""SmallHardpoint1"", ""Item"":""hpt_basicmissilerack_fixed_small"", ""On"":true, ""Priority"":3, ""AmmoInClip"":6, ""AmmoInHopper"":6, ""Health"":0.491816, ""Value"":70785 }, { ""Slot"":""SmallHardpoint2"", ""Item"":""hpt_basicmissilerack_fixed_small"", ""On"":true, ""Priority"":2, ""AmmoInClip"":6, ""AmmoInHopper"":6, ""Health"":0.614118, ""Value"":72600 }, { ""Slot"":""TinyHardpoint1"", ""Item"":""hpt_electroniccountermeasure_tiny"", ""On"":true, ""Priority"":0, ""Health"":0.000000, ""Value"":12188 }, { ""Slot"":""TinyHardpoint2"", ""Item"":""hpt_cloudscanner_size0_class4"", ""On"":false, ""Priority"":0, ""Health"":0.083574, ""Value"":356556 }, { ""Slot"":""Armour"", ""Item"":""viper_mkiv_armour_reactive"", ""On"":true, ""Priority"":1, ""Health"":1.000000, ""Value"":1032203 }, { ""Slot"":""PaintJob"", ""Item"":""paintjob_viper_mkiv_tactical_blue"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""PowerPlant"", ""Item"":""int_powerplant_size4_class5"", ""On"":true, ""Priority"":1, ""Health"":0.526949, ""Value"":1441233, ""Engineering"":{ ""Engineer"":""Felicity Farseer"", ""EngineerID"":300100, ""BlueprintID"":128673765, ""BlueprintName"":""PowerPlant_Boosted"", ""Level"":1, ""Quality"":1.000000, ""Modifiers"":[ { ""Label"":""Integrity"", ""Value"":83.599998, ""OriginalValue"":88.000000, ""LessIsGood"":0 }, { ""Label"":""PowerCapacity"", ""Value"":17.472000, ""OriginalValue"":15.600000, ""LessIsGood"":0 }, { ""Label"":""HeatEfficiency"", ""Value"":0.420000, ""OriginalValue"":0.400000, ""LessIsGood"":1 } ] } }, { ""Slot"":""MainEngines"", ""Item"":""int_engine_size4_class5"", ""On"":true, ""Priority"":0, ""Health"":0.000000, ""Value"":1610080, ""Engineering"":{ ""Engineer"":""Felicity Farseer"", ""EngineerID"":300100, ""BlueprintID"":128673656, ""BlueprintName"":""Engine_Dirty"", ""Level"":2, ""Quality"":1.000000, ""Modifiers"":[ { ""Label"":""Integrity"", ""Value"":82.720001, ""OriginalValue"":88.000000, ""LessIsGood"":0 }, { ""Label"":""PowerDraw"", ""Value"":5.215200, ""OriginalValue"":4.920000, ""LessIsGood"":1 }, { ""Label"":""EngineOptimalMass"", ""Value"":399.000000, ""OriginalValue"":420.000000, ""LessIsGood"":0 }, { ""Label"":""EngineOptPerformance"", ""Value"":119.000008, ""OriginalValue"":100.000000, ""LessIsGood"":0 }, { ""Label"":""EngineHeatRate"", ""Value"":1.690000, ""OriginalValue"":1.300000, ""LessIsGood"":1 } ] } }, { ""Slot"":""FrameShiftDrive"", ""Item"":""int_hyperdrive_overcharge_size4_class5"", ""On"":true, ""Priority"":0, ""Health"":0.666094, ""Value"":1883794, ""Engineering"":{ ""Engineer"":""Felicity Farseer"", ""EngineerID"":300100, ""BlueprintID"":128673691, ""BlueprintName"":""FSD_LongRange"", ""Level"":2, ""Quality"":0.906000, ""Modifiers"":[ { ""Label"":""Mass"", ""Value"":11.500000, ""OriginalValue"":10.000000, ""LessIsGood"":1 }, { ""Label"":""Integrity"", ""Value"":94.000000, ""OriginalValue"":100.000000, ""LessIsGood"":0 }, { ""Label"":""PowerDraw"", ""Value"":0.477000, ""OriginalValue"":0.450000, ""LessIsGood"":1 }, { ""Label"":""FSDOptimalMass"", ""Value"":725.750977, ""OriginalValue"":585.000000, ""LessIsGood"":0 } ] } }, { ""Slot"":""LifeSupport"", ""Item"":""int_lifesupport_size2_class5"", ""On"":true, ""Priority"":3, ""Health"":0.977148, ""Value"":56547 }, { ""Slot"":""PowerDistributor"", ""Item"":""int_powerdistributor_size3_class5"", ""On"":true, ""Priority"":1, ""Health"":0.914809, ""Value"":158331 }, { ""Slot"":""Radar"", ""Item"":""int_sensors_size3_class5"", ""On"":true, ""Priority"":2, ""Health"":0.837076, ""Value"":158331, ""Engineering"":{ ""Engineer"":""Felicity Farseer"", ""EngineerID"":300100, ""BlueprintID"":128740133, ""BlueprintName"":""Sensor_LongRange"", ""Level"":2, ""Quality"":1.000000, ""Modifiers"":[ { ""Label"":""Mass"", ""Value"":7.000000, ""OriginalValue"":5.000000, ""LessIsGood"":1 }, { ""Label"":""SensorTargetScanAngle"", ""Value"":25.500000, ""OriginalValue"":30.000000, ""LessIsGood"":0 }, { ""Label"":""Range"", ""Value"":8424.000000, ""OriginalValue"":6480.000000, ""LessIsGood"":0 } ] } }, { ""Slot"":""FuelTank"", ""Item"":""int_fueltank_size4_class3"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""Decal2"", ""Item"":""decal_powerplay_aislingduval"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""Decal3"", ""Item"":""decal_powerplay_aislingduval"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""Slot01_Size4"", ""Item"":""int_shieldgenerator_size4_class5_strong"", ""On"":true, ""Priority"":1, ""Health"":0.825511, ""Value"":2415120 }, { ""Slot"":""Slot02_Size4"", ""Item"":""int_hullreinforcement_size4_class2"", ""On"":true, ""Priority"":1, ""Health"":1.000000, ""Value"":195000 }, { ""Slot"":""Slot03_Size3"", ""Item"":""int_hullreinforcement_size3_class2"", ""On"":true, ""Priority"":1, ""Health"":1.000000, ""Value"":84000 }, { ""Slot"":""Slot04_Size2"", ""Item"":""int_modulereinforcement_size2_class2"", ""On"":true, ""Priority"":1, ""Health"":0.000000, ""Value"":36000 }, { ""Slot"":""Slot05_Size2"", ""Item"":""int_buggybay_size2_class1"", ""On"":false, ""Priority"":0, ""Health"":1.000000, ""Value"":18000 }, { ""Slot"":""Slot06_Size1"", ""Item"":""int_cargorack_size1_class1"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""Slot07_Size1"", ""Item"":""int_cargorack_size1_class1"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""Slot08_Size1"", ""Item"":""int_cargorack_size1_class1"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""Military01"", ""Item"":""int_hullreinforcement_size3_class2"", ""On"":true, ""Priority"":1, ""Health"":1.000000, ""Value"":84000 }, { ""Slot"":""PlanetaryApproachSuite"", ""Item"":""int_planetapproachsuite_advanced"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""VesselVoice"", ""Item"":""voicepack_amelie"", ""On"":true, ""Priority"":1, ""Health"":1.000000 }, { ""Slot"":""ShipCockpit"", ""Item"":""viper_mkiv_cockpit"", ""On"":true, ""Priority"":1, ""Health"":0.856739 }, { ""Slot"":""CargoHatch"", ""Item"":""modularcargobaydoor"", ""On"":false, ""Priority"":4, ""Health"":0.359405 } ] }";
+            var events = JournalMonitor.ParseJournalEntry( line );
+            var loadoutEvent = (ShipLoadoutEvent)events[ 0 ];
+            Assert.IsNotNull( loadoutEvent );
+            Assert.IsInstanceOfType( loadoutEvent, typeof( ShipLoadoutEvent ) );
+            shipMonitor.PreHandle( loadoutEvent );
+
+            var ship = shipMonitor.GetCurrentShip();
+            Assert.AreEqual( 949, ship.LocalId );
+            Assert.AreEqual( 0, ship.thrusters.health );
+            Assert.AreEqual( 53, ship.powerplant.health );
+
+            // Set up our ShipRebooted event
+            line = @"{ ""timestamp"":""2024-08-20T01:24:48Z"", ""event"":""RebootRepair"", ""Modules"":[ ""MainEngines"", ""MediumHardpoint1"", ""MediumHardpoint2"", ""TinyHardpoint1"", ""Slot04_Size2"" ] }";
+            events = JournalMonitor.ParseJournalEntry( line );
+            var shipRebootedEvent = (ShipRebootedEvent)events[ 0 ];
+            Assert.IsNotNull( shipRebootedEvent );
+            Assert.IsInstanceOfType<ShipRebootedEvent>( shipRebootedEvent );
+            shipMonitor.PreHandle( shipRebootedEvent );
+
+            Assert.AreEqual( 5, shipRebootedEvent.compartments.Count );
+            Assert.IsTrue( shipRebootedEvent.compartments.Contains( "MainEngines" ) );
+            Assert.IsTrue( shipRebootedEvent.compartments.Contains( "MediumHardpoint1" ) );
+            Assert.IsTrue( shipRebootedEvent.compartments.Contains( "MediumHardpoint2" ) );
+            Assert.IsTrue( shipRebootedEvent.compartments.Contains( "TinyHardpoint1" ) );
+            Assert.IsTrue( shipRebootedEvent.compartments.Contains( "Slot04_Size2" ) );
+
+            ship = shipMonitor.GetCurrentShip();
+            Assert.AreEqual( 949, ship.LocalId );
+            Assert.AreEqual( 1, ship.thrusters.health );
+            Assert.AreEqual( 53, ship.powerplant.health );
+        }
     }
 }
