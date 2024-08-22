@@ -198,6 +198,11 @@ namespace EddiSpeechResponder.ScriptResolverService
                 Logging.Error( ce.Message, ce );
                 return $"Cottle speech system configuration error: {ce.Message}";
             }
+            catch ( IndexOutOfRangeException ioore )
+            {
+                Logging.Warn( ioore.Message, ioore );
+                return $"Error with {scriptObject?.Name ?? "this"} script: {ioore.Message}";
+            }
             catch ( TargetParameterCountException tpce )
             {
                 Logging.Warn( tpce.Message, tpce );
