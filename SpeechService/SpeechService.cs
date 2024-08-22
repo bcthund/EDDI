@@ -562,7 +562,7 @@ namespace EddiSpeechService
                 float fadePer10Milliseconds = soundOut.Volume / ActiveSpeechFadeOutMilliseconds * 10;
                 while ( soundOut.Volume > 0 )
                 {
-                    soundOut.Volume -= fadePer10Milliseconds;
+                    soundOut.Volume -= Math.Min( fadePer10Milliseconds, soundOut.Volume );
                     Thread.Sleep( 10 );
                 }
             }
