@@ -63,8 +63,9 @@ namespace EddiDiscoveryMonitor
                      TryCheckPlanetClass( variant.planetClass, ref log ) && 
                      TryCheckAtmosphere( variant.atmosphereClass, ref log ) && 
                      TryCheckAtmosphereComposition( variant.atmosphereComposition, ref log ) &&
-                     TryCheckVolcanismAdvanced( variant.volcanism, ref log ) && 
-                     TryCheckPrimaryStar( variant.primaryStar, ref log ) &&
+                     TryCheckVolcanism( variant.volcanism, ref log ) && 
+                     TryCheckMainStar( variant.primaryStar, ref log ) &&
+                     TryCheckLocalStar( variant.localStar, ref log ) &&
                      TryCheckMaterials( variant.materials, ref log ) &&
                      TryCheckBodyTypePresent( variant.systemBodies, ref log ) &&
                      TryCheckNebulaDistance( variant.nebulaDistance, ref log ) &&
@@ -162,12 +163,14 @@ namespace EddiDiscoveryMonitor
             if (checkRegions.Count() > 0)
             {
                 var currentRegion = Utilities.RegionMap.RegionMap.FindRegion((double)_currentSystem.x, (double)_currentSystem.y, (double)_currentSystem.z);
-                if (checkRegions.Any( a => a == currentRegion.name ) )
-                {
-                    //log += $"ACCEPT. '{currentRegion.name}' is in '{string.Join(",", checkRegions)}'. ";
-                    return true;
+                if (currentRegion != null) {
+                    if (checkRegions.Any( a => a == currentRegion.name ) )
+                    {
+                        //log += $"ACCEPT. '{currentRegion.name}' is in '{string.Join(",", checkRegions)}'. ";
+                        return true;
+                    }
+                    log += $"REJECT. Region: '{currentRegion.name}' not in '{string.Join(",", checkRegions)}'";
                 }
-                log += $"REJECT. Region: '{currentRegion.name}' not in '{string.Join(",", checkRegions)}'";
                 return false;
             }
             return true;
@@ -277,27 +280,27 @@ namespace EddiDiscoveryMonitor
                         }
                     }
                     else if(checkParts.Count() >= 2 ) {
-                        // Check Class and Thickness
-                        if ( 
-                            ( ( checkParts[0] == "None" || checkParts[0] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
-                            checkParts[0] == "Any" ||
-                            checkParts[0] == body.atmosphereclass.edname )
-                        {
-                            
 
+                        checkParts[0] = checkParts[0].ToLowerInvariant();
+
+                        // Check Thickness
+                        if ( 
+                            ( ( checkParts[0] == "none" || checkParts[0] == string.Empty ) && ( body.atmospherethickness == null || body.atmospherethickness == AtmosphereThickness.None ) ) ||
+                            checkParts[0] == "any" ||
+                            checkParts[0] == body.atmospherethickness.edname )
+                        {
+                            // Check Class
                             if ( 
-                            ( ( checkParts[1] == "None" || checkParts[1] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
-                            checkParts[1] == "Any" ||
-                            checkParts[1] == body.atmosphereclass.edname )
+                                ( ( checkParts[1] == "None" || checkParts[1] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                                checkParts[1] == "Any" ||
+                                checkParts[1] == body.atmosphereclass.edname )
                             {
                                 return true;
                             }
-
-
                         }
                     }
 
-
+                    /*
                     if ( checkAtmosphereClasses.Any( c =>
                             ( ( c == "None" || c == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
                                 c == "Any" ||
@@ -305,11 +308,10 @@ namespace EddiDiscoveryMonitor
                     {
                         return true;
                     }
-
-
+                    */
                     
                 }
-                log += $"REJECT. Atmosphere class: {( body.atmosphereclass ?? AtmosphereClass.None )?.edname} not in {string.Join( ",", checkAtmosphereClasses )}.";
+                log += $"REJECT. Atmosphere thickness,class: {( body.atmospherethickness ?? AtmosphereThickness.None )?.edname},{( body.atmosphereclass ?? AtmosphereClass.None )?.edname} not in {string.Join( ";", checkAtmosphereClasses )}.";
                 return false;
             }
 
@@ -362,7 +364,7 @@ namespace EddiDiscoveryMonitor
                 {
                     return true;
                 }
-                log += $"REJECT. Volcanism composition: {body.volcanism?.edComposition} not in {string.Join( ",", checkVolcanismCompositions )}.";
+                log += $"REJECT. Volcanism composition: {body.volcanism?.edComposition} not in {string.Join( ";", checkVolcanismCompositions )}.";
                 return false;
             }
 
@@ -382,7 +384,7 @@ namespace EddiDiscoveryMonitor
                     //    return true;
                     //}
 
-                    if( ( composition=="None" && body.volcanism == null) || ( composition=="Any" && body.volcanism != null) || ( composition == body.volcanism?.ToString() ) ) {
+                    if( (composition=="None") || ( composition=="Any" && body.volcanism != null) || ( composition == body.volcanism?.ToString() ) ) {
                         return true;
                     }
                 }
@@ -394,7 +396,54 @@ namespace EddiDiscoveryMonitor
             return true;
         }
 
-        private bool TryCheckPrimaryStar ( ICollection<string> checkStar, ref string log )
+        private bool TryCheckMainStar ( ICollection<string> checkStar, ref string log )
+        {
+            // TODO: 2212 - Add logic to check Main Star for predictions
+
+            if(checkStar.Count() > 0 ) {
+
+                var result = _currentSystem.TryGetMainStar( out Body mainStar );
+                //log += $"(CHECK MAIN STAR: '{mainStar.stellarclass}', '{mainStar.starClass.edname}', '{mainStar.luminosityclass}')\r\n";
+
+                if(mainStar!=null) {
+                    foreach( var starGroup in checkStar) {
+                        IList<string> starParts = starGroup.Split( ',' ).ToList();
+
+                        if ( starParts[ 0 ] == mainStar.starClass.edname )
+                        {
+                            //log += $"\t\tClass => {starParts[0]}=={parentStar.starClass.edname}, ";
+                            if ( starParts.Count >= 2 )
+                            {
+                                if ( mainStar.luminosityclass.Contains( starParts[ 1 ] ) )
+                                {
+                                    //log += $"Luminosity => {starParts[1]} ? {parentStar.luminosityclass}, ";
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                //log += $"Luminosity => SKIP, ";
+                                return true;
+                            }
+                            //log += "\r\n";
+                        }
+                    }
+                }
+                else
+                {
+                    // Failed to get parent stars, return True as this check isn't valid anymore
+                    log += $"FAILED. Did not get any main star, pass by default. ";
+                    return true;
+                }
+
+                log += $"REJECT. Main star/luminosity [{mainStar.starClass.edname}/{mainStar.luminosityclass}] not in {string.Join( ";", checkStar )}.";
+                return false;
+            }
+
+                    return true;
+        }
+
+        private bool TryCheckLocalStar ( ICollection<string> checkStar, ref string log )
         {
             if(checkStar.Count() > 0 ) {
 
@@ -435,7 +484,7 @@ namespace EddiDiscoveryMonitor
                     return true;
                 }
 
-                log += $"REJECT. Parent star/luminosity [{string.Join(",", parentStars.Select( x => x.starClass.edname ) ) }] not in {string.Join(";", checkStar)}.";
+                log += $"REJECT. Parent star/luminosity [{string.Join(",", parentStars.Select( x => x.starClass.edname ) ) }/{string.Join(",", parentStars.Select( x => x.luminosityclass ) ) }] not in {string.Join(";", checkStar)}.";
                 return false;
             }
             return true;

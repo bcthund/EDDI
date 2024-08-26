@@ -15,7 +15,14 @@ namespace EddiDataDefinitions
     {
         /// <summary>Information for Non-Human Surface Signals (biology/geology)</summary>
         [PublicAPI("Data about surface signals that have been found on the body")]
-        public SurfaceSignals surfaceSignals { get; set; } = new SurfaceSignals();
+        //public SurfaceSignals _surfaceSignals { get; set; } = new SurfaceSignals();
+        [JsonIgnore] private SurfaceSignals _surfaceSignals = new SurfaceSignals();
+        public SurfaceSignals surfaceSignals
+        {
+            get => _surfaceSignals;
+            set { _surfaceSignals = value; OnPropertyChanged( "SurfaceSignals" ); }
+        }
+        //[JsonIgnore] private DateTime? _mappedDateTime;
 
         /// <summary>The ID of this body in the star system</summary>
         public long? bodyId { get; set; }
@@ -371,6 +378,10 @@ namespace EddiDataDefinitions
 
         // Body-specific items
 
+        /// <summary>The atmosphere thickness</summary>
+        [PublicAPI]
+        public AtmosphereThickness atmospherethickness { get; set; } = AtmosphereThickness.None;
+
         /// <summary>The atmosphere class</summary>
         public AtmosphereClass atmosphereclass { get; set; } = AtmosphereClass.None;
 
@@ -436,7 +447,7 @@ namespace EddiDataDefinitions
         public ReserveLevel reserveLevel { get; set; } = ReserveLevel.None;
 
         /// <summary> Planet or Moon definition </summary>
-        public Body(string bodyName, long? bodyId, string systemName, ulong systemAddress, List<IDictionary<string, long>> parents, decimal? distanceLs, bool? tidallylocked, TerraformState terraformstate, PlanetClass planetClass, AtmosphereClass atmosphereClass, List<AtmosphereComposition> atmosphereCompositions, Volcanism volcanism, decimal? earthmass, decimal? radiusKm, decimal gravity, decimal? temperatureKelvin, decimal? pressureAtm, bool? landable, List<MaterialPresence> materials, List<SolidComposition> solidCompositions, decimal? semimajoraxisLs, decimal? eccentricity, decimal? orbitalinclinationDegrees, decimal? periapsisDegrees, decimal? orbitalPeriodDays, decimal? rotationPeriodDays, decimal? axialtiltDegrees, List<Ring> rings, ReserveLevel reserveLevel, bool? alreadydiscovered, bool? alreadymapped)
+        public Body(string bodyName, long? bodyId, string systemName, ulong systemAddress, List<IDictionary<string, long>> parents, decimal? distanceLs, bool? tidallylocked, TerraformState terraformstate, PlanetClass planetClass, AtmosphereThickness atmosphereThickness, AtmosphereClass atmosphereClass, List<AtmosphereComposition> atmosphereCompositions, Volcanism volcanism, decimal? earthmass, decimal? radiusKm, decimal gravity, decimal? temperatureKelvin, decimal? pressureAtm, bool? landable, List<MaterialPresence> materials, List<SolidComposition> solidCompositions, decimal? semimajoraxisLs, decimal? eccentricity, decimal? orbitalinclinationDegrees, decimal? periapsisDegrees, decimal? orbitalPeriodDays, decimal? rotationPeriodDays, decimal? axialtiltDegrees, List<Ring> rings, ReserveLevel reserveLevel, bool? alreadydiscovered, bool? alreadymapped)
         {
             this.bodyname = bodyName;
             this.bodyType = (bool)parents?.Exists( p => p.ContainsKey( BodyType.Planet.invariantName ) )
@@ -454,6 +465,7 @@ namespace EddiDataDefinitions
             this.pressure = pressureAtm;
             this.tidallylocked = tidallylocked;
             this.landable = landable;
+            this.atmospherethickness = atmosphereThickness;
             this.atmosphereclass = atmosphereClass;
             this.atmospherecompositions = atmosphereCompositions;
             this.solidcompositions = solidCompositions;

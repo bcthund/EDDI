@@ -5,13 +5,13 @@ namespace EddiDataDefinitions
     public class Organic
     {
         [PublicAPI]
-        public OrganicGenus genus;
+        public OrganicGenus genus { get; set; }
 
         [PublicAPI]
-        public OrganicSpecies species;
+        public OrganicSpecies species { get; set; }
 
         [PublicAPI]
-        public OrganicVariant variant;
+        public OrganicVariant variant { get; set; }
 
         [PublicAPI ("The credit value for selling organic data for the species, or the predicted value, or else the minimum credit value for the genus if the species is not yet known" ) ]
         public long value => valueOverride ?? 

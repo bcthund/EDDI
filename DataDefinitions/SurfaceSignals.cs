@@ -14,6 +14,9 @@ namespace EddiDataDefinitions
         /// <summary>
         /// Create an Exobiology list, which contains additional structures for tracking
         /// </summary>
+        [ PublicAPI ("SAA scan has been completed") ]
+        public bool hasCompletedSAA { get; set; }
+
         [ PublicAPI ("Biological signal data") ] 
         public HashSet<Exobiology> bioSignals { get; set; } = new HashSet<Exobiology>();
 
@@ -24,13 +27,13 @@ namespace EddiDataDefinitions
         public int reportedBiologicalCount { get; set; }
 
         [ PublicAPI( "True if the current biologicals are predicted (but not confirmed) " ) ]
-        public bool hasPredictedBios => bioSignals.Any( s => s.scanState == Exobiology.State.Predicted );
+        public bool hasPredictedBios => bioSignals.Any( s => s.ScanState == Exobiology.State.Predicted );
 
         public List<Exobiology> bioSignalsRemaining =>
-            bioSignals.Where( e => e.scanState < Exobiology.State.SampleComplete ).ToList();
+            bioSignals.Where( e => e.ScanState < Exobiology.State.SampleComplete ).ToList();
 
         [ PublicAPI( "True if the current biologicals are predicted (but not confirmed) " ) ]
-        public bool predicted => bioSignals.Any( s => s.scanState == Exobiology.State.Predicted );
+        public bool predicted => bioSignals.Any( s => s.ScanState == Exobiology.State.Predicted );
 
         [PublicAPI( "The maximum expected credit value for biological signals that have not been fully scanned on this body" )]
         public long remainingExobiologyValue => bioSignalsRemaining.Select( s => s.value ).Sum();

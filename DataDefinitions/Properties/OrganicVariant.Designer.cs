@@ -22,7 +22,7 @@ namespace EddiDataDefinitions.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class OrganicVariant {
+    internal class OrganicVariant {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EddiDataDefinitions.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EddiDataDefinitions.Properties.OrganicVariant", typeof(OrganicVariant).Assembly);
@@ -51,7 +51,7 @@ namespace EddiDataDefinitions.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,2367 +61,2367 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Aleoids_01_A {
+        internal static string Aleoids_01_A {
             get {
                 return ResourceManager.GetString("Aleoids_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Aleoids_01_B {
+        internal static string Aleoids_01_B {
             get {
                 return ResourceManager.GetString("Aleoids_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Aleoids_01_D {
+        internal static string Aleoids_01_D {
             get {
                 return ResourceManager.GetString("Aleoids_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Aleoids_01_F {
+        internal static string Aleoids_01_F {
             get {
                 return ResourceManager.GetString("Aleoids_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Aleoids_01_K {
+        internal static string Aleoids_01_K {
             get {
                 return ResourceManager.GetString("Aleoids_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Aleoids_01_L {
+        internal static string Aleoids_01_L {
             get {
                 return ResourceManager.GetString("Aleoids_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Aleoids_01_M {
+        internal static string Aleoids_01_M {
             get {
                 return ResourceManager.GetString("Aleoids_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Aleoids_01_N {
+        internal static string Aleoids_01_N {
             get {
                 return ResourceManager.GetString("Aleoids_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Aleoids_01_T {
+        internal static string Aleoids_01_T {
             get {
                 return ResourceManager.GetString("Aleoids_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Aleoids_01_TTS {
+        internal static string Aleoids_01_TTS {
             get {
                 return ResourceManager.GetString("Aleoids_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Arcus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Aleoids_01_W {
+        internal static string Aleoids_01_W {
             get {
                 return ResourceManager.GetString("Aleoids_01_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Aleoids_02_A {
+        internal static string Aleoids_02_A {
             get {
                 return ResourceManager.GetString("Aleoids_02_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Aleoids_02_B {
+        internal static string Aleoids_02_B {
             get {
                 return ResourceManager.GetString("Aleoids_02_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Aleoids_02_D {
+        internal static string Aleoids_02_D {
             get {
                 return ResourceManager.GetString("Aleoids_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Aleoids_02_F {
+        internal static string Aleoids_02_F {
             get {
                 return ResourceManager.GetString("Aleoids_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Aleoids_02_K {
+        internal static string Aleoids_02_K {
             get {
                 return ResourceManager.GetString("Aleoids_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Aleoids_02_L {
+        internal static string Aleoids_02_L {
             get {
                 return ResourceManager.GetString("Aleoids_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Aleoids_02_M {
+        internal static string Aleoids_02_M {
             get {
                 return ResourceManager.GetString("Aleoids_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Aleoids_02_N {
+        internal static string Aleoids_02_N {
             get {
                 return ResourceManager.GetString("Aleoids_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Aleoids_02_T {
+        internal static string Aleoids_02_T {
             get {
                 return ResourceManager.GetString("Aleoids_02_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Aleoids_02_TTS {
+        internal static string Aleoids_02_TTS {
             get {
                 return ResourceManager.GetString("Aleoids_02_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Coronamus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Aleoids_02_Y {
+        internal static string Aleoids_02_Y {
             get {
                 return ResourceManager.GetString("Aleoids_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Aleoids_03_A {
+        internal static string Aleoids_03_A {
             get {
                 return ResourceManager.GetString("Aleoids_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Aleoids_03_B {
+        internal static string Aleoids_03_B {
             get {
                 return ResourceManager.GetString("Aleoids_03_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Aleoids_03_D {
+        internal static string Aleoids_03_D {
             get {
                 return ResourceManager.GetString("Aleoids_03_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Aleoids_03_F {
+        internal static string Aleoids_03_F {
             get {
                 return ResourceManager.GetString("Aleoids_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Aleoids_03_K {
+        internal static string Aleoids_03_K {
             get {
                 return ResourceManager.GetString("Aleoids_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Aleoids_03_L {
+        internal static string Aleoids_03_L {
             get {
                 return ResourceManager.GetString("Aleoids_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Aleoids_03_M {
+        internal static string Aleoids_03_M {
             get {
                 return ResourceManager.GetString("Aleoids_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Aleoids_03_N {
+        internal static string Aleoids_03_N {
             get {
                 return ResourceManager.GetString("Aleoids_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Aleoids_03_T {
+        internal static string Aleoids_03_T {
             get {
                 return ResourceManager.GetString("Aleoids_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Spica - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Aleoids_03_TTS {
+        internal static string Aleoids_03_TTS {
             get {
                 return ResourceManager.GetString("Aleoids_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Aleoids_04_A {
+        internal static string Aleoids_04_A {
             get {
                 return ResourceManager.GetString("Aleoids_04_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Aleoids_04_B {
+        internal static string Aleoids_04_B {
             get {
                 return ResourceManager.GetString("Aleoids_04_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Aleoids_04_F {
+        internal static string Aleoids_04_F {
             get {
                 return ResourceManager.GetString("Aleoids_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Aleoids_04_K {
+        internal static string Aleoids_04_K {
             get {
                 return ResourceManager.GetString("Aleoids_04_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Aleoids_04_L {
+        internal static string Aleoids_04_L {
             get {
                 return ResourceManager.GetString("Aleoids_04_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Aleoids_04_M {
+        internal static string Aleoids_04_M {
             get {
                 return ResourceManager.GetString("Aleoids_04_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Aleoids_04_N {
+        internal static string Aleoids_04_N {
             get {
                 return ResourceManager.GetString("Aleoids_04_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Aleoids_04_T {
+        internal static string Aleoids_04_T {
             get {
                 return ResourceManager.GetString("Aleoids_04_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Aleoids_04_TTS {
+        internal static string Aleoids_04_TTS {
             get {
                 return ResourceManager.GetString("Aleoids_04_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Aleoids_04_W {
+        internal static string Aleoids_04_W {
             get {
                 return ResourceManager.GetString("Aleoids_04_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Laminiae - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Aleoids_04_Y {
+        internal static string Aleoids_04_Y {
             get {
                 return ResourceManager.GetString("Aleoids_04_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Aleoids_05_A {
+        internal static string Aleoids_05_A {
             get {
                 return ResourceManager.GetString("Aleoids_05_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Aleoids_05_B {
+        internal static string Aleoids_05_B {
             get {
                 return ResourceManager.GetString("Aleoids_05_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Aleoids_05_F {
+        internal static string Aleoids_05_F {
             get {
                 return ResourceManager.GetString("Aleoids_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Aleoids_05_K {
+        internal static string Aleoids_05_K {
             get {
                 return ResourceManager.GetString("Aleoids_05_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Aleoids_05_L {
+        internal static string Aleoids_05_L {
             get {
                 return ResourceManager.GetString("Aleoids_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Aleoids_05_M {
+        internal static string Aleoids_05_M {
             get {
                 return ResourceManager.GetString("Aleoids_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Aleoids_05_N {
+        internal static string Aleoids_05_N {
             get {
                 return ResourceManager.GetString("Aleoids_05_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Aleoids_05_T {
+        internal static string Aleoids_05_T {
             get {
                 return ResourceManager.GetString("Aleoids_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Aleoids_05_TTS {
+        internal static string Aleoids_05_TTS {
             get {
                 return ResourceManager.GetString("Aleoids_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aleoida Gravis - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Aleoids_05_Y {
+        internal static string Aleoids_05_Y {
             get {
                 return ResourceManager.GetString("Aleoids_05_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Bacterial_01_A {
+        internal static string Bacterial_01_A {
             get {
                 return ResourceManager.GetString("Bacterial_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Bacterial_01_Ae {
+        internal static string Bacterial_01_Ae {
             get {
                 return ResourceManager.GetString("Bacterial_01_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Bacterial_01_B {
+        internal static string Bacterial_01_B {
             get {
                 return ResourceManager.GetString("Bacterial_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Bacterial_01_D {
+        internal static string Bacterial_01_D {
             get {
                 return ResourceManager.GetString("Bacterial_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_01_F {
+        internal static string Bacterial_01_F {
             get {
                 return ResourceManager.GetString("Bacterial_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Bacterial_01_G {
+        internal static string Bacterial_01_G {
             get {
                 return ResourceManager.GetString("Bacterial_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Bacterial_01_K {
+        internal static string Bacterial_01_K {
             get {
                 return ResourceManager.GetString("Bacterial_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Bacterial_01_L {
+        internal static string Bacterial_01_L {
             get {
                 return ResourceManager.GetString("Bacterial_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Bacterial_01_M {
+        internal static string Bacterial_01_M {
             get {
                 return ResourceManager.GetString("Bacterial_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Bacterial_01_N {
+        internal static string Bacterial_01_N {
             get {
                 return ResourceManager.GetString("Bacterial_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Bacterial_01_O {
+        internal static string Bacterial_01_O {
             get {
                 return ResourceManager.GetString("Bacterial_01_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_01_T {
+        internal static string Bacterial_01_T {
             get {
                 return ResourceManager.GetString("Bacterial_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Bacterial_01_TTS {
+        internal static string Bacterial_01_TTS {
             get {
                 return ResourceManager.GetString("Bacterial_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Bacterial_01_W {
+        internal static string Bacterial_01_W {
             get {
                 return ResourceManager.GetString("Bacterial_01_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Aurasus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Bacterial_01_Y {
+        internal static string Bacterial_01_Y {
             get {
                 return ResourceManager.GetString("Bacterial_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Nebulus - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Bacterial_02_Antimony {
+        internal static string Bacterial_02_Antimony {
             get {
                 return ResourceManager.GetString("Bacterial_02_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Nebulus - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Bacterial_02_Polonium {
+        internal static string Bacterial_02_Polonium {
             get {
                 return ResourceManager.GetString("Bacterial_02_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Nebulus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Bacterial_02_Ruthenium {
+        internal static string Bacterial_02_Ruthenium {
             get {
                 return ResourceManager.GetString("Bacterial_02_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Nebulus - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Bacterial_02_Technetium {
+        internal static string Bacterial_02_Technetium {
             get {
                 return ResourceManager.GetString("Bacterial_02_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Nebulus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Bacterial_02_Tellurium {
+        internal static string Bacterial_02_Tellurium {
             get {
                 return ResourceManager.GetString("Bacterial_02_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Nebulus - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Bacterial_02_Yttrium {
+        internal static string Bacterial_02_Yttrium {
             get {
                 return ResourceManager.GetString("Bacterial_02_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Scopulum - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Bacterial_03_Cadmium {
+        internal static string Bacterial_03_Cadmium {
             get {
                 return ResourceManager.GetString("Bacterial_03_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Scopulum - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Bacterial_03_Mercury {
+        internal static string Bacterial_03_Mercury {
             get {
                 return ResourceManager.GetString("Bacterial_03_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Scopulum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_03_Molybdenum {
+        internal static string Bacterial_03_Molybdenum {
             get {
                 return ResourceManager.GetString("Bacterial_03_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Scopulum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_03_Niobium {
+        internal static string Bacterial_03_Niobium {
             get {
                 return ResourceManager.GetString("Bacterial_03_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Scopulum - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Bacterial_03_Tin {
+        internal static string Bacterial_03_Tin {
             get {
                 return ResourceManager.GetString("Bacterial_03_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Scopulum - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Bacterial_03_Tungsten {
+        internal static string Bacterial_03_Tungsten {
             get {
                 return ResourceManager.GetString("Bacterial_03_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Acies - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Bacterial_04_Antimony {
+        internal static string Bacterial_04_Antimony {
             get {
                 return ResourceManager.GetString("Bacterial_04_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Acies - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Bacterial_04_Polonium {
+        internal static string Bacterial_04_Polonium {
             get {
                 return ResourceManager.GetString("Bacterial_04_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Acies - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Bacterial_04_Ruthenium {
+        internal static string Bacterial_04_Ruthenium {
             get {
                 return ResourceManager.GetString("Bacterial_04_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Acies - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_04_Technetium {
+        internal static string Bacterial_04_Technetium {
             get {
                 return ResourceManager.GetString("Bacterial_04_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Acies - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Bacterial_04_Tellurium {
+        internal static string Bacterial_04_Tellurium {
             get {
                 return ResourceManager.GetString("Bacterial_04_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Acies - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Bacterial_04_Yttrium {
+        internal static string Bacterial_04_Yttrium {
             get {
                 return ResourceManager.GetString("Bacterial_04_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Vesicula - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Bacterial_05_Antimony {
+        internal static string Bacterial_05_Antimony {
             get {
                 return ResourceManager.GetString("Bacterial_05_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Vesicula - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Bacterial_05_Polonium {
+        internal static string Bacterial_05_Polonium {
             get {
                 return ResourceManager.GetString("Bacterial_05_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Vesicula - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Bacterial_05_Ruthenium {
+        internal static string Bacterial_05_Ruthenium {
             get {
                 return ResourceManager.GetString("Bacterial_05_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Vesicula - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Bacterial_05_Technetium {
+        internal static string Bacterial_05_Technetium {
             get {
                 return ResourceManager.GetString("Bacterial_05_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Vesicula - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_05_Tellurium {
+        internal static string Bacterial_05_Tellurium {
             get {
                 return ResourceManager.GetString("Bacterial_05_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Vesicula - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_05_Yttrium {
+        internal static string Bacterial_05_Yttrium {
             get {
                 return ResourceManager.GetString("Bacterial_05_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Bacterial_06_A {
+        internal static string Bacterial_06_A {
             get {
                 return ResourceManager.GetString("Bacterial_06_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Bacterial_06_B {
+        internal static string Bacterial_06_B {
             get {
                 return ResourceManager.GetString("Bacterial_06_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Bacterial_06_D {
+        internal static string Bacterial_06_D {
             get {
                 return ResourceManager.GetString("Bacterial_06_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_06_F {
+        internal static string Bacterial_06_F {
             get {
                 return ResourceManager.GetString("Bacterial_06_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Bacterial_06_G {
+        internal static string Bacterial_06_G {
             get {
                 return ResourceManager.GetString("Bacterial_06_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Bacterial_06_K {
+        internal static string Bacterial_06_K {
             get {
                 return ResourceManager.GetString("Bacterial_06_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Bacterial_06_L {
+        internal static string Bacterial_06_L {
             get {
                 return ResourceManager.GetString("Bacterial_06_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Bacterial_06_M {
+        internal static string Bacterial_06_M {
             get {
                 return ResourceManager.GetString("Bacterial_06_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Bacterial_06_N {
+        internal static string Bacterial_06_N {
             get {
                 return ResourceManager.GetString("Bacterial_06_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Bacterial_06_O {
+        internal static string Bacterial_06_O {
             get {
                 return ResourceManager.GetString("Bacterial_06_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_06_T {
+        internal static string Bacterial_06_T {
             get {
                 return ResourceManager.GetString("Bacterial_06_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Bacterial_06_TTS {
+        internal static string Bacterial_06_TTS {
             get {
                 return ResourceManager.GetString("Bacterial_06_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Bacterial_06_W {
+        internal static string Bacterial_06_W {
             get {
                 return ResourceManager.GetString("Bacterial_06_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Alcyoneum - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Bacterial_06_Y {
+        internal static string Bacterial_06_Y {
             get {
                 return ResourceManager.GetString("Bacterial_06_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Tela - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Bacterial_07_Cadmium {
+        internal static string Bacterial_07_Cadmium {
             get {
                 return ResourceManager.GetString("Bacterial_07_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Tela - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Bacterial_07_Mercury {
+        internal static string Bacterial_07_Mercury {
             get {
                 return ResourceManager.GetString("Bacterial_07_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Tela - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Bacterial_07_Molybdenum {
+        internal static string Bacterial_07_Molybdenum {
             get {
                 return ResourceManager.GetString("Bacterial_07_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Tela - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Bacterial_07_Niobium {
+        internal static string Bacterial_07_Niobium {
             get {
                 return ResourceManager.GetString("Bacterial_07_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Tela - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Bacterial_07_Tin {
+        internal static string Bacterial_07_Tin {
             get {
                 return ResourceManager.GetString("Bacterial_07_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Tela - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Bacterial_07_Tungsten {
+        internal static string Bacterial_07_Tungsten {
             get {
                 return ResourceManager.GetString("Bacterial_07_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Informem - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_08_Antimony {
+        internal static string Bacterial_08_Antimony {
             get {
                 return ResourceManager.GetString("Bacterial_08_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Informem - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_08_Polonium {
+        internal static string Bacterial_08_Polonium {
             get {
                 return ResourceManager.GetString("Bacterial_08_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Informem - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Bacterial_08_Ruthenium {
+        internal static string Bacterial_08_Ruthenium {
             get {
                 return ResourceManager.GetString("Bacterial_08_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Informem - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Bacterial_08_Technetium {
+        internal static string Bacterial_08_Technetium {
             get {
                 return ResourceManager.GetString("Bacterial_08_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Informem - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Bacterial_08_Tellurium {
+        internal static string Bacterial_08_Tellurium {
             get {
                 return ResourceManager.GetString("Bacterial_08_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Informem - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Bacterial_08_Yttrium {
+        internal static string Bacterial_08_Yttrium {
             get {
                 return ResourceManager.GetString("Bacterial_08_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Volu - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_09_Antimony {
+        internal static string Bacterial_09_Antimony {
             get {
                 return ResourceManager.GetString("Bacterial_09_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Volu - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Bacterial_09_Polonium {
+        internal static string Bacterial_09_Polonium {
             get {
                 return ResourceManager.GetString("Bacterial_09_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Volu - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Bacterial_09_Ruthenium {
+        internal static string Bacterial_09_Ruthenium {
             get {
                 return ResourceManager.GetString("Bacterial_09_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Volu - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_09_Technetium {
+        internal static string Bacterial_09_Technetium {
             get {
                 return ResourceManager.GetString("Bacterial_09_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Volu - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Bacterial_09_Tellurium {
+        internal static string Bacterial_09_Tellurium {
             get {
                 return ResourceManager.GetString("Bacterial_09_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Volu - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Bacterial_09_Yttrium {
+        internal static string Bacterial_09_Yttrium {
             get {
                 return ResourceManager.GetString("Bacterial_09_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Bullaris - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Bacterial_10_Antimony {
+        internal static string Bacterial_10_Antimony {
             get {
                 return ResourceManager.GetString("Bacterial_10_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Bullaris - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Bacterial_10_Polonium {
+        internal static string Bacterial_10_Polonium {
             get {
                 return ResourceManager.GetString("Bacterial_10_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Bullaris - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Bacterial_10_Ruthenium {
+        internal static string Bacterial_10_Ruthenium {
             get {
                 return ResourceManager.GetString("Bacterial_10_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Bullaris - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Bacterial_10_Technetium {
+        internal static string Bacterial_10_Technetium {
             get {
                 return ResourceManager.GetString("Bacterial_10_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Bullaris - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_10_Tellurium {
+        internal static string Bacterial_10_Tellurium {
             get {
                 return ResourceManager.GetString("Bacterial_10_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Bullaris - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_10_Yttrium {
+        internal static string Bacterial_10_Yttrium {
             get {
                 return ResourceManager.GetString("Bacterial_10_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Omentum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_11_Cadmium {
+        internal static string Bacterial_11_Cadmium {
             get {
                 return ResourceManager.GetString("Bacterial_11_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Omentum - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Bacterial_11_Mercury {
+        internal static string Bacterial_11_Mercury {
             get {
                 return ResourceManager.GetString("Bacterial_11_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Omentum - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Bacterial_11_Molybdenum {
+        internal static string Bacterial_11_Molybdenum {
             get {
                 return ResourceManager.GetString("Bacterial_11_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Omentum - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Bacterial_11_Niobium {
+        internal static string Bacterial_11_Niobium {
             get {
                 return ResourceManager.GetString("Bacterial_11_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Omentum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_11_Tin {
+        internal static string Bacterial_11_Tin {
             get {
                 return ResourceManager.GetString("Bacterial_11_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Omentum - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Bacterial_11_Tungsten {
+        internal static string Bacterial_11_Tungsten {
             get {
                 return ResourceManager.GetString("Bacterial_11_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Bacterial_12_A {
+        internal static string Bacterial_12_A {
             get {
                 return ResourceManager.GetString("Bacterial_12_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Bacterial_12_Ae {
+        internal static string Bacterial_12_Ae {
             get {
                 return ResourceManager.GetString("Bacterial_12_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Bacterial_12_B {
+        internal static string Bacterial_12_B {
             get {
                 return ResourceManager.GetString("Bacterial_12_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Bacterial_12_D {
+        internal static string Bacterial_12_D {
             get {
                 return ResourceManager.GetString("Bacterial_12_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_12_F {
+        internal static string Bacterial_12_F {
             get {
                 return ResourceManager.GetString("Bacterial_12_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Bacterial_12_G {
+        internal static string Bacterial_12_G {
             get {
                 return ResourceManager.GetString("Bacterial_12_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Bacterial_12_K {
+        internal static string Bacterial_12_K {
             get {
                 return ResourceManager.GetString("Bacterial_12_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Bacterial_12_L {
+        internal static string Bacterial_12_L {
             get {
                 return ResourceManager.GetString("Bacterial_12_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Bacterial_12_M {
+        internal static string Bacterial_12_M {
             get {
                 return ResourceManager.GetString("Bacterial_12_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Bacterial_12_N {
+        internal static string Bacterial_12_N {
             get {
                 return ResourceManager.GetString("Bacterial_12_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Bacterial_12_O {
+        internal static string Bacterial_12_O {
             get {
                 return ResourceManager.GetString("Bacterial_12_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_12_T {
+        internal static string Bacterial_12_T {
             get {
                 return ResourceManager.GetString("Bacterial_12_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Bacterial_12_TTS {
+        internal static string Bacterial_12_TTS {
             get {
                 return ResourceManager.GetString("Bacterial_12_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Bacterial_12_W {
+        internal static string Bacterial_12_W {
             get {
                 return ResourceManager.GetString("Bacterial_12_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Cerbrus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Bacterial_12_Y {
+        internal static string Bacterial_12_Y {
             get {
                 return ResourceManager.GetString("Bacterial_12_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Verrata - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Bacterial_13_Cadmium {
+        internal static string Bacterial_13_Cadmium {
             get {
                 return ResourceManager.GetString("Bacterial_13_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Verrata - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Bacterial_13_Mercury {
+        internal static string Bacterial_13_Mercury {
             get {
                 return ResourceManager.GetString("Bacterial_13_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Verrata - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Bacterial_13_Molybdenum {
+        internal static string Bacterial_13_Molybdenum {
             get {
                 return ResourceManager.GetString("Bacterial_13_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Verrata - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Bacterial_13_Niobium {
+        internal static string Bacterial_13_Niobium {
             get {
                 return ResourceManager.GetString("Bacterial_13_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Verrata - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Bacterial_13_Tin {
+        internal static string Bacterial_13_Tin {
             get {
                 return ResourceManager.GetString("Bacterial_13_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bacterium Verrata - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Bacterial_13_Tungsten {
+        internal static string Bacterial_13_Tungsten {
             get {
                 return ResourceManager.GetString("Bacterial_13_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Cactoid_01_A {
+        internal static string Cactoid_01_A {
             get {
                 return ResourceManager.GetString("Cactoid_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Cactoid_01_D {
+        internal static string Cactoid_01_D {
             get {
                 return ResourceManager.GetString("Cactoid_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Cactoid_01_F {
+        internal static string Cactoid_01_F {
             get {
                 return ResourceManager.GetString("Cactoid_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Cactoid_01_G {
+        internal static string Cactoid_01_G {
             get {
                 return ResourceManager.GetString("Cactoid_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Cactoid_01_L {
+        internal static string Cactoid_01_L {
             get {
                 return ResourceManager.GetString("Cactoid_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Cactoid_01_M {
+        internal static string Cactoid_01_M {
             get {
                 return ResourceManager.GetString("Cactoid_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Cactoid_01_N {
+        internal static string Cactoid_01_N {
             get {
                 return ResourceManager.GetString("Cactoid_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Cactoid_01_T {
+        internal static string Cactoid_01_T {
             get {
                 return ResourceManager.GetString("Cactoid_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Cactoid_01_TTS {
+        internal static string Cactoid_01_TTS {
             get {
                 return ResourceManager.GetString("Cactoid_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Cortexum - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Cactoid_01_Y {
+        internal static string Cactoid_01_Y {
             get {
                 return ResourceManager.GetString("Cactoid_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Cactoid_02_A {
+        internal static string Cactoid_02_A {
             get {
                 return ResourceManager.GetString("Cactoid_02_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Cactoid_02_D {
+        internal static string Cactoid_02_D {
             get {
                 return ResourceManager.GetString("Cactoid_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Cactoid_02_F {
+        internal static string Cactoid_02_F {
             get {
                 return ResourceManager.GetString("Cactoid_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Cactoid_02_G {
+        internal static string Cactoid_02_G {
             get {
                 return ResourceManager.GetString("Cactoid_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Cactoid_02_L {
+        internal static string Cactoid_02_L {
             get {
                 return ResourceManager.GetString("Cactoid_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Cactoid_02_M {
+        internal static string Cactoid_02_M {
             get {
                 return ResourceManager.GetString("Cactoid_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Cactoid_02_N {
+        internal static string Cactoid_02_N {
             get {
                 return ResourceManager.GetString("Cactoid_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Cactoid_02_O {
+        internal static string Cactoid_02_O {
             get {
                 return ResourceManager.GetString("Cactoid_02_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Cactoid_02_T {
+        internal static string Cactoid_02_T {
             get {
                 return ResourceManager.GetString("Cactoid_02_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Cactoid_02_TTS {
+        internal static string Cactoid_02_TTS {
             get {
                 return ResourceManager.GetString("Cactoid_02_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Cactoid_02_W {
+        internal static string Cactoid_02_W {
             get {
                 return ResourceManager.GetString("Cactoid_02_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Lapis - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Cactoid_02_Y {
+        internal static string Cactoid_02_Y {
             get {
                 return ResourceManager.GetString("Cactoid_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Cactoid_03_A {
+        internal static string Cactoid_03_A {
             get {
                 return ResourceManager.GetString("Cactoid_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Cactoid_03_F {
+        internal static string Cactoid_03_F {
             get {
                 return ResourceManager.GetString("Cactoid_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Cactoid_03_G {
+        internal static string Cactoid_03_G {
             get {
                 return ResourceManager.GetString("Cactoid_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Cactoid_03_L {
+        internal static string Cactoid_03_L {
             get {
                 return ResourceManager.GetString("Cactoid_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Cactoid_03_M {
+        internal static string Cactoid_03_M {
             get {
                 return ResourceManager.GetString("Cactoid_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Cactoid_03_N {
+        internal static string Cactoid_03_N {
             get {
                 return ResourceManager.GetString("Cactoid_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Cactoid_03_T {
+        internal static string Cactoid_03_T {
             get {
                 return ResourceManager.GetString("Cactoid_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Vermis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Cactoid_03_TTS {
+        internal static string Cactoid_03_TTS {
             get {
                 return ResourceManager.GetString("Cactoid_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Cactoid_04_A {
+        internal static string Cactoid_04_A {
             get {
                 return ResourceManager.GetString("Cactoid_04_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Cactoid_04_D {
+        internal static string Cactoid_04_D {
             get {
                 return ResourceManager.GetString("Cactoid_04_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Cactoid_04_F {
+        internal static string Cactoid_04_F {
             get {
                 return ResourceManager.GetString("Cactoid_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Cactoid_04_G {
+        internal static string Cactoid_04_G {
             get {
                 return ResourceManager.GetString("Cactoid_04_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Cactoid_04_L {
+        internal static string Cactoid_04_L {
             get {
                 return ResourceManager.GetString("Cactoid_04_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Cactoid_04_M {
+        internal static string Cactoid_04_M {
             get {
                 return ResourceManager.GetString("Cactoid_04_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Cactoid_04_N {
+        internal static string Cactoid_04_N {
             get {
                 return ResourceManager.GetString("Cactoid_04_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Cactoid_04_T {
+        internal static string Cactoid_04_T {
             get {
                 return ResourceManager.GetString("Cactoid_04_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Pullulanta - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Cactoid_04_TTS {
+        internal static string Cactoid_04_TTS {
             get {
                 return ResourceManager.GetString("Cactoid_04_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Cactoid_05_A {
+        internal static string Cactoid_05_A {
             get {
                 return ResourceManager.GetString("Cactoid_05_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Cactoid_05_D {
+        internal static string Cactoid_05_D {
             get {
                 return ResourceManager.GetString("Cactoid_05_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Cactoid_05_F {
+        internal static string Cactoid_05_F {
             get {
                 return ResourceManager.GetString("Cactoid_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Cactoid_05_G {
+        internal static string Cactoid_05_G {
             get {
                 return ResourceManager.GetString("Cactoid_05_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Cactoid_05_L {
+        internal static string Cactoid_05_L {
             get {
                 return ResourceManager.GetString("Cactoid_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Cactoid_05_M {
+        internal static string Cactoid_05_M {
             get {
                 return ResourceManager.GetString("Cactoid_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Cactoid_05_N {
+        internal static string Cactoid_05_N {
             get {
                 return ResourceManager.GetString("Cactoid_05_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Cactoid_05_T {
+        internal static string Cactoid_05_T {
             get {
                 return ResourceManager.GetString("Cactoid_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Cactoid_05_TTS {
+        internal static string Cactoid_05_TTS {
             get {
                 return ResourceManager.GetString("Cactoid_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cactoida Peperatis - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Cactoid_05_Y {
+        internal static string Cactoid_05_Y {
             get {
                 return ResourceManager.GetString("Cactoid_05_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Clypeus_01_A {
+        internal static string Clypeus_01_A {
             get {
                 return ResourceManager.GetString("Clypeus_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Clypeus_01_B {
+        internal static string Clypeus_01_B {
             get {
                 return ResourceManager.GetString("Clypeus_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Clypeus_01_D {
+        internal static string Clypeus_01_D {
             get {
                 return ResourceManager.GetString("Clypeus_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Clypeus_01_F {
+        internal static string Clypeus_01_F {
             get {
                 return ResourceManager.GetString("Clypeus_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Clypeus_01_G {
+        internal static string Clypeus_01_G {
             get {
                 return ResourceManager.GetString("Clypeus_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Clypeus_01_K {
+        internal static string Clypeus_01_K {
             get {
                 return ResourceManager.GetString("Clypeus_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Clypeus_01_L {
+        internal static string Clypeus_01_L {
             get {
                 return ResourceManager.GetString("Clypeus_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Clypeus_01_M {
+        internal static string Clypeus_01_M {
             get {
                 return ResourceManager.GetString("Clypeus_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Clypeus_01_N {
+        internal static string Clypeus_01_N {
             get {
                 return ResourceManager.GetString("Clypeus_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Lacrimam - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Clypeus_01_Y {
+        internal static string Clypeus_01_Y {
             get {
                 return ResourceManager.GetString("Clypeus_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Clypeus_02_A {
+        internal static string Clypeus_02_A {
             get {
                 return ResourceManager.GetString("Clypeus_02_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Clypeus_02_B {
+        internal static string Clypeus_02_B {
             get {
                 return ResourceManager.GetString("Clypeus_02_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Clypeus_02_F {
+        internal static string Clypeus_02_F {
             get {
                 return ResourceManager.GetString("Clypeus_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Clypeus_02_G {
+        internal static string Clypeus_02_G {
             get {
                 return ResourceManager.GetString("Clypeus_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Clypeus_02_K {
+        internal static string Clypeus_02_K {
             get {
                 return ResourceManager.GetString("Clypeus_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Clypeus_02_L {
+        internal static string Clypeus_02_L {
             get {
                 return ResourceManager.GetString("Clypeus_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Clypeus_02_M {
+        internal static string Clypeus_02_M {
             get {
                 return ResourceManager.GetString("Clypeus_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Clypeus_02_N {
+        internal static string Clypeus_02_N {
             get {
                 return ResourceManager.GetString("Clypeus_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Margaritus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Clypeus_02_Y {
+        internal static string Clypeus_02_Y {
             get {
                 return ResourceManager.GetString("Clypeus_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Clypeus_03_A {
+        internal static string Clypeus_03_A {
             get {
                 return ResourceManager.GetString("Clypeus_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Clypeus_03_B {
+        internal static string Clypeus_03_B {
             get {
                 return ResourceManager.GetString("Clypeus_03_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Clypeus_03_F {
+        internal static string Clypeus_03_F {
             get {
                 return ResourceManager.GetString("Clypeus_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Clypeus_03_G {
+        internal static string Clypeus_03_G {
             get {
                 return ResourceManager.GetString("Clypeus_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Clypeus_03_K {
+        internal static string Clypeus_03_K {
             get {
                 return ResourceManager.GetString("Clypeus_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Clypeus_03_M {
+        internal static string Clypeus_03_M {
             get {
                 return ResourceManager.GetString("Clypeus_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clypeus Speculumi - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Clypeus_03_N {
+        internal static string Clypeus_03_N {
             get {
                 return ResourceManager.GetString("Clypeus_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Renibus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Conchas_01_Cadmium {
+        internal static string Conchas_01_Cadmium {
             get {
                 return ResourceManager.GetString("Conchas_01_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Renibus - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Conchas_01_Mercury {
+        internal static string Conchas_01_Mercury {
             get {
                 return ResourceManager.GetString("Conchas_01_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Renibus - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Conchas_01_Molybdenum {
+        internal static string Conchas_01_Molybdenum {
             get {
                 return ResourceManager.GetString("Conchas_01_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Renibus - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Conchas_01_Niobium {
+        internal static string Conchas_01_Niobium {
             get {
                 return ResourceManager.GetString("Conchas_01_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Renibus - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Conchas_01_Tin {
+        internal static string Conchas_01_Tin {
             get {
                 return ResourceManager.GetString("Conchas_01_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Renibus - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Conchas_01_Tungsten {
+        internal static string Conchas_01_Tungsten {
             get {
                 return ResourceManager.GetString("Conchas_01_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Conchas_02_A {
+        internal static string Conchas_02_A {
             get {
                 return ResourceManager.GetString("Conchas_02_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Conchas_02_B {
+        internal static string Conchas_02_B {
             get {
                 return ResourceManager.GetString("Conchas_02_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Conchas_02_D {
+        internal static string Conchas_02_D {
             get {
                 return ResourceManager.GetString("Conchas_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Conchas_02_F {
+        internal static string Conchas_02_F {
             get {
                 return ResourceManager.GetString("Conchas_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Conchas_02_G {
+        internal static string Conchas_02_G {
             get {
                 return ResourceManager.GetString("Conchas_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Conchas_02_K {
+        internal static string Conchas_02_K {
             get {
                 return ResourceManager.GetString("Conchas_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Conchas_02_L {
+        internal static string Conchas_02_L {
             get {
                 return ResourceManager.GetString("Conchas_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Conchas_02_N {
+        internal static string Conchas_02_N {
             get {
                 return ResourceManager.GetString("Conchas_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Aureolas - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Conchas_02_Y {
+        internal static string Conchas_02_Y {
             get {
                 return ResourceManager.GetString("Conchas_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Conchas_03_A {
+        internal static string Conchas_03_A {
             get {
                 return ResourceManager.GetString("Conchas_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Conchas_03_B {
+        internal static string Conchas_03_B {
             get {
                 return ResourceManager.GetString("Conchas_03_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Conchas_03_D {
+        internal static string Conchas_03_D {
             get {
                 return ResourceManager.GetString("Conchas_03_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Conchas_03_F {
+        internal static string Conchas_03_F {
             get {
                 return ResourceManager.GetString("Conchas_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Conchas_03_G {
+        internal static string Conchas_03_G {
             get {
                 return ResourceManager.GetString("Conchas_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Conchas_03_K {
+        internal static string Conchas_03_K {
             get {
                 return ResourceManager.GetString("Conchas_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Conchas_03_L {
+        internal static string Conchas_03_L {
             get {
                 return ResourceManager.GetString("Conchas_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Conchas_03_N {
+        internal static string Conchas_03_N {
             get {
                 return ResourceManager.GetString("Conchas_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Conchas_03_W {
+        internal static string Conchas_03_W {
             get {
                 return ResourceManager.GetString("Conchas_03_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Labiata - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Conchas_03_Y {
+        internal static string Conchas_03_Y {
             get {
                 return ResourceManager.GetString("Conchas_03_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Biconcavis - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Conchas_04_Antimony {
+        internal static string Conchas_04_Antimony {
             get {
                 return ResourceManager.GetString("Conchas_04_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Biconcavis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Conchas_04_Polonium {
+        internal static string Conchas_04_Polonium {
             get {
                 return ResourceManager.GetString("Conchas_04_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Biconcavis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Conchas_04_Ruthenium {
+        internal static string Conchas_04_Ruthenium {
             get {
                 return ResourceManager.GetString("Conchas_04_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Biconcavis - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Conchas_04_Technetium {
+        internal static string Conchas_04_Technetium {
             get {
                 return ResourceManager.GetString("Conchas_04_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Biconcavis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Conchas_04_Tellurium {
+        internal static string Conchas_04_Tellurium {
             get {
                 return ResourceManager.GetString("Conchas_04_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concha Biconcavis - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Conchas_04_Yttrium {
+        internal static string Conchas_04_Yttrium {
             get {
                 return ResourceManager.GetString("Conchas_04_Yttrium", resourceCulture);
             }
@@ -2430,1240 +2430,1240 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Bark Mounds.
         /// </summary>
-        public static string Cone {
+        internal static string Cone {
             get {
                 return ResourceManager.GetString("Cone", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Pluma - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Electricae_01_Antimony {
+        internal static string Electricae_01_Antimony {
             get {
                 return ResourceManager.GetString("Electricae_01_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Pluma - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Electricae_01_Polonium {
+        internal static string Electricae_01_Polonium {
             get {
                 return ResourceManager.GetString("Electricae_01_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Pluma - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Electricae_01_Ruthenium {
+        internal static string Electricae_01_Ruthenium {
             get {
                 return ResourceManager.GetString("Electricae_01_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Pluma - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Electricae_01_Technetium {
+        internal static string Electricae_01_Technetium {
             get {
                 return ResourceManager.GetString("Electricae_01_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Pluma - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Electricae_01_Tellurium {
+        internal static string Electricae_01_Tellurium {
             get {
                 return ResourceManager.GetString("Electricae_01_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Pluma - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Electricae_01_Yttrium {
+        internal static string Electricae_01_Yttrium {
             get {
                 return ResourceManager.GetString("Electricae_01_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Radialem - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Electricae_02_Antimony {
+        internal static string Electricae_02_Antimony {
             get {
                 return ResourceManager.GetString("Electricae_02_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Radialem - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Electricae_02_Polonium {
+        internal static string Electricae_02_Polonium {
             get {
                 return ResourceManager.GetString("Electricae_02_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Radialem - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Electricae_02_Ruthenium {
+        internal static string Electricae_02_Ruthenium {
             get {
                 return ResourceManager.GetString("Electricae_02_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Radialem - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Electricae_02_Technetium {
+        internal static string Electricae_02_Technetium {
             get {
                 return ResourceManager.GetString("Electricae_02_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Radialem - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Electricae_02_Tellurium {
+        internal static string Electricae_02_Tellurium {
             get {
                 return ResourceManager.GetString("Electricae_02_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Electricae Radialem - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Electricae_02_Yttrium {
+        internal static string Electricae_02_Yttrium {
             get {
                 return ResourceManager.GetString("Electricae_02_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fonticulus_01_A {
+        internal static string Fonticulus_01_A {
             get {
                 return ResourceManager.GetString("Fonticulus_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Fonticulus_01_Ae {
+        internal static string Fonticulus_01_Ae {
             get {
                 return ResourceManager.GetString("Fonticulus_01_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fonticulus_01_B {
+        internal static string Fonticulus_01_B {
             get {
                 return ResourceManager.GetString("Fonticulus_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Fonticulus_01_D {
+        internal static string Fonticulus_01_D {
             get {
                 return ResourceManager.GetString("Fonticulus_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fonticulus_01_F {
+        internal static string Fonticulus_01_F {
             get {
                 return ResourceManager.GetString("Fonticulus_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Fonticulus_01_G {
+        internal static string Fonticulus_01_G {
             get {
                 return ResourceManager.GetString("Fonticulus_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Fonticulus_01_K {
+        internal static string Fonticulus_01_K {
             get {
                 return ResourceManager.GetString("Fonticulus_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Fonticulus_01_L {
+        internal static string Fonticulus_01_L {
             get {
                 return ResourceManager.GetString("Fonticulus_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Fonticulus_01_M {
+        internal static string Fonticulus_01_M {
             get {
                 return ResourceManager.GetString("Fonticulus_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Fonticulus_01_N {
+        internal static string Fonticulus_01_N {
             get {
                 return ResourceManager.GetString("Fonticulus_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fonticulus_01_T {
+        internal static string Fonticulus_01_T {
             get {
                 return ResourceManager.GetString("Fonticulus_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fonticulus_01_TTS {
+        internal static string Fonticulus_01_TTS {
             get {
                 return ResourceManager.GetString("Fonticulus_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Segmentatus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Fonticulus_01_Y {
+        internal static string Fonticulus_01_Y {
             get {
                 return ResourceManager.GetString("Fonticulus_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fonticulus_02_A {
+        internal static string Fonticulus_02_A {
             get {
                 return ResourceManager.GetString("Fonticulus_02_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Fonticulus_02_Ae {
+        internal static string Fonticulus_02_Ae {
             get {
                 return ResourceManager.GetString("Fonticulus_02_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fonticulus_02_B {
+        internal static string Fonticulus_02_B {
             get {
                 return ResourceManager.GetString("Fonticulus_02_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Fonticulus_02_D {
+        internal static string Fonticulus_02_D {
             get {
                 return ResourceManager.GetString("Fonticulus_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fonticulus_02_F {
+        internal static string Fonticulus_02_F {
             get {
                 return ResourceManager.GetString("Fonticulus_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Fonticulus_02_G {
+        internal static string Fonticulus_02_G {
             get {
                 return ResourceManager.GetString("Fonticulus_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Fonticulus_02_K {
+        internal static string Fonticulus_02_K {
             get {
                 return ResourceManager.GetString("Fonticulus_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Fonticulus_02_L {
+        internal static string Fonticulus_02_L {
             get {
                 return ResourceManager.GetString("Fonticulus_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Fonticulus_02_M {
+        internal static string Fonticulus_02_M {
             get {
                 return ResourceManager.GetString("Fonticulus_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Fonticulus_02_N {
+        internal static string Fonticulus_02_N {
             get {
                 return ResourceManager.GetString("Fonticulus_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Fonticulus_02_O {
+        internal static string Fonticulus_02_O {
             get {
                 return ResourceManager.GetString("Fonticulus_02_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fonticulus_02_T {
+        internal static string Fonticulus_02_T {
             get {
                 return ResourceManager.GetString("Fonticulus_02_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fonticulus_02_TTS {
+        internal static string Fonticulus_02_TTS {
             get {
                 return ResourceManager.GetString("Fonticulus_02_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Campestris - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Fonticulus_02_Y {
+        internal static string Fonticulus_02_Y {
             get {
                 return ResourceManager.GetString("Fonticulus_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fonticulus_03_A {
+        internal static string Fonticulus_03_A {
             get {
                 return ResourceManager.GetString("Fonticulus_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Fonticulus_03_Ae {
+        internal static string Fonticulus_03_Ae {
             get {
                 return ResourceManager.GetString("Fonticulus_03_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fonticulus_03_B {
+        internal static string Fonticulus_03_B {
             get {
                 return ResourceManager.GetString("Fonticulus_03_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Fonticulus_03_D {
+        internal static string Fonticulus_03_D {
             get {
                 return ResourceManager.GetString("Fonticulus_03_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fonticulus_03_F {
+        internal static string Fonticulus_03_F {
             get {
                 return ResourceManager.GetString("Fonticulus_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Fonticulus_03_G {
+        internal static string Fonticulus_03_G {
             get {
                 return ResourceManager.GetString("Fonticulus_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Fonticulus_03_K {
+        internal static string Fonticulus_03_K {
             get {
                 return ResourceManager.GetString("Fonticulus_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Fonticulus_03_L {
+        internal static string Fonticulus_03_L {
             get {
                 return ResourceManager.GetString("Fonticulus_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Fonticulus_03_M {
+        internal static string Fonticulus_03_M {
             get {
                 return ResourceManager.GetString("Fonticulus_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Fonticulus_03_N {
+        internal static string Fonticulus_03_N {
             get {
                 return ResourceManager.GetString("Fonticulus_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fonticulus_03_T {
+        internal static string Fonticulus_03_T {
             get {
                 return ResourceManager.GetString("Fonticulus_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fonticulus_03_TTS {
+        internal static string Fonticulus_03_TTS {
             get {
                 return ResourceManager.GetString("Fonticulus_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Fonticulus_03_W {
+        internal static string Fonticulus_03_W {
             get {
                 return ResourceManager.GetString("Fonticulus_03_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Upupam - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Fonticulus_03_Y {
+        internal static string Fonticulus_03_Y {
             get {
                 return ResourceManager.GetString("Fonticulus_03_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fonticulus_04_A {
+        internal static string Fonticulus_04_A {
             get {
                 return ResourceManager.GetString("Fonticulus_04_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Fonticulus_04_Ae {
+        internal static string Fonticulus_04_Ae {
             get {
                 return ResourceManager.GetString("Fonticulus_04_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fonticulus_04_B {
+        internal static string Fonticulus_04_B {
             get {
                 return ResourceManager.GetString("Fonticulus_04_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Fonticulus_04_D {
+        internal static string Fonticulus_04_D {
             get {
                 return ResourceManager.GetString("Fonticulus_04_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fonticulus_04_F {
+        internal static string Fonticulus_04_F {
             get {
                 return ResourceManager.GetString("Fonticulus_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Fonticulus_04_G {
+        internal static string Fonticulus_04_G {
             get {
                 return ResourceManager.GetString("Fonticulus_04_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Fonticulus_04_K {
+        internal static string Fonticulus_04_K {
             get {
                 return ResourceManager.GetString("Fonticulus_04_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Fonticulus_04_L {
+        internal static string Fonticulus_04_L {
             get {
                 return ResourceManager.GetString("Fonticulus_04_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Fonticulus_04_M {
+        internal static string Fonticulus_04_M {
             get {
                 return ResourceManager.GetString("Fonticulus_04_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Fonticulus_04_N {
+        internal static string Fonticulus_04_N {
             get {
                 return ResourceManager.GetString("Fonticulus_04_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Fonticulus_04_O {
+        internal static string Fonticulus_04_O {
             get {
                 return ResourceManager.GetString("Fonticulus_04_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fonticulus_04_T {
+        internal static string Fonticulus_04_T {
             get {
                 return ResourceManager.GetString("Fonticulus_04_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fonticulus_04_TTS {
+        internal static string Fonticulus_04_TTS {
             get {
                 return ResourceManager.GetString("Fonticulus_04_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Lapida - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Fonticulus_04_Y {
+        internal static string Fonticulus_04_Y {
             get {
                 return ResourceManager.GetString("Fonticulus_04_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fonticulus_05_A {
+        internal static string Fonticulus_05_A {
             get {
                 return ResourceManager.GetString("Fonticulus_05_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fonticulus_05_B {
+        internal static string Fonticulus_05_B {
             get {
                 return ResourceManager.GetString("Fonticulus_05_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fonticulus_05_F {
+        internal static string Fonticulus_05_F {
             get {
                 return ResourceManager.GetString("Fonticulus_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Fonticulus_05_G {
+        internal static string Fonticulus_05_G {
             get {
                 return ResourceManager.GetString("Fonticulus_05_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Fonticulus_05_K {
+        internal static string Fonticulus_05_K {
             get {
                 return ResourceManager.GetString("Fonticulus_05_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Fonticulus_05_L {
+        internal static string Fonticulus_05_L {
             get {
                 return ResourceManager.GetString("Fonticulus_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Fonticulus_05_M {
+        internal static string Fonticulus_05_M {
             get {
                 return ResourceManager.GetString("Fonticulus_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Fonticulus_05_N {
+        internal static string Fonticulus_05_N {
             get {
                 return ResourceManager.GetString("Fonticulus_05_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fonticulus_05_T {
+        internal static string Fonticulus_05_T {
             get {
                 return ResourceManager.GetString("Fonticulus_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Fluctus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fonticulus_05_TTS {
+        internal static string Fonticulus_05_TTS {
             get {
                 return ResourceManager.GetString("Fonticulus_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fonticulus_06_A {
+        internal static string Fonticulus_06_A {
             get {
                 return ResourceManager.GetString("Fonticulus_06_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fonticulus_06_B {
+        internal static string Fonticulus_06_B {
             get {
                 return ResourceManager.GetString("Fonticulus_06_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Fonticulus_06_D {
+        internal static string Fonticulus_06_D {
             get {
                 return ResourceManager.GetString("Fonticulus_06_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fonticulus_06_F {
+        internal static string Fonticulus_06_F {
             get {
                 return ResourceManager.GetString("Fonticulus_06_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Fonticulus_06_G {
+        internal static string Fonticulus_06_G {
             get {
                 return ResourceManager.GetString("Fonticulus_06_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Fonticulus_06_K {
+        internal static string Fonticulus_06_K {
             get {
                 return ResourceManager.GetString("Fonticulus_06_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Fonticulus_06_L {
+        internal static string Fonticulus_06_L {
             get {
                 return ResourceManager.GetString("Fonticulus_06_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Fonticulus_06_M {
+        internal static string Fonticulus_06_M {
             get {
                 return ResourceManager.GetString("Fonticulus_06_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Fonticulus_06_N {
+        internal static string Fonticulus_06_N {
             get {
                 return ResourceManager.GetString("Fonticulus_06_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fonticulus_06_T {
+        internal static string Fonticulus_06_T {
             get {
                 return ResourceManager.GetString("Fonticulus_06_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fonticulus_06_TTS {
+        internal static string Fonticulus_06_TTS {
             get {
                 return ResourceManager.GetString("Fonticulus_06_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonticulua Digitos - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Fonticulus_06_Y {
+        internal static string Fonticulus_06_Y {
             get {
                 return ResourceManager.GetString("Fonticulus_06_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Carbosis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fumerolas_01_Cadmium {
+        internal static string Fumerolas_01_Cadmium {
             get {
                 return ResourceManager.GetString("Fumerolas_01_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Carbosis - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Fumerolas_01_Mercury {
+        internal static string Fumerolas_01_Mercury {
             get {
                 return ResourceManager.GetString("Fumerolas_01_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Carbosis - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Fumerolas_01_Molybdenum {
+        internal static string Fumerolas_01_Molybdenum {
             get {
                 return ResourceManager.GetString("Fumerolas_01_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Carbosis - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Fumerolas_01_Niobium {
+        internal static string Fumerolas_01_Niobium {
             get {
                 return ResourceManager.GetString("Fumerolas_01_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Carbosis - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Fumerolas_01_Tin {
+        internal static string Fumerolas_01_Tin {
             get {
                 return ResourceManager.GetString("Fumerolas_01_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Carbosis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fumerolas_01_Tungsten {
+        internal static string Fumerolas_01_Tungsten {
             get {
                 return ResourceManager.GetString("Fumerolas_01_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Extremus - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Fumerolas_02_Cadmium {
+        internal static string Fumerolas_02_Cadmium {
             get {
                 return ResourceManager.GetString("Fumerolas_02_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Extremus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fumerolas_02_Mercury {
+        internal static string Fumerolas_02_Mercury {
             get {
                 return ResourceManager.GetString("Fumerolas_02_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Extremus - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Fumerolas_02_Molybdenum {
+        internal static string Fumerolas_02_Molybdenum {
             get {
                 return ResourceManager.GetString("Fumerolas_02_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Extremus - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Fumerolas_02_Niobium {
+        internal static string Fumerolas_02_Niobium {
             get {
                 return ResourceManager.GetString("Fumerolas_02_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Extremus - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Fumerolas_02_Tin {
+        internal static string Fumerolas_02_Tin {
             get {
                 return ResourceManager.GetString("Fumerolas_02_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Extremus - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Fumerolas_02_Tungsten {
+        internal static string Fumerolas_02_Tungsten {
             get {
                 return ResourceManager.GetString("Fumerolas_02_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Nitris - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Fumerolas_03_Cadmium {
+        internal static string Fumerolas_03_Cadmium {
             get {
                 return ResourceManager.GetString("Fumerolas_03_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Nitris - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Fumerolas_03_Mercury {
+        internal static string Fumerolas_03_Mercury {
             get {
                 return ResourceManager.GetString("Fumerolas_03_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Nitris - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fumerolas_03_Molybdenum {
+        internal static string Fumerolas_03_Molybdenum {
             get {
                 return ResourceManager.GetString("Fumerolas_03_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Nitris - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fumerolas_03_Niobium {
+        internal static string Fumerolas_03_Niobium {
             get {
                 return ResourceManager.GetString("Fumerolas_03_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Nitris - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Fumerolas_03_Tin {
+        internal static string Fumerolas_03_Tin {
             get {
                 return ResourceManager.GetString("Fumerolas_03_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Nitris - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Fumerolas_03_Tungsten {
+        internal static string Fumerolas_03_Tungsten {
             get {
                 return ResourceManager.GetString("Fumerolas_03_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Aquatis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fumerolas_04_Cadmium {
+        internal static string Fumerolas_04_Cadmium {
             get {
                 return ResourceManager.GetString("Fumerolas_04_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Aquatis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fumerolas_04_Mercury {
+        internal static string Fumerolas_04_Mercury {
             get {
                 return ResourceManager.GetString("Fumerolas_04_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Aquatis - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Fumerolas_04_Molybdenum {
+        internal static string Fumerolas_04_Molybdenum {
             get {
                 return ResourceManager.GetString("Fumerolas_04_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Aquatis - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Fumerolas_04_Niobium {
+        internal static string Fumerolas_04_Niobium {
             get {
                 return ResourceManager.GetString("Fumerolas_04_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Aquatis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fumerolas_04_Tin {
+        internal static string Fumerolas_04_Tin {
             get {
                 return ResourceManager.GetString("Fumerolas_04_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fumerola Aquatis - Cobalt.
+        ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        public static string Fumerolas_04_Tungsten {
+        internal static string Fumerolas_04_Tungsten {
             get {
                 return ResourceManager.GetString("Fumerolas_04_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Setisis - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Fungoids_01_Antimony {
+        internal static string Fungoids_01_Antimony {
             get {
                 return ResourceManager.GetString("Fungoids_01_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Setisis - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Fungoids_01_Polonium {
+        internal static string Fungoids_01_Polonium {
             get {
                 return ResourceManager.GetString("Fungoids_01_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Setisis - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Fungoids_01_Ruthenium {
+        internal static string Fungoids_01_Ruthenium {
             get {
                 return ResourceManager.GetString("Fungoids_01_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Setisis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fungoids_01_Technetium {
+        internal static string Fungoids_01_Technetium {
             get {
                 return ResourceManager.GetString("Fungoids_01_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Setisis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Fungoids_01_Tellurium {
+        internal static string Fungoids_01_Tellurium {
             get {
                 return ResourceManager.GetString("Fungoids_01_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Setisis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fungoids_01_Yttrium {
+        internal static string Fungoids_01_Yttrium {
             get {
                 return ResourceManager.GetString("Fungoids_01_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Stabitis - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Fungoids_02_Cadmium {
+        internal static string Fungoids_02_Cadmium {
             get {
                 return ResourceManager.GetString("Fungoids_02_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Stabitis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fungoids_02_Mercury {
+        internal static string Fungoids_02_Mercury {
             get {
                 return ResourceManager.GetString("Fungoids_02_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Stabitis - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Fungoids_02_Molybdenum {
+        internal static string Fungoids_02_Molybdenum {
             get {
                 return ResourceManager.GetString("Fungoids_02_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Stabitis - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Fungoids_02_Niobium {
+        internal static string Fungoids_02_Niobium {
             get {
                 return ResourceManager.GetString("Fungoids_02_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Stabitis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fungoids_02_Tin {
+        internal static string Fungoids_02_Tin {
             get {
                 return ResourceManager.GetString("Fungoids_02_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Stabitis - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Fungoids_02_Tungsten {
+        internal static string Fungoids_02_Tungsten {
             get {
                 return ResourceManager.GetString("Fungoids_02_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Bullarum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fungoids_03_Antimony {
+        internal static string Fungoids_03_Antimony {
             get {
                 return ResourceManager.GetString("Fungoids_03_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Bullarum - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Fungoids_03_Polonium {
+        internal static string Fungoids_03_Polonium {
             get {
                 return ResourceManager.GetString("Fungoids_03_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Bullarum - Magenta.
+        ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        public static string Fungoids_03_Ruthenium {
+        internal static string Fungoids_03_Ruthenium {
             get {
                 return ResourceManager.GetString("Fungoids_03_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Bullarum - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Fungoids_03_Technetium {
+        internal static string Fungoids_03_Technetium {
             get {
                 return ResourceManager.GetString("Fungoids_03_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Bullarum - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Fungoids_03_Tellurium {
+        internal static string Fungoids_03_Tellurium {
             get {
                 return ResourceManager.GetString("Fungoids_03_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Bullarum - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fungoids_03_Yttrium {
+        internal static string Fungoids_03_Yttrium {
             get {
                 return ResourceManager.GetString("Fungoids_03_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Gelata - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Fungoids_04_Cadmium {
+        internal static string Fungoids_04_Cadmium {
             get {
                 return ResourceManager.GetString("Fungoids_04_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Gelata - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Fungoids_04_Mercury {
+        internal static string Fungoids_04_Mercury {
             get {
                 return ResourceManager.GetString("Fungoids_04_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Gelata - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Fungoids_04_Molybdenum {
+        internal static string Fungoids_04_Molybdenum {
             get {
                 return ResourceManager.GetString("Fungoids_04_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Gelata - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Fungoids_04_Niobium {
+        internal static string Fungoids_04_Niobium {
             get {
                 return ResourceManager.GetString("Fungoids_04_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Gelata - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Fungoids_04_Tin {
+        internal static string Fungoids_04_Tin {
             get {
                 return ResourceManager.GetString("Fungoids_04_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fungoida Gelata - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Fungoids_04_Tungsten {
+        internal static string Fungoids_04_Tungsten {
             get {
                 return ResourceManager.GetString("Fungoids_04_Tungsten", resourceCulture);
             }
@@ -3672,412 +3672,412 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Crystalline Shards.
         /// </summary>
-        public static string Ground_Struct_Ice {
+        internal static string Ground_Struct_Ice {
             get {
                 return ResourceManager.GetString("Ground_Struct_Ice", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Ice Crystals.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Cry_IcCry_Bl {
+        internal static string L_Cry_IcCry_Bl {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Ice Crystals.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string L_Cry_IcCry_Gr {
+        internal static string L_Cry_IcCry_Gr {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Ice Crystals.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string L_Cry_IcCry_Pk {
+        internal static string L_Cry_IcCry_Pk {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Pk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpureum Ice Crystals.
+        ///   Looks up a localized string similar to Purpureum.
         /// </summary>
-        public static string L_Cry_IcCry_Pur {
+        internal static string L_Cry_IcCry_Pur {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Ice Crystals.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string L_Cry_IcCry_Red {
+        internal static string L_Cry_IcCry_Red {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Ice Crystals.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string L_Cry_IcCry_Wte {
+        internal static string L_Cry_IcCry_Wte {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Wte", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flavum Ice Crystals.
+        ///   Looks up a localized string similar to Flavum.
         /// </summary>
-        public static string L_Cry_IcCry_Yw {
+        internal static string L_Cry_IcCry_Yw {
             get {
                 return ResourceManager.GetString("L_Cry_IcCry_Yw", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Metallic Crystals.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string L_Cry_MetCry_Gr {
+        internal static string L_Cry_MetCry_Gr {
             get {
                 return ResourceManager.GetString("L_Cry_MetCry_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpureum Metallic Crystals.
+        ///   Looks up a localized string similar to Purpureum.
         /// </summary>
-        public static string L_Cry_MetCry_Pur {
+        internal static string L_Cry_MetCry_Pur {
             get {
                 return ResourceManager.GetString("L_Cry_MetCry_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Metallic Crystals.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string L_Cry_MetCry_Red {
+        internal static string L_Cry_MetCry_Red {
             get {
                 return ResourceManager.GetString("L_Cry_MetCry_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flavum Metallic Crystals.
+        ///   Looks up a localized string similar to Flavum.
         /// </summary>
-        public static string L_Cry_MetCry_Yw {
+        internal static string L_Cry_MetCry_Yw {
             get {
                 return ResourceManager.GetString("L_Cry_MetCry_Yw", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Silicate Crystals.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Cry_QtzCry_Bl {
+        internal static string L_Cry_QtzCry_Bl {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Silicate Crystals.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string L_Cry_QtzCry_Gr {
+        internal static string L_Cry_QtzCry_Gr {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Silicate Crystals.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string L_Cry_QtzCry_Pk {
+        internal static string L_Cry_QtzCry_Pk {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Pk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpureum Silicate Crystals.
+        ///   Looks up a localized string similar to Purpureum.
         /// </summary>
-        public static string L_Cry_QtzCry_Pur {
+        internal static string L_Cry_QtzCry_Pur {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Silicate Crystals.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string L_Cry_QtzCry_Red {
+        internal static string L_Cry_QtzCry_Red {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Silicate Crystals.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string L_Cry_QtzCry_Wte {
+        internal static string L_Cry_QtzCry_Wte {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Wte", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flavum Silicate Crystals.
+        ///   Looks up a localized string similar to Flavum.
         /// </summary>
-        public static string L_Cry_QtzCry_Yw {
+        internal static string L_Cry_QtzCry_Yw {
             get {
                 return ResourceManager.GetString("L_Cry_QtzCry_Yw", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Parasol Mollusc.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Org_Moll03_V1_Dark {
+        internal static string L_Org_Moll03_V1_Dark {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V1_Dark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Parasol Mollusc.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string L_Org_Moll03_V1_Def {
+        internal static string L_Org_Moll03_V1_Def {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V1_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Parasol Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Org_Moll03_V1_Earth {
+        internal static string L_Org_Moll03_V1_Earth {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V1_Earth", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Bulb Mollusc.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Org_Moll03_V2_Dark {
+        internal static string L_Org_Moll03_V2_Dark {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V2_Dark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Bulb Mollusc.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string L_Org_Moll03_V2_Def {
+        internal static string L_Org_Moll03_V2_Def {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V2_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Bulb Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Org_Moll03_V2_Earth {
+        internal static string L_Org_Moll03_V2_Earth {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V2_Earth", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Umbrella Mollusc.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Org_Moll03_V3_Dark {
+        internal static string L_Org_Moll03_V3_Dark {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V3_Dark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Umbrella Mollusc.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string L_Org_Moll03_V3_Def {
+        internal static string L_Org_Moll03_V3_Def {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V3_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Umbrella Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Org_Moll03_V3_Earth {
+        internal static string L_Org_Moll03_V3_Earth {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V3_Earth", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Capsule Mollusc.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Org_Moll03_V4_Dark {
+        internal static string L_Org_Moll03_V4_Dark {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V4_Dark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Capsule Mollusc.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string L_Org_Moll03_V4_Def {
+        internal static string L_Org_Moll03_V4_Def {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V4_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Capsule Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Org_Moll03_V4_Earth {
+        internal static string L_Org_Moll03_V4_Earth {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V4_Earth", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Reel Mollusc.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Org_Moll03_V6_Dark {
+        internal static string L_Org_Moll03_V6_Dark {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V6_Dark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Reel Mollusc.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string L_Org_Moll03_V6_Def {
+        internal static string L_Org_Moll03_V6_Def {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V6_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Reel Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Org_Moll03_V6_Earth {
+        internal static string L_Org_Moll03_V6_Earth {
             get {
                 return ResourceManager.GetString("L_Org_Moll03_V6_Earth", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Calcite Plates.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string L_Org_PltFun_V1_Bl {
+        internal static string L_Org_PltFun_V1_Bl {
             get {
                 return ResourceManager.GetString("L_Org_PltFun_V1_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Calcite Plates.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string L_Org_PltFun_V1_Def {
+        internal static string L_Org_PltFun_V1_Def {
             get {
                 return ResourceManager.GetString("L_Org_PltFun_V1_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Calcite Plates.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Org_PltFun_V1_Gr {
+        internal static string L_Org_PltFun_V1_Gr {
             get {
                 return ResourceManager.GetString("L_Org_PltFun_V1_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rutulum Calcite Plates.
+        ///   Looks up a localized string similar to Rutulum.
         /// </summary>
-        public static string L_Org_PltFun_V1_Red {
+        internal static string L_Org_PltFun_V1_Red {
             get {
                 return ResourceManager.GetString("L_Org_PltFun_V1_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Peduncle Tree.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string L_Seed_Pln01_V1_Bl {
+        internal static string L_Seed_Pln01_V1_Bl {
             get {
                 return ResourceManager.GetString("L_Seed_Pln01_V1_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Peduncle Tree.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string L_Seed_Pln01_V1_Def {
+        internal static string L_Seed_Pln01_V1_Def {
             get {
                 return ResourceManager.GetString("L_Seed_Pln01_V1_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Peduncle Tree.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string L_Seed_Pln01_V1_Gr {
+        internal static string L_Seed_Pln01_V1_Gr {
             get {
                 return ResourceManager.GetString("L_Seed_Pln01_V1_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ostrinum Peduncle Tree.
+        ///   Looks up a localized string similar to Ostrinum.
         /// </summary>
-        public static string L_Seed_Pln01_V1_Pur {
+        internal static string L_Seed_Pln01_V1_Pur {
             get {
                 return ResourceManager.GetString("L_Seed_Pln01_V1_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubellum Peduncle Tree.
+        ///   Looks up a localized string similar to Rubellum.
         /// </summary>
-        public static string L_Seed_Pln01_V1_Red {
+        internal static string L_Seed_Pln01_V1_Red {
             get {
                 return ResourceManager.GetString("L_Seed_Pln01_V1_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cereum Aster Tree.
+        ///   Looks up a localized string similar to Cereum.
         /// </summary>
-        public static string L_Seed_Pln02_V3_Def {
+        internal static string L_Seed_Pln02_V3_Def {
             get {
                 return ResourceManager.GetString("L_Seed_Pln02_V3_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Aster Tree.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string L_Seed_Pln02_V3_Gr {
+        internal static string L_Seed_Pln02_V3_Gr {
             get {
                 return ResourceManager.GetString("L_Seed_Pln02_V3_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubellum Aster Tree.
+        ///   Looks up a localized string similar to Rubellum.
         /// </summary>
-        public static string L_Seed_Pln02_V3_Red {
+        internal static string L_Seed_Pln02_V3_Red {
             get {
                 return ResourceManager.GetString("L_Seed_Pln02_V3_Red", resourceCulture);
             }
@@ -4086,1906 +4086,1906 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Stolon Tree.
         /// </summary>
-        public static string L_Seed_SdRt02_V3 {
+        internal static string L_Seed_SdRt02_V3 {
             get {
                 return ResourceManager.GetString("L_Seed_SdRt02_V3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Osseus_01_A {
+        internal static string Osseus_01_A {
             get {
                 return ResourceManager.GetString("Osseus_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Osseus_01_F {
+        internal static string Osseus_01_F {
             get {
                 return ResourceManager.GetString("Osseus_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Osseus_01_G {
+        internal static string Osseus_01_G {
             get {
                 return ResourceManager.GetString("Osseus_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Osseus_01_K {
+        internal static string Osseus_01_K {
             get {
                 return ResourceManager.GetString("Osseus_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Osseus_01_T {
+        internal static string Osseus_01_T {
             get {
                 return ResourceManager.GetString("Osseus_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Osseus_01_TTS {
+        internal static string Osseus_01_TTS {
             get {
                 return ResourceManager.GetString("Osseus_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Fractus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Osseus_01_Y {
+        internal static string Osseus_01_Y {
             get {
                 return ResourceManager.GetString("Osseus_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Discus - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Osseus_02_Cadmium {
+        internal static string Osseus_02_Cadmium {
             get {
                 return ResourceManager.GetString("Osseus_02_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Discus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Osseus_02_Mercury {
+        internal static string Osseus_02_Mercury {
             get {
                 return ResourceManager.GetString("Osseus_02_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Discus - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Osseus_02_Molybdenum {
+        internal static string Osseus_02_Molybdenum {
             get {
                 return ResourceManager.GetString("Osseus_02_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Discus - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Osseus_02_Niobium {
+        internal static string Osseus_02_Niobium {
             get {
                 return ResourceManager.GetString("Osseus_02_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Discus - Blue.
+        ///   Looks up a localized string similar to Blue.
         /// </summary>
-        public static string Osseus_02_Tin {
+        internal static string Osseus_02_Tin {
             get {
                 return ResourceManager.GetString("Osseus_02_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Discus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Osseus_02_Tungsten {
+        internal static string Osseus_02_Tungsten {
             get {
                 return ResourceManager.GetString("Osseus_02_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Osseus_03_A {
+        internal static string Osseus_03_A {
             get {
                 return ResourceManager.GetString("Osseus_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Osseus_03_F {
+        internal static string Osseus_03_F {
             get {
                 return ResourceManager.GetString("Osseus_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Osseus_03_G {
+        internal static string Osseus_03_G {
             get {
                 return ResourceManager.GetString("Osseus_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Osseus_03_K {
+        internal static string Osseus_03_K {
             get {
                 return ResourceManager.GetString("Osseus_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Osseus_03_O {
+        internal static string Osseus_03_O {
             get {
                 return ResourceManager.GetString("Osseus_03_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Osseus_03_T {
+        internal static string Osseus_03_T {
             get {
                 return ResourceManager.GetString("Osseus_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Osseus_03_TTS {
+        internal static string Osseus_03_TTS {
             get {
                 return ResourceManager.GetString("Osseus_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Spiralis - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Osseus_03_Y {
+        internal static string Osseus_03_Y {
             get {
                 return ResourceManager.GetString("Osseus_03_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pumice - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Osseus_04_Antimony {
+        internal static string Osseus_04_Antimony {
             get {
                 return ResourceManager.GetString("Osseus_04_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pumice - Peach.
+        ///   Looks up a localized string similar to Peach.
         /// </summary>
-        public static string Osseus_04_Polonium {
+        internal static string Osseus_04_Polonium {
             get {
                 return ResourceManager.GetString("Osseus_04_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pumice - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Osseus_04_Ruthenium {
+        internal static string Osseus_04_Ruthenium {
             get {
                 return ResourceManager.GetString("Osseus_04_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pumice - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Osseus_04_Technetium {
+        internal static string Osseus_04_Technetium {
             get {
                 return ResourceManager.GetString("Osseus_04_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pumice - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Osseus_04_Tellurium {
+        internal static string Osseus_04_Tellurium {
             get {
                 return ResourceManager.GetString("Osseus_04_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pumice - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Osseus_04_Yttrium {
+        internal static string Osseus_04_Yttrium {
             get {
                 return ResourceManager.GetString("Osseus_04_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Osseus_05_A {
+        internal static string Osseus_05_A {
             get {
                 return ResourceManager.GetString("Osseus_05_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Osseus_05_F {
+        internal static string Osseus_05_F {
             get {
                 return ResourceManager.GetString("Osseus_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Osseus_05_G {
+        internal static string Osseus_05_G {
             get {
                 return ResourceManager.GetString("Osseus_05_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Osseus_05_K {
+        internal static string Osseus_05_K {
             get {
                 return ResourceManager.GetString("Osseus_05_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Osseus_05_T {
+        internal static string Osseus_05_T {
             get {
                 return ResourceManager.GetString("Osseus_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Osseus_05_TTS {
+        internal static string Osseus_05_TTS {
             get {
                 return ResourceManager.GetString("Osseus_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Cornibus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Osseus_05_Y {
+        internal static string Osseus_05_Y {
             get {
                 return ResourceManager.GetString("Osseus_05_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Osseus_06_A {
+        internal static string Osseus_06_A {
             get {
                 return ResourceManager.GetString("Osseus_06_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Osseus_06_F {
+        internal static string Osseus_06_F {
             get {
                 return ResourceManager.GetString("Osseus_06_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Osseus_06_G {
+        internal static string Osseus_06_G {
             get {
                 return ResourceManager.GetString("Osseus_06_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Osseus_06_K {
+        internal static string Osseus_06_K {
             get {
                 return ResourceManager.GetString("Osseus_06_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Osseus_06_T {
+        internal static string Osseus_06_T {
             get {
                 return ResourceManager.GetString("Osseus_06_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Osseus_06_TTS {
+        internal static string Osseus_06_TTS {
             get {
                 return ResourceManager.GetString("Osseus_06_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Osseus Pellebantus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Osseus_06_Y {
+        internal static string Osseus_06_Y {
             get {
                 return ResourceManager.GetString("Osseus_06_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Recepta_01_A {
+        internal static string Recepta_01_A {
             get {
                 return ResourceManager.GetString("Recepta_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Recepta_01_Ae {
+        internal static string Recepta_01_Ae {
             get {
                 return ResourceManager.GetString("Recepta_01_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Recepta_01_B {
+        internal static string Recepta_01_B {
             get {
                 return ResourceManager.GetString("Recepta_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Recepta_01_D {
+        internal static string Recepta_01_D {
             get {
                 return ResourceManager.GetString("Recepta_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Recepta_01_F {
+        internal static string Recepta_01_F {
             get {
                 return ResourceManager.GetString("Recepta_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Recepta_01_G {
+        internal static string Recepta_01_G {
             get {
                 return ResourceManager.GetString("Recepta_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Recepta_01_K {
+        internal static string Recepta_01_K {
             get {
                 return ResourceManager.GetString("Recepta_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Recepta_01_L {
+        internal static string Recepta_01_L {
             get {
                 return ResourceManager.GetString("Recepta_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Recepta_01_M {
+        internal static string Recepta_01_M {
             get {
                 return ResourceManager.GetString("Recepta_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Recepta_01_N {
+        internal static string Recepta_01_N {
             get {
                 return ResourceManager.GetString("Recepta_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Recepta_01_T {
+        internal static string Recepta_01_T {
             get {
                 return ResourceManager.GetString("Recepta_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Recepta_01_TTS {
+        internal static string Recepta_01_TTS {
             get {
                 return ResourceManager.GetString("Recepta_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Umbrux - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Recepta_01_Y {
+        internal static string Recepta_01_Y {
             get {
                 return ResourceManager.GetString("Recepta_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Deltahedronix - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Recepta_02_Cadmium {
+        internal static string Recepta_02_Cadmium {
             get {
                 return ResourceManager.GetString("Recepta_02_Cadmium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Deltahedronix - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Recepta_02_Mercury {
+        internal static string Recepta_02_Mercury {
             get {
                 return ResourceManager.GetString("Recepta_02_Mercury", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Deltahedronix - Gold.
+        ///   Looks up a localized string similar to Gold.
         /// </summary>
-        public static string Recepta_02_Molybdenum {
+        internal static string Recepta_02_Molybdenum {
             get {
                 return ResourceManager.GetString("Recepta_02_Molybdenum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Deltahedronix - Mulberry.
+        ///   Looks up a localized string similar to Mulberry.
         /// </summary>
-        public static string Recepta_02_Niobium {
+        internal static string Recepta_02_Niobium {
             get {
                 return ResourceManager.GetString("Recepta_02_Niobium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Deltahedronix - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Recepta_02_Tin {
+        internal static string Recepta_02_Tin {
             get {
                 return ResourceManager.GetString("Recepta_02_Tin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Deltahedronix - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Recepta_02_Tungsten {
+        internal static string Recepta_02_Tungsten {
             get {
                 return ResourceManager.GetString("Recepta_02_Tungsten", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Conditivus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Recepta_03_Antimony {
+        internal static string Recepta_03_Antimony {
             get {
                 return ResourceManager.GetString("Recepta_03_Antimony", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Conditivus - White.
+        ///   Looks up a localized string similar to White.
         /// </summary>
-        public static string Recepta_03_Polonium {
+        internal static string Recepta_03_Polonium {
             get {
                 return ResourceManager.GetString("Recepta_03_Polonium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Conditivus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Recepta_03_Ruthenium {
+        internal static string Recepta_03_Ruthenium {
             get {
                 return ResourceManager.GetString("Recepta_03_Ruthenium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Conditivus - Aquamarine.
+        ///   Looks up a localized string similar to Aquamarine.
         /// </summary>
-        public static string Recepta_03_Technetium {
+        internal static string Recepta_03_Technetium {
             get {
                 return ResourceManager.GetString("Recepta_03_Technetium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Conditivus - Cyan.
+        ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        public static string Recepta_03_Tellurium {
+        internal static string Recepta_03_Tellurium {
             get {
                 return ResourceManager.GetString("Recepta_03_Tellurium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recepta Conditivus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Recepta_03_Yttrium {
+        internal static string Recepta_03_Yttrium {
             get {
                 return ResourceManager.GetString("Recepta_03_Yttrium", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Peduncle Pod.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string S_Seed_SdTp01_Bl {
+        internal static string S_Seed_SdTp01_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp01_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Candidum Peduncle Pod.
+        ///   Looks up a localized string similar to Candidum.
         /// </summary>
-        public static string S_Seed_SdTp01_Def {
+        internal static string S_Seed_SdTp01_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp01_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gypseeum Peduncle Pod.
+        ///   Looks up a localized string similar to Gypseeum.
         /// </summary>
-        public static string S_Seed_SdTp01_Gr {
+        internal static string S_Seed_SdTp01_Gr {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp01_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpureum Peduncle Pod.
+        ///   Looks up a localized string similar to Purpureum.
         /// </summary>
-        public static string S_Seed_SdTp01_Pur {
+        internal static string S_Seed_SdTp01_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp01_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rufum Peduncle Pod.
+        ///   Looks up a localized string similar to Rufum.
         /// </summary>
-        public static string S_Seed_SdTp01_Red {
+        internal static string S_Seed_SdTp01_Red {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp01_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Aster Pod.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string S_Seed_SdTp02_Bl {
+        internal static string S_Seed_SdTp02_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp02_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cereum Aster Pod.
+        ///   Looks up a localized string similar to Cereum.
         /// </summary>
-        public static string S_Seed_SdTp02_Def {
+        internal static string S_Seed_SdTp02_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp02_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Aster Pod.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string S_Seed_SdTp02_Gr {
+        internal static string S_Seed_SdTp02_Gr {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp02_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puniceum Aster Pod.
+        ///   Looks up a localized string similar to Puniceum.
         /// </summary>
-        public static string S_Seed_SdTp02_Pur {
+        internal static string S_Seed_SdTp02_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp02_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubellum Aster Pod.
+        ///   Looks up a localized string similar to Rubellum.
         /// </summary>
-        public static string S_Seed_SdTp02_Red {
+        internal static string S_Seed_SdTp02_Red {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp02_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Octahedral Pod.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string S_Seed_SdTp03_Bl {
+        internal static string S_Seed_SdTp03_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp03_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveum Octahedral Pod.
+        ///   Looks up a localized string similar to Niveum.
         /// </summary>
-        public static string S_Seed_SdTp03_Def {
+        internal static string S_Seed_SdTp03_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp03_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Octahedral Pod.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string S_Seed_SdTp03_Gr {
+        internal static string S_Seed_SdTp03_Gr {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp03_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Octahedral Pod.
+        ///   Looks up a localized string similar to Blatteum.
         /// </summary>
-        public static string S_Seed_SdTp03_Pur {
+        internal static string S_Seed_SdTp03_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp03_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Octahedral Pod.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string S_Seed_SdTp03_Red {
+        internal static string S_Seed_SdTp03_Red {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp03_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lividum Collared Pod.
+        ///   Looks up a localized string similar to Lividum.
         /// </summary>
-        public static string S_Seed_SdTp04_Bl {
+        internal static string S_Seed_SdTp04_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp04_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Collared Pod.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string S_Seed_SdTp04_Def {
+        internal static string S_Seed_SdTp04_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp04_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Collared Pod.
+        ///   Looks up a localized string similar to Blatteum.
         /// </summary>
-        public static string S_Seed_SdTp04_Pur {
+        internal static string S_Seed_SdTp04_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp04_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubicundum Collared Pod.
+        ///   Looks up a localized string similar to Rubicundum.
         /// </summary>
-        public static string S_Seed_SdTp04_Red {
+        internal static string S_Seed_SdTp04_Red {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp04_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Chalice Pod.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string S_Seed_SdTp05_Bl {
+        internal static string S_Seed_SdTp05_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp05_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Chalice Pod.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string S_Seed_SdTp05_Def {
+        internal static string S_Seed_SdTp05_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp05_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Chalice Pod.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string S_Seed_SdTp05_Gr {
+        internal static string S_Seed_SdTp05_Gr {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp05_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ostrinum Chalice Pod.
+        ///   Looks up a localized string similar to Ostrinum.
         /// </summary>
-        public static string S_Seed_SdTp05_Pur {
+        internal static string S_Seed_SdTp05_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp05_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubellum Chalice Pod.
+        ///   Looks up a localized string similar to Rubellum.
         /// </summary>
-        public static string S_Seed_SdTp05_Red {
+        internal static string S_Seed_SdTp05_Red {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp05_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Gyre Pod.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string S_Seed_SdTp06_Def {
+        internal static string S_Seed_SdTp06_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp06_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aurarium Gyre Pod.
+        ///   Looks up a localized string similar to Aurarium.
         /// </summary>
-        public static string S_Seed_SdTp06_Gd {
+        internal static string S_Seed_SdTp06_Gd {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp06_Gd", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cobalteum Rhizome Pod.
+        ///   Looks up a localized string similar to Cobalteum.
         /// </summary>
-        public static string S_Seed_SdTp07_Bl {
+        internal static string S_Seed_SdTp07_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp07_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Candidum Rhizome Pod.
+        ///   Looks up a localized string similar to Candidum.
         /// </summary>
-        public static string S_Seed_SdTp07_Def {
+        internal static string S_Seed_SdTp07_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp07_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gypseeum Rhizome Pod.
+        ///   Looks up a localized string similar to Gypseeum.
         /// </summary>
-        public static string S_Seed_SdTp07_Gr {
+        internal static string S_Seed_SdTp07_Gr {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp07_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpureum Rhizome Pod.
+        ///   Looks up a localized string similar to Purpureum.
         /// </summary>
-        public static string S_Seed_SdTp07_Pur {
+        internal static string S_Seed_SdTp07_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp07_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Rhizome Pod.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string S_Seed_SdTp07_Red {
+        internal static string S_Seed_SdTp07_Red {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp07_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Quadripartite Pod.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string S_Seed_SdTp08_Bl {
+        internal static string S_Seed_SdTp08_Bl {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp08_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Quadripartite Pod.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string S_Seed_SdTp08_Def {
+        internal static string S_Seed_SdTp08_Def {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp08_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Quadripartite Pod.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string S_Seed_SdTp08_Gr {
+        internal static string S_Seed_SdTp08_Gr {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp08_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Quadripartite Pod.
+        ///   Looks up a localized string similar to Blatteum.
         /// </summary>
-        public static string S_Seed_SdTp08_Pur {
+        internal static string S_Seed_SdTp08_Pur {
             get {
                 return ResourceManager.GetString("S_Seed_SdTp08_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Brain Tree.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string Seed {
+        internal static string Seed {
             get {
                 return ResourceManager.GetString("Seed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gypseeum Brain Tree.
+        ///   Looks up a localized string similar to Gypseeum.
         /// </summary>
-        public static string SeedABCD_01 {
+        internal static string SeedABCD_01 {
             get {
                 return ResourceManager.GetString("SeedABCD_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ostrinum Brain Tree.
+        ///   Looks up a localized string similar to Ostrinum.
         /// </summary>
-        public static string SeedABCD_02 {
+        internal static string SeedABCD_02 {
             get {
                 return ResourceManager.GetString("SeedABCD_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Brain Tree.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string SeedABCD_03 {
+        internal static string SeedABCD_03 {
             get {
                 return ResourceManager.GetString("SeedABCD_03", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lividum Brain Tree.
+        ///   Looks up a localized string similar to Lividum.
         /// </summary>
-        public static string SeedEFGH {
+        internal static string SeedEFGH {
             get {
                 return ResourceManager.GetString("SeedEFGH", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aureum Brain Tree.
+        ///   Looks up a localized string similar to Aureum.
         /// </summary>
-        public static string SeedEFGH_01 {
+        internal static string SeedEFGH_01 {
             get {
                 return ResourceManager.GetString("SeedEFGH_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puniceum Brain Tree.
+        ///   Looks up a localized string similar to Puniceum.
         /// </summary>
-        public static string SeedEFGH_02 {
+        internal static string SeedEFGH_02 {
             get {
                 return ResourceManager.GetString("SeedEFGH_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Brain Tree.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string SeedEFGH_03 {
+        internal static string SeedEFGH_03 {
             get {
                 return ResourceManager.GetString("SeedEFGH_03", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_01_B {
+        internal static string Shrubs_01_B {
             get {
                 return ResourceManager.GetString("Shrubs_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Shrubs_01_D {
+        internal static string Shrubs_01_D {
             get {
                 return ResourceManager.GetString("Shrubs_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_01_F {
+        internal static string Shrubs_01_F {
             get {
                 return ResourceManager.GetString("Shrubs_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_01_G {
+        internal static string Shrubs_01_G {
             get {
                 return ResourceManager.GetString("Shrubs_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_01_L {
+        internal static string Shrubs_01_L {
             get {
                 return ResourceManager.GetString("Shrubs_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_01_M {
+        internal static string Shrubs_01_M {
             get {
                 return ResourceManager.GetString("Shrubs_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_01_N {
+        internal static string Shrubs_01_N {
             get {
                 return ResourceManager.GetString("Shrubs_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Shrubs_01_O {
+        internal static string Shrubs_01_O {
             get {
                 return ResourceManager.GetString("Shrubs_01_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_01_TTS {
+        internal static string Shrubs_01_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flabellum - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Shrubs_01_W {
+        internal static string Shrubs_01_W {
             get {
                 return ResourceManager.GetString("Shrubs_01_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_02_B {
+        internal static string Shrubs_02_B {
             get {
                 return ResourceManager.GetString("Shrubs_02_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Shrubs_02_D {
+        internal static string Shrubs_02_D {
             get {
                 return ResourceManager.GetString("Shrubs_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_02_F {
+        internal static string Shrubs_02_F {
             get {
                 return ResourceManager.GetString("Shrubs_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_02_G {
+        internal static string Shrubs_02_G {
             get {
                 return ResourceManager.GetString("Shrubs_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_02_L {
+        internal static string Shrubs_02_L {
             get {
                 return ResourceManager.GetString("Shrubs_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_02_M {
+        internal static string Shrubs_02_M {
             get {
                 return ResourceManager.GetString("Shrubs_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_02_N {
+        internal static string Shrubs_02_N {
             get {
                 return ResourceManager.GetString("Shrubs_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_02_TTS {
+        internal static string Shrubs_02_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_02_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Acus - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Shrubs_02_W {
+        internal static string Shrubs_02_W {
             get {
                 return ResourceManager.GetString("Shrubs_02_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_03_B {
+        internal static string Shrubs_03_B {
             get {
                 return ResourceManager.GetString("Shrubs_03_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Shrubs_03_D {
+        internal static string Shrubs_03_D {
             get {
                 return ResourceManager.GetString("Shrubs_03_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_03_F {
+        internal static string Shrubs_03_F {
             get {
                 return ResourceManager.GetString("Shrubs_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_03_G {
+        internal static string Shrubs_03_G {
             get {
                 return ResourceManager.GetString("Shrubs_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_03_L {
+        internal static string Shrubs_03_L {
             get {
                 return ResourceManager.GetString("Shrubs_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_03_M {
+        internal static string Shrubs_03_M {
             get {
                 return ResourceManager.GetString("Shrubs_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_03_N {
+        internal static string Shrubs_03_N {
             get {
                 return ResourceManager.GetString("Shrubs_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Metallicum - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_03_TTS {
+        internal static string Shrubs_03_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_04_B {
+        internal static string Shrubs_04_B {
             get {
                 return ResourceManager.GetString("Shrubs_04_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Shrubs_04_D {
+        internal static string Shrubs_04_D {
             get {
                 return ResourceManager.GetString("Shrubs_04_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_04_F {
+        internal static string Shrubs_04_F {
             get {
                 return ResourceManager.GetString("Shrubs_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_04_G {
+        internal static string Shrubs_04_G {
             get {
                 return ResourceManager.GetString("Shrubs_04_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_04_L {
+        internal static string Shrubs_04_L {
             get {
                 return ResourceManager.GetString("Shrubs_04_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_04_M {
+        internal static string Shrubs_04_M {
             get {
                 return ResourceManager.GetString("Shrubs_04_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_04_N {
+        internal static string Shrubs_04_N {
             get {
                 return ResourceManager.GetString("Shrubs_04_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Flammasis - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_04_TTS {
+        internal static string Shrubs_04_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_04_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_05_B {
+        internal static string Shrubs_05_B {
             get {
                 return ResourceManager.GetString("Shrubs_05_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Shrubs_05_D {
+        internal static string Shrubs_05_D {
             get {
                 return ResourceManager.GetString("Shrubs_05_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_05_F {
+        internal static string Shrubs_05_F {
             get {
                 return ResourceManager.GetString("Shrubs_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_05_G {
+        internal static string Shrubs_05_G {
             get {
                 return ResourceManager.GetString("Shrubs_05_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_05_L {
+        internal static string Shrubs_05_L {
             get {
                 return ResourceManager.GetString("Shrubs_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_05_M {
+        internal static string Shrubs_05_M {
             get {
                 return ResourceManager.GetString("Shrubs_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_05_N {
+        internal static string Shrubs_05_N {
             get {
                 return ResourceManager.GetString("Shrubs_05_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Fera - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_05_TTS {
+        internal static string Shrubs_05_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_06_B {
+        internal static string Shrubs_06_B {
             get {
                 return ResourceManager.GetString("Shrubs_06_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_06_F {
+        internal static string Shrubs_06_F {
             get {
                 return ResourceManager.GetString("Shrubs_06_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_06_G {
+        internal static string Shrubs_06_G {
             get {
                 return ResourceManager.GetString("Shrubs_06_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_06_L {
+        internal static string Shrubs_06_L {
             get {
                 return ResourceManager.GetString("Shrubs_06_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_06_M {
+        internal static string Shrubs_06_M {
             get {
                 return ResourceManager.GetString("Shrubs_06_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_06_N {
+        internal static string Shrubs_06_N {
             get {
                 return ResourceManager.GetString("Shrubs_06_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Sponsae - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_06_TTS {
+        internal static string Shrubs_06_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_06_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Shrubs_07_B {
+        internal static string Shrubs_07_B {
             get {
                 return ResourceManager.GetString("Shrubs_07_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Shrubs_07_D {
+        internal static string Shrubs_07_D {
             get {
                 return ResourceManager.GetString("Shrubs_07_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Shrubs_07_F {
+        internal static string Shrubs_07_F {
             get {
                 return ResourceManager.GetString("Shrubs_07_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Shrubs_07_G {
+        internal static string Shrubs_07_G {
             get {
                 return ResourceManager.GetString("Shrubs_07_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Shrubs_07_L {
+        internal static string Shrubs_07_L {
             get {
                 return ResourceManager.GetString("Shrubs_07_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Shrubs_07_M {
+        internal static string Shrubs_07_M {
             get {
                 return ResourceManager.GetString("Shrubs_07_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Shrubs_07_N {
+        internal static string Shrubs_07_N {
             get {
                 return ResourceManager.GetString("Shrubs_07_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frutexa Collum - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Shrubs_07_TTS {
+        internal static string Shrubs_07_TTS {
             get {
                 return ResourceManager.GetString("Shrubs_07_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Gourd Mollusc.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Bl {
+        internal static string Small_Org_Moll01_V1_Bl {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albulum Gourd Mollusc.
+        ///   Looks up a localized string similar to Albulum.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Def {
+        internal static string Small_Org_Moll01_V1_Def {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Gourd Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Gr {
+        internal static string Small_Org_Moll01_V1_Gr {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phoeniceum Gourd Mollusc.
+        ///   Looks up a localized string similar to Phoeniceum.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Pnk {
+        internal static string Small_Org_Moll01_V1_Pnk {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Pnk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Purpureum Gourd Mollusc.
+        ///   Looks up a localized string similar to Purpureum.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Pur {
+        internal static string Small_Org_Moll01_V1_Pur {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rufum Gourd Mollusc.
+        ///   Looks up a localized string similar to Rufum.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Red {
+        internal static string Small_Org_Moll01_V1_Red {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croceum Gourd Mollusc.
+        ///   Looks up a localized string similar to Croceum.
         /// </summary>
-        public static string Small_Org_Moll01_V1_Y {
+        internal static string Small_Org_Moll01_V1_Y {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V1_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Torus Mollusc.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string Small_Org_Moll01_V2_Bl {
+        internal static string Small_Org_Moll01_V2_Bl {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V2_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Torus Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string Small_Org_Moll01_V2_Gr {
+        internal static string Small_Org_Moll01_V2_Gr {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V2_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Torus Mollusc.
+        ///   Looks up a localized string similar to Blatteum.
         /// </summary>
-        public static string Small_Org_Moll01_V2_Pur {
+        internal static string Small_Org_Moll01_V2_Pur {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V2_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubellum Torus Mollusc.
+        ///   Looks up a localized string similar to Rubellum.
         /// </summary>
-        public static string Small_Org_Moll01_V2_Red {
+        internal static string Small_Org_Moll01_V2_Red {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V2_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flavum Torus Mollusc.
+        ///   Looks up a localized string similar to Flavum.
         /// </summary>
-        public static string Small_Org_Moll01_V2_Y {
+        internal static string Small_Org_Moll01_V2_Y {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V2_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Squid Mollusc.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string Small_Org_Moll01_V3_Bl {
+        internal static string Small_Org_Moll01_V3_Bl {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V3_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albulum Squid Mollusc.
+        ///   Looks up a localized string similar to Albulum.
         /// </summary>
-        public static string Small_Org_Moll01_V3_Def {
+        internal static string Small_Org_Moll01_V3_Def {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V3_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Squid Mollusc.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string Small_Org_Moll01_V3_Pnk {
+        internal static string Small_Org_Moll01_V3_Pnk {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V3_Pnk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puniceum Squid Mollusc.
+        ///   Looks up a localized string similar to Puniceum.
         /// </summary>
-        public static string Small_Org_Moll01_V3_Pur {
+        internal static string Small_Org_Moll01_V3_Pur {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V3_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Squid Mollusc.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string Small_Org_Moll01_V3_Red {
+        internal static string Small_Org_Moll01_V3_Red {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V3_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lividum Bullet Mollusc.
+        ///   Looks up a localized string similar to Lividum.
         /// </summary>
-        public static string Small_Org_Moll01_V4_Bl {
+        internal static string Small_Org_Moll01_V4_Bl {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V4_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cereum Bullet Mollusc.
+        ///   Looks up a localized string similar to Cereum.
         /// </summary>
-        public static string Small_Org_Moll01_V4_Def {
+        internal static string Small_Org_Moll01_V4_Def {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V4_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Bullet Mollusc.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string Small_Org_Moll01_V4_Gr {
+        internal static string Small_Org_Moll01_V4_Gr {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V4_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Bullet Mollusc.
+        ///   Looks up a localized string similar to Rubeum.
         /// </summary>
-        public static string Small_Org_Moll01_V4_Red {
+        internal static string Small_Org_Moll01_V4_Red {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V4_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flavum Bullet Mollusc.
+        ///   Looks up a localized string similar to Flavum.
         /// </summary>
-        public static string Small_Org_Moll01_V4_Y {
+        internal static string Small_Org_Moll01_V4_Y {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V4_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cobalteum Globe Mollusc.
+        ///   Looks up a localized string similar to Cobalteum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Bl {
+        internal static string Small_Org_Moll01_V5_Bl {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niveum Globe Mollusc.
+        ///   Looks up a localized string similar to Niveum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Def {
+        internal static string Small_Org_Moll01_V5_Def {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Globe Mollusc.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Gr {
+        internal static string Small_Org_Moll01_V5_Gr {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Globe Mollusc.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Pnk {
+        internal static string Small_Org_Moll01_V5_Pnk {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Pnk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ostrinum Globe Mollusc.
+        ///   Looks up a localized string similar to Ostrinum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Pur {
+        internal static string Small_Org_Moll01_V5_Pur {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rutulum Globe Mollusc.
+        ///   Looks up a localized string similar to Rutulum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Red {
+        internal static string Small_Org_Moll01_V5_Red {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Red", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croceum Globe Mollusc.
+        ///   Looks up a localized string similar to Croceum.
         /// </summary>
-        public static string Small_Org_Moll01_V5_Y {
+        internal static string Small_Org_Moll01_V5_Y {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V5_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Bell Mollusc.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string Small_Org_Moll01_V6_Bl {
+        internal static string Small_Org_Moll01_V6_Bl {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V6_Bl", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albens Bell Mollusc.
+        ///   Looks up a localized string similar to Albens.
         /// </summary>
-        public static string Small_Org_Moll01_V6_Def {
+        internal static string Small_Org_Moll01_V6_Def {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V6_Def", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gypseeum Bell Mollusc.
+        ///   Looks up a localized string similar to Gypseeum.
         /// </summary>
-        public static string Small_Org_Moll01_V6_Gr {
+        internal static string Small_Org_Moll01_V6_Gr {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V6_Gr", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Bell Mollusc.
+        ///   Looks up a localized string similar to Blatteum.
         /// </summary>
-        public static string Small_Org_Moll01_V6_Pur {
+        internal static string Small_Org_Moll01_V6_Pur {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V6_Pur", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Bell Mollusc.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string Small_Org_Moll01_V6_Y {
+        internal static string Small_Org_Moll01_V6_Y {
             get {
                 return ResourceManager.GetString("Small_Org_Moll01_V6_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luteolum Anemone.
+        ///   Looks up a localized string similar to Luteolum.
         /// </summary>
-        public static string Sphere {
+        internal static string Sphere {
             get {
                 return ResourceManager.GetString("Sphere", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Croceum Anemone.
+        ///   Looks up a localized string similar to Croceum.
         /// </summary>
-        public static string SphereABCD_01 {
+        internal static string SphereABCD_01 {
             get {
                 return ResourceManager.GetString("SphereABCD_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puniceum Anemone.
+        ///   Looks up a localized string similar to Puniceum.
         /// </summary>
-        public static string SphereABCD_02 {
+        internal static string SphereABCD_02 {
             get {
                 return ResourceManager.GetString("SphereABCD_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Anemone.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string SphereABCD_03 {
+        internal static string SphereABCD_03 {
             get {
                 return ResourceManager.GetString("SphereABCD_03", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Bioluminescent Anemone.
+        ///   Looks up a localized string similar to Blatteum Bioluminescent.
         /// </summary>
-        public static string SphereEFGH {
+        internal static string SphereEFGH {
             get {
                 return ResourceManager.GetString("SphereEFGH", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rubeum Bioluminescent Anemone.
+        ///   Looks up a localized string similar to Rubeum Bioluminescent.
         /// </summary>
-        public static string SphereEFGH_01 {
+        internal static string SphereEFGH_01 {
             get {
                 return ResourceManager.GetString("SphereEFGH_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Bioluminescent Anemone.
+        ///   Looks up a localized string similar to Prasinum Bioluminescent.
         /// </summary>
-        public static string SphereEFGH_02 {
+        internal static string SphereEFGH_02 {
             get {
                 return ResourceManager.GetString("SphereEFGH_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Bioluminescent Anemone.
+        ///   Looks up a localized string similar to Roseum Bioluminescent.
         /// </summary>
-        public static string SphereEFGH_03 {
+        internal static string SphereEFGH_03 {
             get {
                 return ResourceManager.GetString("SphereEFGH_03", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solid Mineral Spheres.
+        ///   Looks up a localized string similar to Solid.
         /// </summary>
-        public static string SPOI_Ball {
+        internal static string SPOI_Ball {
             get {
                 return ResourceManager.GetString("SPOI_Ball", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lattice Mineral Spheres.
+        ///   Looks up a localized string similar to Lattice.
         /// </summary>
-        public static string SPOI_Ball_Lattice {
+        internal static string SPOI_Ball_Lattice {
             get {
                 return ResourceManager.GetString("SPOI_Ball_Lattice", resourceCulture);
             }
@@ -5994,2302 +5994,2302 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Stolon Pod.
         /// </summary>
-        public static string SPOI_Root_Seeds {
+        internal static string SPOI_Root_Seeds {
             get {
                 return ResourceManager.GetString("SPOI_Root_Seeds", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Gyre Tree.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string SPOI_SeedPolyp01_V1 {
+        internal static string SPOI_SeedPolyp01_V1 {
             get {
                 return ResourceManager.GetString("SPOI_SeedPolyp01_V1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aurarium Gyre Tree.
+        ///   Looks up a localized string similar to Aurarium.
         /// </summary>
-        public static string SPOI_SeedPolyp01_V1_Gld {
+        internal static string SPOI_SeedPolyp01_V1_Gld {
             get {
                 return ResourceManager.GetString("SPOI_SeedPolyp01_V1_Gld", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chryseum Void Heart.
+        ///   Looks up a localized string similar to Chryseum.
         /// </summary>
-        public static string SPOI_SeedWeed01_V1 {
+        internal static string SPOI_SeedWeed01_V1 {
             get {
                 return ResourceManager.GetString("SPOI_SeedWeed01_V1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Stratum_01_Ae {
+        internal static string Stratum_01_Ae {
             get {
                 return ResourceManager.GetString("Stratum_01_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Stratum_01_D {
+        internal static string Stratum_01_D {
             get {
                 return ResourceManager.GetString("Stratum_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_01_F {
+        internal static string Stratum_01_F {
             get {
                 return ResourceManager.GetString("Stratum_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_01_K {
+        internal static string Stratum_01_K {
             get {
                 return ResourceManager.GetString("Stratum_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_01_L {
+        internal static string Stratum_01_L {
             get {
                 return ResourceManager.GetString("Stratum_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_01_M {
+        internal static string Stratum_01_M {
             get {
                 return ResourceManager.GetString("Stratum_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_01_T {
+        internal static string Stratum_01_T {
             get {
                 return ResourceManager.GetString("Stratum_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_01_TTS {
+        internal static string Stratum_01_TTS {
             get {
                 return ResourceManager.GetString("Stratum_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Stratum_01_W {
+        internal static string Stratum_01_W {
             get {
                 return ResourceManager.GetString("Stratum_01_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Excutitus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_01_Y {
+        internal static string Stratum_01_Y {
             get {
                 return ResourceManager.GetString("Stratum_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Stratum_02_Ae {
+        internal static string Stratum_02_Ae {
             get {
                 return ResourceManager.GetString("Stratum_02_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Stratum_02_D {
+        internal static string Stratum_02_D {
             get {
                 return ResourceManager.GetString("Stratum_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_02_F {
+        internal static string Stratum_02_F {
             get {
                 return ResourceManager.GetString("Stratum_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_02_K {
+        internal static string Stratum_02_K {
             get {
                 return ResourceManager.GetString("Stratum_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_02_L {
+        internal static string Stratum_02_L {
             get {
                 return ResourceManager.GetString("Stratum_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_02_M {
+        internal static string Stratum_02_M {
             get {
                 return ResourceManager.GetString("Stratum_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_02_T {
+        internal static string Stratum_02_T {
             get {
                 return ResourceManager.GetString("Stratum_02_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_02_TTS {
+        internal static string Stratum_02_TTS {
             get {
                 return ResourceManager.GetString("Stratum_02_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Stratum_02_W {
+        internal static string Stratum_02_W {
             get {
                 return ResourceManager.GetString("Stratum_02_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Paleas - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_02_Y {
+        internal static string Stratum_02_Y {
             get {
                 return ResourceManager.GetString("Stratum_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_03_F {
+        internal static string Stratum_03_F {
             get {
                 return ResourceManager.GetString("Stratum_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_03_K {
+        internal static string Stratum_03_K {
             get {
                 return ResourceManager.GetString("Stratum_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_03_L {
+        internal static string Stratum_03_L {
             get {
                 return ResourceManager.GetString("Stratum_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_03_M {
+        internal static string Stratum_03_M {
             get {
                 return ResourceManager.GetString("Stratum_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_03_T {
+        internal static string Stratum_03_T {
             get {
                 return ResourceManager.GetString("Stratum_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_03_TTS {
+        internal static string Stratum_03_TTS {
             get {
                 return ResourceManager.GetString("Stratum_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Stratum_03_W {
+        internal static string Stratum_03_W {
             get {
                 return ResourceManager.GetString("Stratum_03_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Laminamus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_03_Y {
+        internal static string Stratum_03_Y {
             get {
                 return ResourceManager.GetString("Stratum_03_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Araneamus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_04_F {
+        internal static string Stratum_04_F {
             get {
                 return ResourceManager.GetString("Stratum_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Stratum_05_Ae {
+        internal static string Stratum_05_Ae {
             get {
                 return ResourceManager.GetString("Stratum_05_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Stratum_05_D {
+        internal static string Stratum_05_D {
             get {
                 return ResourceManager.GetString("Stratum_05_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_05_F {
+        internal static string Stratum_05_F {
             get {
                 return ResourceManager.GetString("Stratum_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_05_K {
+        internal static string Stratum_05_K {
             get {
                 return ResourceManager.GetString("Stratum_05_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_05_L {
+        internal static string Stratum_05_L {
             get {
                 return ResourceManager.GetString("Stratum_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_05_M {
+        internal static string Stratum_05_M {
             get {
                 return ResourceManager.GetString("Stratum_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_05_T {
+        internal static string Stratum_05_T {
             get {
                 return ResourceManager.GetString("Stratum_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_05_TTS {
+        internal static string Stratum_05_TTS {
             get {
                 return ResourceManager.GetString("Stratum_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Limaxus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_05_Y {
+        internal static string Stratum_05_Y {
             get {
                 return ResourceManager.GetString("Stratum_05_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Stratum_06_Ae {
+        internal static string Stratum_06_Ae {
             get {
                 return ResourceManager.GetString("Stratum_06_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Stratum_06_D {
+        internal static string Stratum_06_D {
             get {
                 return ResourceManager.GetString("Stratum_06_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_06_F {
+        internal static string Stratum_06_F {
             get {
                 return ResourceManager.GetString("Stratum_06_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_06_K {
+        internal static string Stratum_06_K {
             get {
                 return ResourceManager.GetString("Stratum_06_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_06_L {
+        internal static string Stratum_06_L {
             get {
                 return ResourceManager.GetString("Stratum_06_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_06_M {
+        internal static string Stratum_06_M {
             get {
                 return ResourceManager.GetString("Stratum_06_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_06_T {
+        internal static string Stratum_06_T {
             get {
                 return ResourceManager.GetString("Stratum_06_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_06_TTS {
+        internal static string Stratum_06_TTS {
             get {
                 return ResourceManager.GetString("Stratum_06_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Cucumisis - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_06_Y {
+        internal static string Stratum_06_Y {
             get {
                 return ResourceManager.GetString("Stratum_06_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Stratum_07_D {
+        internal static string Stratum_07_D {
             get {
                 return ResourceManager.GetString("Stratum_07_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_07_F {
+        internal static string Stratum_07_F {
             get {
                 return ResourceManager.GetString("Stratum_07_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_07_K {
+        internal static string Stratum_07_K {
             get {
                 return ResourceManager.GetString("Stratum_07_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_07_L {
+        internal static string Stratum_07_L {
             get {
                 return ResourceManager.GetString("Stratum_07_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_07_M {
+        internal static string Stratum_07_M {
             get {
                 return ResourceManager.GetString("Stratum_07_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_07_T {
+        internal static string Stratum_07_T {
             get {
                 return ResourceManager.GetString("Stratum_07_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_07_TTS {
+        internal static string Stratum_07_TTS {
             get {
                 return ResourceManager.GetString("Stratum_07_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Stratum_07_W {
+        internal static string Stratum_07_W {
             get {
                 return ResourceManager.GetString("Stratum_07_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Tectonicas - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_07_Y {
+        internal static string Stratum_07_Y {
             get {
                 return ResourceManager.GetString("Stratum_07_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Stratum_08_Ae {
+        internal static string Stratum_08_Ae {
             get {
                 return ResourceManager.GetString("Stratum_08_Ae", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Stratum_08_F {
+        internal static string Stratum_08_F {
             get {
                 return ResourceManager.GetString("Stratum_08_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Stratum_08_K {
+        internal static string Stratum_08_K {
             get {
                 return ResourceManager.GetString("Stratum_08_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Stratum_08_L {
+        internal static string Stratum_08_L {
             get {
                 return ResourceManager.GetString("Stratum_08_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Stratum_08_M {
+        internal static string Stratum_08_M {
             get {
                 return ResourceManager.GetString("Stratum_08_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Stratum_08_T {
+        internal static string Stratum_08_T {
             get {
                 return ResourceManager.GetString("Stratum_08_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Stratum_08_TTS {
+        internal static string Stratum_08_TTS {
             get {
                 return ResourceManager.GetString("Stratum_08_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stratum Frigus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Stratum_08_Y {
+        internal static string Stratum_08_Y {
             get {
                 return ResourceManager.GetString("Stratum_08_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Common Thargoid Barnacle.
+        ///   Looks up a localized string similar to Common.
         /// </summary>
-        public static string Thargoid_Barnacle_01 {
+        internal static string Thargoid_Barnacle_01 {
             get {
                 return ResourceManager.GetString("Thargoid_Barnacle_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Large Thargoid Barnacle.
+        ///   Looks up a localized string similar to Large.
         /// </summary>
-        public static string Thargoid_Barnacle_02 {
+        internal static string Thargoid_Barnacle_02 {
             get {
                 return ResourceManager.GetString("Thargoid_Barnacle_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thargoid Barnacle Barbs.
+        ///   Looks up a localized string similar to Barbs.
         /// </summary>
-        public static string Thargoid_Barnacle_Spikes {
+        internal static string Thargoid_Barnacle_Spikes {
             get {
                 return ResourceManager.GetString("Thargoid_Barnacle_Spikes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Sinuous Tubers.
+        ///   Looks up a localized string similar to Roseum.
         /// </summary>
-        public static string Tube {
+        internal static string Tube {
             get {
                 return ResourceManager.GetString("Tube", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prasinum Sinuous Tubers.
+        ///   Looks up a localized string similar to Prasinum.
         /// </summary>
-        public static string TubeABCD_01 {
+        internal static string TubeABCD_01 {
             get {
                 return ResourceManager.GetString("TubeABCD_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Albidum Sinuous Tubers.
+        ///   Looks up a localized string similar to Albidum.
         /// </summary>
-        public static string TubeABCD_02 {
+        internal static string TubeABCD_02 {
             get {
                 return ResourceManager.GetString("TubeABCD_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caeruleum Sinuous Tubers.
+        ///   Looks up a localized string similar to Caeruleum.
         /// </summary>
-        public static string TubeABCD_03 {
+        internal static string TubeABCD_03 {
             get {
                 return ResourceManager.GetString("TubeABCD_03", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Blatteum Sinuous Tubers.
+        ///   Looks up a localized string similar to Blatteum.
         /// </summary>
-        public static string TubeEFGH {
+        internal static string TubeEFGH {
             get {
                 return ResourceManager.GetString("TubeEFGH", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Sinuous Tubers.
+        ///   Looks up a localized string similar to Lindigoticum.
         /// </summary>
-        public static string TubeEFGH_01 {
+        internal static string TubeEFGH_01 {
             get {
                 return ResourceManager.GetString("TubeEFGH_01", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Violaceum Sinuous Tubers.
+        ///   Looks up a localized string similar to Violaceum.
         /// </summary>
-        public static string TubeEFGH_02 {
+        internal static string TubeEFGH_02 {
             get {
                 return ResourceManager.GetString("TubeEFGH_02", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Sinuous Tubers.
+        ///   Looks up a localized string similar to Viride.
         /// </summary>
-        public static string TubeEFGH_03 {
+        internal static string TubeEFGH_03 {
             get {
                 return ResourceManager.GetString("TubeEFGH_03", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Tubus_01_A {
+        internal static string Tubus_01_A {
             get {
                 return ResourceManager.GetString("Tubus_01_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tubus_01_B {
+        internal static string Tubus_01_B {
             get {
                 return ResourceManager.GetString("Tubus_01_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tubus_01_D {
+        internal static string Tubus_01_D {
             get {
                 return ResourceManager.GetString("Tubus_01_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Tubus_01_F {
+        internal static string Tubus_01_F {
             get {
                 return ResourceManager.GetString("Tubus_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tubus_01_G {
+        internal static string Tubus_01_G {
             get {
                 return ResourceManager.GetString("Tubus_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tubus_01_K {
+        internal static string Tubus_01_K {
             get {
                 return ResourceManager.GetString("Tubus_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Tubus_01_L {
+        internal static string Tubus_01_L {
             get {
                 return ResourceManager.GetString("Tubus_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tubus_01_M {
+        internal static string Tubus_01_M {
             get {
                 return ResourceManager.GetString("Tubus_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Tubus_01_N {
+        internal static string Tubus_01_N {
             get {
                 return ResourceManager.GetString("Tubus_01_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Tubus_01_T {
+        internal static string Tubus_01_T {
             get {
                 return ResourceManager.GetString("Tubus_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Conifer - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Tubus_01_TTS {
+        internal static string Tubus_01_TTS {
             get {
                 return ResourceManager.GetString("Tubus_01_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Tubus_02_A {
+        internal static string Tubus_02_A {
             get {
                 return ResourceManager.GetString("Tubus_02_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tubus_02_B {
+        internal static string Tubus_02_B {
             get {
                 return ResourceManager.GetString("Tubus_02_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Tubus_02_F {
+        internal static string Tubus_02_F {
             get {
                 return ResourceManager.GetString("Tubus_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tubus_02_G {
+        internal static string Tubus_02_G {
             get {
                 return ResourceManager.GetString("Tubus_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tubus_02_K {
+        internal static string Tubus_02_K {
             get {
                 return ResourceManager.GetString("Tubus_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Tubus_02_L {
+        internal static string Tubus_02_L {
             get {
                 return ResourceManager.GetString("Tubus_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tubus_02_M {
+        internal static string Tubus_02_M {
             get {
                 return ResourceManager.GetString("Tubus_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Tubus_02_N {
+        internal static string Tubus_02_N {
             get {
                 return ResourceManager.GetString("Tubus_02_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Tubus_02_T {
+        internal static string Tubus_02_T {
             get {
                 return ResourceManager.GetString("Tubus_02_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Sororibus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Tubus_02_TTS {
+        internal static string Tubus_02_TTS {
             get {
                 return ResourceManager.GetString("Tubus_02_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Tubus_03_A {
+        internal static string Tubus_03_A {
             get {
                 return ResourceManager.GetString("Tubus_03_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tubus_03_B {
+        internal static string Tubus_03_B {
             get {
                 return ResourceManager.GetString("Tubus_03_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tubus_03_D {
+        internal static string Tubus_03_D {
             get {
                 return ResourceManager.GetString("Tubus_03_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Tubus_03_F {
+        internal static string Tubus_03_F {
             get {
                 return ResourceManager.GetString("Tubus_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tubus_03_G {
+        internal static string Tubus_03_G {
             get {
                 return ResourceManager.GetString("Tubus_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tubus_03_K {
+        internal static string Tubus_03_K {
             get {
                 return ResourceManager.GetString("Tubus_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Tubus_03_L {
+        internal static string Tubus_03_L {
             get {
                 return ResourceManager.GetString("Tubus_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tubus_03_M {
+        internal static string Tubus_03_M {
             get {
                 return ResourceManager.GetString("Tubus_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Tubus_03_N {
+        internal static string Tubus_03_N {
             get {
                 return ResourceManager.GetString("Tubus_03_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Tubus_03_T {
+        internal static string Tubus_03_T {
             get {
                 return ResourceManager.GetString("Tubus_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Cavas - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Tubus_03_TTS {
+        internal static string Tubus_03_TTS {
             get {
                 return ResourceManager.GetString("Tubus_03_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Tubus_04_A {
+        internal static string Tubus_04_A {
             get {
                 return ResourceManager.GetString("Tubus_04_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tubus_04_B {
+        internal static string Tubus_04_B {
             get {
                 return ResourceManager.GetString("Tubus_04_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Tubus_04_F {
+        internal static string Tubus_04_F {
             get {
                 return ResourceManager.GetString("Tubus_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tubus_04_G {
+        internal static string Tubus_04_G {
             get {
                 return ResourceManager.GetString("Tubus_04_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tubus_04_K {
+        internal static string Tubus_04_K {
             get {
                 return ResourceManager.GetString("Tubus_04_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Tubus_04_L {
+        internal static string Tubus_04_L {
             get {
                 return ResourceManager.GetString("Tubus_04_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tubus_04_M {
+        internal static string Tubus_04_M {
             get {
                 return ResourceManager.GetString("Tubus_04_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Tubus_04_N {
+        internal static string Tubus_04_N {
             get {
                 return ResourceManager.GetString("Tubus_04_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tubus_04_O {
+        internal static string Tubus_04_O {
             get {
                 return ResourceManager.GetString("Tubus_04_O", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Tubus_04_T {
+        internal static string Tubus_04_T {
             get {
                 return ResourceManager.GetString("Tubus_04_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Rosarium - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Tubus_04_TTS {
+        internal static string Tubus_04_TTS {
             get {
                 return ResourceManager.GetString("Tubus_04_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Indigo.
+        ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        public static string Tubus_05_A {
+        internal static string Tubus_05_A {
             get {
                 return ResourceManager.GetString("Tubus_05_A", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tubus_05_B {
+        internal static string Tubus_05_B {
             get {
                 return ResourceManager.GetString("Tubus_05_B", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tubus_05_D {
+        internal static string Tubus_05_D {
             get {
                 return ResourceManager.GetString("Tubus_05_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Grey.
+        ///   Looks up a localized string similar to Grey.
         /// </summary>
-        public static string Tubus_05_F {
+        internal static string Tubus_05_F {
             get {
                 return ResourceManager.GetString("Tubus_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tubus_05_G {
+        internal static string Tubus_05_G {
             get {
                 return ResourceManager.GetString("Tubus_05_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tubus_05_K {
+        internal static string Tubus_05_K {
             get {
                 return ResourceManager.GetString("Tubus_05_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Turquoise.
+        ///   Looks up a localized string similar to Turquoise.
         /// </summary>
-        public static string Tubus_05_L {
+        internal static string Tubus_05_L {
             get {
                 return ResourceManager.GetString("Tubus_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tubus_05_M {
+        internal static string Tubus_05_M {
             get {
                 return ResourceManager.GetString("Tubus_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Amethyst.
+        ///   Looks up a localized string similar to Amethyst.
         /// </summary>
-        public static string Tubus_05_N {
+        internal static string Tubus_05_N {
             get {
                 return ResourceManager.GetString("Tubus_05_N", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Mauve.
+        ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        public static string Tubus_05_T {
+        internal static string Tubus_05_T {
             get {
                 return ResourceManager.GetString("Tubus_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Ocher.
+        ///   Looks up a localized string similar to Ocher.
         /// </summary>
-        public static string Tubus_05_TTS {
+        internal static string Tubus_05_TTS {
             get {
                 return ResourceManager.GetString("Tubus_05_TTS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tubus Compagibus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tubus_05_W {
+        internal static string Tubus_05_W {
             get {
                 return ResourceManager.GetString("Tubus_05_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_01_F {
+        internal static string Tussocks_01_F {
             get {
                 return ResourceManager.GetString("Tussocks_01_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_01_G {
+        internal static string Tussocks_01_G {
             get {
                 return ResourceManager.GetString("Tussocks_01_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_01_K {
+        internal static string Tussocks_01_K {
             get {
                 return ResourceManager.GetString("Tussocks_01_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_01_L {
+        internal static string Tussocks_01_L {
             get {
                 return ResourceManager.GetString("Tussocks_01_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_01_M {
+        internal static string Tussocks_01_M {
             get {
                 return ResourceManager.GetString("Tussocks_01_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_01_T {
+        internal static string Tussocks_01_T {
             get {
                 return ResourceManager.GetString("Tussocks_01_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Tussocks_01_W {
+        internal static string Tussocks_01_W {
             get {
                 return ResourceManager.GetString("Tussocks_01_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennata - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_01_Y {
+        internal static string Tussocks_01_Y {
             get {
                 return ResourceManager.GetString("Tussocks_01_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_02_D {
+        internal static string Tussocks_02_D {
             get {
                 return ResourceManager.GetString("Tussocks_02_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_02_F {
+        internal static string Tussocks_02_F {
             get {
                 return ResourceManager.GetString("Tussocks_02_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_02_G {
+        internal static string Tussocks_02_G {
             get {
                 return ResourceManager.GetString("Tussocks_02_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_02_K {
+        internal static string Tussocks_02_K {
             get {
                 return ResourceManager.GetString("Tussocks_02_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_02_L {
+        internal static string Tussocks_02_L {
             get {
                 return ResourceManager.GetString("Tussocks_02_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_02_M {
+        internal static string Tussocks_02_M {
             get {
                 return ResourceManager.GetString("Tussocks_02_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_02_T {
+        internal static string Tussocks_02_T {
             get {
                 return ResourceManager.GetString("Tussocks_02_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Tussocks_02_W {
+        internal static string Tussocks_02_W {
             get {
                 return ResourceManager.GetString("Tussocks_02_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ventusa - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_02_Y {
+        internal static string Tussocks_02_Y {
             get {
                 return ResourceManager.GetString("Tussocks_02_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_03_D {
+        internal static string Tussocks_03_D {
             get {
                 return ResourceManager.GetString("Tussocks_03_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_03_F {
+        internal static string Tussocks_03_F {
             get {
                 return ResourceManager.GetString("Tussocks_03_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_03_G {
+        internal static string Tussocks_03_G {
             get {
                 return ResourceManager.GetString("Tussocks_03_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_03_K {
+        internal static string Tussocks_03_K {
             get {
                 return ResourceManager.GetString("Tussocks_03_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_03_L {
+        internal static string Tussocks_03_L {
             get {
                 return ResourceManager.GetString("Tussocks_03_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_03_M {
+        internal static string Tussocks_03_M {
             get {
                 return ResourceManager.GetString("Tussocks_03_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_03_T {
+        internal static string Tussocks_03_T {
             get {
                 return ResourceManager.GetString("Tussocks_03_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Tussocks_03_W {
+        internal static string Tussocks_03_W {
             get {
                 return ResourceManager.GetString("Tussocks_03_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Ignis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_03_Y {
+        internal static string Tussocks_03_Y {
             get {
                 return ResourceManager.GetString("Tussocks_03_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_04_D {
+        internal static string Tussocks_04_D {
             get {
                 return ResourceManager.GetString("Tussocks_04_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_04_F {
+        internal static string Tussocks_04_F {
             get {
                 return ResourceManager.GetString("Tussocks_04_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_04_G {
+        internal static string Tussocks_04_G {
             get {
                 return ResourceManager.GetString("Tussocks_04_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_04_K {
+        internal static string Tussocks_04_K {
             get {
                 return ResourceManager.GetString("Tussocks_04_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_04_L {
+        internal static string Tussocks_04_L {
             get {
                 return ResourceManager.GetString("Tussocks_04_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_04_M {
+        internal static string Tussocks_04_M {
             get {
                 return ResourceManager.GetString("Tussocks_04_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_04_T {
+        internal static string Tussocks_04_T {
             get {
                 return ResourceManager.GetString("Tussocks_04_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Tussocks_04_W {
+        internal static string Tussocks_04_W {
             get {
                 return ResourceManager.GetString("Tussocks_04_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Cultro - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_04_Y {
+        internal static string Tussocks_04_Y {
             get {
                 return ResourceManager.GetString("Tussocks_04_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_05_D {
+        internal static string Tussocks_05_D {
             get {
                 return ResourceManager.GetString("Tussocks_05_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_05_F {
+        internal static string Tussocks_05_F {
             get {
                 return ResourceManager.GetString("Tussocks_05_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_05_G {
+        internal static string Tussocks_05_G {
             get {
                 return ResourceManager.GetString("Tussocks_05_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_05_K {
+        internal static string Tussocks_05_K {
             get {
                 return ResourceManager.GetString("Tussocks_05_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_05_L {
+        internal static string Tussocks_05_L {
             get {
                 return ResourceManager.GetString("Tussocks_05_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_05_M {
+        internal static string Tussocks_05_M {
             get {
                 return ResourceManager.GetString("Tussocks_05_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_05_T {
+        internal static string Tussocks_05_T {
             get {
                 return ResourceManager.GetString("Tussocks_05_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Catena - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_05_Y {
+        internal static string Tussocks_05_Y {
             get {
                 return ResourceManager.GetString("Tussocks_05_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_06_D {
+        internal static string Tussocks_06_D {
             get {
                 return ResourceManager.GetString("Tussocks_06_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_06_F {
+        internal static string Tussocks_06_F {
             get {
                 return ResourceManager.GetString("Tussocks_06_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_06_G {
+        internal static string Tussocks_06_G {
             get {
                 return ResourceManager.GetString("Tussocks_06_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_06_K {
+        internal static string Tussocks_06_K {
             get {
                 return ResourceManager.GetString("Tussocks_06_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_06_L {
+        internal static string Tussocks_06_L {
             get {
                 return ResourceManager.GetString("Tussocks_06_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_06_M {
+        internal static string Tussocks_06_M {
             get {
                 return ResourceManager.GetString("Tussocks_06_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_06_T {
+        internal static string Tussocks_06_T {
             get {
                 return ResourceManager.GetString("Tussocks_06_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Pennatis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_06_Y {
+        internal static string Tussocks_06_Y {
             get {
                 return ResourceManager.GetString("Tussocks_06_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_07_D {
+        internal static string Tussocks_07_D {
             get {
                 return ResourceManager.GetString("Tussocks_07_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_07_F {
+        internal static string Tussocks_07_F {
             get {
                 return ResourceManager.GetString("Tussocks_07_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_07_G {
+        internal static string Tussocks_07_G {
             get {
                 return ResourceManager.GetString("Tussocks_07_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_07_K {
+        internal static string Tussocks_07_K {
             get {
                 return ResourceManager.GetString("Tussocks_07_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_07_L {
+        internal static string Tussocks_07_L {
             get {
                 return ResourceManager.GetString("Tussocks_07_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_07_M {
+        internal static string Tussocks_07_M {
             get {
                 return ResourceManager.GetString("Tussocks_07_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_07_T {
+        internal static string Tussocks_07_T {
             get {
                 return ResourceManager.GetString("Tussocks_07_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Serrati - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_07_Y {
+        internal static string Tussocks_07_Y {
             get {
                 return ResourceManager.GetString("Tussocks_07_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_08_D {
+        internal static string Tussocks_08_D {
             get {
                 return ResourceManager.GetString("Tussocks_08_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_08_F {
+        internal static string Tussocks_08_F {
             get {
                 return ResourceManager.GetString("Tussocks_08_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_08_G {
+        internal static string Tussocks_08_G {
             get {
                 return ResourceManager.GetString("Tussocks_08_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_08_K {
+        internal static string Tussocks_08_K {
             get {
                 return ResourceManager.GetString("Tussocks_08_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_08_L {
+        internal static string Tussocks_08_L {
             get {
                 return ResourceManager.GetString("Tussocks_08_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_08_M {
+        internal static string Tussocks_08_M {
             get {
                 return ResourceManager.GetString("Tussocks_08_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_08_T {
+        internal static string Tussocks_08_T {
             get {
                 return ResourceManager.GetString("Tussocks_08_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Orange.
+        ///   Looks up a localized string similar to Orange.
         /// </summary>
-        public static string Tussocks_08_W {
+        internal static string Tussocks_08_W {
             get {
                 return ResourceManager.GetString("Tussocks_08_W", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Albata - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_08_Y {
+        internal static string Tussocks_08_Y {
             get {
                 return ResourceManager.GetString("Tussocks_08_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_09_D {
+        internal static string Tussocks_09_D {
             get {
                 return ResourceManager.GetString("Tussocks_09_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_09_F {
+        internal static string Tussocks_09_F {
             get {
                 return ResourceManager.GetString("Tussocks_09_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_09_G {
+        internal static string Tussocks_09_G {
             get {
                 return ResourceManager.GetString("Tussocks_09_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_09_K {
+        internal static string Tussocks_09_K {
             get {
                 return ResourceManager.GetString("Tussocks_09_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_09_L {
+        internal static string Tussocks_09_L {
             get {
                 return ResourceManager.GetString("Tussocks_09_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_09_M {
+        internal static string Tussocks_09_M {
             get {
                 return ResourceManager.GetString("Tussocks_09_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_09_T {
+        internal static string Tussocks_09_T {
             get {
                 return ResourceManager.GetString("Tussocks_09_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Propagito - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_09_Y {
+        internal static string Tussocks_09_Y {
             get {
                 return ResourceManager.GetString("Tussocks_09_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_10_D {
+        internal static string Tussocks_10_D {
             get {
                 return ResourceManager.GetString("Tussocks_10_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_10_F {
+        internal static string Tussocks_10_F {
             get {
                 return ResourceManager.GetString("Tussocks_10_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_10_G {
+        internal static string Tussocks_10_G {
             get {
                 return ResourceManager.GetString("Tussocks_10_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_10_K {
+        internal static string Tussocks_10_K {
             get {
                 return ResourceManager.GetString("Tussocks_10_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_10_L {
+        internal static string Tussocks_10_L {
             get {
                 return ResourceManager.GetString("Tussocks_10_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_10_M {
+        internal static string Tussocks_10_M {
             get {
                 return ResourceManager.GetString("Tussocks_10_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_10_T {
+        internal static string Tussocks_10_T {
             get {
                 return ResourceManager.GetString("Tussocks_10_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Divisa - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_10_Y {
+        internal static string Tussocks_10_Y {
             get {
                 return ResourceManager.GetString("Tussocks_10_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_11_D {
+        internal static string Tussocks_11_D {
             get {
                 return ResourceManager.GetString("Tussocks_11_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_11_F {
+        internal static string Tussocks_11_F {
             get {
                 return ResourceManager.GetString("Tussocks_11_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_11_G {
+        internal static string Tussocks_11_G {
             get {
                 return ResourceManager.GetString("Tussocks_11_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_11_K {
+        internal static string Tussocks_11_K {
             get {
                 return ResourceManager.GetString("Tussocks_11_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_11_L {
+        internal static string Tussocks_11_L {
             get {
                 return ResourceManager.GetString("Tussocks_11_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_11_M {
+        internal static string Tussocks_11_M {
             get {
                 return ResourceManager.GetString("Tussocks_11_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_11_T {
+        internal static string Tussocks_11_T {
             get {
                 return ResourceManager.GetString("Tussocks_11_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Caputus - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_11_Y {
+        internal static string Tussocks_11_Y {
             get {
                 return ResourceManager.GetString("Tussocks_11_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_12_D {
+        internal static string Tussocks_12_D {
             get {
                 return ResourceManager.GetString("Tussocks_12_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_12_F {
+        internal static string Tussocks_12_F {
             get {
                 return ResourceManager.GetString("Tussocks_12_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_12_G {
+        internal static string Tussocks_12_G {
             get {
                 return ResourceManager.GetString("Tussocks_12_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_12_K {
+        internal static string Tussocks_12_K {
             get {
                 return ResourceManager.GetString("Tussocks_12_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_12_L {
+        internal static string Tussocks_12_L {
             get {
                 return ResourceManager.GetString("Tussocks_12_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_12_M {
+        internal static string Tussocks_12_M {
             get {
                 return ResourceManager.GetString("Tussocks_12_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_12_T {
+        internal static string Tussocks_12_T {
             get {
                 return ResourceManager.GetString("Tussocks_12_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Triticum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_12_Y {
+        internal static string Tussocks_12_Y {
             get {
                 return ResourceManager.GetString("Tussocks_12_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_13_D {
+        internal static string Tussocks_13_D {
             get {
                 return ResourceManager.GetString("Tussocks_13_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_13_F {
+        internal static string Tussocks_13_F {
             get {
                 return ResourceManager.GetString("Tussocks_13_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_13_G {
+        internal static string Tussocks_13_G {
             get {
                 return ResourceManager.GetString("Tussocks_13_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_13_K {
+        internal static string Tussocks_13_K {
             get {
                 return ResourceManager.GetString("Tussocks_13_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_13_L {
+        internal static string Tussocks_13_L {
             get {
                 return ResourceManager.GetString("Tussocks_13_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_13_M {
+        internal static string Tussocks_13_M {
             get {
                 return ResourceManager.GetString("Tussocks_13_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_13_T {
+        internal static string Tussocks_13_T {
             get {
                 return ResourceManager.GetString("Tussocks_13_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Stigmasis - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_13_Y {
+        internal static string Tussocks_13_Y {
             get {
                 return ResourceManager.GetString("Tussocks_13_Y", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Virgam - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_14_F {
+        internal static string Tussocks_14_F {
             get {
                 return ResourceManager.GetString("Tussocks_14_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Virgam - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_14_G {
+        internal static string Tussocks_14_G {
             get {
                 return ResourceManager.GetString("Tussocks_14_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Virgam - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_14_K {
+        internal static string Tussocks_14_K {
             get {
                 return ResourceManager.GetString("Tussocks_14_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Virgam - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_14_L {
+        internal static string Tussocks_14_L {
             get {
                 return ResourceManager.GetString("Tussocks_14_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Virgam - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_14_M {
+        internal static string Tussocks_14_M {
             get {
                 return ResourceManager.GetString("Tussocks_14_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Virgam - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_14_T {
+        internal static string Tussocks_14_T {
             get {
                 return ResourceManager.GetString("Tussocks_14_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Maroon.
+        ///   Looks up a localized string similar to Maroon.
         /// </summary>
-        public static string Tussocks_15_D {
+        internal static string Tussocks_15_D {
             get {
                 return ResourceManager.GetString("Tussocks_15_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Yellow.
+        ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        public static string Tussocks_15_F {
+        internal static string Tussocks_15_F {
             get {
                 return ResourceManager.GetString("Tussocks_15_F", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Lime.
+        ///   Looks up a localized string similar to Lime.
         /// </summary>
-        public static string Tussocks_15_G {
+        internal static string Tussocks_15_G {
             get {
                 return ResourceManager.GetString("Tussocks_15_G", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Green.
+        ///   Looks up a localized string similar to Green.
         /// </summary>
-        public static string Tussocks_15_K {
+        internal static string Tussocks_15_K {
             get {
                 return ResourceManager.GetString("Tussocks_15_K", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Sage.
+        ///   Looks up a localized string similar to Sage.
         /// </summary>
-        public static string Tussocks_15_L {
+        internal static string Tussocks_15_L {
             get {
                 return ResourceManager.GetString("Tussocks_15_L", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Emerald.
+        ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        public static string Tussocks_15_M {
+        internal static string Tussocks_15_M {
             get {
                 return ResourceManager.GetString("Tussocks_15_M", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Teal.
+        ///   Looks up a localized string similar to Teal.
         /// </summary>
-        public static string Tussocks_15_T {
+        internal static string Tussocks_15_T {
             get {
                 return ResourceManager.GetString("Tussocks_15_T", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tussock Capillum - Red.
+        ///   Looks up a localized string similar to Red.
         /// </summary>
-        public static string Tussocks_15_Y {
+        internal static string Tussocks_15_Y {
             get {
                 return ResourceManager.GetString("Tussocks_15_Y", resourceCulture);
             }
@@ -8298,7 +8298,7 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Amphora Plant.
         /// </summary>
-        public static string Vents {
+        internal static string Vents {
             get {
                 return ResourceManager.GetString("Vents", resourceCulture);
             }

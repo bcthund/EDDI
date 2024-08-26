@@ -180,6 +180,12 @@ namespace EddiStarMapService
                         }
                     }
                     decimal? pressureAtm = (decimal?)body["surfacePressure"];
+
+                    // TODO: Does EDSM have this data?
+                    //  - Appear this si contained in "atmosphereType"
+                    //AtmosphereThickness atmosphereThickness = AtmosphereThickness.None;
+                    AtmosphereThickness atmosphereThickness = AtmosphereThickness.FromName((string)body["atmosphereType"]) ?? AtmosphereThickness.Normal;
+
                     AtmosphereClass atmosphereClass = null;
                     if (((string)body["subType"]).Contains("gas giant") &&
                         (string)body["atmosphereType"] == "No atmosphere")
@@ -234,7 +240,7 @@ namespace EddiStarMapService
                     ReserveLevel reserveLevel = ReserveLevel.FromName((string)body["reserveLevel"]) ?? ReserveLevel.None;
 
                     DateTime updatedAt = JsonParsing.getDateTime("updateTime", body);
-                    Body Body = new Body(bodyname, bodyId, systemName, systemAddress, parents, distanceLs, tidallylocked, terraformState, planetClass, atmosphereClass, atmosphereCompositions, volcanism, earthmass, radiusKm, (decimal)gravity, temperatureKelvin, pressureAtm, landable, materials, solidCompositions, semimajoraxisLs, eccentricity, orbitalInclinationDegrees, periapsisDegrees, orbitalPeriodDays, rotationPeriodDays, axialTiltDegrees, rings, reserveLevel, true, null)
+                    Body Body = new Body(bodyname, bodyId, systemName, systemAddress, parents, distanceLs, tidallylocked, terraformState, planetClass, atmosphereThickness, atmosphereClass, atmosphereCompositions, volcanism, earthmass, radiusKm, (decimal)gravity, temperatureKelvin, pressureAtm, landable, materials, solidCompositions, semimajoraxisLs, eccentricity, orbitalInclinationDegrees, periapsisDegrees, orbitalPeriodDays, rotationPeriodDays, axialTiltDegrees, rings, reserveLevel, true, null)
                     {
                         EDSMID = EDSMID,
                         updatedat = updatedAt == DateTime.MinValue ? null : (long?)Dates.fromDateTimeToSeconds(updatedAt)

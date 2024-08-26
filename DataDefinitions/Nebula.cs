@@ -5823,8 +5823,10 @@ namespace EddiDataDefinitions
         {
             List<Nebula> listNebula = new List<Nebula>();
 
-            // TODO:Future - Add nebula sectors for non-central body nebulas
-            // Check if system name is in the nebula sector list
+            // TODO: 22-2 - Future - Add nebula sectors for non-central body nebulas
+            //   - Check if system name is in the nebula sector list
+            //   - systemname.Contains(nebula.referenceSector)
+
             //foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==false).ToList() )
             //{
             //    if( systemname == nebula.referenceSector )
@@ -5844,6 +5846,32 @@ namespace EddiDataDefinitions
                         // We don't need the exact distance, use the faster method for sorting purposes
                         nebula.distance = Functions.StellarDistanceSquare(systemX, systemY, systemZ, nebula.x, nebula.y, nebula.z);
                         //nebula.distance = Functions.StellarDistanceLy(systemX, systemY, systemZ, nebula.x, nebula.y, nebula.z);
+                        listNebula.Add(nebula);
+                    }
+                }
+            }
+
+            Nebula closest = listNebula.OrderBy( s => s.distance).First();
+            closest.distance = Functions.StellarDistanceLy( closest.distance );
+            
+            // TODO:There should be a way to get the nearest nebula into the clipboard. Maybe through VA integration only?
+            return closest;
+        }
+
+        public static Nebula TryGetNearestNebula ( decimal? systemX, decimal? systemY, decimal? systemZ )
+        {
+            List<Nebula> listNebula = new List<Nebula>();
+
+            // If not in sector then check nebula list
+            if(listNebula.Count == 0 ) {
+
+                // Get the distance (squared) of all Nebula
+                foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true ) )
+                {
+                    if( nebula.x != null && nebula.y != null && nebula.z != null )
+                    {
+                        // We don't need the exact distance, use the faster method for sorting purposes
+                        nebula.distance = Functions.StellarDistanceSquare(systemX, systemY, systemZ, nebula.x, nebula.y, nebula.z);
                         listNebula.Add(nebula);
                     }
                 }

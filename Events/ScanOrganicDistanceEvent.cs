@@ -12,7 +12,7 @@ namespace EddiEvents
         public const string DESCRIPTION = "Triggered when entering and exiting sample ranges.";
         public static ScanOrganicDistanceEvent SAMPLE = new ScanOrganicDistanceEvent(DateTime.UtcNow, new Exobiology( OrganicGenus.FromEDName("Clypeus") )
         {
-            nearPriorSample = new Random().NextBoolean(), species = OrganicSpecies.ClypeusMargaritus, scanState = Exobiology.State.SampleStarted
+            nearPriorSample = new Random().NextBoolean(), species = OrganicSpecies.ClypeusMargaritus, ScanState = Exobiology.State.SampleStarted
         });
 
         [PublicAPI( "An object holding all the data about the organism currently being sampled" )]

@@ -86,7 +86,7 @@ namespace EddiDataDefinitions
         public static readonly GuardianSector GS_HIP_43123 = new GuardianSector( "HIP 43123", "Inner Orion Spur");
         public static readonly GuardianSector GS_NGC_2516_SECTOR = new GuardianSector( "NGC 2516 SECTOR", "Inner Orion Spur");
 
-        [PublicAPI("The name of the nebula")]
+        [PublicAPI("The name of the guardian sector")]
         public string name;
         public string region;
 

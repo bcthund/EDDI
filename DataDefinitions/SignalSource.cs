@@ -52,20 +52,20 @@ namespace EddiDataDefinitions
         public static readonly SignalSource UnregisteredCommsBeacon = new SignalSource("NumberStation");
         public static readonly SignalSource ListeningPost = new SignalSource("ListeningPost");
 
-            var CapShip = new SignalSource("FIXED_EVENT_CAPSHIP");
-            var Checkpoint = new SignalSource("FIXED_EVENT_CHECKPOINT");
-            var ConvoyBeacon = new SignalSource("FIXED_EVENT_CONVOY");
-            var DebrisField = new SignalSource("FIXED_EVENT_DEBRIS");
-            var DistributionCenter = new SignalSource("FIXED_EVENT_DISTRIBUTIONCENTRE");
-            var PirateAttackT5 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T5");
-            var PirateAttackT6 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T6");
-            var PirateAttackT7 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T7");
-            var NotableStellarPhenomenaCloud = new SignalSource("Fixed_Event_Life_Cloud");
-            var NotableStellarPhenomenaRing = new SignalSource("Fixed_Event_Life_Ring");
-            var AncientProbe = new SignalSource("FIXED_EVENT_PROBE");
+            //var CapShip = new SignalSource("FIXED_EVENT_CAPSHIP");
+            //var Checkpoint = new SignalSource("FIXED_EVENT_CHECKPOINT");
+            //var ConvoyBeacon = new SignalSource("FIXED_EVENT_CONVOY");
+            //var DebrisField = new SignalSource("FIXED_EVENT_DEBRIS");
+            //var DistributionCenter = new SignalSource("FIXED_EVENT_DISTRIBUTIONCENTRE");
+            //var PirateAttackT5 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T5");
+            //var PirateAttackT6 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T6");
+            //var PirateAttackT7 = new SignalSource("FIXED_EVENT_HIGHTHREATSCENARIO_T7");
+            //var NotableStellarPhenomenaCloud = new SignalSource("Fixed_Event_Life_Cloud");
+            //var NotableStellarPhenomenaRing = new SignalSource("Fixed_Event_Life_Ring");
+            //var AncientProbe = new SignalSource("FIXED_EVENT_PROBE");
 
-            var AttackAftermath = new SignalSource("AttackAftermath");
-            var AftermathLarge = new SignalSource("Aftermath_Large");
+            //var AttackAftermath = new SignalSource("AttackAftermath");
+            //var AftermathLarge = new SignalSource("Aftermath_Large");
 
         public static readonly SignalSource AttackAftermath = new SignalSource("AttackAftermath");
         public static readonly SignalSource AftermathLarge = new SignalSource("Aftermath_Large");
@@ -77,13 +77,6 @@ namespace EddiDataDefinitions
         public static readonly SignalSource Thargoid = new SignalSource("SAA_SignalType_Thargoid");
         public static readonly SignalSource PlanetAnomaly = new SignalSource("SAA_SignalType_PlanetAnomaly");
         public static readonly SignalSource OtherSAA = new SignalSource("SAA_SignalType_Other");
-            var AncientGuardianRuins = new SignalSource("Ancient");
-            var GuardianStructureTiny = new SignalSource("Ancient_Tiny");
-            var GuardianStructureSmall = new SignalSource("Ancient_Small");
-            var GuardianStructureMedium = new SignalSource("Ancient_Medium");
-            var ThargoidBarnacle = new SignalSource("Settlement_Unflattened_Unknown");
-            var ThargoidCrashSite = new SignalSource("Settlement_Unflattened_WreckedUnknown");
-            var ThargoidSpireSite = new SignalSource( "Settlement_Unflattened_TGMegaBarnacle" );
 
         public static readonly SignalSource AncientGuardianRuins = new SignalSource("Ancient");
         public static readonly SignalSource GuardianStructureTiny = new SignalSource("Ancient_Tiny");

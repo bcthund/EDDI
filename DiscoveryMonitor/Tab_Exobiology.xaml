@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="EddiDiscoveryMonitor.Tab_Exobiology"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EddiDiscoveryMonitor"
+             xmlns:eddi="clr-namespace:Eddi;assembly=EDDI"
+             xmlns:resx="clr-namespace:EddiDiscoveryMonitor.Properties"
+             xmlns:eddiDataDefinitions="clr-namespace:EddiDataDefinitions;assembly=EddiDataDefinitions"
+             xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
+             d:DataContext="{d:DesignInstance Type=local:DiscoveryMonitor}"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="800" MinWidth="750">
+
+    <Grid Background="#FFE5E5E5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Label VerticalAlignment="Center">Current Body ID:</Label>
+            <TextBox x:Name="textbox_CurrentBodyId" Text="" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
+            <!--<TextBox x:Name="textbox_CurrentBodyId" Text="{Binding Path=_currentBodyId}" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
+
+            <Rectangle Width="20"/>
+
+            <Label VerticalAlignment="Center">Current Body:</Label>
+            <TextBox x:Name="textbox_CurrentBodyShortName" Text="" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
+            <!--<TextBox x:Name="textbox_CurrentBodyShortName" Text="{Binding Path=_currentBody.shortName}" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <DataGrid AutoGenerateColumns="False" x:Name="datagrid_bioData" ItemsSource="{Binding}" LoadingRow="datagrid_LoadingRow" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Genus" IsReadOnly="True" Width="Auto" Binding="{Binding genus.localizedName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Species" IsReadOnly="True" Width="Auto" Binding="{Binding species.localizedName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Variant" IsReadOnly="True" Width="Auto" Binding="{Binding variant.localizedName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Samples" IsReadOnly="True" Width="Auto" Binding="{Binding samples}"/>
+                    <DataGridTextColumn Header="State" IsReadOnly="True" Width="Auto" Binding="{Binding state}"/>
+                    <DataGridTextColumn Header="Value" IsReadOnly="True" Width="Auto" Binding="{Binding value}"/>
+                    <DataGridTextColumn Header="Min Value" IsReadOnly="True" Width="Auto" Binding="{Binding predictedMinimumValue}"/>
+                    <DataGridTextColumn Header="Max Value" IsReadOnly="True" Width="Auto" Binding="{Binding predictedMaximumValue}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+            <Button Content="Refresh" Click="buttonRefresh" Height="30"/>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

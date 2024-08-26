@@ -14,11 +14,12 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Utilities;
 using Utilities.RegionMap;
+using System.ComponentModel;
 
 [assembly: InternalsVisibleTo( "Tests" )]
 namespace EddiDiscoveryMonitor
 {
-    public class DiscoveryMonitor : IEddiMonitor
+    public class DiscoveryMonitor : IEddiMonitor, INotifyPropertyChanged
     {
         internal class FssSignal
         {
@@ -29,18 +30,32 @@ namespace EddiDiscoveryMonitor
         }
         internal readonly HashSet<FssSignal> fssSignalsLibrary = new HashSet<FssSignal>();
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
         internal DiscoveryMonitorConfiguration configuration;
         internal Exobiology _currentOrganic;
         internal long _currentBodyId;
-        internal StarSystem _currentSystem => EDDI.Instance?.CurrentStarSystem;
-        private Body _currentBody ( long bodyId ) => _currentSystem?.BodyWithID( bodyId );
+
+        public long CurrentBodyId
+        {
+            get { return _currentBodyId; }
+            set {
+                _currentBodyId = value;
+                OnPropertyChanged("CurrentBodyId");
+                Logging.Debug("======================> OnPropertyChanged(\"CurrentBodyId\")");
+            }
+        }
+
+        internal Status _currentStatus { get; set; }
 
         internal Region _currentRegion;
         internal Nebula _nearestNebula;
 
         public DiscoveryMonitor ()
         {
-            StatusService.StatusUpdatedEvent += HandleStatus;
             configuration = ConfigService.Instance.discoveryMonitorConfiguration;
         }
 
@@ -85,6 +100,27 @@ namespace EddiDiscoveryMonitor
             return new ConfigurationWindow();
         }
 
+
+        // TODO: Reimplement old HandleStatus with new HandleStatus
+        //  - Remove use of CurrentStatus access (Rework, still need access to lat/long)
+        public void HandleStatus ( Status status )
+        {
+            _currentStatus = status;
+            try
+            {
+                if ( TryCheckScanDistance( status, out var bio ) )
+                {
+                    EDDI.Instance.enqueueEvent( new ScanOrganicDistanceEvent( DateTime.UtcNow, bio ) );
+                }
+            }
+            catch ( Exception exception )
+            {
+                Logging.Error( "Failed to handle status update: TryCheckScanDistance/ScanOrganicDistanceEvent", exception );
+                throw;
+            }
+        }
+
+        /*
          private void HandleStatus ( object sender, EventArgs e )
         {
             try
@@ -103,6 +139,7 @@ namespace EddiDiscoveryMonitor
                 throw;
             }
         }
+        */
 
         /// <summary>
         /// Check the currently active bio scan distance (if any). Return true if it's time to post a `ScanOrganicDistance` event.
@@ -112,11 +149,12 @@ namespace EddiDiscoveryMonitor
             bioResult = null;
             if ( !CheckSafe() || status.latitude is null || status.longitude is null ) { return false; }
 
-            var body = _currentBody(_currentBodyId);
+            //var body = _currentBody(_currentBodyId);
+            var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( CurrentBodyId );
             if ( body.surfaceSignals.TryGetBio( _currentOrganic, out var bio ) && bio.samples > 0 )
             {
                 // If the bio has been fully sampled, ignore it.
-                if( bio.scanState == Exobiology.State.SampleAnalysed) {
+                if( bio.ScanState == Exobiology.State.SampleAnalysed) {
                     return false;
                 }
 
@@ -168,18 +206,22 @@ namespace EddiDiscoveryMonitor
             else if ( @event is SurfaceSignalsEvent signalsEvent )
             {
                 handleSurfaceSignalsEvent( signalsEvent );
+                OnPropertyChanged("RefreshData");
             }
             else if ( @event is ScanOrganicEvent organicEvent )
             {
                 handleScanOrganicEvent( organicEvent );
+                OnPropertyChanged("RefreshData");
             }
             else if ( @event is BodyScannedEvent bodyScannedEvent )
             {
                 handleBodyScannedEvent( bodyScannedEvent );
+                OnPropertyChanged("RefreshData");
             }
             else if ( @event is StarScannedEvent starScannedEvent )
             {
                 handleStarScannedEvent( starScannedEvent );
+                OnPropertyChanged("RefreshData");
             }
             else if ( @event is JumpedEvent jumpedEvent )
             {
@@ -364,7 +406,8 @@ namespace EddiDiscoveryMonitor
                     fssSignalsLibrary.Add( signals );
                 }
             }
-            else if ( @event.detectionType == "SAA" && _currentSystem != null )
+            //else if ( @event.detectionType == "SAA" && _currentSystem != null )
+            else if ( @event.detectionType == "SAA" )
             {
                 if ( TrySetSaaSurfaceSignals( @event, ref log, out var body ) )
                 {
@@ -413,97 +456,110 @@ namespace EddiDiscoveryMonitor
 
         private bool TrySetSaaSurfaceSignals ( SurfaceSignalsEvent @event, ref string log, out Body body )
         {
-            body = _currentSystem?.BodyWithID( @event.bodyId );
+            // TODO: 2212 - CHECK IF DATA ALREADY EXISTS
+            //  - It appears that the SAA signal is generated when logging in to the game
+            //    which in turn triggers this code to run and overwrites the existing data.
+
+            //body = _currentSystem?.BodyWithID( @event.bodyId );
+            body = EDDI.Instance?.CurrentStarSystem?.BodyWithID( @event.bodyId );
             if ( body == null ) { return false; }
-            log += "[SAASignalsFound]: ";
 
-            // Set the number of detected surface signals for each signal type
-            foreach ( var signal in @event.surfaceSignals )
-            {
-                if ( signal.signalSource == SignalSource.Biological )
+            if(!body.surfaceSignals.hasCompletedSAA) {
+                log += "[SAASignalsFound]: ";
+                // Set the number of detected surface signals for each signal type
+                foreach ( var signal in @event.surfaceSignals )
                 {
-                    log += $"Bios: {signal.amount}. ";
-                    body.surfaceSignals.reportedBiologicalCount = signal.amount;
+                    if ( signal.signalSource == SignalSource.Biological )
+                    {
+                        log += $"Bios: {signal.amount}. ";
+                        body.surfaceSignals.reportedBiologicalCount = signal.amount;
+                    }
+                    else if ( signal.signalSource == SignalSource.Geological )
+                    {
+                        log += $"Geos: {signal.amount}. ";
+                        body.surfaceSignals.reportedGeologicalCount = signal.amount;
+                    }
+                    else if ( signal.signalSource == SignalSource.Guardian )
+                    {
+                        log += $"Guardian: {signal.amount}. ";
+                        body.surfaceSignals.reportedGuardianCount = signal.amount;
+                    }
+                    else if ( signal.signalSource == SignalSource.Human )
+                    {
+                        log += $"Human: {signal.amount}. ";
+                        body.surfaceSignals.reportedHumanCount = signal.amount;
+                    }
+                    else if ( signal.signalSource == SignalSource.Thargoid )
+                    {
+                        log += $"Thargoid: {signal.amount}. ";
+                        body.surfaceSignals.reportedThargoidCount = signal.amount;
+                    }
+                    else
+                    {
+                        log += $"Other ({signal.signalSource.invariantName}): {signal.amount}. ";
+                        body.surfaceSignals.reportedOtherCount += signal.amount;
+                    }
                 }
-                else if ( signal.signalSource == SignalSource.Geological )
+
+                Logging.Debug( log );
+
+                if ( @event.bioSignals != null )
                 {
-                    log += $"Geos: {signal.amount}. ";
-                    body.surfaceSignals.reportedGeologicalCount = signal.amount;
+                    // Compare our predicted and actual bio signals.
+                    if ( body.surfaceSignals.hasPredictedBios )
+                    {
+                        var confirmedBiologicals = @event.bioSignals.Select(b => b.species).ToList();
+                        var predictedBiologicals = body.surfaceSignals.bioSignals
+                            .Where( b => b.ScanState == Exobiology.State.Predicted ).Select( b => b.species ).ToList();
+                        var unpredictedBiologicals = confirmedBiologicals.Except( predictedBiologicals ).ToList();
+                        var missingBiologicals = predictedBiologicals.Except( confirmedBiologicals ).ToList();
+
+                        if ( unpredictedBiologicals.Any() )
+                        {
+                            log = "Unpredicted biologicals found";
+                            log += $"\tStar System:  {body.systemname}\r\n";
+                            log += $"\tBody Name:    {body.bodyname}\r\n";
+                            log += $"\tGravity:      {body.gravity}\r\n";
+                            log += $"\tTemperature:  {body.temperature} K\r\n";
+                            log += $"\tPlanet Class: {(body.planetClass ?? PlanetClass.None).edname}\r\n";
+                            log += $"\tAtmosphere:   {(body.atmosphereclass ?? AtmosphereClass.None).edname}\r\n";
+                            log += $"\tVolcanism:    {body.volcanism?.edComposition ?? "None"}\r\n";
+                            //if ( _currentSystem?.TryGetParentStar( body.bodyId, out var parentStar ) ?? false )
+                            if ( EDDI.Instance?.CurrentStarSystem?.TryGetMainStar( out var parentStar ) ?? false )
+                            {
+                                log += $"\tParent star class: {parentStar.stellarclass}\r\n";
+                            }
+                            Logging.Error( log, unpredictedBiologicals);
+                        }
+
+                        if ( missingBiologicals.Any() )
+                        {
+                            log = "Predicted biologicals not found";
+                            log += $"\tStar System:  {body.systemname}\r\n";
+                            log += $"\tBody Name:    {body.bodyname}\r\n";
+                            log += $"\tGravity:      {body.gravity}\r\n";
+                            log += $"\tTemperature:  {body.temperature} K\r\n";
+                            log += $"\tPlanet Class: {( body.planetClass ?? PlanetClass.None ).edname}\r\n";
+                            log += $"\tAtmosphere:   {( body.atmosphereclass ?? AtmosphereClass.None ).edname}\r\n";
+                            log += $"\tVolcanism:    {body.volcanism?.edComposition ?? "None"}\r\n";
+                            //if ( _currentSystem?.TryGetParentStar( body.bodyId, out var parentStar ) ?? false )
+                            if ( EDDI.Instance?.CurrentStarSystem?.TryGetMainStar( out var parentStar ) ?? false )
+                            {
+                                log += $"\tParent star class: {parentStar.stellarclass}\r\n";
+                            }
+                            Logging.Debug( log, missingBiologicals );
+                        }
+                    }
+
+                    // Update from predicted to actual bio signals
+                    body.surfaceSignals.bioSignals = @event.bioSignals;
                 }
-                else if ( signal.signalSource == SignalSource.Guardian )
-                {
-                    log += $"Guardian: {signal.amount}. ";
-                    body.surfaceSignals.reportedGuardianCount = signal.amount;
-                }
-                else if ( signal.signalSource == SignalSource.Human )
-                {
-                    log += $"Human: {signal.amount}. ";
-                    body.surfaceSignals.reportedHumanCount = signal.amount;
-                }
-                else if ( signal.signalSource == SignalSource.Thargoid )
-                {
-                    log += $"Thargoid: {signal.amount}. ";
-                    body.surfaceSignals.reportedThargoidCount = signal.amount;
-                }
-                else
-                {
-                    log += $"Other ({signal.signalSource.invariantName}): {signal.amount}. ";
-                    body.surfaceSignals.reportedOtherCount += signal.amount;
-                }
+
+                body.surfaceSignals.hasCompletedSAA = true;
             }
-
-            Logging.Debug( log );
-
-            if ( @event.bioSignals != null )
-            {
-                // Compare our predicted and actual bio signals.
-                if ( body.surfaceSignals.hasPredictedBios )
-                {
-                    var confirmedBiologicals = @event.bioSignals.Select(b => b.species).ToList();
-                    var predictedBiologicals = body.surfaceSignals.bioSignals
-                        .Where( b => b.scanState == Exobiology.State.Predicted ).Select( b => b.species ).ToList();
-                    var unpredictedBiologicals = confirmedBiologicals.Except( predictedBiologicals ).ToList();
-                    var missingBiologicals = predictedBiologicals.Except( confirmedBiologicals ).ToList();
-
-                    if ( unpredictedBiologicals.Any() )
-                    {
-                        log = "Unpredicted biologicals found";
-                        log += $"\tStar System:  {body.systemname}\r\n";
-                        log += $"\tBody Name:    {body.bodyname}\r\n";
-                        log += $"\tGravity:      {body.gravity}\r\n";
-                        log += $"\tTemperature:  {body.temperature} K\r\n";
-                        log += $"\tPlanet Class: {(body.planetClass ?? PlanetClass.None).edname}\r\n";
-                        log += $"\tAtmosphere:   {(body.atmosphereclass ?? AtmosphereClass.None).edname}\r\n";
-                        log += $"\tVolcanism:    {body.volcanism?.edComposition ?? "None"}\r\n";
-                        //if ( _currentSystem?.TryGetParentStar( body.bodyId, out var parentStar ) ?? false )
-                        if ( _currentSystem?.TryGetMainStar( out var parentStar ) ?? false )
-                        {
-                            log += $"\tParent star class: {parentStar.stellarclass}\r\n";
-                        }
-                        Logging.Error( log, unpredictedBiologicals);
-                    }
-
-                    if ( missingBiologicals.Any() )
-                    {
-                        log = "Predicted biologicals not found";
-                        log += $"\tStar System:  {body.systemname}\r\n";
-                        log += $"\tBody Name:    {body.bodyname}\r\n";
-                        log += $"\tGravity:      {body.gravity}\r\n";
-                        log += $"\tTemperature:  {body.temperature} K\r\n";
-                        log += $"\tPlanet Class: {( body.planetClass ?? PlanetClass.None ).edname}\r\n";
-                        log += $"\tAtmosphere:   {( body.atmosphereclass ?? AtmosphereClass.None ).edname}\r\n";
-                        log += $"\tVolcanism:    {body.volcanism?.edComposition ?? "None"}\r\n";
-                        //if ( _currentSystem?.TryGetParentStar( body.bodyId, out var parentStar ) ?? false )
-                        if ( _currentSystem?.TryGetMainStar( out var parentStar ) ?? false )
-                        {
-                            log += $"\tParent star class: {parentStar.stellarclass}\r\n";
-                        }
-                        Logging.Debug( log, missingBiologicals );
-                    }
-                }
-
-                // Update from predicted to actual bio signals
-                body.surfaceSignals.bioSignals = @event.bioSignals;
+            else {
+                log = $"\r\n***** SAASignalsFound already logged for this body (body.surfaceSignals.hasCompletedSAA=true), ignoring event and using existing 'body.surfaceSignals' data *****\r\n\r\n";
+                Logging.Debug( log );
             }
 
             return true;
@@ -513,94 +569,98 @@ namespace EddiDiscoveryMonitor
         {
             try
             {
-                if ( CheckSafe( @event.bodyId ) )
-                {
-                    _currentBodyId = @event.bodyId;
-                    var body = _currentBody(_currentBodyId);
-                    var log = "";
-
-                    // Retrieve and/or add the organic
-                    if ( body.surfaceSignals.TryGetBio( @event.variant, @event.species, @event.genus, out var bio ) )
+                if (!@event.fromLoad) {
+                    if ( CheckSafe( @event.bodyId ) )
                     {
-                        log += "Fetched biological\r\n";
-                    }
-                    else
-                    {
-                        log += "Adding biological\r\n";
-                        bio = bio ?? body.surfaceSignals.AddBio( @event.variant, @event.species, @event.genus );
-                    }
+                        CurrentBodyId = @event.bodyId;
 
-                    if ( bio == null )
-                    {
-                        Logging.Debug( log );
-                        return;
-                    }
+                        //var body = _currentBody(_currentBodyId);
+                        var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( CurrentBodyId );
+                        var log = "";
 
-                    _currentOrganic = bio;
-
-                    if ( bio.scanState == Exobiology.State.Predicted )
-                    {
-                        log += $"Presence of predicted organic {bio.species} is confirmed\r\n";
-                        bio.scanState = Exobiology.State.Confirmed;
-                    }
-
-                    if ( bio.variant is null )
-                    {
-                        log += "Setting additional data from variant details\r\n";
-                        bio.SetVariantData( @event.variant );
-                    }
-
-                    bio.Sample( @event.scanType,
-                        @event.variant,
-                        StatusService.Instance.CurrentStatus.latitude,
-                        StatusService.Instance.CurrentStatus.longitude );
-
-                    // These are updated when the above Sample() function is called, se we send them back to the event
-                    // Otherwise we would probably have to enqueue a new event (maybe not a bad idea?)
-                    @event.bio = bio;
-                    @event.remainingBios = body.surfaceSignals.bioSignalsRemaining.Except( new[] { bio } ).ToList();
-
-                    Logging.Debug( log, @event );
-
-                    if ( bio.scanState == Exobiology.State.SampleComplete )
-                    {
-                        // The `Analyse` journal event normally takes place about 5 seconds after completing the sample
-                        // but can be delayed if the commander holsters their scanner before the analysis cycle is completed.
-                        Task.Run( async () =>
+                        // Retrieve and/or add the organic
+                        if ( body.surfaceSignals.TryGetBio( @event.variant, @event.species, @event.genus, out var bio ) )
                         {
-                            int timeMs = 15000; // If after 15 seconds the event hasn't generated then
-                                                // we'll generate our own event and update our own internal tracking
-                                                // (regardless of whether the scanner is holstered).
-                            await Task.Delay( timeMs );
-                            if ( bio.scanState < Exobiology.State.SampleAnalysed )
-                            {
-                                Logging.Debug( "Generating synthetic 'Analyse' event (to update internal tracking when scanner is holstered before `Analyse` completes)" );
-                                EDDI.Instance.enqueueEvent(
-                                    new ScanOrganicEvent(
-                                        @event.timestamp.AddMilliseconds( timeMs ),
-                                        @event.systemAddress,
-                                        @event.bodyId, "Analyse",
-                                        @event.genus,
-                                        @event.species,
-                                        @event.variant )
-                                    {
-                                        fromLoad = @event.fromLoad
-                                    } );
-                            }
-                        } ).ConfigureAwait( false );
-                    }
-                    else if ( bio.scanState == Exobiology.State.SampleAnalysed )
-                    { 
-                        // Clear our tracked organic once analysis is complete.
-                        _currentOrganic = null; 
-                    }
+                            log += "Fetched biological\r\n";
+                        }
+                        else
+                        {
+                            log += "Adding biological\r\n";
+                            bio = bio ?? body.surfaceSignals.AddBio( @event.variant, @event.species, @event.genus );
+                        }
 
-                    // Save/Update Body data
-                    body.surfaceSignals.lastUpdated = @event.timestamp;
-                    //_currentSystem.AddOrUpdateBody( body );
-                    //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
-                    EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                    StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                        if ( bio == null )
+                        {
+                            Logging.Debug( log );
+                            return;
+                        }
+
+                        _currentOrganic = bio;
+
+                        if ( bio.ScanState == Exobiology.State.Predicted )
+                        {
+                            log += $"Presence of predicted organic {bio.species} is confirmed\r\n";
+                            bio.ScanState = Exobiology.State.Confirmed;
+                        }
+
+                        if ( bio.variant is null )
+                        {
+                            log += "Setting additional data from variant details\r\n";
+                            bio.SetVariantData( @event.variant );
+                        }
+
+                        bio.Sample( @event.scanType,
+                            @event.variant,
+                            _currentStatus.latitude,
+                            _currentStatus.longitude );
+
+                        // These are updated when the above Sample() function is called, se we send them back to the event
+                        // Otherwise we would probably have to enqueue a new event (maybe not a bad idea?)
+                        @event.bio = bio;
+                        @event.remainingBios = body.surfaceSignals.bioSignalsRemaining.Except( new[] { bio } ).ToList();
+
+                        Logging.Debug( log, @event );
+
+                        if ( bio.ScanState == Exobiology.State.SampleComplete )
+                        {
+                            // The `Analyse` journal event normally takes place about 5 seconds after completing the sample
+                            // but can be delayed if the commander holsters their scanner before the analysis cycle is completed.
+                            Task.Run( async () =>
+                            {
+                                int timeMs = 15000; // If after 15 seconds the event hasn't generated then
+                                                    // we'll generate our own event and update our own internal tracking
+                                                    // (regardless of whether the scanner is holstered).
+                                await Task.Delay( timeMs );
+                                if ( bio.ScanState < Exobiology.State.SampleAnalysed )
+                                {
+                                    Logging.Debug( "Generating synthetic 'Analyse' event (to update internal tracking when scanner is holstered before `Analyse` completes)" );
+                                    EDDI.Instance.enqueueEvent(
+                                        new ScanOrganicEvent(
+                                            @event.timestamp.AddMilliseconds( timeMs ),
+                                            @event.systemAddress,
+                                            @event.bodyId, "Analyse",
+                                            @event.genus,
+                                            @event.species,
+                                            @event.variant )
+                                        {
+                                            fromLoad = @event.fromLoad
+                                        } );
+                                }
+                            } ).ConfigureAwait( false );
+                        }
+                        else if ( bio.ScanState == Exobiology.State.SampleAnalysed )
+                        { 
+                            // Clear our tracked organic once analysis is complete.
+                            _currentOrganic = null; 
+                        }
+
+                        // Save/Update Body data
+                        body.surfaceSignals.lastUpdated = @event.timestamp;
+                        //_currentSystem.AddOrUpdateBody( body );
+                        //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                        EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                        StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                    }
                 }
             }
             catch ( Exception e )
@@ -613,10 +673,11 @@ namespace EddiDiscoveryMonitor
         {
             if ( @event.bodyId is null || !CheckSafe( (long)@event.bodyId ) ) { return; }
 
-            if ( @event.systemAddress == _currentSystem.systemAddress )
+            if ( @event.systemAddress == EDDI.Instance?.CurrentStarSystem.systemAddress )
             {
                 // Predict biologicals for a scanned body
-                var body = _currentBody( (long)@event.bodyId );
+                //var body = _currentBody( (long)@event.bodyId );
+                var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( (long)@event.bodyId );
                 var signal = fssSignalsLibrary.FirstOrDefault( s =>
                     s.systemAddress == body.systemAddress && s.bodyId == body.bodyId );
 
@@ -640,15 +701,16 @@ namespace EddiDiscoveryMonitor
         {
             if ( @event.bodyId is null || !CheckSafe( (long)@event.bodyId ) ) { return; }
 
-            if ( @event.systemAddress == _currentSystem.systemAddress )
+            if ( @event.systemAddress == EDDI.Instance?.CurrentStarSystem.systemAddress )
             {
                 // Predict biologicals for previously scanned bodies when a star is scanned
-                var childBodyIDs = _currentSystem.GetChildBodyIDs( (long)@event.bodyId );
-                foreach ( var childBodyID in _currentSystem.bodies
+                var childBodyIDs = EDDI.Instance?.CurrentStarSystem.GetChildBodyIDs( (long)@event.bodyId );
+                foreach ( var childBodyID in EDDI.Instance?.CurrentStarSystem.bodies
                              .Where( b=> b.bodyId != null && childBodyIDs.Contains((long)b.bodyId) )
                              .Select(b => b.bodyId) )
                 {
-                    var body = _currentBody( (long)childBodyID );
+                    //var body = _currentBody( (long)childBodyID );
+                    var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( (long)childBodyID );
                     var signal = fssSignalsLibrary.FirstOrDefault( s =>
                         s.systemAddress == body.systemAddress && s.bodyId == body.bodyId );
 
@@ -683,7 +745,7 @@ namespace EddiDiscoveryMonitor
             if ( signal?.bioCount > 0 && 
                  body != null && 
                  !body.surfaceSignals.bioSignals.Any() && 
-                 _currentSystem.TryGetMainStar(out var parentStar))
+                 EDDI.Instance.CurrentStarSystem.TryGetMainStar(out var parentStar))
             {
                 // Always update the reported totals
                 body.surfaceSignals.reportedBiologicalCount = signal.bioCount;
@@ -697,7 +759,7 @@ namespace EddiDiscoveryMonitor
                 //log += "Predicting organics (by species):\r\n";
                 //bios = new ExobiologyPredictions( _currentSystem, body, parentStar, configuration ).PredictBySpecies();
                 log += "Predicting organics (by variant):\r\n";
-                bios = new ExobiologyPredictions( _currentSystem, body, parentStar, configuration ).PredictByVariant();
+                bios = new ExobiologyPredictions( EDDI.Instance?.CurrentStarSystem, body, parentStar, configuration ).PredictByVariant();
 
                 // Account for predicting less than actual signals, lets player know that we don't know what one or more bios will be
                 if( bios?.Count()<signal.bioCount )
@@ -733,9 +795,9 @@ namespace EddiDiscoveryMonitor
         {
             if ( _currentOrganic != null )
             {
-                if ( _currentSystem != null )
+                if ( EDDI.Instance?.CurrentStarSystem != null )
                 {
-                    if ( _currentBody( _currentBodyId ) != null )
+                    if ( EDDI.Instance?.CurrentStarSystem.BodyWithID( CurrentBodyId ) != null )
                     {
                         return true;
                     }
@@ -747,11 +809,11 @@ namespace EddiDiscoveryMonitor
 
         private bool CheckSafe ( long bodyId )
         {
-            if ( _currentSystem != null )
+            if ( EDDI.Instance?.CurrentStarSystem != null )
             {
-                if ( _currentBody( bodyId ) != null )
+                if ( EDDI.Instance?.CurrentStarSystem.BodyWithID( bodyId ) != null )
                 {
-                    _currentBodyId = bodyId;
+                    CurrentBodyId = bodyId;
                     return true;
                 }
             }

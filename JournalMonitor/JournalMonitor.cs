@@ -3,6 +3,7 @@ using EddiCore;
 using EddiDataDefinitions;
 using EddiDataProviderService;
 using EddiEvents;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -165,6 +166,7 @@ namespace EddiJournalMonitor
                         EDDI.Instance.JournalTimeStamp = timestamp;
                     }
 
+                    bool handled = false;
                     try
                     {
                         switch (edType)
@@ -1078,6 +1080,9 @@ namespace EddiJournalMonitor
 
                                         ReserveLevel reserveLevel = ReserveLevel.FromEDName(JsonParsing.getString(data, "ReserveLevel"));
 
+                                        // Atmosphere thickness is useful for predictions
+                                        AtmosphereThickness atmosphereThickness = AtmosphereThickness.FromEDName(JsonParsing.getString(data, "Atmosphere"));
+
                                         // The "Atmosphere" is most accurately described through the "AtmosphereType" and "AtmosphereComposition" 
                                         // properties, so we use them in preference to "Atmosphere"
 
@@ -1162,7 +1167,7 @@ namespace EddiJournalMonitor
                                         TerraformState terraformState = TerraformState.FromEDName(JsonParsing.getString(data, "TerraformState")) ?? TerraformState.NotTerraformable;
                                         Volcanism volcanism = Volcanism.FromName(JsonParsing.getString(data, "Volcanism"));
 
-                                        Body body = new Body(name, bodyId, systemName, systemAddress, parents, distanceLs, tidallyLocked, terraformState, planetClass, atmosphereClass, atmosphereCompositions, volcanism, earthMass, radiusKm, gravity, temperatureKelvin, pressureAtm, landable, materials, solidCompositions, semimajoraxisLs, eccentricity, orbitalinclinationDegrees, periapsisDegrees, orbitalPeriodDays, rotationPeriodDays, axialTiltDegrees, rings, reserveLevel, alreadydiscovered, alreadymapped)
+                                        Body body = new Body(name, bodyId, systemName, systemAddress, parents, distanceLs, tidallyLocked, terraformState, planetClass, atmosphereThickness, atmosphereClass, atmosphereCompositions, volcanism, earthMass, radiusKm, gravity, temperatureKelvin, pressureAtm, landable, materials, solidCompositions, semimajoraxisLs, eccentricity, orbitalinclinationDegrees, periapsisDegrees, orbitalPeriodDays, rotationPeriodDays, axialTiltDegrees, rings, reserveLevel, alreadydiscovered, alreadymapped)
                                         {
                                             scannedDateTime = (DateTime?)timestamp
                                         };
@@ -5045,7 +5050,7 @@ namespace EddiJournalMonitor
                                             var body = EDDI.Instance.CurrentStarSystem?.BodyWithID( bodyId );
                                             if ( body != null &&
                                                  body.surfaceSignals.TryGetBio( variant, species, genus, out var bio ) &&
-                                                 bio.scanState < Exobiology.State.SampleAnalysed )
+                                                 bio.ScanState < Exobiology.State.SampleAnalysed )
                                             {
                                                 return true;
                                             }

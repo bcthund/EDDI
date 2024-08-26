@@ -70,7 +70,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aster Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string AsterPod {
             get {
@@ -79,7 +79,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aster Tree.
+        ///   Looks up a localized string similar to Tree.
         /// </summary>
         public static string AsterTree {
             get {
@@ -115,7 +115,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Calcite Plates.
+        ///   Looks up a localized string similar to Plates.
         /// </summary>
         public static string CalcitePlates {
             get {
@@ -124,7 +124,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chalice Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string ChalicePod {
             get {
@@ -142,7 +142,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Collared Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string CollaredPod {
             get {
@@ -207,14 +207,14 @@ namespace EddiDataDefinitions.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Crystalline Shards.
         /// </summary>
-        public static string Ground_Struct_Ice {
+        public static string GroundStructIce {
             get {
-                return ResourceManager.GetString("Ground_Struct_Ice", resourceCulture);
+                return ResourceManager.GetString("GroundStructIce", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gyre Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string GyrePod {
             get {
@@ -223,7 +223,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gyre Tree.
+        ///   Looks up a localized string similar to Tree.
         /// </summary>
         public static string GyreTree {
             get {
@@ -232,7 +232,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ice Crystals.
+        ///   Looks up a localized string similar to Crystals.
         /// </summary>
         public static string IceCrystals {
             get {
@@ -241,7 +241,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metallic Crystals.
+        ///   Looks up a localized string similar to Crystals.
         /// </summary>
         public static string MetallicCrystals {
             get {
@@ -250,7 +250,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mineral Spheres.
+        ///   Looks up a localized string similar to Spheres.
         /// </summary>
         public static string MineralSpheres {
             get {
@@ -259,7 +259,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Bell.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscBell {
             get {
@@ -268,7 +268,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Bulb.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscBulb {
             get {
@@ -277,7 +277,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Bullet.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscBullet {
             get {
@@ -286,7 +286,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Capsule.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscCapsule {
             get {
@@ -295,7 +295,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Globe.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscGlobe {
             get {
@@ -304,7 +304,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Gourd.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscGourd {
             get {
@@ -313,7 +313,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Parasol.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscParasol {
             get {
@@ -322,7 +322,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Reel.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscReel {
             get {
@@ -331,7 +331,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Squid.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscSquid {
             get {
@@ -340,7 +340,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Torus.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscTorus {
             get {
@@ -349,7 +349,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mollusc Umbrella.
+        ///   Looks up a localized string similar to Mollusc.
         /// </summary>
         public static string MolluscUmbrella {
             get {
@@ -367,7 +367,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peduncle Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string PedunclePod {
             get {
@@ -376,7 +376,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peduncle Tree.
+        ///   Looks up a localized string similar to Tree.
         /// </summary>
         public static string PeduncleTree {
             get {
@@ -385,7 +385,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quadripartite Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string QuadripartitePod {
             get {
@@ -403,7 +403,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rhizome Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string RhizomePod {
             get {
@@ -421,7 +421,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Silicate Crystals.
+        ///   Looks up a localized string similar to Crystals.
         /// </summary>
         public static string SilicateCrystals {
             get {
@@ -439,7 +439,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stolon Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string StolonPod {
             get {
@@ -448,7 +448,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stolon Tree.
+        ///   Looks up a localized string similar to Tree.
         /// </summary>
         public static string StolonTree {
             get {
@@ -466,7 +466,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thargoid Barnacle.
+        ///   Looks up a localized string similar to Thargoid.
         /// </summary>
         public static string ThargoidBarnacle {
             get {
@@ -475,7 +475,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sinuous Tuber.
+        ///   Looks up a localized string similar to Tuber.
         /// </summary>
         public static string Tubers {
             get {
@@ -502,15 +502,6 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown.
-        /// </summary>
-        public static string Unknown {
-            get {
-                return ResourceManager.GetString("Unknown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Amphora.
         /// </summary>
         public static string Vents {
@@ -520,7 +511,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Void Heart.
+        ///   Looks up a localized string similar to Heart.
         /// </summary>
         public static string VoidHeart {
             get {
@@ -529,7 +520,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Octahedral Pod.
+        ///   Looks up a localized string similar to Pod.
         /// </summary>
         public static string VoidPod {
             get {

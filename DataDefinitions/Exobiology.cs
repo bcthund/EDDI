@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Utilities;
 
 namespace EddiDataDefinitions
 {
-    public class Exobiology : Organic
+    public class Exobiology : Organic, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
         public enum State
         {
             Predicted,
@@ -16,10 +22,45 @@ namespace EddiDataDefinitions
             SampleAnalysed    // Analysed - this comes shortly after the final sample is collected
         }
 
-        public State scanState { get; set; }
+        private State _scanState;
+        public State ScanState
+        {
+            get { return _scanState; }
+            set {
+                _scanState = value;
+                OnPropertyChanged("ScanState");
+            }
+        }
+
+        public OrganicGenus Genus
+        {
+            get { return this.genus; }
+            set {
+                this.genus = value;
+                OnPropertyChanged("Genus");
+            }
+        }
+
+        public OrganicSpecies Species
+        {
+            get { return this.species; }
+            set {
+                this.species = value;
+                OnPropertyChanged("Species");
+            }
+        }
+
+        public OrganicVariant Variant
+        {
+            get { return this.variant; }
+            set {
+                this.variant = value;
+                OnPropertyChanged("Variant");
+            }
+        }
 
         [PublicAPI]
-        public string state => scanState.ToString();
+        public string state => ScanState.ToString();
 
         // coordinates of scan [n-1]. Only Log and Sample are stored.
         [ PublicAPI ]
@@ -32,26 +73,26 @@ namespace EddiDataDefinitions
 
         public Exobiology ( OrganicGenus genus, bool isPrediction = false ) : base ( genus )
         {
-            this.genus = genus;
-            this.scanState = isPrediction ? State.Predicted : State.Confirmed;
+            this.Genus = genus;
+            this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
         }
 
         public Exobiology ( OrganicSpecies species, bool isPrediction = false ) : base( species )
         {
-            this.species = species;
-            this.scanState = isPrediction ? State.Predicted : State.Confirmed;
+            this.Species = species;
+            this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
         }
 
         public Exobiology ( OrganicVariant variant, bool isPrediction = false ) : base( variant )
         {
-            this.variant = variant;
-            this.scanState = isPrediction ? State.Predicted : State.Confirmed;
+            this.Variant = variant;
+            this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
         }
 
         /// <summary>Increase the sample count, set the coordinates, and return the number of scans complete.</summary>
         public void Sample ( string scanType, OrganicVariant sampleVariant, decimal? latitude, decimal? longitude )
         {
-            if ( variant is null )
+            if ( this.Variant is null )
             {
                 SetVariantData( sampleVariant );
             }
@@ -59,22 +100,22 @@ namespace EddiDataDefinitions
             // Check for sample type and update sample coordinates
             if ( scanType == "Log" )
             {
-                scanState = State.SampleStarted;
+                ScanState = State.SampleStarted;
                 sampleCoords.Add( new Tuple<decimal?, decimal?>( latitude, longitude ) );
             }
             else if ( scanType == "Sample" && samples < 2 )
             {
-                scanState = State.SampleInProgress;
+                ScanState = State.SampleInProgress;
                 sampleCoords.Add( new Tuple<decimal?, decimal?>( latitude, longitude ) );
             }
             else if ( scanType == "Sample" && samples == 2 )
             {
-                scanState = State.SampleComplete;
+                ScanState = State.SampleComplete;
                 sampleCoords.Add( new Tuple<decimal?, decimal?>( latitude, longitude ) );
             }
             else if ( scanType == "Analyse" )
             {
-                scanState = State.SampleAnalysed;
+                ScanState = State.SampleAnalysed;
             } 
             
             nearPriorSample = true;

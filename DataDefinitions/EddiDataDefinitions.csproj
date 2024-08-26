@@ -14,10 +14,20 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="Properties\AtmosphereThickness.Designer.cs">
+      <DependentUpon>AtmosphereThickness.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Properties\GuardianDesc.Designer.cs">
       <DependentUpon>GuardianDesc.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Properties\OrganicVariant.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OrganicVariant.resx</DependentUpon>
     </Compile>
     <Compile Update="Properties\ThargoidDesc.Designer.cs">
       <DependentUpon>ThargoidDesc.resx</DependentUpon>
@@ -429,9 +439,17 @@
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Properties\AtmosphereThickness.resx">
+      <LastGenOutput>AtmosphereThickness.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\GuardianDesc.resx">
       <LastGenOutput>GuardianDesc.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\OrganicVariant.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>OrganicVariant.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\ThargoidDesc.resx">
       <LastGenOutput>ThargoidDesc.Designer.cs</LastGenOutput>
