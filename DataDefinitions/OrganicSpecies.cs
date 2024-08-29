@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Utilities;
+using Newtonsoft.Json;
 
 namespace EddiDataDefinitions
 {
@@ -274,12 +275,13 @@ namespace EddiDataDefinitions
         public IList<string> starClass;
         public IList<string> volcanism;
 
-        [PublicAPI]
+        [JsonIgnore, PublicAPI]
         public string localizedDescription => Properties.OrganicSpeciesDesc.ResourceManager.GetString( edname );
 
-        [PublicAPI]
+        [JsonIgnore, PublicAPI]
         public string localizedConditions => Properties.OrganicSpeciesCond.ResourceManager.GetString( edname );
 
+        [JsonIgnore]
         public bool isPredictable => maxG != null ||
                                      minK != null ||
                                      maxK != null ||

@@ -21,14 +21,14 @@ namespace EddiDiscoveryMonitor
     /// </summary>
     public partial class Tab_Exobiology : UserControl
     {
-        public ObservableCollection<Exobiology> bioSignals {get; set; }
+        public ObservableCollection<Exobiology> bioSignals { get; set; }
 
         //public long currentBodyId {get; set; }
-        public long currentBodyId => discoveryMonitor().CurrentBodyId;
+        public long? currentBodyId => discoveryMonitor().CurrentBodyId;
 
         public Body currentBody => EDDI.Instance?.CurrentStarSystem?.BodyWithID( currentBodyId );
 
-        public long _currentBodyId { get; set; }
+        public long? _currentBodyId { get; set; }
 
         public Body _currentBody { get; set; }
 
@@ -58,8 +58,16 @@ namespace EddiDiscoveryMonitor
             datagrid_bioData.DataContext = bioSignals;
 
             this.DataContext = this;
-            textbox_CurrentBodyId.Text = _currentBodyId.ToString();
-            textbox_CurrentBodyShortName.Text = _currentBody?.shortname;
+            if(currentBody != null ) {
+                textbox_CurrentSystemName.Text = _currentBody?.systemname;
+                textbox_CurrentBodyId.Text = _currentBodyId.ToString();
+                textbox_CurrentBodyShortName.Text = _currentBody?.shortname;
+            }
+            else {
+                textbox_CurrentSystemName.Text = "";
+                textbox_CurrentBodyId.Text = "";
+                textbox_CurrentBodyShortName.Text = "";
+            }
         }
 
         void DiscoveryMonitor_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -90,8 +98,11 @@ namespace EddiDiscoveryMonitor
         }
 
         private void RefreshData() {
-            textbox_CurrentBodyId.Text = _currentBodyId.ToString();
-            textbox_CurrentBodyShortName.Text = _currentBody?.shortname;
+            if(currentBody != null ) {
+                textbox_CurrentSystemName.Text = _currentBody?.systemname;
+                textbox_CurrentBodyId.Text = _currentBodyId.ToString();
+                textbox_CurrentBodyShortName.Text = _currentBody?.shortname;
+            }
             
             bioSignals = new ObservableCollection<Exobiology>();
 

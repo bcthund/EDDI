@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls.WebParts;
 using Utilities;
+using Newtonsoft.Json;
 
 namespace EddiDataDefinitions
 {
@@ -965,6 +966,7 @@ namespace EddiDataDefinitions
         public decimal? geologicalsPresent;         // Must have this many geological present.
         public IList<string> regions;               // Galactic regions that this has been reported in. 
 
+        [JsonIgnore]
         public bool isPredictable => minG != null ||
                                      maxG != null ||
                                      minK != null ||

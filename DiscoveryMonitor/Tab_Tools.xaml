@@ -5,156 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EddiDiscoveryMonitor"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="800" MinWidth="750">
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid HorizontalAlignment="Stretch" Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Column="0" Header="System Address" HorizontalContentAlignment="Stretch" Margin="5,1,5,1">
-            <StackPanel>
-                <Button Content="Get Current System Address" VerticalAlignment="Top" Margin="0,0,0,0" Click="onClick_GetSystemAddress"/>
-                <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
-                    <Label Content="X" Height="20" Width="40" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
-                    <TextBox x:Name="system_xCoord" Text="0" Height="20" TextChanged="system_xCoord_Changed" ToolTip="System X coordinate" Width="130" PreviewTextInput="EnsureValidDecimalWithNegative"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
-                    <Label Content="Y" Height="20" Width="40" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
-                    <TextBox x:Name="system_yCoord" Text="0" Height="20" TextChanged="system_yCoord_Changed" ToolTip="System Y coordinate" Width="130" PreviewTextInput="EnsureValidDecimalWithNegative"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
-                    <Label Content="Z" Height="20" Width="40" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
-                    <TextBox x:Name="system_zCoord" Text="0" Height="20" TextChanged="system_zCoord_Changed" ToolTip="System Z coordinate" Width="130" PreviewTextInput="EnsureValidDecimalWithNegative"/>
-                </StackPanel>
-                <Rectangle Height="20" VerticalAlignment="Top" Margin="0,0,0,0"/>
-            </StackPanel>
-        </GroupBox>
-
-        <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <GroupBox Header="Region" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Stretch" Margin="5,1,5,1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="10"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <Button Grid.Row="0" Grid.ColumnSpan="2" Content="Get Region" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_FindRegion"/>
-
-                    <Label Grid.Row="2" Grid.Column="0" Content="Region" Width="100" Padding="0,0,10,0" VerticalAlignment="Stretch"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="regionName" Text="" IsReadOnly="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                </Grid>
-            </GroupBox>
-
-            <GroupBox Header="Nebula" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="5,1,5,1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="10"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <Button Grid.Row="0" Grid.ColumnSpan="2" Content="Get Nearest Nebula" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_GetNebula"/>
-
-                    <Label Grid.Row="2" Grid.Column="0" Content="Nebula Name" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="nebulaName" Text="" IsReadOnly="True" />
-
-                    <Label Grid.Row="3" Grid.Column="0" Content="Reference Body" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="nebulaReferenceBody" Text="" IsReadOnly="True" />
-
-                    <Label Grid.Row="4" Grid.Column="0" Content="Distance" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="nebulaDistance" Text="" IsReadOnly="True" />
-                </Grid>
-            </GroupBox>
-
-            <GroupBox Header="Guardian Sites" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Stretch" Margin="5,1,5,1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="10"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="10"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <Button Grid.Row="0" Grid.ColumnSpan="2" Content="Get Neareset Guardian Site" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_GetGuardianSite"/>
-
-                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.RowSpan="2" Grid.Column="0" Content="Filter" VerticalAlignment="Center" Padding="5,0,20,0"/>
-                        <RadioButton Grid.RowSpan="2" Grid.Column="1" x:Name="radioGuardianfilter_All" Content="All" IsChecked="True" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                        <RadioButton Grid.Row="0" Grid.Column="2" x:Name="radioGuardianfilter_Beacons" Content="Beacons" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                        <RadioButton Grid.Row="0" Grid.Column="3" x:Name="radioGuardianfilter_Ruins" Content="Ruins" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                        <RadioButton Grid.Row="0" Grid.Column="4" x:Name="radioGuardianfilter_Structures" Content="Structures" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                        <RadioButton Grid.Row="1" Grid.Column="2" x:Name="radioGuardianfilter_Weapon" Content="Weapon BP" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                        <RadioButton Grid.Row="1" Grid.Column="3" x:Name="radioGuardianfilter_Module" Content="Module BP" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                        <RadioButton Grid.Row="1" Grid.Column="4" x:Name="radioGuardianfilter_Vessel" Content="Vessel BP" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                    </Grid>
-                    
-                    <Label Grid.Row="4" Grid.Column="0" Content="Type" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="guardianSite_Type" Text="" IsReadOnly="True" />
-
-                    <Label Grid.Row="5" Grid.Column="0" Content="System" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="guardianSite_SystemName" Text="" IsReadOnly="True" />
-
-                    <Label Grid.Row="6" Grid.Column="0" Content="Body" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="guardianSite_Body" Text="" IsReadOnly="True" />
-
-                    <Label Grid.Row="7" Grid.Column="0" Content="Blueprint" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="7" Grid.Column="1" x:Name="guardianSite_Blueprint" Text="" IsReadOnly="True" />
-
-                    <Label Grid.Row="8" Grid.Column="0" Content="Distance" Padding="0,0,10,0" />
-                    <TextBox Grid.Row="8" Grid.Column="1" x:Name="guardianSite_Distance" Text="" IsReadOnly="True"/>
-                </Grid>
-            </GroupBox>
-
-            <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom"></Label>
-        </Grid>
 
     </Grid>
 </UserControl>

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Utilities;
+using Newtonsoft.Json;
 
 namespace EddiDataDefinitions
 {
     public class Exobiology : Organic, INotifyPropertyChanged
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) {
             PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
@@ -22,7 +24,10 @@ namespace EddiDataDefinitions
             SampleAnalysed    // Analysed - this comes shortly after the final sample is collected
         }
 
+        
         private State _scanState;
+
+        [JsonProperty]
         public State ScanState
         {
             get { return _scanState; }
@@ -32,6 +37,7 @@ namespace EddiDataDefinitions
             }
         }
 
+        [JsonIgnore]
         public OrganicGenus Genus
         {
             get { return this.genus; }
@@ -41,6 +47,7 @@ namespace EddiDataDefinitions
             }
         }
 
+        [JsonIgnore]
         public OrganicSpecies Species
         {
             get { return this.species; }
@@ -50,6 +57,7 @@ namespace EddiDataDefinitions
             }
         }
 
+        [JsonIgnore]
         public OrganicVariant Variant
         {
             get { return this.variant; }
@@ -59,17 +67,22 @@ namespace EddiDataDefinitions
             }
         }
 
-        [PublicAPI]
+        [PublicAPI, JsonIgnore]
         public string state => ScanState.ToString();
 
         // coordinates of scan [n-1]. Only Log and Sample are stored.
         [ PublicAPI ]
         public List<Tuple<decimal?, decimal?>> sampleCoords = new List<Tuple<decimal?, decimal?>>(); 
         
-        [PublicAPI] public bool nearPriorSample { get; set; }
+        [PublicAPI, JsonProperty]
+        public bool nearPriorSample { get; set; }
 
-        [PublicAPI]
+        [PublicAPI, JsonIgnore]
         public int samples => sampleCoords.Count;
+
+        public Exobiology () 
+        {
+        }
 
         public Exobiology ( OrganicGenus genus, bool isPrediction = false ) : base ( genus )
         {

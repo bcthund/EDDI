@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Utilities;
+using Newtonsoft.Json;
 
 namespace EddiDataDefinitions
 {
@@ -71,12 +72,13 @@ namespace EddiDataDefinitions
         public static readonly OrganicGenus CalcitePlates = new OrganicGenus( "CalcitePlates", 0 );
         public static readonly OrganicGenus ThargoidBarnacle = new OrganicGenus( "ThargoidBarnacle", 0 );
 
+        [JsonProperty]
         public int minimumDistanceMeters { get; private set; }
 
-        [PublicAPI( "The maximum credit value for this genus" )]
+        [JsonIgnore, PublicAPI( "The maximum credit value for this genus" )]
         public long maximumValue => OrganicSpecies.AllOfThem.Where( s => s.genus == this )?.Max( s => s?.value ) ?? 0;
 
-        [PublicAPI( "The minimum credit value for this genus" )]
+        [JsonIgnore, PublicAPI( "The minimum credit value for this genus" )]
         public long minimumValue => OrganicSpecies.AllOfThem.Where( s => s.genus == this )?.Min( s => s?.value ) ?? 0;
 
         [PublicAPI( "The predicted minimum credit value for this genus" )]
@@ -85,7 +87,7 @@ namespace EddiDataDefinitions
         [PublicAPI( "The predicted maximum credit value for this genus" )]
         public long predictedMaximumValue;
 
-        [PublicAPI]
+        [JsonIgnore, PublicAPI]
         public string localizedDescription => Properties.OrganicGenusDesc.ResourceManager.GetString( NormalizeGenus( edname ) );
 
         // dummy used to ensure that the static constructor has run

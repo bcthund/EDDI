@@ -1788,6 +1788,15 @@
       "name": "Nebula",
       "description": "Triggered when you are near a new nebula."
     },
+    "Nebula Entered": {
+      "enabled": true,
+      "priority": 3,
+      "responder": true,
+      "script": "{if event.distance<(event.size/2):\r\n    You have entered the vicinity of the {P(event.name,\"systemname\")} nebula.\r\n|else:\r\n    You have left the vicinity of the {P(event.name,\"systemname\")} nebula.\r\n}",
+      "default": true,
+      "name": "Nebula Entered",
+      "description": "Triggered when you enter the radius of the neareset nebula."
+    },
     "Near bookmark": {
       "enabled": true,
       "priority": 3,

@@ -23,7 +23,6 @@ namespace EddiDataDefinitions
             Ruin = 2,
             Structure = 3
         }
-        public static string[] GuardianSiteTypeText = { "None", "Beacon", "Ruin", "Structure" };
 
         public enum BlueprintType {
             None = 0,
@@ -31,7 +30,6 @@ namespace EddiDataDefinitions
             Vessel = 2,
             Module = 3
         }
-        public static string[] BlueprintTypeText = { "None", "Weapon", "Vessel", "Module" };
 
         public static readonly GuardianSite GB000 = new GuardianSite( GuardianSiteType.Beacon, "HIP 36823", "1", (decimal?)640.4375, (decimal?)-143.90625, (decimal?)-118.3125, BlueprintType.None);
         public static readonly GuardianSite GB001 = new GuardianSite( GuardianSiteType.Beacon, "IC 2391 Sector CQ-Y c16", "2", (decimal?)559.875, (decimal?)-87.15625, (decimal?)-33.15625, BlueprintType.None);
@@ -478,17 +476,17 @@ namespace EddiDataDefinitions
 
 
 
-        public GuardianSiteType type;
-        public string systemName;
-        public string body;
+        public GuardianSiteType type { get; set; }
+        public string systemName { get; set; }
+        public string body { get; set; }
         public decimal? x;                   // x coordinate of system
         public decimal? y;                   // y coordinate of system
         public decimal? z;                   // z coordinate of system
-        public BlueprintType blueprintType;
+        public BlueprintType blueprintType { get; set; }
 
         // Calucated distance from target system ( Gets set and returned with TryGetNearestNebula )
         [PublicAPI("The calculated distance to the site from the current system.")]
-        public decimal? distance;
+        public decimal? distance { get; set; }
 
         // dummy used to ensure that the static constructor has run
         public GuardianSite ()
@@ -534,6 +532,33 @@ namespace EddiDataDefinitions
             return closest;
         }
 
+        public static List<GuardianSite> TryGetNearestGuardianSites ( decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000 )
+        {
+            List<GuardianSite> listGuardianSites = new List<GuardianSite>();
+
+            // Get the distance (squared) of all Nebula
+            foreach ( var guardianSite in AllOfThem )
+            {
+                if ( guardianSite.x != null && guardianSite.y != null && guardianSite.z != null )
+                {
+                    // We don't need the exact distance, use the faster method for sorting purposes
+                    guardianSite.distance = Functions.StellarDistanceSquare( systemX, systemY, systemZ, guardianSite.x, guardianSite.y, guardianSite.z );
+                    listGuardianSites.Add( guardianSite );
+                }
+            }
+
+            var maxDistanceSquared = maxDistance*maxDistance;
+            List<GuardianSite> closestList = listGuardianSites.Where( s => s.distance <= maxDistanceSquared ).OrderBy( s => s.distance).Take(maxCount).ToList();
+            //foreach( var guardianSite in closestList ) {
+            //    guardianSite.distance = Functions.StellarDistanceLy( guardianSite.distance );
+            //}
+            for(int i = 0; i< closestList.Count; i++) {
+                closestList[i].distance = Functions.StellarDistanceLy( closestList[i].distance );
+            }
+
+            return closestList;
+        }
+
         public static GuardianSite TryGetNearestGuardianSite ( GuardianSiteType typeFilter, decimal? systemX, decimal? systemY, decimal? systemZ )
         {
             List<GuardianSite> listGuardianSites = new List<GuardianSite>();
@@ -555,6 +580,33 @@ namespace EddiDataDefinitions
             return closest;
         }
 
+        public static List<GuardianSite> TryGetNearestGuardianSites ( GuardianSiteType typeFilter, decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000 )
+        {
+            List<GuardianSite> listGuardianSites = new List<GuardianSite>();
+
+            // Get the distance (squared) of all Nebula
+            foreach ( var guardianSite in AllOfThem.Where( x=> x.type == typeFilter ) )
+            {
+                if ( guardianSite.x != null && guardianSite.y != null && guardianSite.z != null )
+                {
+                    // We don't need the exact distance, use the faster method for sorting purposes
+                    guardianSite.distance = Functions.StellarDistanceSquare( systemX, systemY, systemZ, guardianSite.x, guardianSite.y, guardianSite.z );
+                    listGuardianSites.Add( guardianSite );
+                }
+            }
+
+            var maxDistanceSquared = maxDistance*maxDistance;
+            List<GuardianSite> closestList = listGuardianSites.Where( s => s.distance <= maxDistanceSquared ).OrderBy( s => s.distance).Take(maxCount).ToList();
+            //foreach( var guardianSite in closestList ) {
+            //    guardianSite.distance = Functions.StellarDistanceLy( guardianSite.distance );
+            //}
+            for(int i = 0; i< closestList.Count; i++) {
+                closestList[i].distance = Functions.StellarDistanceLy( closestList[i].distance );
+            }
+
+            return closestList;
+        }
+
         public static GuardianSite TryGetNearestGuardianSite ( BlueprintType typeFilter, decimal? systemX, decimal? systemY, decimal? systemZ )
         {
             List<GuardianSite> listGuardianSites = new List<GuardianSite>();
@@ -574,6 +626,33 @@ namespace EddiDataDefinitions
             closest.distance = Functions.StellarDistanceLy( closest.distance );
 
             return closest;
+        }
+
+        public static List<GuardianSite> TryGetNearestGuardianSites ( BlueprintType typeFilter, decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000 )
+        {
+            List<GuardianSite> listGuardianSites = new List<GuardianSite>();
+
+            // Get the distance (squared) of all Nebula
+            foreach ( var guardianSite in AllOfThem.Where( x=> x.blueprintType == typeFilter ) )
+            {
+                if ( guardianSite.x != null && guardianSite.y != null && guardianSite.z != null )
+                {
+                    // We don't need the exact distance, use the faster method for sorting purposes
+                    guardianSite.distance = Functions.StellarDistanceSquare( systemX, systemY, systemZ, guardianSite.x, guardianSite.y, guardianSite.z );
+                    listGuardianSites.Add( guardianSite );
+                }
+            }
+
+            var maxDistanceSquared = maxDistance*maxDistance;
+            List<GuardianSite> closestList = listGuardianSites.Where( s => s.distance <= maxDistanceSquared ).OrderBy( s => s.distance).Take(maxCount).ToList();
+            //foreach( var guardianSite in closestList ) {
+            //    guardianSite.distance = Functions.StellarDistanceLy( guardianSite.distance );
+            //}
+            for(int i = 0; i< closestList.Count; i++) {
+                closestList[i].distance = Functions.StellarDistanceLy( closestList[i].distance );
+            }
+
+            return closestList;
         }
 
         public static GuardianSite TryGetNearestNebula ( StarSystem starsystem )

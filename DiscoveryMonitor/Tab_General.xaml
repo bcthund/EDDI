@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EddiDiscoveryMonitor"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="800" MinWidth="750">
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
@@ -19,6 +19,11 @@
         <TextBlock Grid.Column="0" Grid.Row="0" TextWrapping="Wrap" Margin="5,5,5,5">
             <Run Text="These tabs allow configuration of the codex discoveries, exobiology and to a lesser extend geology. They change how the scripts work without needing to modify the scripts directly. Most settings have tooltips to briefly explain what they do."/><LineBreak/>
             <Run/><LineBreak/>
+            <Run Text="The System Address should automatically update whenever the current system changes. The tools on the different tabs rely on these coordinates and they can be manually changed to run the tools on different locations. The Region is not automatically updated."/><LineBreak/>
+            <Run/><LineBreak/>
+            <Run Text="The Exobiology tab data will automatically update depending on the contextual body. For example if you target a planet it will show the data for that planet. If you scan a biological on a planet it will show data for that planet."/><LineBreak/>
+            <Run/><LineBreak/>
+            <Run Text="Nebulae and Guardian Sites will not automatically update when the system changes. Press the associated button in those tabs to see the data."/><LineBreak/>
         </TextBlock>
 
         <StackPanel Grid.Column="0" Grid.Row="1">

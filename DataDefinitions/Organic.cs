@@ -1,4 +1,5 @@
 ﻿using Utilities;
+using Newtonsoft.Json;
 
 namespace EddiDataDefinitions
 {
@@ -13,23 +14,23 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public OrganicVariant variant { get; set; }
 
-        [PublicAPI ("The credit value for selling organic data for the species, or the predicted value, or else the minimum credit value for the genus if the species is not yet known" ) ]
+        [JsonIgnore, PublicAPI ("The credit value for selling organic data for the species, or the predicted value, or else the minimum credit value for the genus if the species is not yet known" ) ]
         public long value => valueOverride ?? 
                              species?.value ?? 
                              genus?.minimumValue ?? 
                              0;
 
-        [PublicAPI ("The minimum value from all predictions of this genus.")]
+        [JsonIgnore, PublicAPI ("The minimum value from all predictions of this genus.")]
         public long predictedMinimumValue => valueOverride ??
                                              genus?.predictedMinimumValue ??
                                              0;
 
-        [PublicAPI ("The maximum value from all predictions of this genus.")]
+        [JsonIgnore, PublicAPI ("The maximum value from all predictions of this genus.")]
         public long predictedMaximumValue => valueOverride ??
                                              genus?.predictedMaximumValue ??
                                              0;
 
-        [PublicAPI( "The minimum distance that you must travel before you can collect a fresh sample of this genus" )]
+        [JsonIgnore, PublicAPI( "The minimum distance that you must travel before you can collect a fresh sample of this genus" )]
         public int minimumDistanceMeters => genus.minimumDistanceMeters;
 
         /// <summary>
@@ -44,6 +45,9 @@ namespace EddiDataDefinitions
 
         [PublicAPI ( "The bonus credit value, as awarded when selling organic data" ) ]
         public decimal bonus { get; set; }
+
+        public Organic() {
+        }
 
         /// <summary>
         /// Populate the organic from variant data. Most preferred.

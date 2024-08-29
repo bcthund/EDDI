@@ -10,7 +10,7 @@
              xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
              d:DataContext="{d:DesignInstance Type=local:DiscoveryMonitor}"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="800" MinWidth="750">
+             d:DesignHeight="400" d:DesignWidth="800" d:MinWidth="650">
 
     <Grid Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
@@ -22,17 +22,34 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Label VerticalAlignment="Center">Current Body ID:</Label>
-            <TextBox x:Name="textbox_CurrentBodyId" Text="" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
-            <!--<TextBox x:Name="textbox_CurrentBodyId" Text="{Binding Path=_currentBodyId}" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto" MinWidth="100"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto" MinWidth="100"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto" MinWidth="30"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
 
-            <Rectangle Width="20"/>
+            <Label Grid.Column="0" VerticalAlignment="Center">Current System:</Label>
+            <TextBox Grid.Column="1" x:Name="textbox_CurrentSystemName" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
 
-            <Label VerticalAlignment="Center">Current Body:</Label>
-            <TextBox x:Name="textbox_CurrentBodyShortName" Text="" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
-            <!--<TextBox x:Name="textbox_CurrentBodyShortName" Text="{Binding Path=_currentBody.shortName}" Width="50" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
-        </StackPanel>
+            <!--<Rectangle Width="20"/>-->
+
+            <Label Grid.Column="2" VerticalAlignment="Center">Current Body:</Label>
+            <TextBox Grid.Column="3" x:Name="textbox_CurrentBodyShortName" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
+
+            <!--<Rectangle Width="20"/>-->
+
+            <Label Grid.Column="5" VerticalAlignment="Center">Current Body ID:</Label>
+            <TextBox Grid.Column="6" x:Name="textbox_CurrentBodyId" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
+
+        </Grid>
 
         <StackPanel Grid.Column="0" Grid.Row="1">
             <DataGrid AutoGenerateColumns="False" x:Name="datagrid_bioData" ItemsSource="{Binding}" LoadingRow="datagrid_LoadingRow" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow">

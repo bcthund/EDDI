@@ -40,7 +40,7 @@ namespace UnitTests
             _currentBody.surfaceSignals.AddBioFromGenus( OrganicGenus.Bacterial );
             _currentBody.surfaceSignals.bioSignals.First().sampleCoords.Add( new Tuple<decimal?, decimal?>( 0M, 0M ) );
             _currentBody.surfaceSignals.bioSignals.First().nearPriorSample = inputNearPriorSample;
-            _currentBody.surfaceSignals.bioSignals.First().scanState = Exobiology.State.SampleStarted;
+            _currentBody.surfaceSignals.bioSignals.First().ScanState = Exobiology.State.SampleStarted;
 
             var status = new Status
             {
@@ -128,7 +128,7 @@ namespace UnitTests
             Assert.IsNotNull( body.surfaceSignals.bioSignals );
             Assert.IsTrue( body.surfaceSignals.bioSignals.Count >= 7 );
             Assert.IsTrue( body.surfaceSignals.bioSignals.Distinct().Count() == body.surfaceSignals.bioSignals.Count );
-            Assert.IsTrue( body.surfaceSignals.bioSignals.All( s => s.scanState == Exobiology.State.Predicted ) );
+            Assert.IsTrue( body.surfaceSignals.bioSignals.All( s => s.ScanState == Exobiology.State.Predicted ) );
             Assert.AreEqual( 1, body.surfaceSignals.bioSignals.Count( b => b.genus == OrganicGenus.Bacterial ) );
             Assert.AreEqual( 1, body.surfaceSignals.bioSignals.Count( b => b.genus == OrganicGenus.Cactoid ) );
             Assert.AreEqual( 1, body.surfaceSignals.bioSignals.Count( b => b.genus == OrganicGenus.Clypeus ) );
@@ -156,7 +156,7 @@ namespace UnitTests
             Assert.AreEqual( 0, body.surfaceSignals.reportedGeologicalCount );
             Assert.IsNotNull( body.surfaceSignals.bioSignals );
             Assert.AreEqual( 7, body.surfaceSignals.bioSignals.Count );
-            Assert.IsTrue( body.surfaceSignals.bioSignals.All( s => s.scanState == Exobiology.State.Confirmed ) );
+            Assert.IsTrue( body.surfaceSignals.bioSignals.All( s => s.ScanState == Exobiology.State.Confirmed ) );
             Assert.IsTrue( body.surfaceSignals.bioSignals.All( s => s.samples == 0 ) );
             Assert.AreEqual( 1, body.surfaceSignals.bioSignals.Count( b => b.genus == OrganicGenus.Bacterial ) );
             Assert.AreEqual( 1, body.surfaceSignals.bioSignals.Count( b => b.genus == OrganicGenus.Cactoid ) );
@@ -209,7 +209,7 @@ namespace UnitTests
             Assert.IsNotNull( body.surfaceSignals?.bioSignals?.Last() );
             Assert.AreEqual( OrganicVariant.Shrubs_05_F, body.surfaceSignals.bioSignals.Last().variant );
             Assert.AreEqual( 2, body.surfaceSignals.bioSignals.Last().samples );
-            Assert.AreEqual( Exobiology.State.SampleInProgress, body.surfaceSignals.bioSignals.Last().scanState );
+            Assert.AreEqual( Exobiology.State.SampleInProgress, body.surfaceSignals.bioSignals.Last().ScanState );
             Assert.AreEqual( OrganicVariant.Shrubs_05_F.species.value , body.surfaceSignals.bioSignals.Last().value );
             Assert.AreEqual( 0, @event.remainingBios?.Count );
             Assert.AreEqual( body.surfaceSignals.bioSignals.Last(), @event.bio );
@@ -220,7 +220,7 @@ namespace UnitTests
             Assert.AreEqual( 1, events.Count );
             @event = (ScanOrganicEvent)events[0];
             discoveryMonitor.PreHandle( @event );
-            Assert.AreEqual( Exobiology.State.SampleComplete, body.surfaceSignals.bioSignals.Last().scanState );
+            Assert.AreEqual( Exobiology.State.SampleComplete, body.surfaceSignals.bioSignals.Last().ScanState );
             Assert.AreEqual( 0, @event.remainingBios?.Count );
             Assert.AreEqual( body.surfaceSignals.bioSignals.Last(), @event.bio );
             Assert.AreEqual( 0, body.surfaceSignals.bioSignalsRemaining.Count );
@@ -236,7 +236,7 @@ namespace UnitTests
             Assert.IsNotNull( body.surfaceSignals?.bioSignals?.Last() );
             Assert.AreEqual( OrganicVariant.Fonticulus_02_TTS, body.surfaceSignals.bioSignals.Last().variant );
             Assert.AreEqual( 1, body.surfaceSignals.bioSignals.Last().samples );
-            Assert.AreEqual( Exobiology.State.SampleStarted, body.surfaceSignals.bioSignals.Last().scanState );
+            Assert.AreEqual( Exobiology.State.SampleStarted, body.surfaceSignals.bioSignals.Last().ScanState );
             Assert.AreEqual( OrganicVariant.Fonticulus_02_TTS.species.value, body.surfaceSignals.bioSignals.Last().value );
             Assert.AreEqual( 0, @event.remainingBios?.Count );
             Assert.AreEqual( body.surfaceSignals.bioSignals.Last(), @event.bio );

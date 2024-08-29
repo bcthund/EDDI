@@ -37,15 +37,15 @@ namespace EddiDiscoveryMonitor
 
         internal DiscoveryMonitorConfiguration configuration;
         internal Exobiology _currentOrganic;
-        internal long _currentBodyId;
+        internal StarSystem _currentSystem => EDDI.Instance?.CurrentStarSystem;
+        internal long? _currentBodyId;
 
-        public long CurrentBodyId
+        public long? CurrentBodyId
         {
             get { return _currentBodyId; }
             set {
                 _currentBodyId = value;
                 OnPropertyChanged("CurrentBodyId");
-                Logging.Debug("======================> OnPropertyChanged(\"CurrentBodyId\")");
             }
         }
 
@@ -53,6 +53,7 @@ namespace EddiDiscoveryMonitor
 
         internal Region _currentRegion;
         internal Nebula _nearestNebula;
+        internal Nebula _enteredNebula;
 
         public DiscoveryMonitor ()
         {
@@ -100,9 +101,6 @@ namespace EddiDiscoveryMonitor
             return new ConfigurationWindow();
         }
 
-
-        // TODO: Reimplement old HandleStatus with new HandleStatus
-        //  - Remove use of CurrentStatus access (Rework, still need access to lat/long)
         public void HandleStatus ( Status status )
         {
             _currentStatus = status;
@@ -119,27 +117,6 @@ namespace EddiDiscoveryMonitor
                 throw;
             }
         }
-
-        /*
-         private void HandleStatus ( object sender, EventArgs e )
-        {
-            try
-            {
-                if ( sender is Status status )
-                {
-                    if ( TryCheckScanDistance( status, out var bio ) )
-                    {
-                        EDDI.Instance.enqueueEvent( new ScanOrganicDistanceEvent( DateTime.UtcNow, bio ) );
-                    }
-                }
-            }
-            catch ( Exception exception )
-            {
-                Logging.Error( "Failed to handle status", exception );
-                throw;
-            }
-        }
-        */
 
         /// <summary>
         /// Check the currently active bio scan distance (if any). Return true if it's time to post a `ScanOrganicDistance` event.
@@ -231,6 +208,9 @@ namespace EddiDiscoveryMonitor
             {
                 handleLocationEvent( locationEvent );
             }
+            else if ( @event is NextDestinationEvent nextDestinationEvent) {
+                handleNextDestinationEvent( nextDestinationEvent );
+            }
         }
 
         internal void handleJumpedEvent ( JumpedEvent @event )
@@ -242,24 +222,7 @@ namespace EddiDiscoveryMonitor
             log += $"\tGetting Region for ({@event.x},{@event.y},{@event.z}): ";
             if( @event.region != null )
             {
-                if( _currentRegion is null || @event.region.id != _currentRegion.id )
-                {
-                    log += $"New Region = {@event.region.name}.\r\n";
-
-                    _currentRegion = @event.region;
-
-                    EDDI.Instance.enqueueEvent(
-                        new RegionEvent(
-                            DateTime.UtcNow,
-                            @event.region )
-                        {
-                            fromLoad = @event.fromLoad
-                        } );
-                }
-                else
-                {
-                    log += $"No New Region.\r\n";
-                }
+                CheckRegion(@event.region, @event.fromLoad);
             }
             else 
             {
@@ -271,24 +234,7 @@ namespace EddiDiscoveryMonitor
             log += $"\tGetting Nebula for {@event.system} @ ({@event.x},{@event.y},{@event.z}): ";
             if( @event.nebula != null )
             {
-                if ( _nearestNebula is null || @event.nebula.id != _nearestNebula.id )
-                {
-                    log += $"New Nebula = {@event.nebula.name} @ {@event.nebula.distance} Ly.\r\n";
-
-                    _nearestNebula = @event.nebula;
-
-                    EDDI.Instance.enqueueEvent(
-                        new NebulaEvent(
-                            DateTime.UtcNow,
-                            @event.nebula )
-                        {
-                            fromLoad = @event.fromLoad
-                        } );
-                }
-                else
-                {
-                    log += $"No New Nebula.\r\n";
-                }
+                CheckNebula(@event.nebula, @event.fromLoad);
             }
             else 
             {
@@ -319,24 +265,7 @@ namespace EddiDiscoveryMonitor
             log += $"\tGetting Region for ({@event.x},{@event.y},{@event.z}): ";
             if( checkRegion != null )
             {
-                if( _currentRegion is null || checkRegion.id != _currentRegion.id )
-                {
-                    log += $"New Region = {checkRegion.name}.\r\n";
-
-                    _currentRegion = checkRegion;
-
-                    EDDI.Instance.enqueueEvent(
-                        new RegionEvent(
-                            DateTime.UtcNow,
-                            checkRegion )
-                        {
-                            fromLoad = @event.fromLoad
-                        } );
-                }
-                else
-                {
-                    log += $"No New Region.\r\n";
-                }
+                CheckRegion(checkRegion, @event.fromLoad);
             }
             else 
             {
@@ -350,24 +279,7 @@ namespace EddiDiscoveryMonitor
             log += $"\tGetting Nebula for {@event.systemname} @ ({@event.x},{@event.y},{@event.z}): ";
             if( checkNebula != null )
             {
-                if ( _nearestNebula is null || checkNebula.id != _nearestNebula.id )
-                {
-                    log += $"New Nebula = {checkNebula.name} @ {checkNebula.distance} Ly.\r\n";
-
-                    _nearestNebula = checkNebula;
-
-                    EDDI.Instance.enqueueEvent(
-                        new NebulaEvent(
-                            DateTime.UtcNow,
-                            checkNebula )
-                        {
-                            fromLoad = @event.fromLoad
-                        } );
-                }
-                else
-                {
-                    log += $"No New Nebula.\r\n";
-                }
+                CheckNebula(checkNebula, @event.fromLoad);
             }
             else 
             {
@@ -384,6 +296,75 @@ namespace EddiDiscoveryMonitor
                 Logging.Debug( log );
             }
             
+        }
+
+        // When the location is recieved at startup or if the player respawns at a station update the region and nebula
+        internal void handleNextDestinationEvent(NextDestinationEvent @event)
+        {
+            CurrentBodyId = @event.bodyId;
+        }
+
+        internal void CheckRegion(Region checkRegion, bool fromLoad) {
+            if( _currentRegion is null || checkRegion.id != _currentRegion.id )
+            {
+                _currentRegion = checkRegion;
+
+                EDDI.Instance.enqueueEvent(
+                    new RegionEvent(
+                        DateTime.UtcNow,
+                        checkRegion )
+                    {
+                        fromLoad = fromLoad
+                    } );
+            }
+        }
+
+        internal void CheckNebula(Nebula checkNebula, bool fromLoad) {
+
+            if ( _nearestNebula is null || _nearestNebula.id != checkNebula.id )
+            {
+                _nearestNebula = checkNebula;
+
+                EDDI.Instance.enqueueEvent(
+                    new NebulaEvent(
+                        DateTime.UtcNow,
+                        checkNebula )
+                    {
+                        fromLoad = fromLoad
+                    } );
+            }
+            else if (_nearestNebula != null)
+            {
+                // Are we inside the radius of the nearest nebula?
+                if ( _nearestNebula.distance <= ( _nearestNebula.diameter / 2 ) && ( _enteredNebula is null || _enteredNebula.id != checkNebula.id ) )
+                {
+
+                    _nearestNebula.visited = true;
+                    _enteredNebula = checkNebula;
+
+                    EDDI.Instance.enqueueEvent(
+                    new NebulaEnteredEvent(
+                        DateTime.UtcNow,
+                        _nearestNebula )
+                    {
+                        fromLoad = fromLoad
+                    } );
+
+                }
+                else if ( _nearestNebula.distance > ( _nearestNebula.diameter / 2 ) && ( _enteredNebula != null ) )
+                {
+                    // We can use this to report if we have left the Nebula
+                    EDDI.Instance.enqueueEvent(
+                    new NebulaEnteredEvent(
+                        DateTime.UtcNow,
+                        _nearestNebula )
+                    {
+                        fromLoad = fromLoad
+                    } );
+
+                    _enteredNebula = null;
+                }
+            }
         }
 
         internal void handleCodexEntryEvent ( CodexEntryEvent @event )
@@ -671,7 +652,7 @@ namespace EddiDiscoveryMonitor
 
         private void handleBodyScannedEvent ( BodyScannedEvent @event )
         {
-            if ( @event.bodyId is null || !CheckSafe( (long)@event.bodyId ) ) { return; }
+            if ( @event.bodyId is null || !CheckSafe( @event.bodyId ) ) { return; }
 
             if ( @event.systemAddress == EDDI.Instance?.CurrentStarSystem.systemAddress )
             {
@@ -699,7 +680,7 @@ namespace EddiDiscoveryMonitor
 
         private void handleStarScannedEvent ( StarScannedEvent @event )
         {
-            if ( @event.bodyId is null || !CheckSafe( (long)@event.bodyId ) ) { return; }
+            if ( @event.bodyId is null || !CheckSafe( @event.bodyId ) ) { return; }
 
             if ( @event.systemAddress == EDDI.Instance?.CurrentStarSystem.systemAddress )
             {
@@ -807,7 +788,7 @@ namespace EddiDiscoveryMonitor
             return false;
         }
 
-        private bool CheckSafe ( long bodyId )
+        private bool CheckSafe ( long? bodyId )
         {
             if ( EDDI.Instance?.CurrentStarSystem != null )
             {
