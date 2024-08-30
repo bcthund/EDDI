@@ -64,7 +64,7 @@ namespace EddiDiscoveryMonitor
                      TryCheckAtmosphere( variant.atmosphereClass, ref log ) && 
                      TryCheckAtmosphereComposition( variant.atmosphereComposition, ref log ) &&
                      TryCheckVolcanism( variant.volcanism, ref log ) && 
-                     TryCheckMainStar( variant.primaryStar, ref log ) &&
+                     //TryCheckMainStar( variant.primaryStar, ref log ) &&
                      TryCheckLocalStar( variant.localStar, ref log ) &&
                      TryCheckMaterials( variant.materials, ref log ) &&
                      TryCheckBodyTypePresent( variant.systemBodies, ref log ) &&

@@ -89,6 +89,14 @@ namespace EddiDiscoveryMonitor
             e.Row.Header = (e.Row.GetIndex()+1).ToString();
         }
 
+        private void buttonPredict ( object sender, RoutedEventArgs e ) {
+            if (_currentBodyId != null ) {
+                discoveryMonitor().UpdatePredictedBios( _currentBodyId );
+
+                RefreshData();
+            }
+        }
+
         private void buttonRefresh ( object sender, RoutedEventArgs e )
         {
             _currentBodyId = currentBodyId;

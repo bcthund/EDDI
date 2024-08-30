@@ -190,6 +190,9 @@ namespace EddiDataDefinitions
                 }
             }
 
+            // TODO: 2212 - Preserve Surface Signals - Is this working correctly?
+            Logging.Debug($"\r\n================> OLD BODY: {JsonConvert.SerializeObject(oldBody.surfaceSignals).ToString()}\r\n============> UPDATED BODY: {JsonConvert.SerializeObject(updatedBody.surfaceSignals).ToString()}\r\n============> LAST UPDATED: '{oldBody.surfaceSignals.lastUpdated}' > '{updatedBody.surfaceSignals.lastUpdated}'?");
+
             // Third party sites do not have surface signal data (currently)
             if ( oldBody.surfaceSignals.lastUpdated > updatedBody.surfaceSignals.lastUpdated )
             {
@@ -540,7 +543,7 @@ namespace EddiDataDefinitions
                 .ToHashSet();
         }
 
-        // TODO:2212_bt - Testing getting the main star of the system
+        // TODO: 2212 - This only gets the first main star, if it is a barycentre then it is missed. Add TryGetMainStars() method?.
         public bool TryGetMainStar( out Body star ) {
             star = null;
 

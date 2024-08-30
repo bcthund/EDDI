@@ -769,6 +769,69 @@ namespace EddiDiscoveryMonitor
             return hasPredictedBios;
         }
 
+        // This was originally added to allow forced prediction updates from the GUI as a debugging option
+        public void UpdatePredictedBios(long? bodyId) {
+
+            var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( (long)bodyId );
+
+            if ( TryUpdatePredictBios( ref body ) )
+            {
+                EDDI.Instance.enqueueEvent( new OrganicPredictionEvent( DateTime.UtcNow, body, body.surfaceSignals.bioSignals ) );
+
+                // Save/Update Body data
+                body.surfaceSignals.lastUpdated = DateTime.UtcNow;
+                //_currentSystem.AddOrUpdateBody( body );
+                //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+            }
+        }
+
+        // Forced refresh of predicted bios
+        //  - Existing counts will remain
+        //  - List of bios will be overwritten, including current status of any samples
+        private bool TryUpdatePredictBios(ref Body body)
+        {
+            var log = "";
+            var hasPredictedBios = false;
+
+            // Erase existing bio signals
+            body.surfaceSignals.bioSignals = new HashSet<Exobiology>();
+
+            if ( body != null && 
+                 !body.surfaceSignals.bioSignals.Any() && 
+                 EDDI.Instance.CurrentStarSystem.TryGetMainStar(out var parentStar))
+            {                
+                List<OrganicGenus> bios;
+                bios = new ExobiologyPredictions( EDDI.Instance?.CurrentStarSystem, body, parentStar, configuration ).PredictByVariant();
+
+                // Account for predicting less than actual signals, lets player know that we don't know what one or more bios will be
+                if( bios?.Count()<body.surfaceSignals.reportedBiologicalCount )
+                {
+                    for(int i=bios.Count(); i<body.surfaceSignals.reportedBiologicalCount; i++)
+                    {
+                        log += $"\t[Adding Unknown Genus: ";
+                        OrganicGenus newGenus = OrganicGenus.Unknown;
+                        newGenus.predictedMinimumValue = 1000000;
+                        newGenus.predictedMaximumValue = 1000000;
+                        bios.Add( newGenus );
+                        log += $"count={bios.Count()}]\r\n";
+                    }
+                }
+
+                foreach ( var genus in bios )
+                {
+                    log += $"\tAdding predicted bio {genus.invariantName}\r\n";
+                    body.surfaceSignals.AddBioFromGenus( genus, true );
+                }
+                hasPredictedBios = true;
+            }
+
+            Logging.Debug( log );
+
+            return hasPredictedBios;
+        }
+
         /// <summary>
         /// Check if the current system and body exist
         /// </summary>

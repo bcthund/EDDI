@@ -8,7 +8,6 @@
              xmlns:resx="clr-namespace:EddiDiscoveryMonitor.Properties"
              xmlns:eddiDataDefinitions="clr-namespace:EddiDataDefinitions;assembly=EddiDataDefinitions"
              xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
-             d:DataContext="{d:DesignInstance Type=local:DiscoveryMonitor}"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800" d:MinWidth="650">
 
@@ -36,7 +35,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" VerticalAlignment="Center">Current System:</Label>
+            <Label Grid.Column="0" x:Name="TEST_LABEL" VerticalAlignment="Center">Current System:</Label>
             <TextBox Grid.Column="1" x:Name="textbox_CurrentSystemName" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
 
             <!--<Rectangle Width="20"/>-->
@@ -94,9 +93,17 @@
             </DataGrid>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
-            <Button Content="Refresh" Click="buttonRefresh" Height="30"/>
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Content="Refresh Display" Click="buttonRefresh" Height="30"/>
+            <Button Grid.Column="1" Content="Force Prediction Update" Click="buttonPredict" Height="30"/>
+        </Grid>
     </Grid>
 
 </UserControl>
