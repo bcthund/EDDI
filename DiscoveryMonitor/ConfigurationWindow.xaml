@@ -87,9 +87,6 @@
             <TabItem Header="Guardian Sites">
                 <local:Tab_Guardian/>
             </TabItem>
-            <TabItem Header="Tools">
-                <local:Tab_Tools/>
-            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

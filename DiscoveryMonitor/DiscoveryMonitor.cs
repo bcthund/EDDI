@@ -259,6 +259,9 @@ namespace EddiDiscoveryMonitor
             var log = "\r\n";
             bool error = false;
 
+            // Set the current body context
+            CurrentBodyId = @event.bodyId;
+
             // Check if the current region has changed
             var checkRegion = RegionMap.FindRegion( (double)@event.x, (double)@event.y, (double)@event.z );
 
@@ -379,6 +382,9 @@ namespace EddiDiscoveryMonitor
         internal void handleSurfaceSignalsEvent ( SurfaceSignalsEvent @event )
         {
             var log = "";
+
+            CurrentBodyId = @event.bodyId;
+
             if ( @event.detectionType == "FSS" )
             {
                 if ( !fssSignalsLibrary.Any( s => s.systemAddress == @event.systemAddress && s.bodyId == @event.bodyId ) &&

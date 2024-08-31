@@ -190,9 +190,6 @@ namespace EddiDataDefinitions
                 }
             }
 
-            // TODO: 2212 - Preserve Surface Signals - Is this working correctly?
-            Logging.Debug($"\r\n================> OLD BODY: {JsonConvert.SerializeObject(oldBody.surfaceSignals).ToString()}\r\n============> UPDATED BODY: {JsonConvert.SerializeObject(updatedBody.surfaceSignals).ToString()}\r\n============> LAST UPDATED: '{oldBody.surfaceSignals.lastUpdated}' > '{updatedBody.surfaceSignals.lastUpdated}'?");
-
             // Third party sites do not have surface signal data (currently)
             if ( oldBody.surfaceSignals.lastUpdated > updatedBody.surfaceSignals.lastUpdated )
             {

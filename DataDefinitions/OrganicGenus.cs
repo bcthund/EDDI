@@ -81,11 +81,11 @@ namespace EddiDataDefinitions
         [JsonIgnore, PublicAPI( "The minimum credit value for this genus" )]
         public long minimumValue => OrganicSpecies.AllOfThem.Where( s => s.genus == this )?.Min( s => s?.value ) ?? 0;
 
-        [PublicAPI( "The predicted minimum credit value for this genus" )]
-        public long predictedMinimumValue;
+        [JsonProperty, PublicAPI( "The predicted minimum credit value for this genus" )]
+        public long predictedMinimumValue { get; private set; }
 
-        [PublicAPI( "The predicted maximum credit value for this genus" )]
-        public long predictedMaximumValue;
+        [JsonProperty, PublicAPI( "The predicted maximum credit value for this genus" )]
+        public long predictedMaximumValue { get; private set; }
 
         [JsonIgnore, PublicAPI]
         public string localizedDescription => Properties.OrganicGenusDesc.ResourceManager.GetString( NormalizeGenus( edname ) );

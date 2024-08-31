@@ -8,8 +8,12 @@
              xmlns:resx="clr-namespace:EddiDiscoveryMonitor.Properties"
              xmlns:eddiDataDefinitions="clr-namespace:EddiDataDefinitions;assembly=EddiDataDefinitions"
              xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="400" d:DesignWidth="800" d:MinWidth="650">
+    <!--<UserControl.Resources>
+        <d:BooleanToVisibiltyConverter x:Key="myBoolToVisibilityConverter" />
+    </UserControl.Resources>-->
 
     <Grid Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
@@ -18,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -51,7 +56,7 @@
         </Grid>
 
         <StackPanel Grid.Column="0" Grid.Row="1">
-            <DataGrid AutoGenerateColumns="False" x:Name="datagrid_bioData" ItemsSource="{Binding}" LoadingRow="datagrid_LoadingRow" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow">
+            <DataGrid AutoGenerateColumns="False" x:Name="datagrid_bioData" SelectionChanged="datagrid_SelectionChanged" ItemsSource="{Binding}" LoadingRow="datagrid_LoadingRow" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -85,15 +90,70 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Samples" IsReadOnly="True" Width="Auto" Binding="{Binding samples}"/>
+                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding genus.minimumDistanceMeters, StringFormat={}{0}m}"/>
                     <DataGridTextColumn Header="State" IsReadOnly="True" Width="Auto" Binding="{Binding state}"/>
                     <DataGridTextColumn Header="Value" IsReadOnly="True" Width="Auto" Binding="{Binding value}"/>
-                    <DataGridTextColumn Header="Min Value" IsReadOnly="True" Width="Auto" Binding="{Binding predictedMinimumValue}"/>
-                    <DataGridTextColumn Header="Max Value" IsReadOnly="True" Width="Auto" Binding="{Binding predictedMaximumValue}"/>
+                    <!--<DataGridTextColumn Header="Min Value" IsReadOnly="True" Width="Auto" Binding="{Binding predictedMinimumValue}"/>-->
+                    <!--<DataGridTextColumn Header="Max Value" IsReadOnly="True" Width="Auto" Binding="{Binding predictedMaximumValue}"/>-->
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" x:Name="selectedBio_Grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            
+            <TextBlock x:Name="textBlock_Genus" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" TextWrapping="Wrap">
+                <Run Text="{Binding genus.localizedName, Mode=OneWay, FallbackValue='Genus?'}"/>
+                <Run Text=":"/><!--<LineBreak/>-->
+                <Run Text="{Binding genus.localizedDescription, Mode=OneWay, FallbackValue=''}"/>
+                <LineBreak/>
+            </TextBlock>
+            <TextBlock x:Name="textBlock_Species" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" TextWrapping="Wrap">
+                <!--<Style.Triggers>
+                    <DataTrigger Binding="{Binding SomeValue}" Value=" x:Null ">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>-->
+                <Run Text="The"/>
+                <Run Text="{Binding species.localizedName, Mode=OneWay, FallbackValue='Species?'}"/>
+                <Run Text="species"/><!--<LineBreak/>-->
+                <Run Text="{Binding species.localizedDescription, Mode=OneWay, FallbackValue=''}"/>
+                <LineBreak/>
+            </TextBlock>
+
+            <Label Grid.Column="0" Grid.Row="2" x:Name="selectedBio_samples_title" Content="Sample" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="1" Grid.Row="2" x:Name="selectedBio_x_title" Content="X" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="2" Grid.Row="2" x:Name="selectedBio_y_title" Content="Y" HorizontalContentAlignment="Center"/>
+
+            <Label Grid.Column="0" Grid.Row="3" x:Name="selectedBio_Sample1_header" Content="#1" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="1" Grid.Row="3" x:Name="selectedBio_Sample1_x" Content="" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="2" Grid.Row="3" x:Name="selectedBio_Sample1_y" Content="" HorizontalContentAlignment="Center"/>
+
+            <Label Grid.Column="0" Grid.Row="4" x:Name="selectedBio_Sample2_header" Content="#2" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="1" Grid.Row="4" x:Name="selectedBio_Sample2_x" Content="" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="2" Grid.Row="4" x:Name="selectedBio_Sample2_y" Content="" HorizontalContentAlignment="Center"/>
+
+            <Label Grid.Column="0" Grid.Row="5" x:Name="selectedBio_Sample3_header" Content="#3" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="1" Grid.Row="5" x:Name="selectedBio_Sample3_x" Content="" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="2" Grid.Row="5" x:Name="selectedBio_Sample3_y" Content="" HorizontalContentAlignment="Center"/>
+
+        </Grid>
+        
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
