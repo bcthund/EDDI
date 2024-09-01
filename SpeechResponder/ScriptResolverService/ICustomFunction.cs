@@ -16,7 +16,7 @@ namespace EddiSpeechResponder.ScriptResolverService
 
     public class RecursiveFunction
     {
-        private IContext TopLevelContext { get; }
+        private IContext ParentContext { get; }
 
         private static Dictionary<Value, Value> RuntimeGlobals { get; set; } = new Dictionary<Value, Value>();
         private static readonly object globalsLock = new object();
@@ -25,7 +25,7 @@ namespace EddiSpeechResponder.ScriptResolverService
 
         protected RecursiveFunction ( IContext context, Dictionary< string, Script > scripts )
         {
-            this.TopLevelContext = context;
+            this.ParentContext = context;
             this.Scripts = scripts;
             lock ( globalsLock )
             {
@@ -45,13 +45,10 @@ namespace EddiSpeechResponder.ScriptResolverService
                     }
                     .SelectMany( dict => dict )
                     .ToDictionary( pair => pair.Key, pair => pair.Value );
-                var runtimeState = new Dictionary<Value, Value> { [ "state" ] = ScriptResolver.buildState() }
-                    .Where( pair => !RuntimeGlobals.ContainsKey( pair.Key ) );
-                latestContext = Context.CreateBuiltin( new[] { RuntimeGlobals, runtimeState }
-                    .SelectMany( dict => dict )
-                    .ToDictionary( pair => pair.Key, pair => pair.Value ) );
+                RuntimeGlobals[ "state" ] = ScriptResolver.buildState();
+                latestContext = Context.CreateBuiltin( RuntimeGlobals );
             }
-            return Context.CreateCascade( latestContext, TopLevelContext );
+            return Context.CreateCascade( latestContext, ParentContext );
         }
     }
 
