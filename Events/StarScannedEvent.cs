@@ -21,131 +21,134 @@ namespace EddiEvents
         // Variable names for this event should match the class property names for maximum compatibility with the BodyDetails() function in Cottle
 
         [PublicAPI("The absolute (bolometric) magnitude of the star that has been scanned")]
-        public decimal? absolutemagnitude => star.absolutemagnitude;
+        public decimal? absolutemagnitude => star?.absolutemagnitude;
 
         [PublicAPI("The cumulative probability describing the star's age, relative to other stars of the same stellar class")]
-        public decimal? absolutemagnitudeprobability => star.absolutemagnitudeprobability;
+        public decimal? absolutemagnitudeprobability => star?.absolutemagnitudeprobability;
 
         [PublicAPI("The age of the star that has been scanned, in millions of years")]
-        public long? age => star.age;
+        public long? age => star?.age;
 
         [PublicAPI("The probablility of finding a star of this class with this age")]
-        public decimal? ageprobability => star.ageprobability;
+        public decimal? ageprobability => star?.ageprobability;
 
         [PublicAPI("Whether this star's scan data has already been registered with Universal Cartographics")]
-        public bool? alreadydiscovered => star.alreadydiscovered;
+        public bool? alreadydiscovered => star?.alreadydiscovered;
 
         [PublicAPI("The name of the star that has been scanned")]
-        public string bodyname => star.bodyname;
+        public string bodyname => star?.bodyname;
 
         [PublicAPI("The apparent colour of the star that has been scanned")]
-        public string chromaticity => star.chromaticity;
+        public string chromaticity => star?.chromaticity;
 
         [PublicAPI("The average density of the star, in kg per cubic meter")]
-        public decimal? density => star.density;
+        public decimal? density => star?.density;
 
         [PublicAPI("The cumulative probability describing the star's density, relative to other stars of the same stellarclass")]
-        public decimal? densityprobability => star.densityprobability;
+        public decimal? densityprobability => star?.densityprobability;
 
         [PublicAPI("The distance in LS from the main star")]
-        public decimal? distance => star.distance;
+        public decimal? distance => star?.distance;
 
         [PublicAPI("The orbital eccentricity of the star")]
-        public decimal? eccentricity => star.eccentricity;
+        public decimal? eccentricity => star?.eccentricity;
 
         [PublicAPI("The cumulative probability describing the star's orbital eccentricity, relative to other stars of the same stellar class")]
-        public decimal? eccentricityprobability => star.eccentricityprobability;
+        public decimal? eccentricityprobability => star?.eccentricityprobability;
 
         [PublicAPI("The estimated inner radius of the habitable zone of the scanned star, in light seconds, not considering other stars in the system")]
-        public decimal? estimatedhabzoneinner => star.estimatedhabzoneinner;
+        public decimal? estimatedhabzoneinner => star?.estimatedhabzoneinner;
 
         [PublicAPI("The estimated outer radius of the habitable zone of the scanned star, in light seconds, not considering other stars in the system")]
-        public decimal? estimatedhabzoneouter => star.estimatedhabzoneouter;
+        public decimal? estimatedhabzoneouter => star?.estimatedhabzoneouter;
 
         [PublicAPI("The estimated value of the current scan")]
-        public long? estimatedvalue => star.estimatedvalue;
+        public long? estimatedvalue => star?.estimatedvalue;
 
         [PublicAPI("The orbital inclination of the star, in degrees")]
-        public decimal? inclination => star.inclination;
+        public decimal? inclination => star?.inclination;
 
         [PublicAPI("The cumulative probability describing the star's orbital inclination, relative to other stars of the same stellar class")]
-        public decimal? inclinationprobability => star.inclinationprobability;
+        public decimal? inclinationprobability => star?.inclinationprobability;
 
         [PublicAPI("The luminosity of the star that has been scanned")]
-        public decimal? luminosity => star.luminosity;
+        public decimal? luminosity => star?.luminosity;
 
         [PublicAPI("The luminosity class of the star that has been scanned")]
-        public string luminosityclass => star.luminosityclass;
+        public string luminosityclass => star?.luminosityclass;
 
         [PublicAPI("True if the star is the main / primary star in the star system")]
-        public bool? mainstar => star.mainstar;
+        public bool? mainstar => star?.mainstar;
 
         [PublicAPI("The probablility of finding a star of this class with this mass")]
-        public decimal? massprobability => star.massprobability;
+        public decimal? massprobability => star?.massprobability;
 
         [PublicAPI("The number of seconds taken for a full orbit of the main star")]
-        public decimal? orbitalperiod => star.orbitalperiod;
+        public decimal? orbitalperiod => star?.orbitalperiod;
 
         [PublicAPI("The cumulative probability describing the star's orbital period about the main star, relative to other stars of the same stellar class")]
-        public decimal? orbitalperiodprobability => star.orbitalperiodprobability;
+        public decimal? orbitalperiodprobability => star?.orbitalperiodprobability;
 
         [PublicAPI("The argument of periapsis of the star, in degrees")]
-        public decimal? periapsis => star.periapsis;
+        public decimal? periapsis => star?.periapsis;
 
         [PublicAPI("The cumulative probability describing the stars's argument of periapsis, relative to other stars of the same stellar class")]
-        public decimal? periapsisprobability => star.periapsisprobability;
+        public decimal? periapsisprobability => star?.periapsisprobability;
 
         [PublicAPI("The radius of the star that has been scanned, in kilometres")]
-        public decimal? radius => star.radius;
+        public decimal? radius => star?.radius;
 
         [PublicAPI("The probablility of finding a star of this class with this radius")]
-        public decimal? radiusprobability => star.radiusprobability;
+        public decimal? radiusprobability => star?.radiusprobability;
 
         [PublicAPI("The star's rings")]
-        public List<Ring> rings => star.rings;
+        public List<Ring> rings => star?.rings;
 
         [PublicAPI("The number of seconds taken for a full rotation")]
-        public decimal? rotationalperiod => star.rotationalperiod;
+        public decimal? rotationalperiod => star?.rotationalperiod;
 
         [PublicAPI("The cumulative probability describing the stars's rotational period, relative to other stars of the same stellar class")]
-        public decimal? rotationalperiodprobability => star.rotationalperiodprobability;
+        public decimal? rotationalperiodprobability => star?.rotationalperiodprobability;
 
         [PublicAPI("The type of scan event (AutoScan, Basic, Detailed, NavBeacon, NavBeaconDetail)")]
         public string scantype { get; private set; } // One of AutoScan, Basic, Detailed, NavBeacon, NavBeaconDetail
                                                      // AutoScan events are detailed scans triggered via proximity. 
 
         [PublicAPI("True if the star is scoopable (K, G, B, F, O, A, M)")]
-        public bool scoopable => star.scoopable;
+        public bool scoopable => star?.scoopable ?? false;
 
         [PublicAPI("The semi major axis of the star's orbit, in light seconds")]
-        public decimal? semimajoraxis => star.semimajoraxis;
+        public decimal? semimajoraxis => star?.semimajoraxis;
 
         [PublicAPI("The cumulative probability describing the semi-major axis of the orbit of the star, relative to other stars of the same stellar class")]
-        public decimal? semimajoraxisprobability => star.semimajoraxisprobability;
+        public decimal? semimajoraxisprobability => star?.semimajoraxisprobability;
 
         [PublicAPI("The mass of the star that has been scanned, relative to Sol's mass")]
-        public decimal? solarmass => star.solarmass;
+        public decimal? solarmass => star?.solarmass;
 
         [PublicAPI("The radius of the star that has been scanned, compared to Sol")]
-        public decimal? solarradius => star.solarradius;
+        public decimal? solarradius => star?.solarradius;
 
         [PublicAPI("The stellar class of the star that has been scanned (O, G, etc)")]
-        public string stellarclass => star.stellarclass;
+        public string stellarclass => star?.stellarclass;
 
         [PublicAPI("The stellar sub class of the star that has been scanned (0 - 9, with 0 being hotter and 9 being cooler)")]
-        public int? stellarsubclass => star.stellarsubclass;
+        public int? stellarsubclass => star?.stellarsubclass;
+
+        [PublicAPI( "The name of the system containing the scanned body" )]
+        public string systemname => star?.systemname;
 
         [PublicAPI("The temperature of the star that has been scanned")]
-        public decimal? temperature => star.temperature;
+        public decimal? temperature => star?.temperature;
 
         [PublicAPI("The probablility of finding a star of this class with this temperature")]
-        public decimal? tempprobability => star.tempprobability;
+        public decimal? tempprobability => star?.tempprobability;
 
         [PublicAPI("Axial tilt for the star, in degrees (only available if DSS equipped)")]
-        public decimal? tilt => star.tilt;
+        public decimal? tilt => star?.tilt;
 
         [PublicAPI("The cumulative probability describing the star's orbital tilt, relative to other stars of the same stellar class")]
-        public decimal? tiltprobability => star.tiltprobability;
+        public decimal? tiltprobability => star?.tiltprobability;
 
         // Deprecated, maintained for compatibility with user scripts
 
@@ -163,15 +166,15 @@ namespace EddiEvents
 
         // Variables below are not intended to be user facing
 
-        public bool? alreadymapped => star.alreadymapped;
+        public bool? alreadymapped => star?.alreadymapped;
 
-        public long? bodyId => star.bodyId;
+        public long? bodyId => star?.bodyId;
 
-        public DateTime? mapped => star.mappedDateTime;
+        public DateTime? mapped => star?.mappedDateTime;
 
-        public List<IDictionary<string, object>> parents => star.parents;
+        public List<IDictionary<string, object>> parents => star?.parents ?? new List<IDictionary<string, object>>();
 
-        public DateTime? scanned => star.scannedDateTime;
+        public DateTime? scanned => star?.scannedDateTime;
 
         public Body star { get; private set; }
 

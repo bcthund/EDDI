@@ -4,6 +4,7 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.1.0
   * Promote 4.1.0-b3 to final.
+  * Fixed missing `systemname` property in the `Star scanned` event.
 
 ## 4.1.0-b3
   * Core
