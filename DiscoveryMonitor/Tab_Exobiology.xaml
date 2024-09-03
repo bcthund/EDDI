@@ -64,7 +64,7 @@
 
             </Grid>
 
-            <DataGrid Grid.Column="0" Grid.Row="1" Grid.RowSpan="1" AutoGenerateColumns="False" x:Name="datagrid_PlanetsWithBios" SelectionMode="Single" SelectionChanged="datagrid_PlanetsWithBios_SelectionChanged" ItemsSource="{Binding}" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid Grid.Column="0" Grid.Row="1" Grid.RowSpan="1" AutoGenerateColumns="False" x:Name="datagrid_PlanetsWithBios" CanUserSortColumns="False" SelectionMode="Single" SelectionChanged="datagrid_PlanetsWithBios_SelectionChanged" ItemsSource="{Binding}" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -73,8 +73,25 @@
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="LightGreen"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.CellStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Margin" Value="5, 0, 10, 0"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="Blue"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <!--<DataGridTextColumn Header="ID" IsReadOnly="True" Width="Auto" Binding="{Binding bodyId}">
                             <DataGridTextColumn.ElementStyle>
@@ -107,7 +124,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" x:Name="datagrid_bioData" SelectionMode="Single" SelectionChanged="datagrid_SelectionChanged" ItemsSource="{Binding}" LoadingRow="datagrid_LoadingRow" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" x:Name="datagrid_bioData" SelectionMode="Single" CanUserSortColumns="False" SelectionChanged="datagrid_SelectionChanged" ItemsSource="{Binding}" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -116,8 +133,24 @@
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="LightGreen"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.CellStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="Blue"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Genus" IsReadOnly="True" Width="*" Binding="{Binding genus.localizedName, FallbackValue=''}">
                         <DataGridTextColumn.ElementStyle>

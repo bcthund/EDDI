@@ -38,24 +38,35 @@ namespace EddiDiscoveryMonitor
         //public Exobiology selectedBio => currentBody?.surfaceSignals?.bioSignals?.Where(x => x.genus==selectedGenus).First();
         public Exobiology selectedBio;
 
-        private bool isPredicting = false;
+        internal bool isPredicting = false;
+        internal bool ignoreSelectionChange = false;
+
+
+        internal int _lastPlanetIndex { get; set; }
+        internal int _lastBioIndex { get; set; }
 
         internal long? _currentBodyId { get; set; }
+        internal long? _lastBodyId { get; set; }
 
         public long? CurrentBodyId
         {
             get { return _currentBodyId; }
             set {
+                _lastBioIndex = datagrid_bioData.SelectedIndex;
+                _lastPlanetIndex = datagrid_PlanetsWithBios.SelectedIndex;
+                _lastBodyId = _currentBodyId;
                 _currentBodyId = value;
                 OnPropertyChanged("CurrentBodyId");
             }
         }
 
         internal Body _currentBody { get; set; }
+        internal Body _lastBody { get; set; }
         public Body CurrentBody
         {
             get { return _currentBody; }
             set {
+                _lastBody = _currentBody;
                 _currentBody = value;
                 OnPropertyChanged("CurrentBody");
             }
@@ -108,13 +119,19 @@ namespace EddiDiscoveryMonitor
 
         void DiscoveryMonitor_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if ( !isPredicting && (e.PropertyName == "CurrentBodyId" || e.PropertyName == "RefreshData") )
+            if ( !isPredicting && (e.PropertyName == "CurrentBodyId" || e.PropertyName == "RefreshData" || e.PropertyName == "handleScanOrganicEvent" ) )
             {
                 this.Dispatcher.Invoke( () =>
                 {
                     //Logging.Debug($"[00] ========> DiscoveryMonitor_PropertyChanged INVOKED ");
-                    datagrid_bioData.SelectedIndex = -1;
-                    CurrentBodyId = ( (DiscoveryMonitor)sender ).CurrentBodyId;
+                    //datagrid_bioData.SelectedIndex = -1;
+
+                    long? newBodyId = ( (DiscoveryMonitor)sender ).CurrentBodyId;
+
+                    var getIndex = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList().FindIndex(x => x.bodyId == newBodyId);
+                    datagrid_PlanetsWithBios.SelectedIndex = getIndex;
+
+                    CurrentBodyId = newBodyId;
                     CurrentBody = EDDI.Instance?.CurrentStarSystem?.BodyWithID( CurrentBodyId );
 
                     RefreshData();
@@ -134,6 +151,7 @@ namespace EddiDiscoveryMonitor
                     CurrentBody = null;
                     selectedBio = null;
 
+                    //RefreshData((StarSystem)sender);
                     RefreshData();
                     SetBioData();
                 } );
@@ -144,7 +162,7 @@ namespace EddiDiscoveryMonitor
         {
             if ( !isPredicting && (e.PropertyName == "CurrentBodyId") )
             {
-                Logging.Debug( $"======> CurrentBodyId Property Changed" );
+                //Logging.Debug( $"======> CurrentBodyId Property Changed" );
                 // If the contextual body has changed, set bio selection to none and clear current display data
                 datagrid_bioData.SelectedIndex = -1;
                 selectedBio = null;
@@ -177,13 +195,18 @@ namespace EddiDiscoveryMonitor
             RefreshData();
         }
 
-        private void RefreshData (bool refreshPlanets=true)
+        private void RefreshData (StarSystem referenceStarSystem, bool refreshPlanets=true)
         {
             //Logging.Debug($"[03] RefreshData INVOKED ");
-            if ( currentStarSystem != null ) {
+            if ( referenceStarSystem != null ) {
 
-                if (refreshPlanets ) {
-                    datagrid_PlanetsWithBios.DataContext = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
+                if ( refreshPlanets ) {
+                    datagrid_PlanetsWithBios.DataContext = referenceStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
+                    if(_lastBodyId==CurrentBodyId) {
+                        ignoreSelectionChange = true;
+                        datagrid_PlanetsWithBios.SelectedIndex = _lastPlanetIndex;
+                        ignoreSelectionChange = false;
+                    }
                 }
 
                 if ( CurrentBody != null )
@@ -204,7 +227,44 @@ namespace EddiDiscoveryMonitor
                 }
 
                 datagrid_bioData.DataContext = bioSignals;
+                if(_lastBodyId==CurrentBodyId) {
+                    ignoreSelectionChange = true;
+                    datagrid_bioData.SelectedIndex = _lastBioIndex;
+                    ignoreSelectionChange = false;
+                }
             }
+        }
+
+        private void RefreshData (bool refreshPlanets=true)
+        {
+            RefreshData(currentStarSystem, refreshPlanets);
+            
+            //Logging.Debug($"[03] RefreshData INVOKED ");
+            //if ( currentStarSystem != null ) {
+
+            //    if (refreshPlanets ) {
+            //        datagrid_PlanetsWithBios.DataContext = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
+            //    }
+
+            //    if ( CurrentBody != null )
+            //    {
+            //        textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+            //        textbox_CurrentBodyId.Text = CurrentBodyId.ToString();
+            //        textbox_CurrentBodyShortName.Text = CurrentBody?.shortname;
+            //    }
+
+            //    bioSignals = new ObservableCollection<Exobiology>();
+
+            //    if ( CurrentBody != null )
+            //    {
+            //        foreach ( Exobiology bio in CurrentBody.surfaceSignals?.bioSignals )
+            //        {
+            //            bioSignals.Add( bio );
+            //        }
+            //    }
+
+            //    datagrid_bioData.DataContext = bioSignals;
+            //}
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

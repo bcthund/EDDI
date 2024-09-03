@@ -647,6 +647,8 @@ namespace EddiDiscoveryMonitor
                         //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
                         EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
                         StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                        
+                        OnPropertyChanged("handleScanOrganicEvent");
                     }
                 }
             }
