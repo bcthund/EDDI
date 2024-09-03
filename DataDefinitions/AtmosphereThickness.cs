@@ -6,21 +6,22 @@ using System.Diagnostics.Tracing;
 
 namespace EddiDataDefinitions
 {
-    /// <summary> Atmosphere Class </summary>
+    /// <summary> Atmosphere Thickness </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class AtmosphereThickness : ResourceBasedLocalizedEDName<AtmosphereThickness>
     {
         static AtmosphereThickness()
         {
             resourceManager = Properties.AtmosphereThickness.ResourceManager;
-            resourceManager.IgnoreCase = true;
+            resourceManager.IgnoreCase = false;
             missingEDNameHandler = (edname) => new AtmosphereThickness(edname);
 
-            None = new AtmosphereThickness("none");
-            Normal = new AtmosphereThickness("normal");
-            Thin = new AtmosphereThickness("thin");
-            Thick = new AtmosphereThickness("thick");
-            HotThick = new AtmosphereThickness("hot_thick");
+            None = new AtmosphereThickness("None");
+            Normal = new AtmosphereThickness("Normal");
+            Thin = new AtmosphereThickness("Thin");
+            Thick = new AtmosphereThickness("Thick");
+            HotThick = new AtmosphereThickness("HotThick");
+            GasGiant = new AtmosphereThickness("GasGiant");
         }
 
         public static readonly AtmosphereThickness None;
@@ -28,70 +29,74 @@ namespace EddiDataDefinitions
         public static readonly AtmosphereThickness Thin;
         public static readonly AtmosphereThickness Thick;
         public static readonly AtmosphereThickness HotThick;
+        public static readonly AtmosphereThickness GasGiant;
 
         // dummy used to ensure that the static constructor has run
         public AtmosphereThickness () : this("")
         { }
 
-        private AtmosphereThickness(string edname) : base(edname, edname
-            .ToLowerInvariant()
-            .Replace(" ", "_")
-            .Replace("-", ""))
+        private AtmosphereThickness(string edname) : base(edname, NormalizeAtmosphereThickness(edname))
         { }
 
-        new public static AtmosphereThickness FromName(string name)
+        new public static AtmosphereThickness FromName( string name )
         {
-            if (name == null)
+            string normalizedName;
+            if ( name == null || name == "" )
             {
-                return FromName("none");
+                normalizedName = "None";
+            }
+            else {
+                normalizedName = NormalizeAtmosphereThickness(name);
             }
 
-            string normalizedName = name
-            .ToLowerInvariant();
-            return ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName(normalizedName);
+            //Logging.Debug($"===============> [Atmosphere Thickness:FromName] name='{name}', normalized='{normalizedName}', resource='{ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName( normalizedName ).edname}'");
+
+            return ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName( normalizedName );
         }
 
-        new public static AtmosphereThickness FromEDName(string edname)
+        new public static AtmosphereThickness FromEDName( string edname )
         {
-            if (edname == null)
+            string normalizedEDName;
+            if ( edname == null || edname == "" )
             {
-                return FromEDName("none");
+                normalizedEDName = "None";
+            }
+            else {
+                normalizedEDName = NormalizeAtmosphereThickness(edname);
             }
 
-            string normalizedEDName = NormalizeAtmosphereThickness(edname);
-            return ResourceBasedLocalizedEDName<AtmosphereThickness>.FromEDName(normalizedEDName);
+            //Logging.Debug($"===============> [Atmosphere Thickness:FromEDName] name='{edname}', normalized='{normalizedEDName}', resource='{ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName( normalizedEDName ).edname}'");
+
+            return ResourceBasedLocalizedEDName<AtmosphereThickness>.FromEDName( normalizedEDName );
         }
 
-        public static string NormalizeAtmosphereThickness ( string edname )
+        public static string NormalizeAtmosphereThickness( string edname )
         {
+            string returnVal;
             string normalizedThickness = edname.ToLowerInvariant()
             .Replace(" ", "_")
             .Replace("-", "");
 
-            // TODO: 2212: Gas Giants?
-
-            int pos;
-            if (normalizedThickness=="" || normalizedThickness=="none" || normalizedThickness=="None") {
-                return "none";
+            if (normalizedThickness.Contains("no_atmosphere") || normalizedThickness=="" || normalizedThickness=="none" ) {
+                returnVal = "None";
             }
-            else if (normalizedThickness.Contains("hot_thick")) {
-                pos = normalizedThickness.IndexOf("hot_thick")+9;
+            else if (normalizedThickness.Contains("hot_thick") || normalizedThickness.Contains("hotthick")) {
+                returnVal = "HotThick";
             }
             else if (normalizedThickness.Contains("thick")) {
-                pos = normalizedThickness.IndexOf("thick")+5;
+                returnVal = "Thick";
             }
             else if (normalizedThickness.Contains("thin")) {
-                pos = normalizedThickness.IndexOf("thin")+4;
+                returnVal = "Thin";
             }
-            else return "normal";
-
-            //Logging.Debug($"{edname}, {normalizedThickness}, {pos}, {normalizedThickness.Length}");
-
-            if (pos < normalizedThickness.Length) {
-                return normalizedThickness?.Remove(pos) ?? "None";
+            else if (normalizedThickness.Contains("gas_giant") || normalizedThickness.Contains("gasgiant")) {
+                returnVal = "GasGiant";
             }
+            else returnVal = "Normal";
 
-            return normalizedThickness ?? "None";
+            //Logging.Debug($"====================> [Atmosphere Thickness:Normalize] edname='{edname}' normalized='{normalizedThickness}', return='{returnVal}'");
+
+            return returnVal;
         }
     }
 }

@@ -119,11 +119,11 @@
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Type" IsReadOnly="True" Width="Auto" Binding="{Binding type}"/>
-                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding distance}"/>
-                    <DataGridTextColumn Header="System" IsReadOnly="True" Width="Auto" Binding="{Binding systemName}"/>
-                    <DataGridTextColumn Header="Body" IsReadOnly="True" Width="Auto" Binding="{Binding body}"/>
-                    <DataGridTextColumn Header="Blueprint" IsReadOnly="True" Width="Auto" Binding="{Binding blueprintType}"/>
+                    <DataGridTextColumn Header="Type" IsReadOnly="True" Width="*" Binding="{Binding type}"/>
+                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="*" Binding="{Binding distance}"/>
+                    <DataGridTextColumn Header="System" IsReadOnly="True" Width="3*" Binding="{Binding systemName}"/>
+                    <DataGridTextColumn Header="Body" IsReadOnly="True" Width="*" Binding="{Binding body}"/>
+                    <DataGridTextColumn Header="Blueprint" IsReadOnly="True" Width="*" Binding="{Binding blueprintType}"/>
                     <!--<DataGridTextColumn Header="Visited" IsReadOnly="True" Width="Auto" Binding="{Binding visited}"/>-->
                 </DataGrid.Columns>
             </DataGrid>

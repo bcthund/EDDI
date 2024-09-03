@@ -181,11 +181,7 @@ namespace EddiStarMapService
                     }
                     decimal? pressureAtm = (decimal?)body["surfacePressure"];
 
-                    // TODO: Does EDSM have this data?
-                    //  - Appear this si contained in "atmosphereType"
-                    //AtmosphereThickness atmosphereThickness = AtmosphereThickness.None;
-                    AtmosphereThickness atmosphereThickness = AtmosphereThickness.FromName((string)body["atmosphereType"]) ?? AtmosphereThickness.Normal;
-
+                    AtmosphereThickness atmosphereThickness = null;
                     AtmosphereClass atmosphereClass = null;
                     if (((string)body["subType"]).Contains("gas giant") &&
                         (string)body["atmosphereType"] == "No atmosphere")
@@ -193,11 +189,14 @@ namespace EddiStarMapService
                         // EDSM classifies any body with an empty string atmosphere property as "No atmosphere". 
                         // However, gas giants also receive an empty string. Fix it, since gas giants have atmospheres. 
                         atmosphereClass = AtmosphereClass.GasGiant;
+                        atmosphereThickness = AtmosphereThickness.GasGiant;
                     }
                     else
                     {
                         atmosphereClass = AtmosphereClass.FromName((string)body["atmosphereType"]) ?? AtmosphereClass.None;
+                        atmosphereThickness = AtmosphereThickness.FromName((string)body["atmosphereType"]) ?? AtmosphereThickness.Normal;
                     }
+                    //Logging.Debug($"==========> [Atmosphere Thickness:EDSM] bodyId={body["bodyId"]}, EDSM Type={body["atmosphereType"]}, Thickness={atmosphereThickness.edname}");
 
                     List<SolidComposition> solidCompositions = new List<SolidComposition>();
                     if (body["solidComposition"] is JObject)

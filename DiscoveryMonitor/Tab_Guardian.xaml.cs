@@ -18,7 +18,7 @@ namespace EddiDiscoveryMonitor
     /// </summary>
     public partial class Tab_Guardian : UserControl
     {
-        public static ConfigurationWindow.Coord systemCoord => ConfigurationWindow.systemCoord;
+        public static Tab_General.Coord systemCoord => Tab_General.systemCoord;
 
         List<GuardianSite> guardianResult = new List<GuardianSite>();
 

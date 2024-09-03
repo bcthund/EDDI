@@ -9,14 +9,71 @@
 
     <Grid Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" MinWidth="175"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0" TextWrapping="Wrap" Margin="5,5,5,5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Column="0" Header="System Address" Margin="5,1,5,1">
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="10"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,0" Click="onClick_GetSystemAddress">
+                        <TextBlock TextAlignment="Center">Get Current<LineBreak/>System Address</TextBlock>
+                    </Button>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="X" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="system_xCoord" Text="0" TextChanged="system_xCoord_Changed" ToolTip="System X coordinate" PreviewTextInput="EnsureValidDecimalWithNegative"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="Y" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="system_yCoord" Text="0" TextChanged="system_yCoord_Changed" ToolTip="System Y coordinate" PreviewTextInput="EnsureValidDecimalWithNegative"/>
+
+                    <Label Grid.Row="4" Grid.Column="0" Content="Z" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="system_zCoord" Text="0" TextChanged="system_zCoord_Changed" ToolTip="System Z coordinate" PreviewTextInput="EnsureValidDecimalWithNegative"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Region" Grid.Column="0" Grid.Row="1" Margin="5,1,5,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="10"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" Grid.Column="0" Content="Get Region" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_FindRegion"/>
+
+                    <TextBox Grid.Row="2" Grid.Column="0" x:Name="regionName" Text="" IsReadOnly="True" VerticalAlignment="Stretch"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        
+        <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Margin="5,5,5,5">
             <Run Text="These tabs allow configuration of the codex discoveries, exobiology and to a lesser extend geology. They change how the scripts work without needing to modify the scripts directly. Most settings have tooltips to briefly explain what they do."/><LineBreak/>
             <Run/><LineBreak/>
             <Run Text="The System Address should automatically update whenever the current system changes. The tools on the different tabs rely on these coordinates and they can be manually changed to run the tools on different locations. The Region is not automatically updated."/><LineBreak/>
@@ -26,7 +83,7 @@
             <Run Text="Nebulae and Guardian Sites will not automatically update when the system changes. Press the associated button in those tabs to see the data."/><LineBreak/>
         </TextBlock>
 
-        <StackPanel Grid.Column="0" Grid.Row="1">
+        <StackPanel Grid.Column="1" Grid.Row="1">
             <GroupBox Header="Legacy Predictions" Margin="5,1,5,1">
                 <StackPanel>
                     <TextBlock Height="40" TextWrapping="WrapWithOverflow">These can often give false predictions due to their broad conditions.</TextBlock>

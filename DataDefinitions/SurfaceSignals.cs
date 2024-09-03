@@ -34,6 +34,10 @@ namespace EddiDataDefinitions
         public List<Exobiology> bioSignalsRemaining =>
             bioSignals.Where( e => e.ScanState < Exobiology.State.SampleComplete ).ToList();
 
+        [JsonIgnore]
+        public int? bioSignalsComplete =>
+            bioSignals.Where( e => e.ScanState==Exobiology.State.SampleComplete ).Count();
+
         [JsonIgnore,  PublicAPI( "True if the current biologicals are predicted (but not confirmed) " ) ]
         public bool predicted => bioSignals.Any( s => s.ScanState == Exobiology.State.Predicted );
 

@@ -39,7 +39,7 @@ namespace EddiDiscoveryMonitor
         internal Exobiology _currentOrganic;
         internal StarSystem _currentSystem => EDDI.Instance?.CurrentStarSystem;
         internal long? _currentBodyId;
-
+        
         public long? CurrentBodyId
         {
             get { return _currentBodyId; }
@@ -776,20 +776,23 @@ namespace EddiDiscoveryMonitor
         }
 
         // This was originally added to allow forced prediction updates from the GUI as a debugging option
-        public void UpdatePredictedBios(long? bodyId) {
+        public void UpdatePredictedBios(ulong systemAddress, long? bodyId) {
 
-            var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( (long)bodyId );
+            if( _currentSystem.systemAddress==systemAddress ) {
 
-            if ( TryUpdatePredictBios( ref body ) )
-            {
-                EDDI.Instance.enqueueEvent( new OrganicPredictionEvent( DateTime.UtcNow, body, body.surfaceSignals.bioSignals ) );
+                var body = _currentSystem.BodyWithID( (long)bodyId );
 
-                // Save/Update Body data
-                body.surfaceSignals.lastUpdated = DateTime.UtcNow;
-                //_currentSystem.AddOrUpdateBody( body );
-                //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
-                EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
-                StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                if ( TryUpdatePredictBios( ref body ) )
+                {
+                    EDDI.Instance.enqueueEvent( new OrganicPredictionEvent( DateTime.UtcNow, body, body.surfaceSignals.bioSignals ) );
+
+                    // Save/Update Body data
+                    body.surfaceSignals.lastUpdated = DateTime.UtcNow;
+                    //_currentSystem.AddOrUpdateBody( body );
+                    //StarSystemSqLiteRepository.Instance.SaveStarSystem( _currentSystem );
+                    EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
+                    StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
+                }
             }
         }
 

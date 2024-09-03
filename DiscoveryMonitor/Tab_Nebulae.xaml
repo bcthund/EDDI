@@ -124,10 +124,10 @@
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Type" IsReadOnly="True" Width="Auto" Binding="{Binding type}"/>
-                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding distance}"/>
-                    <DataGridTextColumn Header="Name" IsReadOnly="True" Width="Auto" Binding="{Binding name}"/>
-                    <DataGridTextColumn Header="Reference" IsReadOnly="True" Width="Auto" Binding="{Binding referenceBody}"/>
-                    <DataGridTextColumn Header="Diameter" IsReadOnly="True" Width="Auto" Binding="{Binding diameter}"/>
+                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding distance, StringFormat={}0 LY}"/>
+                    <DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding name}"/>
+                    <DataGridTextColumn Header="Reference" IsReadOnly="True" Width="*" Binding="{Binding referenceBody}"/>
+                    <DataGridTextColumn Header="Diameter" IsReadOnly="True" Width="Auto" Binding="{Binding diameter, StringFormat={}0 LY}"/>
                     <!-- TODO: Would be nice to track if we have visisted a Nebula so we can filter results -->
                     <!--<DataGridTextColumn Header="Visited" IsReadOnly="True" Width="Auto" Binding="{Binding visited}"/>-->
                 </DataGrid.Columns>

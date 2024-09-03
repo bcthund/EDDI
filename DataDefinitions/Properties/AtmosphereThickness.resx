@@ -132,4 +132,7 @@
   <data name="normal" xml:space="preserve">
     <value>Normal</value>
   </data>
+  <data name="gas_giant" xml:space="preserve">
+    <value>Gas Giant</value>
+  </data>
 </root>

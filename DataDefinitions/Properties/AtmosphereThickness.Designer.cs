@@ -61,6 +61,15 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gas Giant.
+        /// </summary>
+        public static string gas_giant {
+            get {
+                return ResourceManager.GetString("gas_giant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hot Thick.
         /// </summary>
         public static string hot_thick {

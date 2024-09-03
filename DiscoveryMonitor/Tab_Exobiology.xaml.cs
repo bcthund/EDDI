@@ -9,10 +9,6 @@ using Utilities;
 using EddiDataDefinitions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Collections.Generic;
-using Windows.UI.Xaml.Data;
-//using System.Windows.Data;
-using System.Security.Permissions;
 using System.Linq;
 
 namespace EddiDiscoveryMonitor
@@ -22,21 +18,48 @@ namespace EddiDiscoveryMonitor
     /// </summary>
     public partial class Tab_Exobiology : UserControl
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName) {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
         public ObservableCollection<Exobiology> bioSignals { get; set; }
 
-        //public long currentBodyId {get; set; }
+        //public HashSet<Exobiology> biosignals2 => currentBody?.surfaceSignals?.bioSignals;
+
+        public StarSystem currentStarSystem => EDDI.Instance?.CurrentStarSystem;
+
         public long? currentBodyId => discoveryMonitor().CurrentBodyId;
 
-        public Body currentBody => EDDI.Instance?.CurrentStarSystem?.BodyWithID( currentBodyId );
+        //public Body currentBody => currentStarSystem?.BodyWithID( currentBodyId );
 
         public OrganicGenus selectedGenus;
 
-        public Exobiology selectedBio => currentBody?.surfaceSignals.bioSignals.Where(x => x.genus==selectedGenus).First();
+        //public Exobiology selectedBio => currentBody?.surfaceSignals?.bioSignals?.Where(x => x.genus==selectedGenus).First();
+        public Exobiology selectedBio;
 
-        public long? _currentBodyId { get; set; }
+        private bool isPredicting = false;
 
-        public Body _currentBody { get; set; }
+        internal long? _currentBodyId { get; set; }
 
+        public long? CurrentBodyId
+        {
+            get { return _currentBodyId; }
+            set {
+                _currentBodyId = value;
+                OnPropertyChanged("CurrentBodyId");
+            }
+        }
+
+        internal Body _currentBody { get; set; }
+        public Body CurrentBody
+        {
+            get { return _currentBody; }
+            set {
+                _currentBody = value;
+                OnPropertyChanged("CurrentBody");
+            }
+        }
 
         private DiscoveryMonitor discoveryMonitor ()
         {
@@ -48,46 +71,84 @@ namespace EddiDiscoveryMonitor
             InitializeComponent();
 
             discoveryMonitor().PropertyChanged += DiscoveryMonitor_PropertyChanged;
+            EDDI.Instance.PropertyChanged += EddiInstance_PropertyChanged;
+            this.PropertyChanged += This_PropertyChanged;
 
-            this.DataContext = this;
+            //this.DataContext = this;
 
-            _currentBodyId = currentBodyId;
-            _currentBody = currentBody;
+            CurrentBodyId = currentBodyId;
+            CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
 
             bioSignals = new ObservableCollection<Exobiology>();
-            if(currentBody != null ) {
-                foreach ( Exobiology bio in currentBody.surfaceSignals?.bioSignals ) {
+            if ( CurrentBody != null )
+            {
+                foreach ( Exobiology bio in CurrentBody.surfaceSignals?.bioSignals )
+                {
                     bioSignals.Add( bio );
                 }
             }
             datagrid_bioData.DataContext = bioSignals;
 
-            if(currentBody != null ) {
-                textbox_CurrentSystemName.Text = _currentBody?.systemname;
-                textbox_CurrentBodyId.Text = _currentBodyId.ToString();
-                textbox_CurrentBodyShortName.Text = _currentBody?.shortname;
+            if ( CurrentBody != null )
+            {
+                textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+                textbox_CurrentBodyId.Text = CurrentBodyId.ToString();
+                textbox_CurrentBodyShortName.Text = CurrentBody?.shortname;
             }
-            else {
+            else
+            {
                 textbox_CurrentSystemName.Text = "";
                 textbox_CurrentBodyId.Text = "";
                 textbox_CurrentBodyShortName.Text = "";
             }
 
-            selectedBio_Grid.DataContext = selectedBio;
+            //selectedBio_Grid.DataContext = selectedBio;
             SetBioData();
         }
 
         void DiscoveryMonitor_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CurrentBodyId" || e.PropertyName == "RefreshData")
+            if ( !isPredicting && (e.PropertyName == "CurrentBodyId" || e.PropertyName == "RefreshData") )
             {
-                this.Dispatcher.Invoke(() =>
+                this.Dispatcher.Invoke( () =>
                 {
-                    _currentBodyId = ((DiscoveryMonitor)sender).CurrentBodyId;
-                    _currentBody = EDDI.Instance?.CurrentStarSystem?.BodyWithID( _currentBodyId );;
+                    //Logging.Debug($"[00] ========> DiscoveryMonitor_PropertyChanged INVOKED ");
+                    datagrid_bioData.SelectedIndex = -1;
+                    CurrentBodyId = ( (DiscoveryMonitor)sender ).CurrentBodyId;
+                    CurrentBody = EDDI.Instance?.CurrentStarSystem?.BodyWithID( CurrentBodyId );
 
                     RefreshData();
-                });
+                } );
+            }
+        }
+
+        void EddiInstance_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if ( !isPredicting && (e.PropertyName == "CurrentStarSystem") )
+            {
+                this.Dispatcher.Invoke( () =>
+                {
+                    //Logging.Debug($"[01] EddiInstance_PropertyChanged INVOKED ");
+                    CurrentBodyId = 0;
+                    datagrid_bioData.SelectedIndex = -1;
+                    CurrentBody = null;
+                    selectedBio = null;
+
+                    RefreshData();
+                    SetBioData();
+                } );
+            }
+        }
+
+        void This_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if ( !isPredicting && (e.PropertyName == "CurrentBodyId") )
+            {
+                Logging.Debug( $"======> CurrentBodyId Property Changed" );
+                // If the contextual body has changed, set bio selection to none and clear current display data
+                datagrid_bioData.SelectedIndex = -1;
+                selectedBio = null;
+                SetBioData();
             }
         }
 
@@ -97,37 +158,53 @@ namespace EddiDiscoveryMonitor
         }
 
         private void buttonPredict ( object sender, RoutedEventArgs e ) {
-            if (_currentBodyId != null ) {
-                discoveryMonitor().UpdatePredictedBios( _currentBodyId );
+            if (CurrentBodyId != null ) {
+                isPredicting = true;
+                //Logging.Debug($"[02] buttonPredict INVOKED ");
+                discoveryMonitor().UpdatePredictedBios( currentStarSystem.systemAddress, CurrentBodyId );
+                CurrentBody = EDDI.Instance?.CurrentStarSystem?.BodyWithID( CurrentBodyId );
 
-                RefreshData();
+                RefreshData(false);
+                isPredicting = false;
             }
         }
 
         private void buttonRefresh ( object sender, RoutedEventArgs e )
         {
-            _currentBodyId = currentBodyId;
-            _currentBody = currentBody;
+            CurrentBodyId = currentBodyId;
+            CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
 
             RefreshData();
         }
 
-        private void RefreshData() {
-            if(currentBody != null ) {
-                textbox_CurrentSystemName.Text = _currentBody?.systemname;
-                textbox_CurrentBodyId.Text = _currentBodyId.ToString();
-                textbox_CurrentBodyShortName.Text = _currentBody?.shortname;
-            }
-            
-            bioSignals = new ObservableCollection<Exobiology>();
+        private void RefreshData (bool refreshPlanets=true)
+        {
+            //Logging.Debug($"[03] RefreshData INVOKED ");
+            if ( currentStarSystem != null ) {
 
-            if(currentBody != null ) {
-                foreach ( Exobiology bio in currentBody.surfaceSignals?.bioSignals ) {
-                    bioSignals.Add( bio );
+                if (refreshPlanets ) {
+                    datagrid_PlanetsWithBios.DataContext = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
                 }
-            }
 
-            datagrid_bioData.DataContext = bioSignals;
+                if ( CurrentBody != null )
+                {
+                    textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+                    textbox_CurrentBodyId.Text = CurrentBodyId.ToString();
+                    textbox_CurrentBodyShortName.Text = CurrentBody?.shortname;
+                }
+
+                bioSignals = new ObservableCollection<Exobiology>();
+
+                if ( CurrentBody != null )
+                {
+                    foreach ( Exobiology bio in CurrentBody.surfaceSignals?.bioSignals )
+                    {
+                        bioSignals.Add( bio );
+                    }
+                }
+
+                datagrid_bioData.DataContext = bioSignals;
+            }
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -148,17 +225,17 @@ namespace EddiDiscoveryMonitor
         {
             DataGrid dataGrid = sender as DataGrid;
 
-            // Future Reference - Getting Cell Data
-            //DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(dataGrid.SelectedIndex);
-            //DataGridCell RowColumn = dataGrid.Columns[ColumnIndex].GetCellContent(row).Parent as DataGridCell;
-            //string CellValue = ((TextBlock)RowColumn.Content).Text;
+            if ( datagrid_bioData?.SelectedIndex >= 0 ) {
+                var row = datagrid_bioData?.SelectedIndex;
+                if (row != null) {
+                    selectedGenus = bioSignals[(int)row].genus;
 
-            var row = datagrid_bioData.SelectedIndex;
-            selectedGenus = bioSignals[row].genus;
+                    selectedBio = CurrentBody?.surfaceSignals?.bioSignals?.Where(x => x.genus==selectedGenus).First();
+                    selectedBio_Grid.DataContext = selectedBio;
 
-            selectedBio_Grid.DataContext = selectedBio;
-
-            SetBioData();
+                    SetBioData();
+                }
+            }
 
         }
 
@@ -229,11 +306,59 @@ namespace EddiDiscoveryMonitor
             }
         }
 
-        //public object BooleanToVisibiltyConverter(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        //{
-        //    bool isVisible = (bool)value;
-        //    return (isVisible ? Visibility.Visible : Visibility.Collapsed);
-        //}
+        // When ENTER key pressed, try to set the ID as the new current body Id
+        private void textbox_CurrentBodyId_KeyDown ( object sender, KeyEventArgs e )
+        {
+            //Logging.Debug($"TEXT CHANGED ({e.Key})");
+            //string log = $"";
+
+            if (e.Key != Key.Enter) return;
+
+            //log += $"Enter Key Pressed: ";
+
+            if (textbox_CurrentBodyId.Text.Length>0) {
+                //log += $"Textbox length > 0, ";
+                long? newBodyId = Convert.ToInt64(textbox_CurrentBodyId.Text);
+
+                //log += $"newBodyId = {newBodyId}, ";
+
+                if ( newBodyId != null ) {
+                    if ( currentStarSystem.bodies.Exists(x=>x.bodyId==newBodyId) ) {
+
+                        //log += $"body existis ";
+
+                        CurrentBodyId = newBodyId;
+                        CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
+
+                        //log += $"({CurrentBody.bodyname}), REFRESH DATA...";
+
+                        RefreshData();
+                    }
+                }
+            }
+            //Logging.Debug($"{log}");
+        }
+
+        private void datagrid_PlanetsWithBios_SelectionChanged ( object sender, SelectionChangedEventArgs e )
+        {
+            //DataGrid dataGrid = sender as DataGrid;
+            // Future Reference - Getting Cell Data
+            //DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(dataGrid.SelectedIndex);
+            //DataGridCell RowColumn = dataGrid.Columns[ColumnIndex].GetCellContent(row).Parent as DataGridCell;
+            //string CellValue = ((TextBlock)RowColumn.Content).Text;
+
+            if ( datagrid_PlanetsWithBios?.SelectedIndex >= 0 ) {
+                var row = datagrid_PlanetsWithBios?.SelectedIndex;
+                if (row != null) {
+                    
+                    var newBodyId = (this.datagrid_PlanetsWithBios.SelectedItem as Body).bodyId;
+                    CurrentBodyId = newBodyId;
+                    CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
+                    RefreshData(false);
+                    SetBioData();
+                }
+            }
+        }
 
     }
 }

@@ -135,6 +135,11 @@ namespace EddiDataDefinitions
 
         private static Body PreserveBodyData(Body oldBody, Body updatedBody)
         {
+            //if ( oldBody.atmospherethickness != AtmosphereThickness.None )
+            //{
+            //    updatedBody.atmospherethickness = oldBody.atmospherethickness;
+            //}
+
             if ( ( oldBody.scannedDateTime ?? DateTime.MinValue) > ( updatedBody.scannedDateTime ?? DateTime.MinValue ) )
             {
                 updatedBody.scannedDateTime = oldBody.scannedDateTime;

@@ -178,6 +178,8 @@ namespace EddiDiscoveryMonitor
 
         private bool TryCheckGravity ( decimal? minG, decimal? maxG, ref string log )
         {
+            //log += $"[Gravity: body={body.gravity} min={minG} max={maxG}] ";
+
             if ( minG > 0 )
             {
                 if ( body.gravity < minG )
@@ -281,7 +283,8 @@ namespace EddiDiscoveryMonitor
                     }
                     else if(checkParts.Count() >= 2 ) {
 
-                        checkParts[0] = checkParts[0].ToLowerInvariant();
+                        //checkParts[0] = checkParts[0].ToLowerInvariant();
+                        //log += $"({checkParts[0]}=={body.atmospherethickness.basename})";
 
                         // Check Thickness
                         if ( 
@@ -299,16 +302,6 @@ namespace EddiDiscoveryMonitor
                             }
                         }
                     }
-
-                    /*
-                    if ( checkAtmosphereClasses.Any( c =>
-                            ( ( c == "None" || c == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
-                                c == "Any" ||
-                                c == body.atmosphereclass.edname ) )
-                    {
-                        return true;
-                    }
-                    */
                     
                 }
                 log += $"REJECT. Atmosphere thickness,class: {( body.atmospherethickness ?? AtmosphereThickness.None )?.edname},{( body.atmosphereclass ?? AtmosphereClass.None )?.edname} not in {string.Join( ";", checkAtmosphereClasses )}.";

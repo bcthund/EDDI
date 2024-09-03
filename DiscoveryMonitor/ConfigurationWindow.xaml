@@ -9,8 +9,7 @@
 
     <Grid Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="175"></ColumnDefinition>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -18,53 +17,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Column="0" Header="System Address" Margin="5,1,5,1">
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="10"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,0" Click="onClick_GetSystemAddress">
-                    <TextBlock TextAlignment="Center">Get Current<LineBreak/>System Address</TextBlock>
-                </Button>
-
-                <Label Grid.Row="2" Grid.Column="0" Content="X" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
-                <TextBox Grid.Row="2" Grid.Column="1" x:Name="system_xCoord" Text="0" TextChanged="system_xCoord_Changed" ToolTip="System X coordinate" PreviewTextInput="EnsureValidDecimalWithNegative"/>
-
-                <Label Grid.Row="3" Grid.Column="0" Content="Y" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
-                <TextBox Grid.Row="3" Grid.Column="1" x:Name="system_yCoord" Text="0" TextChanged="system_yCoord_Changed" ToolTip="System Y coordinate" PreviewTextInput="EnsureValidDecimalWithNegative"/>
-
-                <Label Grid.Row="4" Grid.Column="0" Content="Z" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="system_zCoord" Text="0" TextChanged="system_zCoord_Changed" ToolTip="System Z coordinate" PreviewTextInput="EnsureValidDecimalWithNegative"/>
-            </Grid>
-        </GroupBox>
-
-        <GroupBox Header="Region" Grid.Column="0" Grid.Row="1" Margin="5,1,5,1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="10"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <Button Grid.Row="0" Grid.Column="0" Content="Get Region" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_FindRegion"/>
-
-                <TextBox Grid.Row="2" Grid.Column="0" x:Name="regionName" Text="" IsReadOnly="True" VerticalAlignment="Stretch"/>
-            </Grid>
-        </GroupBox>
-
-        <TabControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" x:Name="tabControl" TabStripPlacement="Top" HorizontalAlignment="Stretch">
+        <TabControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" x:Name="tabControl" TabStripPlacement="Top">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="MinWidth" Value="75" />
@@ -73,6 +26,7 @@
                 </Style>
                 <Style TargetType="TabPanel">
                     <Setter Property="Width" Value="1000"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
                 </Style>
             </TabControl.Resources>
             <TabItem Header="General">
