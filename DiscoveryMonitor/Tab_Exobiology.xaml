@@ -176,7 +176,7 @@
                     <DataGridTextColumn Header="Samples" IsReadOnly="True" Width="Auto" Binding="{Binding samples, FallbackValue=''}"/>
                     <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding genus.minimumDistanceMeters, StringFormat={}{0}m, FallbackValue=''}"/>
                     <DataGridTextColumn Header="State" IsReadOnly="True" Width="Auto" Binding="{Binding state, FallbackValue=''}"/>
-                    <DataGridTextColumn Header="Value" IsReadOnly="True" Width="Auto" Binding="{Binding value, FallbackValue=''}"/>
+                    <DataGridTextColumn Header="Value" IsReadOnly="True" Width="Auto" Binding="{Binding value, FallbackValue='', StringFormat='{}{0:#,0}'}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -212,8 +212,8 @@
                 </TextBlock>
 
                 <Label Grid.Column="0" Grid.Row="2" x:Name="selectedBio_samples_title" Content="Sample" HorizontalContentAlignment="Center"/>
-                <Label Grid.Column="1" Grid.Row="2" x:Name="selectedBio_x_title" Content="X" HorizontalContentAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="2" x:Name="selectedBio_y_title" Content="Y" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="1" Grid.Row="2" x:Name="selectedBio_x_title" Content="Latitude" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="2" x:Name="selectedBio_y_title" Content="Longitude" HorizontalContentAlignment="Center"/>
 
                 <Label Grid.Column="0" Grid.Row="3" x:Name="selectedBio_Sample1_header" Content="#1" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="1" Grid.Row="3" x:Name="selectedBio_Sample1_x" Content="" HorizontalContentAlignment="Center"/>

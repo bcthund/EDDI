@@ -25,17 +25,12 @@ namespace EddiDiscoveryMonitor
 
         public ObservableCollection<Exobiology> bioSignals { get; set; }
 
-        //public HashSet<Exobiology> biosignals2 => currentBody?.surfaceSignals?.bioSignals;
-
         public StarSystem currentStarSystem => EDDI.Instance?.CurrentStarSystem;
 
         public long? currentBodyId => discoveryMonitor().CurrentBodyId;
 
-        //public Body currentBody => currentStarSystem?.BodyWithID( currentBodyId );
-
         public OrganicGenus selectedGenus;
 
-        //public Exobiology selectedBio => currentBody?.surfaceSignals?.bioSignals?.Where(x => x.genus==selectedGenus).First();
         public Exobiology selectedBio;
 
         internal bool isPredicting = false;
@@ -117,6 +112,13 @@ namespace EddiDiscoveryMonitor
             SetBioData();
         }
 
+        /// <summary>
+        /// If the discovery monitor changes its current body due to a handled event then update displayed data
+        /// Also monitor manual property update via "RefreshData"
+        /// Also update after a "handleScanOrganicEvent" which occurs after the DiscoveryMonitor has made its own internal updates
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void DiscoveryMonitor_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if ( !isPredicting && (e.PropertyName == "CurrentBodyId" || e.PropertyName == "RefreshData" || e.PropertyName == "handleScanOrganicEvent" ) )
@@ -139,46 +141,61 @@ namespace EddiDiscoveryMonitor
             }
         }
 
+        /// <summary>
+        /// If the current star system has changed, then reset selections/internals and refresh all displayed data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void EddiInstance_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if ( !isPredicting && (e.PropertyName == "CurrentStarSystem") )
             {
                 this.Dispatcher.Invoke( () =>
                 {
-                    //Logging.Debug($"[01] EddiInstance_PropertyChanged INVOKED ");
                     CurrentBodyId = 0;
                     datagrid_bioData.SelectedIndex = -1;
                     CurrentBody = null;
                     selectedBio = null;
 
-                    //RefreshData((StarSystem)sender);
                     RefreshData();
                     SetBioData();
                 } );
             }
         }
 
+        /// <summary>
+        /// If the contextual body has changed, set bio selection to none and clear current display data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void This_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if ( !isPredicting && (e.PropertyName == "CurrentBodyId") )
             {
-                //Logging.Debug( $"======> CurrentBodyId Property Changed" );
-                // If the contextual body has changed, set bio selection to none and clear current display data
                 datagrid_bioData.SelectedIndex = -1;
                 selectedBio = null;
                 SetBioData();
             }
         }
 
+        /// <summary>
+        /// Numbered rows for biologicals
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void datagrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex()+1).ToString();
         }
 
+        /// <summary>
+        /// Force a prediction retry, will erase current biosignals (even already sampled ones) on body and recreate
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonPredict ( object sender, RoutedEventArgs e ) {
             if (CurrentBodyId != null ) {
                 isPredicting = true;
-                //Logging.Debug($"[02] buttonPredict INVOKED ");
                 discoveryMonitor().UpdatePredictedBios( currentStarSystem.systemAddress, CurrentBodyId );
                 CurrentBody = EDDI.Instance?.CurrentStarSystem?.BodyWithID( CurrentBodyId );
 
@@ -187,21 +204,29 @@ namespace EddiDiscoveryMonitor
             }
         }
 
+        /// <summary>
+        /// Manual refresh of planets/biologicals
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonRefresh ( object sender, RoutedEventArgs e )
         {
-            CurrentBodyId = currentBodyId;
-            CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
+            //CurrentBodyId = currentBodyId;
+            //CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
 
-            RefreshData();
+            RefreshData(true);
         }
 
-        private void RefreshData (StarSystem referenceStarSystem, bool refreshPlanets=true)
+        /// <summary>
+        /// Refresh the list of planets and the list of biologicals for the current star system
+        /// </summary>
+        /// <param name="refreshPlanets"></param>
+        private void RefreshData (bool refreshPlanets=true)
         {
-            //Logging.Debug($"[03] RefreshData INVOKED ");
-            if ( referenceStarSystem != null ) {
+            if ( currentStarSystem != null ) {
 
                 if ( refreshPlanets ) {
-                    datagrid_PlanetsWithBios.DataContext = referenceStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
+                    datagrid_PlanetsWithBios.DataContext = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
                     if(_lastBodyId==CurrentBodyId) {
                         ignoreSelectionChange = true;
                         datagrid_PlanetsWithBios.SelectedIndex = _lastPlanetIndex;
@@ -226,61 +251,45 @@ namespace EddiDiscoveryMonitor
                     }
                 }
 
+                string contextBioName = discoveryMonitor()._currentOrganic?.Genus.localizedName ?? "";
+                var getIndex = bioSignals.ToList().FindIndex(x=>x.genus.localizedName==contextBioName);
+
                 datagrid_bioData.DataContext = bioSignals;
                 if(_lastBodyId==CurrentBodyId) {
                     ignoreSelectionChange = true;
-                    datagrid_bioData.SelectedIndex = _lastBioIndex;
+                    datagrid_bioData.SelectedIndex = getIndex;
                     ignoreSelectionChange = false;
                 }
             }
         }
 
-        private void RefreshData (bool refreshPlanets=true)
-        {
-            RefreshData(currentStarSystem, refreshPlanets);
-            
-            //Logging.Debug($"[03] RefreshData INVOKED ");
-            //if ( currentStarSystem != null ) {
-
-            //    if (refreshPlanets ) {
-            //        datagrid_PlanetsWithBios.DataContext = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList();
-            //    }
-
-            //    if ( CurrentBody != null )
-            //    {
-            //        textbox_CurrentSystemName.Text = CurrentBody?.systemname;
-            //        textbox_CurrentBodyId.Text = CurrentBodyId.ToString();
-            //        textbox_CurrentBodyShortName.Text = CurrentBody?.shortname;
-            //    }
-
-            //    bioSignals = new ObservableCollection<Exobiology>();
-
-            //    if ( CurrentBody != null )
-            //    {
-            //        foreach ( Exobiology bio in CurrentBody.surfaceSignals?.bioSignals )
-            //        {
-            //            bioSignals.Add( bio );
-            //        }
-            //    }
-
-            //    datagrid_bioData.DataContext = bioSignals;
-            //}
-        }
-
+        /// <summary>
+        /// Ensure a TextBox only has valid integers (non-negative)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Ensure a TextBox only has valid integers (non-negative)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EnsureValidInteger(object sender, TextCompositionEventArgs e)
         {
-            // Match valid characters
-            Regex regex = new Regex(@"[0-9]");
-            // Swallow the character doesn't match the regex
-            e.Handled = !regex.IsMatch(e.Text);
+            Regex regex = new Regex(@"[0-9]");      // Match valid characters
+            e.Handled = !regex.IsMatch(e.Text);     // Swallow the character doesn't match the regex
         }
 
+        /// <summary>
+        /// Biological selection changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void datagrid_SelectionChanged ( object sender, SelectionChangedEventArgs e )
         {
             DataGrid dataGrid = sender as DataGrid;
@@ -299,6 +308,9 @@ namespace EddiDiscoveryMonitor
 
         }
 
+        /// <summary>
+        /// Update the visibility and content of selected biological data
+        /// </summary>
         public void SetBioData() {
             textBlock_Genus.Visibility = Visibility.Hidden;
             textBlock_Species.Visibility = Visibility.Hidden;
@@ -366,47 +378,35 @@ namespace EddiDiscoveryMonitor
             }
         }
 
-        // When ENTER key pressed, try to set the ID as the new current body Id
+        /// <summary>
+        /// When ENTER key pressed, try to set the ID as the new current body Id
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textbox_CurrentBodyId_KeyDown ( object sender, KeyEventArgs e )
         {
-            //Logging.Debug($"TEXT CHANGED ({e.Key})");
-            //string log = $"";
-
             if (e.Key != Key.Enter) return;
 
-            //log += $"Enter Key Pressed: ";
-
             if (textbox_CurrentBodyId.Text.Length>0) {
-                //log += $"Textbox length > 0, ";
                 long? newBodyId = Convert.ToInt64(textbox_CurrentBodyId.Text);
-
-                //log += $"newBodyId = {newBodyId}, ";
 
                 if ( newBodyId != null ) {
                     if ( currentStarSystem.bodies.Exists(x=>x.bodyId==newBodyId) ) {
-
-                        //log += $"body existis ";
-
                         CurrentBodyId = newBodyId;
                         CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
-
-                        //log += $"({CurrentBody.bodyname}), REFRESH DATA...";
-
                         RefreshData();
                     }
                 }
             }
-            //Logging.Debug($"{log}");
         }
 
+        /// <summary>
+        /// Currently selected planet has changed, update internals and refresh the biologicals list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void datagrid_PlanetsWithBios_SelectionChanged ( object sender, SelectionChangedEventArgs e )
         {
-            //DataGrid dataGrid = sender as DataGrid;
-            // Future Reference - Getting Cell Data
-            //DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(dataGrid.SelectedIndex);
-            //DataGridCell RowColumn = dataGrid.Columns[ColumnIndex].GetCellContent(row).Parent as DataGridCell;
-            //string CellValue = ((TextBlock)RowColumn.Content).Text;
-
             if ( datagrid_PlanetsWithBios?.SelectedIndex >= 0 ) {
                 var row = datagrid_PlanetsWithBios?.SelectedIndex;
                 if (row != null) {

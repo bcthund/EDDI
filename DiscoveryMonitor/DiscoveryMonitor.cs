@@ -36,7 +36,7 @@ namespace EddiDiscoveryMonitor
         }
 
         internal DiscoveryMonitorConfiguration configuration;
-        internal Exobiology _currentOrganic;
+        internal Exobiology _currentOrganic { get; set; }
         internal StarSystem _currentSystem => EDDI.Instance?.CurrentStarSystem;
         internal long? _currentBodyId;
         
@@ -128,6 +128,7 @@ namespace EddiDiscoveryMonitor
 
             //var body = _currentBody(_currentBodyId);
             var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( CurrentBodyId );
+
             if ( body.surfaceSignals.TryGetBio( _currentOrganic, out var bio ) && bio.samples > 0 )
             {
                 // If the bio has been fully sampled, ignore it.
@@ -147,6 +148,7 @@ namespace EddiDiscoveryMonitor
 
                 var maxDistanceKm = distanceFromSamplesKm.LastOrDefault();
                 var minDistanceKm = distanceFromSamplesKm.FirstOrDefault();
+
                 //var distanceM = maxDistanceKm * 1000;
                 var distanceM = minDistanceKm * 1000;
 
@@ -203,13 +205,16 @@ namespace EddiDiscoveryMonitor
             else if ( @event is JumpedEvent jumpedEvent )
             {
                 handleJumpedEvent( jumpedEvent );
+                OnPropertyChanged("RefreshData");
             }
             else if ( @event is LocationEvent locationEvent )
             {
                 handleLocationEvent( locationEvent );
+                OnPropertyChanged("RefreshData");
             }
             else if ( @event is NextDestinationEvent nextDestinationEvent) {
                 handleNextDestinationEvent( nextDestinationEvent );
+                OnPropertyChanged("RefreshData");
             }
         }
 
@@ -556,33 +561,38 @@ namespace EddiDiscoveryMonitor
         {
             try
             {
-                if (!@event.fromLoad) {
-                    if ( CheckSafe( @event.bodyId ) )
+                // Always get current bio data, even during fromLoad so we have correct context on startup
+                //  - We have no other way to know the last bio context unless the ScanOrganic event is in the logs at startup
+                //  - Could we somehow save the last bio context in config files?
+                if ( CheckSafe( @event.bodyId ) )
+                {
+                    CurrentBodyId = @event.bodyId;
+
+                    //var body = _currentBody(_currentBodyId);
+                    var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( CurrentBodyId );
+                    var log = "";
+
+                    // Retrieve and/or add the organic
+                    if ( body.surfaceSignals.TryGetBio( @event.variant, @event.species, @event.genus, out var bio ) )
                     {
-                        CurrentBodyId = @event.bodyId;
+                        log += "Fetched biological\r\n";
+                    }
+                    else
+                    {
+                        log += "Adding biological\r\n";
+                        bio = bio ?? body.surfaceSignals.AddBio( @event.variant, @event.species, @event.genus );
+                    }
 
-                        //var body = _currentBody(_currentBodyId);
-                        var body = EDDI.Instance?.CurrentStarSystem.BodyWithID( CurrentBodyId );
-                        var log = "";
+                    if ( bio == null )
+                    {
+                        Logging.Debug( log );
+                        return;
+                    }
 
-                        // Retrieve and/or add the organic
-                        if ( body.surfaceSignals.TryGetBio( @event.variant, @event.species, @event.genus, out var bio ) )
-                        {
-                            log += "Fetched biological\r\n";
-                        }
-                        else
-                        {
-                            log += "Adding biological\r\n";
-                            bio = bio ?? body.surfaceSignals.AddBio( @event.variant, @event.species, @event.genus );
-                        }
+                    _currentOrganic = bio;
 
-                        if ( bio == null )
-                        {
-                            Logging.Debug( log );
-                            return;
-                        }
-
-                        _currentOrganic = bio;
+                    // If event if fromLoad then do not update the bio data
+                    if (!@event.fromLoad) {
 
                         if ( bio.ScanState == Exobiology.State.Predicted )
                         {
@@ -648,8 +658,10 @@ namespace EddiDiscoveryMonitor
                         EDDI.Instance?.CurrentStarSystem.AddOrUpdateBody( body );
                         StarSystemSqLiteRepository.Instance.SaveStarSystem(EDDI.Instance.CurrentStarSystem);
                         
-                        OnPropertyChanged("handleScanOrganicEvent");
                     }
+
+                    // Let DiscoveryMonitor window know there was a context update
+                    OnPropertyChanged("handleScanOrganicEvent");
                 }
             }
             catch ( Exception e )
