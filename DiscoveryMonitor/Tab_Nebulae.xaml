@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:EddiDiscoveryMonitor"
              mc:Ignorable="d" 
          d:DesignHeight="450" d:DesignWidth="800" d:MinWidth="650">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v" />
+    </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" Background="#FFE5E5E5">
         <Grid.ColumnDefinitions>
@@ -44,7 +47,7 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -64,41 +67,19 @@
 
                 <Label Grid.Row="4" Grid.Column="0" Content="Max Distance" VerticalAlignment="Center" Padding="5,0,20,0"/>
                 <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="5000" x:Name="nebulaMaxDistance" PreviewTextInput="EnsureValidInteger"/>
-                <!--<Slider Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Minimum="1" Maximum="20000" Value="5000" x:Name="slider_nebulaMaxDistance"></Slider>-->
-                <!--<Slider Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Minimum="1" Maximum="20000" Value="{Binding ElementName=textbox_nebulaMaxDistance,Path=Text}" x:Name="slider_nebulaMaxDistance"></Slider>-->
-                <!--<TextBox Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding ElementName=slider_nebulaMaxDistance,Path=Value,StringFormat={}{0:#}LY,UpdateSourceTrigger=PropertyChanged}" x:Name="textbox_nebulaMaxDistance" PreviewTextInput="EnsureValidInteger"/>-->
-                <!--<Label Grid.Row="4" Grid.Column="4" Content="{Binding ElementName=slider_nebulaMaxDistance,Path=Value}" ContentStringFormat="{}{0:#}LY" VerticalAlignment="Center" Padding="5,0,20,0" HorizontalContentAlignment="Center"/>-->
                 <Label Grid.Row="4" Grid.Column="4" Content="LY" VerticalAlignment="Center" Padding="5,0,20,0"/>
 
                 <Label Grid.Row="5" Grid.Column="0" Content="Max Results" VerticalAlignment="Center" Padding="5,0,20,0"/>
                 <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="50" x:Name="nebulaMaxCount" PreviewTextInput="EnsureValidInteger"/>
                 <Label Grid.Row="5" Grid.Column="4" Content="" VerticalAlignment="Center" Padding="5,0,20,0"/>
 
-                <!-- TODO: Would be nice to track if we have visisted a Nebula so we can filter results -->
-                <!--<Label Grid.Row="1" Grid.Column="0" Content="Visited Filter" VerticalAlignment="Center" Padding="5,0,20,0"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Visited Filter" VerticalAlignment="Center" Padding="5,0,20,0"/>
                 <RadioButton Grid.Row="1" Grid.Column="1" x:Name="radioNebulafilter_Visted_All" Content="All" IsChecked="True" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
                 <RadioButton Grid.Row="1" Grid.Column="2" x:Name="radioNebulafilter_Visted_Visited" Content="Visited" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
                 <RadioButton Grid.Row="1" Grid.Column="3" x:Name="radioNebulafilter_Visted_NotVisited" Content="Not Visited" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                <RadioButton Grid.Row="1" Grid.Column="4" x:Name="radioNebulafilter_None" Content="?" GroupName="GuardianSiteFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>-->
+
+                <CheckBox Grid.Row="5" Grid.Column="5" x:Name="checkbox_EditVisibility" Checked="checkbox_EditVisited_Changed" Unchecked="checkbox_EditVisited_Changed" Content="Edit Visited" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Left"/>
             </Grid>
-
-            <!--<Label Grid.Row="4" Grid.Column="0" Content="Nebula Type" Padding="0,0,10,0" />
-            <TextBox Grid.Row="4" Grid.Column="1" x:Name="nebulaType" Text="" IsReadOnly="True" />
-
-            <Label Grid.Row="5" Grid.Column="0" Content="Nebula Name" Padding="0,0,10,0" />
-            <TextBox Grid.Row="5" Grid.Column="1" x:Name="nebulaName" Text="" IsReadOnly="True" />
-
-            <Label Grid.Row="6" Grid.Column="0" Content="Reference Body" Padding="0,0,10,0" />
-            <TextBox Grid.Row="6" Grid.Column="1" x:Name="nebulaReferenceBody" Text="" IsReadOnly="True" />
-
-            <Label Grid.Row="7" Grid.Column="0" Content="Distance" Padding="0,0,10,0" />
-            <TextBox Grid.Row="7" Grid.Column="1" x:Name="nebulaDistance" Text="" IsReadOnly="True" />-->
-
-            <!-- TODO: Would be nice to track if we have visisted a Nebula so we can filter results -->
-            <!--<Label Grid.Row="8" Grid.Column="0" Content="Visited" Padding="0,0,10,0" />
-            <CheckBox Grid.Row="8" Grid.Column="1" x:Name="nebulaVisited" VerticalAlignment="Center" Padding="5,0,10,0"/>-->
-
-            <!--LoadingRow="datagrid_LoadingRow"-->
         </Grid>
 
         <Grid Grid.Column="0" Grid.Row="1">
@@ -128,8 +109,14 @@
                     <DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding name}"/>
                     <DataGridTextColumn Header="Reference" IsReadOnly="True" Width="*" Binding="{Binding referenceBody}"/>
                     <DataGridTextColumn Header="Diameter" IsReadOnly="True" Width="Auto" Binding="{Binding diameter, StringFormat={}0 LY}"/>
-                    <!-- TODO: Would be nice to track if we have visisted a Nebula so we can filter results -->
-                    <!--<DataGridTextColumn Header="Visited" IsReadOnly="True" Width="Auto" Binding="{Binding visited}"/>-->
+                    <DataGridTextColumn Header="Visited" IsReadOnly="True" Width="Auto" Binding="{Binding visited}"/>
+                    <DataGridTemplateColumn Header="Modify" x:Name="datagrid_Nebula_ToggleVisited_Template" Width="Auto" Visibility="Hidden">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="datagrid_Nebula_ToggleVisited" Tag="{Binding id}">Toggle</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

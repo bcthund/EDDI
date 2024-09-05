@@ -16,6 +16,12 @@ namespace EddiDataDefinitions
             //missingEDNameHandler = ( edname ) => new Nebula( NormalizeGenus( edname ) );
         }
 
+        public enum FilterVisited {
+            NotVisited = 0,
+            Visited = 1,
+            All = 2
+        }
+
         public enum NebulaType {
             Standard = 0,
             Real = 1,
@@ -5775,7 +5781,7 @@ namespace EddiDataDefinitions
 
 
 
-        public int id;
+        public int id { get; set; }
         public NebulaType type { get; set; }
         public string designation;
 
@@ -5826,7 +5832,7 @@ namespace EddiDataDefinitions
             this.z = z;
             this.diameter = diameter;
             this.distance = 0;
-            this.visited = visited;
+            this.visited = false;
 
             AllOfThem.Add( this );
         }
@@ -5895,21 +5901,35 @@ namespace EddiDataDefinitions
             return closest;
         }
 
-        public static List<Nebula> TryGetNearestNebulae ( decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000 )
+        public static List<Nebula> TryGetNearestNebulae ( decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000, FilterVisited filterVisited=FilterVisited.All )
         {
             List<Nebula> listNebula = new List<Nebula>();
 
             // If not in sector then check nebula list
             if(listNebula.Count == 0 ) {
 
-                // Get the distance (squared) of all Nebula
-                foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true ) )
-                {
-                    if( nebula.x != null && nebula.y != null && nebula.z != null )
+                if (filterVisited == FilterVisited.All) {
+                    // Get the distance (squared) of all Nebula
+                    foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true ) )
                     {
-                        // We don't need the exact distance, use the faster method for sorting purposes
-                        nebula.distance = Functions.StellarDistanceSquare(systemX, systemY, systemZ, nebula.x, nebula.y, nebula.z);
-                        listNebula.Add(nebula);
+                        Logging.Debug($"=====> EXECUTE FILTER ALL");
+                        CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
+                    }
+                }
+                else if (filterVisited == FilterVisited.Visited) {
+                    // Get the distance (squared) of all Nebula
+                    foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.visited==true ) )
+                    {
+                        Logging.Debug($"=====> EXECUTE FILTER VISITED");
+                        CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
+                    }
+                }
+                else if (filterVisited == FilterVisited.NotVisited) {
+                    // Get the distance (squared) of all Nebula
+                    foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.visited==false ) )
+                    {
+                        Logging.Debug($"=====> EXECUTE FILTER NOT VISITED");
+                        CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
                     }
                 }
             }
@@ -5926,30 +5946,46 @@ namespace EddiDataDefinitions
             return closestList;
         }
 
-        public static List<Nebula> TryGetNearestNebulae ( NebulaType type, decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000 )
+        private static void CalcNebulaDistance(decimal? systemX, decimal? systemY, decimal? systemZ, Nebula nebula, ref List<Nebula> listNebula) {
+            if( nebula.x != null && nebula.y != null && nebula.z != null )
+            {
+                // We don't need the exact distance, use the faster method for sorting purposes
+                nebula.distance = Functions.StellarDistanceSquare(systemX, systemY, systemZ, nebula.x, nebula.y, nebula.z);
+                listNebula.Add(nebula);
+            }
+        }
+
+        public static List<Nebula> TryGetNearestNebulae ( NebulaType type, decimal? systemX, decimal? systemY, decimal? systemZ, int maxCount=50, int maxDistance=10000, FilterVisited filterVisited=FilterVisited.All )
         {
             List<Nebula> listNebula = new List<Nebula>();
 
             // If not in sector then check nebula list
             if(listNebula.Count == 0 ) {
-
-                // Get the distance (squared) of all Nebula
-                foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.type==type) )
-                {
-                    if( nebula.x != null && nebula.y != null && nebula.z != null )
+                if (filterVisited == FilterVisited.All) {
+                    // Get the distance (squared) of all Nebula
+                    foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.type==type ) )
                     {
-                        // We don't need the exact distance, use the faster method for sorting purposes
-                        nebula.distance = Functions.StellarDistanceSquare(systemX, systemY, systemZ, nebula.x, nebula.y, nebula.z);
-                        listNebula.Add(nebula);
+                        CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
+                    }
+                }
+                else if (filterVisited == FilterVisited.Visited) {
+                    // Get the distance (squared) of all Nebula
+                    foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.type==type && x.visited==true ) )
+                    {
+                        CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
+                    }
+                }
+                else if (filterVisited == FilterVisited.NotVisited) {
+                    // Get the distance (squared) of all Nebula
+                    foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.type==type && x.visited==false ) )
+                    {
+                        CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
                     }
                 }
             }
 
             var maxDistanceSquared = maxDistance*maxDistance;
             List<Nebula> closestList = listNebula.Where( s => s.distance <= maxDistanceSquared ).OrderBy( s => s.distance).Take(maxCount).ToList();
-            //foreach( var nebula in closestList ) {
-            //    nebula.distance = Functions.StellarDistanceLy( nebula.distance );
-            //}
             for(int i = 0; i< closestList.Count; i++) {
                 closestList[i].distance = Functions.StellarDistanceLy( closestList[i].distance );
             }

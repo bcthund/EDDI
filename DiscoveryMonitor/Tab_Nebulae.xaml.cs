@@ -10,6 +10,8 @@ using EddiDataDefinitions;
 using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
+using EddiDataProviderService;
+using Newtonsoft.Json.Bson;
 
 namespace EddiDiscoveryMonitor
 {
@@ -57,30 +59,37 @@ namespace EddiDiscoveryMonitor
 
         private void onClick_GetNebula ( object sender, RoutedEventArgs e )
         {
+            RefreshNebula();
+        }
+
+        private void RefreshNebula() {
             try
             {
-                try
-                {
-                    var maxDistance = Convert.ToInt32(nebulaMaxDistance.Text);
-                    var maxCount = Convert.ToInt32(nebulaMaxCount.Text);
+                var maxDistance = Convert.ToInt32(nebulaMaxDistance.Text);
+                var maxCount = Convert.ToInt32(nebulaMaxCount.Text);
 
-                    if(radioNebulafilter_Type_All.IsChecked == true) {
-                        nebulaResult = Nebula.TryGetNearestNebulae(systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance);
-                    }
-                    else if (radioNebulafilter_Type_Standard.IsChecked == true) {
-                        nebulaResult = Nebula.TryGetNearestNebulae(Nebula.NebulaType.Standard, systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance);
-                    }
-                    else if (radioNebulafilter_Type_Real.IsChecked == true) {
-                        nebulaResult = Nebula.TryGetNearestNebulae(Nebula.NebulaType.Real, systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance);
-                    }
-                    else if (radioNebulafilter_Type_Planetary.IsChecked == true) {
-                        nebulaResult = Nebula.TryGetNearestNebulae(Nebula.NebulaType.Planetary, systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance);
-                    }
+                Nebula.FilterVisited filter = Nebula.FilterVisited.All;
+                if (radioNebulafilter_Visted_Visited.IsChecked == true) {
+                    filter = Nebula.FilterVisited.Visited;
                 }
-                catch
-                {
-                    // Error; ignore it
+                else if (radioNebulafilter_Visted_NotVisited.IsChecked == true) {
+                    filter = Nebula.FilterVisited.NotVisited;
                 }
+
+                if(radioNebulafilter_Type_All.IsChecked == true) {
+                    nebulaResult = Nebula.TryGetNearestNebulae(systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance, filter);
+                }
+                else if (radioNebulafilter_Type_Standard.IsChecked == true) {
+                    nebulaResult = Nebula.TryGetNearestNebulae(Nebula.NebulaType.Standard, systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance, filter);
+                }
+                else if (radioNebulafilter_Type_Real.IsChecked == true) {
+                    nebulaResult = Nebula.TryGetNearestNebulae(Nebula.NebulaType.Real, systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance, filter);
+                }
+                else if (radioNebulafilter_Type_Planetary.IsChecked == true) {
+                    nebulaResult = Nebula.TryGetNearestNebulae(Nebula.NebulaType.Planetary, systemCoord.x, systemCoord.y, systemCoord.z, maxCount, maxDistance, filter);
+                }
+
+                NebulaSqLiteRepository.Instance.GetNebulaeVisited( ref nebulaResult );
             }
             catch
             {
@@ -90,6 +99,26 @@ namespace EddiDiscoveryMonitor
             datagrid_NebulaData.DataContext = nebulaResult;
         }
 
+        private void datagrid_Nebula_ToggleVisited ( object sender, RoutedEventArgs e )
+        {
+            Button button = sender as Button;
+            NebulaSqLiteRepository.Instance.ToggleNebulaVisited( Convert.ToInt32( button.Tag ) );
 
+            Logging.Debug($"=============> [TOGGLE VISITED] Tag={button.Tag}, Int={Convert.ToInt32( button.Tag )}, {NebulaSqLiteRepository.Instance.GetNebulaVisited( Convert.ToInt32( button.Tag ) )}");
+
+            RefreshNebula();
+        }
+
+        private void checkbox_EditVisited_Changed ( object sender, RoutedEventArgs e )
+        {
+            CheckBox checkbox = sender as CheckBox;
+            if (checkbox.IsChecked == true) {
+                datagrid_Nebula_ToggleVisited_Template.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                datagrid_Nebula_ToggleVisited_Template.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

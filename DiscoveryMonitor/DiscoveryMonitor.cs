@@ -58,6 +58,9 @@ namespace EddiDiscoveryMonitor
         public DiscoveryMonitor ()
         {
             configuration = ConfigService.Instance.discoveryMonitorConfiguration;
+
+            // Update the visited status of all Nebulae
+            NebulaSqLiteRepository.Instance.GetNebulaeVisited(ref Nebula.AllOfThem);
         }
 
         public string MonitorName ()
@@ -349,6 +352,8 @@ namespace EddiDiscoveryMonitor
 
                     _nearestNebula.visited = true;
                     _enteredNebula = checkNebula;
+
+                    NebulaSqLiteRepository.Instance.SaveNebulaVisited(checkNebula.id, true);
 
                     EDDI.Instance.enqueueEvent(
                     new NebulaEnteredEvent(
