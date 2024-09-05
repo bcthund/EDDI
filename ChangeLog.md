@@ -4,7 +4,9 @@ Full details of the variables available for each noted event, and VoiceAttack in
 
 ## 4.1.0
   * Promote 4.1.0-b3 to final.
+  * Fixed child scripts not always using the latest state variables in their contexts.
   * Fixed missing `systemname` property in the `Star scanned` event.
+  * Fixed a null reference exception which could occur when deleting scripts.
 
 ## 4.1.0-b3
   * Core
