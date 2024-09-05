@@ -1,15 +1,9 @@
 ﻿using EddiDataDefinitions;
-using EddiStarMapService;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Utilities;
 
 namespace EddiDataProviderService

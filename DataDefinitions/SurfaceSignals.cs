@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Utilities;
 using Newtonsoft.Json;
@@ -89,7 +87,6 @@ namespace EddiDataDefinitions
                 try
                 {
                     if(reportedBiologicalCount==1) {
-                        //value = bioSignals.OrderBy(x => x.predictedMaximumValue).Last().value;
                         value = bioSignals.Max(x => x.predictedMaximumValue);
                         log += $"\t(1/1) predictedMaximumTotalValue={value} [{bioSignals.Max(x => x.predictedMaximumValue)}]\r\n";
                     }

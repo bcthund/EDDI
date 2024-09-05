@@ -49,8 +49,6 @@ namespace EddiDataDefinitions
                 normalizedName = NormalizeAtmosphereThickness(name);
             }
 
-            //Logging.Debug($"===============> [Atmosphere Thickness:FromName] name='{name}', normalized='{normalizedName}', resource='{ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName( normalizedName ).edname}'");
-
             return ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName( normalizedName );
         }
 
@@ -64,8 +62,6 @@ namespace EddiDataDefinitions
             else {
                 normalizedEDName = NormalizeAtmosphereThickness(edname);
             }
-
-            //Logging.Debug($"===============> [Atmosphere Thickness:FromEDName] name='{edname}', normalized='{normalizedEDName}', resource='{ResourceBasedLocalizedEDName<AtmosphereThickness>.FromName( normalizedEDName ).edname}'");
 
             return ResourceBasedLocalizedEDName<AtmosphereThickness>.FromEDName( normalizedEDName );
         }
@@ -93,8 +89,6 @@ namespace EddiDataDefinitions
                 returnVal = "GasGiant";
             }
             else returnVal = "Normal";
-
-            //Logging.Debug($"====================> [Atmosphere Thickness:Normalize] edname='{edname}' normalized='{normalizedThickness}', return='{returnVal}'");
 
             return returnVal;
         }

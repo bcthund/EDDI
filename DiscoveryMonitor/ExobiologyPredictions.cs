@@ -5,11 +5,6 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Utilities;
-using Utilities.RegionMap;
-using System.ServiceModel.Security;
-using MathNet.Numerics.Distributions;
-using System.Runtime.ExceptionServices;
-using System.Windows.Media;
 
 namespace EddiDiscoveryMonitor
 {
@@ -283,9 +278,6 @@ namespace EddiDiscoveryMonitor
                     }
                     else if(checkParts.Count() >= 2 ) {
 
-                        //checkParts[0] = checkParts[0].ToLowerInvariant();
-                        //log += $"({checkParts[0]}=={body.atmospherethickness.basename})";
-
                         // Check Thickness
                         if ( 
                             ( ( checkParts[0] == "none" || checkParts[0] == string.Empty ) && ( body.atmospherethickness == null || body.atmospherethickness == AtmosphereThickness.None ) ) ||
@@ -371,12 +363,6 @@ namespace EddiDiscoveryMonitor
             {
                 foreach(var composition in checkVolcanismCompositions) {
 
-                    // This doesn't appear to work
-                    //Volcanism volcanism = Volcanism.FromName(composition);
-                    //if( ( composition=="Any" && body.volcanism != null) || (volcanism is null && body.volcanism is null) || volcanism == body.volcanism) {
-                    //    return true;
-                    //}
-
                     if( (composition=="None") || ( composition=="Any" && body.volcanism != null) || ( composition == body.volcanism?.ToString() ) ) {
                         return true;
                     }
@@ -391,12 +377,9 @@ namespace EddiDiscoveryMonitor
 
         private bool TryCheckMainStar ( ICollection<string> checkStar, ref string log )
         {
-            // TODO: 2212 - Add logic to check Main Star for predictions
-
             if(checkStar.Count() > 0 ) {
 
                 var result = _currentSystem.TryGetMainStar( out Body mainStar );
-                //log += $"(CHECK MAIN STAR: '{mainStar.stellarclass}', '{mainStar.starClass.edname}', '{mainStar.luminosityclass}')\r\n";
 
                 if(mainStar!=null) {
                     foreach( var starGroup in checkStar) {
@@ -404,21 +387,17 @@ namespace EddiDiscoveryMonitor
 
                         if ( starParts[ 0 ] == mainStar.starClass.edname )
                         {
-                            //log += $"\t\tClass => {starParts[0]}=={parentStar.starClass.edname}, ";
                             if ( starParts.Count >= 2 )
                             {
                                 if ( mainStar.luminosityclass.Contains( starParts[ 1 ] ) )
                                 {
-                                    //log += $"Luminosity => {starParts[1]} ? {parentStar.luminosityclass}, ";
                                     return true;
                                 }
                             }
                             else
                             {
-                                //log += $"Luminosity => SKIP, ";
                                 return true;
                             }
-                            //log += "\r\n";
                         }
                     }
                 }
@@ -442,30 +421,22 @@ namespace EddiDiscoveryMonitor
 
                 HashSet<Body> parentStars = new HashSet<Body>();
                 var result = _currentSystem.TryGetParentStars( body.bodyId, out parentStars );
-                
-                //log += $"(CHECK STAR: '{string.Join(";", parentStars.Select( w => string.Join(",", (new { w.starClass.edname, w.luminosityclass }) ) ) )}')\r\n";
 
                 if(parentStars.Count()>0) {
                     foreach( var starGroup in checkStar) {
                         IList<string> starParts = starGroup.Split( ',' ).ToList();
 
-                        //log += $"\t[starParts={string.Join(",",starParts)}]\r\n";
-
                         foreach ( var parentStar in parentStars ) {
                             if ( starParts[0] == parentStar.starClass.edname )
                             {
-                                //log += $"\t\tClass => {starParts[0]}=={parentStar.starClass.edname}, ";
                                 if(starParts.Count >= 2) {
                                     if ( parentStar.luminosityclass.Contains(starParts[1]) ) {
-                                        //log += $"Luminosity => {starParts[1]} ? {parentStar.luminosityclass}, ";
                                         return true;
                                     }
                                 }
                                 else {
-                                    //log += $"Luminosity => SKIP, ";
                                     return true;
                                 }
-                                //log += "\r\n";
                             }
                         }
                     }

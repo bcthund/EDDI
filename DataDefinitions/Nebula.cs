@@ -1,20 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Utilities;
-//using System.Windows;
-//using System.Windows.Forms;
-//using System.Threading;
 
 namespace EddiDataDefinitions
 {
-    public class Nebula /*: ResourceBasedLocalizedEDName<Nebula>*/
+    public class Nebula
     {
         static Nebula ()
-        {
-            //resourceManager = Properties.OrganicGenus.ResourceManager;
-            //resourceManager.IgnoreCase = true;
-            //missingEDNameHandler = ( edname ) => new Nebula( NormalizeGenus( edname ) );
-        }
+        { }
 
         public enum FilterVisited {
             NotVisited = 0,
@@ -5832,7 +5825,7 @@ namespace EddiDataDefinitions
             this.z = z;
             this.diameter = diameter;
             this.distance = 0;
-            this.visited = false;
+            this.visited = visited;
 
             AllOfThem.Add( this );
         }
@@ -5912,7 +5905,6 @@ namespace EddiDataDefinitions
                     // Get the distance (squared) of all Nebula
                     foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true ) )
                     {
-                        Logging.Debug($"=====> EXECUTE FILTER ALL");
                         CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
                     }
                 }
@@ -5920,7 +5912,6 @@ namespace EddiDataDefinitions
                     // Get the distance (squared) of all Nebula
                     foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.visited==true ) )
                     {
-                        Logging.Debug($"=====> EXECUTE FILTER VISITED");
                         CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
                     }
                 }
@@ -5928,7 +5919,6 @@ namespace EddiDataDefinitions
                     // Get the distance (squared) of all Nebula
                     foreach( var nebula in AllOfThem.Where( x => x.hasCentralBody==true && x.visited==false ) )
                     {
-                        Logging.Debug($"=====> EXECUTE FILTER NOT VISITED");
                         CalcNebulaDistance( systemX, systemY, systemZ, nebula, ref listNebula);
                     }
                 }
@@ -5936,9 +5926,6 @@ namespace EddiDataDefinitions
 
             var maxDistanceSquared = maxDistance*maxDistance;
             List<Nebula> closestList = listNebula.Where( s => s.distance <= maxDistanceSquared ).OrderBy( s => s.distance).Take(maxCount).ToList();
-            //foreach( var nebula in closestList ) {
-            //    nebula.distance = Functions.StellarDistanceLy( nebula.distance );
-            //}
             for(int i = 0; i< closestList.Count; i++) {
                 closestList[i].distance = Functions.StellarDistanceLy( closestList[i].distance );
             }

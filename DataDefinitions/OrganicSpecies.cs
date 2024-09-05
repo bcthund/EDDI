@@ -16,6 +16,7 @@ namespace EddiDataDefinitions
 
         // Terrestrial Species
         // - Many of these ednames have been generated and assumed from the variant name and may not be correct
+        // - The prediction data here is old and not used anymore, will probably remove in future
         public static readonly OrganicSpecies AleoidaArcus = new OrganicSpecies( "Aleoids_01", OrganicGenus.Aleoids, 7252500,(decimal?)0.3, (decimal?)175, (decimal?)180, "","CarbonDioxide","None","B;A;F;K;M;L;T;TTS;Y;N" );
         public static readonly OrganicSpecies AleoidaCoronamus = new OrganicSpecies( "Aleoids_02", OrganicGenus.Aleoids, 6284600,(decimal?)0.3, (decimal?)180, (decimal?)190, "","CarbonDioxide","None","B;A;F;K;M;L;T;TTS;Y;N" );
         public static readonly OrganicSpecies AleoidaGravis = new OrganicSpecies( "Aleoids_05", OrganicGenus.Aleoids, 12934900,(decimal?)0.3, (decimal?)190, (decimal?)195, "","CarbonDioxide","None","B;A;F;K;M;L;T;TTS;Y;N" );

@@ -18,9 +18,13 @@ namespace EddiDataDefinitions
 
         // The prediction data included here comes from multiple locations:
         //  - The BioStats2.json file from Cannon ( https://drive.google.com/file/d/14t7SKjLyATHVipuqNiGT-ziA2nRW8sKj/view?usp=sharing )
-        //  - Deep Space Network ( https://ed-dsn.net/en/dsn-2/ )
-        //  - Codex NSP and Bio requirements spreadsheet ( https://docs.google.com/spreadsheets/d/1nV_UD_0kIxkWAHhAqvf62ILHpbYzdZpJ53CqPHn3qlA/edit#gid=344475511 )
+        //      - This is one of the primary sources of data but it has lots of outliers that cause trouble with making accurate predictions
         //  - Cannon - Surface Biology spreadhseet ( https://docs.google.com/spreadsheets/d/15lqZtqJk7B2qUV5Jb4tlnst6i1B7pXlAUzQnacX64Kc/edit#gid=0 )
+        //      - This is a valuable secondary source for biologicals as it gives a better idea of the outliers
+        //  - Deep Space Network ( https://ed-dsn.net/en/dsn-2/ )
+        //      - Good to double check things as has common conditions but missing some valuable data to narrow things down
+        //  - Codex NSP and Bio requirements spreadsheet ( https://docs.google.com/spreadsheets/d/1nV_UD_0kIxkWAHhAqvf62ILHpbYzdZpJ53CqPHn3qlA/edit#gid=344475511 )
+        //      - Not too useful, has limited data
         //  - EDMC-BioScan rules ( https://github.com/Silarn/EDMC-BioScan/tree/master )
 
         // Variants without any known criteria (including non-terrestrial variants)
