@@ -337,8 +337,11 @@ namespace EddiSpeechResponder
 
                     // Remove any references to the removed script in the `includes` scring of other scripts
                     SpeechResponder.CurrentPersonality.Scripts.AsParallel().ForAll( kv =>
-                        kv.Value.includes = string.Join( "; ",
-                            kv.Value.includes.Split( ';' ).Select( s => s.Trim() ).Except( new[] { script.Name } ) ) );
+                        kv.Value.includes = kv.Value.includes is null
+                            ? string.Empty
+                            : string.Join( "; ",
+                                kv.Value.includes.Split( ';' ).Select( s => s.Trim() )
+                                    .Except( new[] { script.Name } ) ) );
 
                     SpeechResponder.SavePersonality();
                     scriptsView.Refresh();
