@@ -58,8 +58,8 @@ namespace EddiDiscoveryMonitor
         {
             configuration = ConfigService.Instance.discoveryMonitorConfiguration;
 
-            // Update the visited status of all Nebulae
-            NebulaSqLiteRepository.Instance.GetNebulaeVisited(ref Nebula.AllOfThem);
+            // Get the visited status of all Nebulae
+            NebulaSqLiteRepository.Instance.GetNebulaeVisited(ref NebulaDefinitions.AllOfThem);
         }
 
         public string MonitorName ()
@@ -187,27 +187,27 @@ namespace EddiDiscoveryMonitor
             else if ( @event is SurfaceSignalsEvent signalsEvent )
             {
                 handleSurfaceSignalsEvent( signalsEvent );
-                OnPropertyChanged("RefreshData");
+                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
             else if ( @event is ScanOrganicEvent organicEvent )
             {
                 handleScanOrganicEvent( organicEvent );
-                OnPropertyChanged("RefreshData");
+                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
             else if ( @event is BodyScannedEvent bodyScannedEvent )
             {
                 handleBodyScannedEvent( bodyScannedEvent );
-                OnPropertyChanged("RefreshData");
+                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
             else if ( @event is StarScannedEvent starScannedEvent )
             {
                 handleStarScannedEvent( starScannedEvent );
-                OnPropertyChanged("RefreshData");
+                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
             else if ( @event is JumpedEvent jumpedEvent )
             {
                 handleJumpedEvent( jumpedEvent );
-                OnPropertyChanged("RefreshData");
+                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
             else if ( @event is LocationEvent locationEvent )
             {
@@ -216,7 +216,7 @@ namespace EddiDiscoveryMonitor
             }
             else if ( @event is NextDestinationEvent nextDestinationEvent) {
                 handleNextDestinationEvent( nextDestinationEvent );
-                OnPropertyChanged("RefreshData");
+                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
         }
 
@@ -283,15 +283,13 @@ namespace EddiDiscoveryMonitor
                 log += $"Region = NULL.\r\n";
             }
 
-            // Check if the nearest nebula has changed
             var checkNebula = Nebula.TryGetNearestNebula( @event.systemname, (decimal)@event.x, (decimal)@event.y, (decimal) @event.z );
-
             log += $"\tGetting Nebula for {@event.systemname} @ ({@event.x},{@event.y},{@event.z}): ";
-            if( checkNebula != null )
+            if ( checkNebula != null )
             {
-                CheckNebula(checkNebula, @event.fromLoad);
+                CheckNebula( checkNebula, @event.fromLoad );
             }
-            else 
+            else
             {
                 error = true;
                 log += $"Nebula = NULL.\r\n";

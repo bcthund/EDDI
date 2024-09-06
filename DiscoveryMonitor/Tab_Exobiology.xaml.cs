@@ -125,9 +125,6 @@ namespace EddiDiscoveryMonitor
             {
                 this.Dispatcher.Invoke( () =>
                 {
-                    //Logging.Debug($"[00] ========> DiscoveryMonitor_PropertyChanged INVOKED ");
-                    //datagrid_bioData.SelectedIndex = -1;
-
                     long? newBodyId = ( (DiscoveryMonitor)sender ).CurrentBodyId;
 
                     var getIndex = currentStarSystem.bodies.Where(x=>x.surfaceSignals.reportedBiologicalCount > 0).ToList().FindIndex(x => x.bodyId == newBodyId);
@@ -211,9 +208,6 @@ namespace EddiDiscoveryMonitor
         /// <param name="e"></param>
         private void buttonRefresh ( object sender, RoutedEventArgs e )
         {
-            //CurrentBodyId = currentBodyId;
-            //CurrentBody = currentStarSystem?.BodyWithID( CurrentBodyId );
-
             RefreshData(true);
         }
 
