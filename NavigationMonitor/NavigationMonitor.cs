@@ -260,6 +260,7 @@ namespace EddiNavigationMonitor
 
         private void handleCarrierJumpedEvent(CarrierJumpedEvent @event)
         {
+            if ( @event.carrierId is null ) { return; } // We cannot update the carrier when carrier data is not present in the event
             var updatedCarrier = FleetCarrier?.Copy() ?? new FleetCarrier(@event.carrierId) { name = @event.carriername };
             updatedCarrier.currentStarSystem = @event.systemname;
             updatedCarrier.Market.name = @event.carriername;

@@ -154,7 +154,7 @@ namespace EddiEvents
             this.onFoot = onFoot;
             this.carrierId = carrierId;
             this.carriername = carrierName;
-            this.carrierType = carrierType ?? StationModel.FleetCarrier;
+            this.carrierType = carrierId is null ? null : carrierType ?? StationModel.FleetCarrier;
             this.carrierFaction = stationFaction;
             this.carrierServices = stationServices ?? new List<StationService>();
             this.carrierEconomies = stationEconomies ?? new List<EconomyShare>();

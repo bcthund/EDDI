@@ -4368,102 +4368,137 @@ namespace EddiJournalMonitor
                             case "CarrierJump":
                                 {
                                     // Get destination star system data
-                                    string systemName = JsonParsing.getString(data, "StarSystem");
-                                    data.TryGetValue("StarPos", out object starposVal);
-                                    List<object> starPos = (List<object>)starposVal;
-                                    decimal x = Math.Round(JsonParsing.getDecimal("X", starPos?[0]) * 32) / (decimal)32.0;
-                                    decimal y = Math.Round(JsonParsing.getDecimal("Y", starPos?[1]) * 32) / (decimal)32.0;
-                                    decimal z = Math.Round(JsonParsing.getDecimal("Z", starPos?[2]) * 32) / (decimal)32.0;
-                                    var systemAddress = JsonParsing.getULong(data, "SystemAddress");
-                                    Economy systemEconomy = Economy.FromEDName(JsonParsing.getString(data, "SystemEconomy"));
-                                    Economy systemEconomy2 = Economy.FromEDName(JsonParsing.getString(data, "SystemSecondEconomy"));
-                                    Faction systemfaction = GetFaction(data, "System", systemName);
-                                    SecurityLevel systemSecurity = SecurityLevel.FromEDName(JsonParsing.getString(data, "SystemSecurity"));
-                                    systemSecurity.fallbackLocalizedName = JsonParsing.getString(data, "SystemSecurity_Localised");
-                                    long? systemPopulation = JsonParsing.getOptionalLong(data, "Population");
+                                    var systemName = JsonParsing.getString( data, "StarSystem" );
+                                    data.TryGetValue( "StarPos", out object starposVal );
+                                    var starPos = (List<object>)starposVal;
+                                    var x = Math.Round( JsonParsing.getDecimal( "X", starPos?[ 0 ] ) * 32 ) /
+                                            (decimal)32.0;
+                                    var y = Math.Round( JsonParsing.getDecimal( "Y", starPos?[ 1 ] ) * 32 ) /
+                                            (decimal)32.0;
+                                    var z = Math.Round( JsonParsing.getDecimal( "Z", starPos?[ 2 ] ) * 32 ) /
+                                            (decimal)32.0;
+                                    var systemAddress = JsonParsing.getULong( data, "SystemAddress" );
+                                    var systemEconomy =
+                                        Economy.FromEDName( JsonParsing.getString( data, "SystemEconomy" ) );
+                                    var systemEconomy2 =
+                                        Economy.FromEDName( JsonParsing.getString( data, "SystemSecondEconomy" ) );
+                                    var systemfaction = GetFaction( data, "System", systemName );
+                                    var systemSecurity =
+                                        SecurityLevel.FromEDName( JsonParsing.getString( data, "SystemSecurity" ) );
+                                    systemSecurity.fallbackLocalizedName =
+                                        JsonParsing.getString( data, "SystemSecurity_Localised" );
+                                    var systemPopulation = JsonParsing.getOptionalLong( data, "Population" );
 
                                     // Get destination body data (if any)
-                                    string bodyName = JsonParsing.getString(data, "Body");
-                                    long? bodyId = JsonParsing.getOptionalLong(data, "BodyID");
-                                    var bodyType = BodyType.FromEDName(JsonParsing.getString(data, "BodyType")) ?? BodyType.None;
+                                    var bodyName = JsonParsing.getString( data, "Body" );
+                                    var bodyId = JsonParsing.getOptionalLong( data, "BodyID" );
+                                    var bodyType = BodyType.FromEDName( JsonParsing.getString( data, "BodyType" ) ) ??
+                                                   BodyType.None;
                                     if ( bodyType == BodyType.Planet )
                                     {
-                                        bodyType = StarSystemSqLiteRepository.Instance.GetOrFetchStarSystem( systemName )?
-                                                       .bodies.FirstOrDefault( b => b.bodyId != null && b.bodyId == bodyId )?.bodyType ??
+                                        bodyType = StarSystemSqLiteRepository.Instance
+                                                       .GetOrFetchStarSystem( systemName )?
+                                                       .bodies.FirstOrDefault( b =>
+                                                           b.bodyId != null && b.bodyId == bodyId )?.bodyType ??
                                                    bodyType;
                                     }
 
                                     // Get carrier data (may not be present when on-foot at a fleet carrier but not docked)
-                                    string carrierName = JsonParsing.getString(data, "StationName");
-                                    StationModel carrierType = StationModel.FromEDName(JsonParsing.getString(data, "StationType"));
-                                    long carrierId = JsonParsing.getLong(data, "MarketID");
-                                    Faction stationFaction = GetFaction(data, "Station", systemName);
+                                    var carrierId = JsonParsing.getOptionalLong( data, "MarketID" );
+                                    var carrierName = JsonParsing.getString( data, "StationName" );
+                                    var carrierType =
+                                        StationModel.FromEDName( JsonParsing.getString( data, "StationType" ) );
+                                    var stationFaction = GetFaction( data, "Station", systemName );
 
                                     // Get carrier services data (may not be present when on-foot at a fleet carrier but not docked)
-                                    List<StationService> stationServices = new List<StationService>();
-                                    data.TryGetValue("StationServices", out object stationserviceVal);
-                                    List<string> stationservices = (stationserviceVal as List<object>)?.Cast<string>()?.ToList() ?? new List<string>();
-                                    foreach (string service in stationservices)
+                                    var stationServices = new List<StationService>();
+                                    data.TryGetValue( "StationServices", out object stationserviceVal );
+                                    var stationservices =
+                                        ( stationserviceVal as List<object> )?.Cast<string>()?.ToList() ??
+                                        new List<string>();
+                                    foreach ( var service in stationservices )
                                     {
-                                        stationServices.Add(StationService.FromEDName(service));
+                                        stationServices.Add( StationService.FromEDName( service ) );
                                     }
 
                                     // Get carrier economies and their shares (may not be present when on-foot at a fleet carrier but not docked)
-                                    data.TryGetValue("StationEconomies", out object economiesVal);
-                                    List<object> economies = economiesVal as List<object> ?? new List<object>();
-                                    List<EconomyShare> stationEconomies = new List<EconomyShare>();
-                                    foreach (Dictionary<string, object> economyshare in economies)
+                                    data.TryGetValue( "StationEconomies", out object economiesVal );
+                                    var economies = economiesVal as List<object> ?? new List<object>();
+                                    var stationEconomies = new List<EconomyShare>();
+                                    foreach ( var economyShareVal in economies )
                                     {
-                                        Economy economy = Economy.FromEDName(JsonParsing.getString(economyshare, "Name"));
-                                        economy.fallbackLocalizedName = JsonParsing.getString(economyshare, "Name_Localised");
-                                        decimal share = JsonParsing.getDecimal(economyshare, "Proportion");
-                                        if (economy != Economy.None && share > 0)
+                                        if ( economyShareVal is Dictionary<string, object> economyshare )
                                         {
-                                            stationEconomies.Add(new EconomyShare(economy, share));
+                                            var economy =
+                                                Economy.FromEDName( JsonParsing.getString( economyshare, "Name" ) );
+                                            economy.fallbackLocalizedName =
+                                                JsonParsing.getString( economyshare, "Name_Localised" );
+                                            var share = JsonParsing.getDecimal( economyshare, "Proportion" );
+                                            if ( economy != Economy.None && share > 0 )
+                                            {
+                                                stationEconomies.Add( new EconomyShare( economy, share ) );
                                         }
+                                    }
                                     }
 
                                     // Parse factions array data
-                                    List<Faction> factions = new List<Faction>();
-                                    data.TryGetValue("Factions", out object factionsVal);
-                                    if (factionsVal != null)
+                                    var factions = new List<Faction>();
+                                    data.TryGetValue( "Factions", out object factionsVal );
+                                    if ( factionsVal != null )
                                     {
-                                        factions = GetFactions(factionsVal, systemName);
+                                        factions = GetFactions( factionsVal, systemName );
                                     }
 
                                     // Parse conflicts array data
-                                    List<Conflict> conflicts = new List<Conflict>();
-                                    data.TryGetValue("Conflicts", out object conflictsVal);
-                                    if (conflictsVal != null)
+                                    var conflicts = new List<Conflict>();
+                                    data.TryGetValue( "Conflicts", out object conflictsVal );
+                                    if ( conflictsVal != null )
                                     {
-                                        conflicts = GetConflicts(conflictsVal, factions);
+                                        conflicts = GetConflicts( conflictsVal, factions );
                                     }
 
                                     // Powerplay data (if pledged)
-                                    GetPowerplayData( data, out List<Power> powerplayPowers, out PowerplayState powerplayState );
+                                    GetPowerplayData( data, out List<Power> powerplayPowers,
+                                        out var powerplayState );
 
                                     // Thargoid war data (if any)
-                                    GetThargoidWarData( data, out ThargoidWar thargoidWar );
+                                    GetThargoidWarData( data, out var thargoidWar );
 
-                                    bool docked = JsonParsing.getBool(data, "Docked");
-                                    bool onFoot = JsonParsing.getOptionalBool(data, "OnFoot") ?? false;
+                                    var docked = JsonParsing.getBool( data, "Docked" );
+                                    var onFoot = JsonParsing.getOptionalBool( data, "OnFoot" ) ?? false;
 
-                                    events.Add(new CarrierJumpedEvent(timestamp, systemName, systemAddress, x, y, z, bodyName, bodyId, bodyType, docked, onFoot, carrierName, carrierType, carrierId, stationServices, systemfaction, stationFaction, factions, conflicts, stationEconomies, systemEconomy, systemEconomy2, systemSecurity, systemPopulation, powerplayPowers, powerplayState, thargoidWar ) { raw = line, fromLoad = fromLogLoad });
+                                    events.Add( new CarrierJumpedEvent( timestamp, systemName, systemAddress, x, y, z,
+                                        bodyName, bodyId, bodyType, docked, onFoot, carrierName, carrierType, carrierId,
+                                        stationServices, systemfaction, stationFaction, factions, conflicts,
+                                        stationEconomies, systemEconomy, systemEconomy2, systemSecurity,
+                                        systemPopulation, powerplayPowers, powerplayState, thargoidWar )
+                                    {
+                                        raw = line, fromLoad = fromLogLoad
+                                    } );
 
                                     // Generate secondary event when the carrier jump cooldown completes
-                                    if (carrierJumpCancellationTokenSources.TryGetValue(carrierId, out var carrierJumpCancellationTS))
+                                    if ( carrierId != null &&
+                                         carrierJumpCancellationTokenSources.TryGetValue( (long)carrierId,
+                                             out var carrierJumpCancellationTS ) )
                                     {
                                         // Cancel any pending cooldown event (to prevent doubling events if the commander is the fleet carrier owner)
                                         carrierJumpCancellationTS.Cancel();
                                     }
-                                    if (!fromLogLoad)
+
+                                    if ( !fromLogLoad )
                                     {
-                                        Task.Run(async () =>
+                                        Task.Run( async () =>
                                         {
-                                            int timeMs = (Constants.carrierPostJumpSeconds - Constants.carrierJumpSeconds) * 1000; // Cooldown timer starts when the carrier jump is engaged, not when the jump ends
-                                            await Task.Delay(timeMs);
-                                            EDDI.Instance.enqueueEvent(new CarrierCooldownEvent(timestamp.AddMilliseconds(timeMs), carrierId, systemName, systemAddress, bodyName, bodyId, bodyType, carrierName, carrierType) { fromLoad = fromLogLoad });
-                                        }).ConfigureAwait(false);
+                                            // Cooldown timer starts when the carrier jump is engaged, not when the jump ends
+                                            var timeMs = ( Constants.carrierPostJumpSeconds -
+                                                           Constants.carrierJumpSeconds ) *
+                                                         1000; 
+                                            await Task.Delay( timeMs );
+                                            EDDI.Instance.enqueueEvent(
+                                                new CarrierCooldownEvent( timestamp.AddMilliseconds( timeMs ),
+                                                    carrierId, systemName, systemAddress, bodyName, bodyId, bodyType,
+                                                    carrierName, carrierType ) { fromLoad = fromLogLoad } );
+                                        } ).ConfigureAwait( false );
                                     }
                                 }
                                 handled = true;

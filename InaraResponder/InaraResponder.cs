@@ -409,6 +409,7 @@ namespace EddiInaraResponder
 
         private void handleCarrierJumpedEvent(CarrierJumpedEvent @event)
         {
+            if ( @event.carrierId is null ) { return; } // We cannot update the carrier when carrier data is not present in the event
             var eventData = new Dictionary<string, object>()
             {
                 { "starsystemName", @event.systemname },
