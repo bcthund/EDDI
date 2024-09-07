@@ -4437,8 +4437,8 @@ namespace EddiJournalMonitor
                                             if ( economy != Economy.None && share > 0 )
                                             {
                                                 stationEconomies.Add( new EconomyShare( economy, share ) );
+                                            }
                                         }
-                                    }
                                     }
 
                                     // Parse factions array data
@@ -5328,41 +5328,59 @@ namespace EddiJournalMonitor
                     };
                     faction.presences.Add( factionPresense );
                 }
-            }
 
-            // Since systems can have Thargoid allegiance, treat Thargoids like a faction for the purpose of
-            // allegiance and government (even when no human faction exists).
-
-            // Get the faction allegiance
-            if ( data.TryGetValue( type + "Allegiance", out _ ) )
-            {
-                if ( faction is null ) { faction = new Faction(); }
-                faction.Allegiance = GetAllegiance( data, type + "Allegiance" );
-                if ( string.IsNullOrEmpty( faction.name ) && faction.Allegiance != null )
+                // Get the controlling faction (system or station) government
+                if ( data.TryGetValue( type + "Government", out _ ) )
                 {
-                    faction.name = faction.Allegiance.localizedName;
+                    faction.Government = Government.FromEDName( JsonParsing.getString( data, type + "Government" ) ) ?? Government.None;
                 }
-            }
-            else if ( data.TryGetValue( "Factions", out var val ) && val is List<object> factionsList )
-            {
-                // Station controlling faction government is not discretely available in 'Location' event
-                if ( faction is null ) { faction = new Faction(); }
-                foreach ( IDictionary<string, object> factionDetail in factionsList )
+
+                // Get the controlling faction (system or station) allegiance
+                if ( data.TryGetValue( type + "Allegiance", out _ ) )
                 {
-                    string fName = JsonParsing.getString( factionDetail, "Name" );
-                    if ( fName == faction.name )
+                    faction.Allegiance = GetAllegiance( data, type + "Allegiance" );
+                }
+                else if ( data.TryGetValue( "Factions", out var val ) && val is List<object> factionsList )
+                {
+                    // Station controlling faction government is not directly available in 'Location' event
+                    // so we have to find and match the faction name through the factions list.
+                    foreach ( IDictionary<string, object> factionDetail in factionsList )
                     {
-                        faction.Allegiance = GetAllegiance( factionDetail, "Allegiance" );
-                        break;
+                        var fName = JsonParsing.getString( factionDetail, "Name" );
+                        if ( fName == faction.name )
+                        {
+                            faction.Allegiance = GetAllegiance( factionDetail, "Allegiance" );
+                            break;
+                        }
                     }
                 }
             }
 
-            // Get the controlling faction (system or station) government
-            if ( data.TryGetValue( type + "Government", out _ ) )
+            // Since systems can have Guardian or Thargoid allegiance, treat these like factions for the purpose of
+            // allegiance and government (even when no human faction exists).
+            if ( data.TryGetValue( type + "Allegiance", out var allegianceVal ) )
             {
-                if ( faction is null ) { faction = new Faction(); }
-                faction.Government = Government.FromEDName( JsonParsing.getString( data, type + "Government" ) ) ?? Government.None;
+                if ( allegianceVal is string allegiance )
+                {
+                    if ( allegiance.Equals( Superpower.Thargoid.invariantName ) )
+                    {
+                        faction = new Faction
+                        {
+                            name = Superpower.Thargoid.localizedName,
+                            Allegiance = Superpower.Thargoid,
+                            Government = Government.None
+                        };
+                    }
+                    else if ( allegiance.Equals( Superpower.Guardian.invariantName ) )
+                    {
+                        faction = new Faction
+                        {
+                            name = Superpower.Guardian.localizedName,
+                            Allegiance = Superpower.Guardian,
+                            Government = Government.None
+                        };
+                    }
+                }
             }
 
             return faction;

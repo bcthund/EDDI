@@ -1192,9 +1192,9 @@ namespace UnitTests
             LocationEvent @event = (LocationEvent)events[0];
 
             Assert.IsNotNull(@event.raw);
-            Assert.IsNull(@event.controllingsystemfaction.Allegiance?.invariantName);
+            Assert.IsNull(@event.controllingsystemfaction);
 #pragma warning disable CS0618 // Type or member is obsolete
-            Assert.AreEqual( "None", @event.controllingsystemfaction.allegiance);
+            Assert.AreEqual( "None", @event.allegiance);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
