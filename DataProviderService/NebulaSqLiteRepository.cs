@@ -200,7 +200,7 @@ namespace EddiDataProviderService
 
             DatabaseNebula dbNebula = Instance.ReadNebula(nebulaId);
 
-            if ( dbNebula is null )
+            if ( dbNebula is null || dbNebula.nebulaId==0 )
             {
                 Instance.insertNebula( nebulaId, visited );
             }

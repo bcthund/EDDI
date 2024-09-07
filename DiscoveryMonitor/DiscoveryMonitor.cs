@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -249,6 +250,9 @@ namespace EddiDiscoveryMonitor
                 log += $"Nebula = NULL.\r\n";
             }
 
+            // Check if we are in a known Guardian site system
+            CheckGuardianSite(@event.systemAddress, @event.fromLoad);
+
             if (error)
             {
                 Logging.Error( log );
@@ -365,16 +369,31 @@ namespace EddiDiscoveryMonitor
                 {
                     // We can use this to report if we have left the Nebula
                     EDDI.Instance.enqueueEvent(
-                    new NebulaEnteredEvent(
-                        DateTime.UtcNow,
-                        _nearestNebula )
-                    {
-                        fromLoad = fromLoad
-                    } );
+                        new NebulaEnteredEvent(
+                            DateTime.UtcNow,
+                            _nearestNebula )
+                        {
+                            fromLoad = fromLoad
+                        } );
 
                     _enteredNebula = null;
                 }
             }
+        }
+
+        internal void CheckGuardianSite(ulong  systemAddress, bool fromLoad) {
+            if(GuardianSiteDefinitions.AllOfThem.Exists(x=>x.systemAddress == systemAddress)) {
+                List<GuardianSite> guardianSites = GuardianSiteDefinitions.AllOfThem.Where(x=>x.systemAddress == systemAddress).ToList();
+
+                EDDI.Instance.enqueueEvent(
+                    new GuardianSiteEvent(
+                        DateTime.UtcNow,
+                        guardianSites )
+                    {
+                        fromLoad = fromLoad
+                    } );
+            }
+
         }
 
         internal void handleCodexEntryEvent ( CodexEntryEvent @event )

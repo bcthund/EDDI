@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EddiDiscoveryMonitor"
+             xmlns:resx="clr-namespace:EddiDiscoveryMonitor.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -41,7 +42,11 @@
                     </Grid.RowDefinitions>
 
                     <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="0,0,0,0" Click="onClick_GetSystemAddress">
-                        <TextBlock TextAlignment="Center">Get Current<LineBreak/>System Address</TextBlock>
+                        <TextBlock TextAlignment="Center">
+                            <Run Text="{x:Static resx:Tab_General.GetCurrent}"/>
+                            <LineBreak/>
+                            <Run Text="{x:Static resx:Tab_General.SystemAddress}"/>
+                        </TextBlock>
                     </Button>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="X" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
@@ -55,7 +60,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Region" Grid.Column="0" Grid.Row="1" Margin="5,1,5,1">
+            <GroupBox Header="{x:Static resx:Tab_General.Region}" Grid.Column="0" Grid.Row="1" Margin="5,1,5,1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -66,7 +71,12 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" Grid.Column="0" Content="Get Region" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_FindRegion"/>
+                    <Button Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_FindRegion">
+                        <TextBlock>
+                            <Run Text="Get"/>
+                            <Run Text="{x:Static resx:Tab_General.Region}"/>
+                        </TextBlock>
+                    </Button>
 
                     <TextBox Grid.Row="2" Grid.Column="0" x:Name="regionName" Text="" IsReadOnly="True" VerticalAlignment="Stretch"/>
                 </Grid>
@@ -74,24 +84,24 @@
         </Grid>
         
         <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Margin="5,5,5,5">
-            <Run Text="These tabs allow configuration of the codex discoveries, exobiology and to a lesser extend geology. They change how the scripts work without needing to modify the scripts directly. Most settings have tooltips to briefly explain what they do."/><LineBreak/>
+            <Run Text="{x:Static resx:Tab_General.Description_Tabs}"/><LineBreak/>
             <Run/><LineBreak/>
-            <Run Text="The System Address should automatically update whenever the current system changes. The tools on the different tabs rely on these coordinates and they can be manually changed to run the tools on different locations. The Region is not automatically updated."/><LineBreak/>
+            <Run Text="{x:Static resx:Tab_General.Description_SystemAddress}"/><LineBreak/>
             <Run/><LineBreak/>
-            <Run Text="The Exobiology tab data will automatically update depending on the contextual body. For example if you target a planet it will show the data for that planet. If you scan a biological on a planet it will show data for that planet."/><LineBreak/>
+            <Run Text="{x:Static resx:Tab_General.Description_Exobiology}"/><LineBreak/>
             <Run/><LineBreak/>
-            <Run Text="Nebulae and Guardian Sites will not automatically update when the system changes. Press the associated button in those tabs to see the data."/><LineBreak/>
+            <Run Text="{x:Static resx:Tab_General.Description_NebulaeGuardian}"/><LineBreak/>
         </TextBlock>
 
         <StackPanel Grid.Column="1" Grid.Row="1">
-            <GroupBox Header="Legacy Predictions" Margin="5,1,5,1">
+            <GroupBox Header="{x:Static resx:Tab_General.LegacyPredictions}" Margin="5,1,5,1">
                 <StackPanel>
-                    <TextBlock Height="40" TextWrapping="WrapWithOverflow">These can often give false predictions due to their broad conditions.</TextBlock>
+                    <TextBlock Height="40" TextWrapping="WrapWithOverflow" Text="{x:Static resx:Tab_General.LegacyDescription}"/>
                     <UniformGrid Rows="4">
-                        <CheckBox x:Name="checkboxIgnoreBrainTrees" Content="Ignore Brain Trees" Height="20" Checked="IgnoreBrainTrees_Toggle" Unchecked="IgnoreBrainTrees_Toggle"/>
-                        <CheckBox x:Name="checkboxIgnoreCrystalShards" Content="Ignore Crystal Shards" Height="20" Checked="IgnoreCrystalShards_Toggle" Unchecked="IgnoreCrystalShards_Toggle"/>
-                        <CheckBox x:Name="checkboxIgnoreBarkMounds" Content="Ignore Bark Mounds" Height="20" Checked="IgnoreBarkMounds_Toggle" Unchecked="IgnoreBarkMounds_Toggle"/>
-                        <CheckBox x:Name="checkboxIgnoreTubers" Content="Ignore Tubers" Height="20" Checked="IgnoreTubers_Toggle" Unchecked="IgnoreTubers_Toggle"/>
+                        <CheckBox x:Name="checkboxIgnoreBrainTrees" Content="{x:Static resx:Tab_General.IgnoreBrainTrees}" Height="20" Checked="IgnoreBrainTrees_Toggle" Unchecked="IgnoreBrainTrees_Toggle"/>
+                        <CheckBox x:Name="checkboxIgnoreCrystalShards" Content="{x:Static resx:Tab_General.IgnoreCrystalShards}" Height="20" Checked="IgnoreCrystalShards_Toggle" Unchecked="IgnoreCrystalShards_Toggle"/>
+                        <CheckBox x:Name="checkboxIgnoreBarkMounds" Content="{x:Static resx:Tab_General.IgnoreBarkMounds}" Height="20" Checked="IgnoreBarkMounds_Toggle" Unchecked="IgnoreBarkMounds_Toggle"/>
+                        <CheckBox x:Name="checkboxIgnoreTubers" Content="{x:Static resx:Tab_General.IgnoreTubers}" Height="20" Checked="IgnoreTubers_Toggle" Unchecked="IgnoreTubers_Toggle"/>
                     </UniformGrid>
                 </StackPanel>
             </GroupBox>

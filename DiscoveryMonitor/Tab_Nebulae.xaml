@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EddiDiscoveryMonitor"
+             xmlns:eddi="clr-namespace:Eddi;assembly=EDDI"
+             xmlns:resx="clr-namespace:EddiDiscoveryMonitor.Properties"
+             xmlns:eddiDataDefinitions="clr-namespace:EddiDataDefinitions;assembly=EddiDataDefinitions"
+             xmlns:sysglb="clr-namespace:System.Globalization;assembly=mscorlib"
              mc:Ignorable="d" 
          d:DesignHeight="450" d:DesignWidth="800" d:MinWidth="650">
     <UserControl.Resources>
@@ -38,7 +42,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Grid.ColumnSpan="2" Content="Get Nearest Nebula" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_GetNebula"/>
+            <Button Grid.Row="0" Grid.ColumnSpan="2" Content="{x:Static resx:Tab_Nebulae.Button_GetNearest}" VerticalAlignment="Stretch" Margin="0,0,0,0" Click="onClick_GetNebula"/>
 
             <Grid Grid.Row="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -59,26 +63,26 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Type Filter" VerticalAlignment="Center" Padding="5,0,20,0"/>
-                <RadioButton Grid.Row="0" Grid.Column="1" x:Name="radioNebulafilter_Type_All" Content="All" IsChecked="True" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                <RadioButton Grid.Row="0" Grid.Column="2" x:Name="radioNebulafilter_Type_Standard" Content="Standard" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                <RadioButton Grid.Row="0" Grid.Column="3" x:Name="radioNebulafilter_Type_Real" Content="Real" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                <RadioButton Grid.Row="0" Grid.Column="4" x:Name="radioNebulafilter_Type_Planetary" Content="Planetary" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static resx:Tab_Nebulae.TypeFilter}" VerticalAlignment="Center" Padding="5,0,20,0"/>
+                <RadioButton Grid.Row="0" Grid.Column="1" x:Name="radioNebulafilter_Type_All" Content="{x:Static resx:Tab_Nebulae.TypeFilter_All}" IsChecked="True" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <RadioButton Grid.Row="0" Grid.Column="2" x:Name="radioNebulafilter_Type_Standard" Content="{x:Static resx:Tab_Nebulae.TypeFilter_Standard}" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <RadioButton Grid.Row="0" Grid.Column="3" x:Name="radioNebulafilter_Type_Real" Content="{x:Static resx:Tab_Nebulae.TypeFilter_Real}" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <RadioButton Grid.Row="0" Grid.Column="4" x:Name="radioNebulafilter_Type_Planetary" Content="{x:Static resx:Tab_Nebulae.TypeFilter_Planetary}" GroupName="NebulaTypeFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
 
-                <Label Grid.Row="4" Grid.Column="0" Content="Max Distance" VerticalAlignment="Center" Padding="5,0,20,0"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="{x:Static resx:Tab_Nebulae.MaxDistance}" VerticalAlignment="Center" Padding="5,0,20,0"/>
                 <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="5000" x:Name="nebulaMaxDistance" PreviewTextInput="EnsureValidInteger"/>
                 <Label Grid.Row="4" Grid.Column="4" Content="LY" VerticalAlignment="Center" Padding="5,0,20,0"/>
 
-                <Label Grid.Row="5" Grid.Column="0" Content="Max Results" VerticalAlignment="Center" Padding="5,0,20,0"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="{x:Static resx:Tab_Nebulae.MaxResults}" VerticalAlignment="Center" Padding="5,0,20,0"/>
                 <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Text="50" x:Name="nebulaMaxCount" PreviewTextInput="EnsureValidInteger"/>
                 <Label Grid.Row="5" Grid.Column="4" Content="" VerticalAlignment="Center" Padding="5,0,20,0"/>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Visited Filter" VerticalAlignment="Center" Padding="5,0,20,0"/>
-                <RadioButton Grid.Row="1" Grid.Column="1" x:Name="radioNebulafilter_Visted_All" Content="All" IsChecked="True" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                <RadioButton Grid.Row="1" Grid.Column="2" x:Name="radioNebulafilter_Visted_Visited" Content="Visited" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
-                <RadioButton Grid.Row="1" Grid.Column="3" x:Name="radioNebulafilter_Visted_NotVisited" Content="Not Visited" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="{x:Static resx:Tab_Nebulae.VisitedFilter}" VerticalAlignment="Center" Padding="5,0,20,0"/>
+                <RadioButton Grid.Row="1" Grid.Column="1" x:Name="radioNebulafilter_Visted_All" Content="{x:Static resx:Tab_Nebulae.VisitedFilter_All}" IsChecked="True" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <RadioButton Grid.Row="1" Grid.Column="2" x:Name="radioNebulafilter_Visted_Visited" Content="{x:Static resx:Tab_Nebulae.VisitedFilter_Visited}" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
+                <RadioButton Grid.Row="1" Grid.Column="3" x:Name="radioNebulafilter_Visted_NotVisited" Content="{x:Static resx:Tab_Nebulae.VisitedFilter_NotVisited}" GroupName="NebulaVisitedFilter" VerticalAlignment="Center" Padding="5,0,10,0"/>
 
-                <CheckBox Grid.Row="5" Grid.Column="5" x:Name="checkbox_EditVisibility" Checked="checkbox_EditVisited_Changed" Unchecked="checkbox_EditVisited_Changed" Content="Edit Visited" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Left"/>
+                <CheckBox Grid.Row="5" Grid.Column="5" x:Name="checkbox_EditVisibility" Checked="checkbox_EditVisited_Changed" Unchecked="checkbox_EditVisited_Changed" Content="{x:Static resx:Tab_Nebulae.NearestNebulae_Edit}" VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Left"/>
             </Grid>
         </Grid>
 
@@ -91,7 +95,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Nearest Nebulae" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{x:Static resx:Tab_Nebulae.NearestNebulae}" Padding="0,0,10,0" HorizontalContentAlignment="Center"/>
             <DataGrid Grid.Row="1" Grid.ColumnSpan="2" AutoGenerateColumns="False" x:Name="datagrid_NebulaData" ItemsSource="{Binding}" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="Cell">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
@@ -104,16 +108,32 @@
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Type" IsReadOnly="True" Width="Auto" Binding="{Binding type}"/>
-                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding distance, StringFormat={}0 LY}"/>
-                    <DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding name}"/>
-                    <DataGridTextColumn Header="Reference" IsReadOnly="True" Width="*" Binding="{Binding referenceBody}"/>
-                    <DataGridTextColumn Header="Diameter" IsReadOnly="True" Width="Auto" Binding="{Binding diameter, StringFormat={}0 LY}"/>
-                    <DataGridTextColumn Header="Visited" IsReadOnly="True" Width="Auto" Binding="{Binding visited}"/>
-                    <DataGridTemplateColumn Header="Modify" x:Name="datagrid_Nebula_ToggleVisited_Template" Width="Auto" Visibility="Hidden">
+                    <DataGridTextColumn Header="ID" IsReadOnly="True" Width="Auto" Binding="{Binding id}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Type}" IsReadOnly="True" Width="Auto" Binding="{Binding localizedType}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Distance}" IsReadOnly="True" Width="Auto" Binding="{Binding distance, StringFormat={}0 LY}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Name}" IsReadOnly="True" Width="*" Binding="{Binding name}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Reference}" IsReadOnly="True" Width="*" Binding="{Binding referenceBody}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Diameter}" IsReadOnly="True" Width="Auto" Binding="{Binding diameter, StringFormat={}0 LY}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Visited}" IsReadOnly="True" Width="Auto" Binding="{Binding visited}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="False">
+                                        <Setter Property="Background" Value="#FF5555"/>
+                                        <!--<Setter Property="Foreground" Value="#FF5555"/>-->
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="True">
+                                        <Setter Property="Background" Value="#55FF55"/>
+                                        <!--<Setter Property="Foreground" Value="#55FF55"/>-->
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="{x:Static resx:Tab_Nebulae.NearestNebulae_Modify}" x:Name="datagrid_Nebula_ToggleVisited_Template" Width="Auto" Visibility="Hidden">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="datagrid_Nebula_ToggleVisited" Tag="{Binding id}">Toggle</Button>
+                                <Button Click="datagrid_Nebula_ToggleVisited" Tag="{Binding id}" Content="{x:Static resx:Tab_Nebulae.NearestNebulae_Toggle}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

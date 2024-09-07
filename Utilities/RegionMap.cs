@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 
@@ -143,6 +144,15 @@ namespace Utilities
                 }
 
                 return sysregions;
+            }
+
+            public static string GetRegionName(int regionNum)
+            {
+                if ( regionNum>=0 && regionNum<RegionNames.Count() ) {
+                    return RegionNames[regionNum];
+                }
+
+                return "Error";
             }
 
             //private static void Main(string[] args)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Utilities;
+using Utilities.RegionMap;
 
 namespace EddiDataDefinitions
 {
@@ -16,21 +17,27 @@ namespace EddiDataDefinitions
         }
 
         public enum NebulaType {
-            Standard = 0,
-            Real = 1,
-            Planetary = 2
+            None = 0,
+            Standard = 1,
+            Real = 2,
+            Planetary = 3
         }
+
+        [PublicAPI]
+        public string localizedType => Properties.NebulaType.ResourceManager.GetString(type.ToString());
+
+        [PublicAPI]
+        public string regionName => RegionMap.GetRegionName(region);
 
         public int id { get; set; }
         public NebulaType type { get; set; }
-        public string designation;
 
         [PublicAPI("The name of the nebula")]
         public string name { get; set; }
         public int region;
         public bool hasCentralBody;
         public string referenceBody { get; set; }
-        //public string referenceSector;    // TODO:Future - Add nebula sectors for non-central body nebulae
+        public string referenceSector { get; set; }
         public decimal? x;                   // x coordinate of system
         public decimal? y;                   // y coordinate of system
         public decimal? z;                   // z coordinate of system
@@ -46,13 +53,12 @@ namespace EddiDataDefinitions
         { }
 
         internal Nebula ( int id,
-                         //string designation,
                          NebulaType type,
                          string name,
                          int region,
                          bool hasCentralBody,
                          string referenceBody,
-                         //string referenceSector,      // TODO:Future - Add nebula sectors for non-central body nebulas
+                         //string referenceSector,      // TODO:Future - Add nebula sectors for non-central body nebulae
                          decimal? x,
                          decimal? y,
                          decimal? z,
@@ -61,12 +67,11 @@ namespace EddiDataDefinitions
         {
             this.id = id;
             this.type = type;
-            //this.designation = designation;
             this.name = name;
             this.region = region;
             this.hasCentralBody = hasCentralBody;
             this.referenceBody = referenceBody;
-            //this.referenceSector = referenceSector;   // TODO:Future - Add nebula sectors for non-central body nebulas
+            //this.referenceSector = referenceSector;   // TODO:Future - Add nebula sectors for non-central body nebulae
             this.x = x;
             this.y = y;
             this.z = z;

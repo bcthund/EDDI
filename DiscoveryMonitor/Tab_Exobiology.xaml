@@ -50,15 +50,15 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" VerticalAlignment="Center">Current System:</Label>
+                <Label Grid.Column="0" VerticalAlignment="Center" Content="{x:Static resx:Tab_Exobiology.CurrentSystem}"/>
                 <!--<TextBox Grid.Column="1" x:Name="textbox_CurrentSystemName" Text="{Binding _currentBody.systemname}" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
                 <TextBox Grid.Column="1" x:Name="textbox_CurrentSystemName" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
 
-                <Label Grid.Column="2" VerticalAlignment="Center">Current Body:</Label>
+                <Label Grid.Column="2" VerticalAlignment="Center" Content="{x:Static resx:Tab_Exobiology.CurrentBody}"/>
                 <!--<TextBox Grid.Column="3" x:Name="textbox_CurrentBodyShortName" Text="{Binding _currentBody.shortname}" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
                 <TextBox Grid.Column="3" x:Name="textbox_CurrentBodyShortName" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />
 
-                <Label Grid.Column="5" VerticalAlignment="Center">Current Body ID:</Label>
+                <Label Grid.Column="5" VerticalAlignment="Center" Content="{x:Static resx:Tab_Exobiology.CurrentBodyId}"/>
                 <!--<TextBox Grid.Column="6" x:Name="textbox_CurrentBodyId" Text="{Binding _currentBodyId}" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" />-->
                 <TextBox Grid.Column="6" x:Name="textbox_CurrentBodyId" Text="" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False" KeyDown="textbox_CurrentBodyId_KeyDown"/>
 
@@ -100,21 +100,21 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>-->
-                    <DataGridTextColumn Header="Planet" IsReadOnly="True" Width="*" Binding="{Binding shortname, FallbackValue=''}">
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Planet_Planet}" IsReadOnly="True" Width="*" Binding="{Binding shortname, FallbackValue=''}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Left" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Bios" IsReadOnly="True" Width="Auto" Binding="{Binding surfaceSignals.reportedBiologicalCount, FallbackValue='?'}">
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Planet_Bios}" IsReadOnly="True" Width="Auto" Binding="{Binding surfaceSignals.reportedBiologicalCount, FallbackValue='?'}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Done" IsReadOnly="True" Width="Auto" Binding="{Binding surfaceSignals.bioSignalsComplete, FallbackValue='?'}">
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Planet_Done}" IsReadOnly="True" Width="Auto" Binding="{Binding surfaceSignals.bioSignalsComplete, FallbackValue='?'}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -152,31 +152,31 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Genus" IsReadOnly="True" Width="*" Binding="{Binding genus.localizedName, FallbackValue=''}">
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_Genus}" IsReadOnly="True" Width="*" Binding="{Binding genus.localizedName, FallbackValue=''}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Left" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Species" IsReadOnly="True" Width="*" Binding="{Binding species.localizedName, FallbackValue=''}">
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_Species}" IsReadOnly="True" Width="*" Binding="{Binding species.localizedName, FallbackValue=''}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Left" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Variant" IsReadOnly="True" Width="*" Binding="{Binding variant.localizedName, FallbackValue=''}">
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_Variant}" IsReadOnly="True" Width="*" Binding="{Binding variant.localizedName, FallbackValue=''}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Left" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Samples" IsReadOnly="True" Width="Auto" Binding="{Binding samples, FallbackValue=''}"/>
-                    <DataGridTextColumn Header="Distance" IsReadOnly="True" Width="Auto" Binding="{Binding genus.minimumDistanceMeters, StringFormat={}{0}m, FallbackValue=''}"/>
-                    <DataGridTextColumn Header="State" IsReadOnly="True" Width="Auto" Binding="{Binding state, FallbackValue=''}"/>
-                    <DataGridTextColumn Header="Value" IsReadOnly="True" Width="Auto" Binding="{Binding value, FallbackValue='', StringFormat='{}{0:#,0}'}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_Samples}" IsReadOnly="True" Width="Auto" Binding="{Binding samples, FallbackValue=''}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_Distance}" IsReadOnly="True" Width="Auto" Binding="{Binding genus.minimumDistanceMeters, StringFormat={}{0}m, FallbackValue=''}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_State}" IsReadOnly="True" Width="Auto" Binding="{Binding state, FallbackValue=''}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Exobiology.Bios_Value}" IsReadOnly="True" Width="Auto" Binding="{Binding value, FallbackValue='', StringFormat='{}{0:#,0}'}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -198,32 +198,32 @@
 
 
                 <TextBlock x:Name="textBlock_Genus" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" TextWrapping="Wrap">
-                    <Run Text="{Binding genus.localizedName, Mode=OneWay, FallbackValue='Genus?'}"/>
+                    <Run Text="{Binding genus.localizedName, Mode=OneWay, FallbackValue='? Genus'}"/>
                     <Run Text=":"/>
-                    <Run Text="{Binding genus.localizedDescription, Mode=OneWay, FallbackValue=''}"/>
+                    <Run Text="{Binding genus.localizedDescription, Mode=OneWay, FallbackValue='?'}"/>
                     <LineBreak/>
                 </TextBlock>
                 <TextBlock x:Name="textBlock_Species" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" TextWrapping="Wrap">
-                    <Run Text="The"/>
-                    <Run Text="{Binding species.localizedName, Mode=OneWay, FallbackValue='Species?'}"/>
-                    <Run Text="species"/>
+                    <Run Text="{x:Static resx:Tab_Exobiology.The}"/>
+                    <Run Text="{Binding species.localizedName, Mode=OneWay, FallbackValue='?'}"/>
+                    <Run Text="{x:Static resx:Tab_Exobiology.species}"/>
                     <Run Text="{Binding species.localizedDescription, Mode=OneWay, FallbackValue=''}"/>
                     <LineBreak/>
                 </TextBlock>
 
-                <Label Grid.Column="0" Grid.Row="2" x:Name="selectedBio_samples_title" Content="Sample" HorizontalContentAlignment="Center"/>
-                <Label Grid.Column="1" Grid.Row="2" x:Name="selectedBio_x_title" Content="Latitude" HorizontalContentAlignment="Center"/>
-                <Label Grid.Column="2" Grid.Row="2" x:Name="selectedBio_y_title" Content="Longitude" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="0" Grid.Row="2" x:Name="selectedBio_samples_title" Content="{x:Static resx:Tab_Exobiology.Samples_Sample}" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="1" Grid.Row="2" x:Name="selectedBio_x_title" Content="{x:Static resx:Tab_Exobiology.Samples_Latitude }" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="2" Grid.Row="2" x:Name="selectedBio_y_title" Content="{x:Static resx:Tab_Exobiology.Samples_Longitude }" HorizontalContentAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="3" x:Name="selectedBio_Sample1_header" Content="#1" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="0" Grid.Row="3" x:Name="selectedBio_Sample1_header" Content="{x:Static resx:Tab_Exobiology.Samples_1}" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="1" Grid.Row="3" x:Name="selectedBio_Sample1_x" Content="" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="2" Grid.Row="3" x:Name="selectedBio_Sample1_y" Content="" HorizontalContentAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="4" x:Name="selectedBio_Sample2_header" Content="#2" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="0" Grid.Row="4" x:Name="selectedBio_Sample2_header" Content="{x:Static resx:Tab_Exobiology.Samples_2}" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="1" Grid.Row="4" x:Name="selectedBio_Sample2_x" Content="" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="2" Grid.Row="4" x:Name="selectedBio_Sample2_y" Content="" HorizontalContentAlignment="Center"/>
 
-                <Label Grid.Column="0" Grid.Row="5" x:Name="selectedBio_Sample3_header" Content="#3" HorizontalContentAlignment="Center"/>
+                <Label Grid.Column="0" Grid.Row="5" x:Name="selectedBio_Sample3_header" Content="{x:Static resx:Tab_Exobiology.Samples_3}" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="1" Grid.Row="5" x:Name="selectedBio_Sample3_x" Content="" HorizontalContentAlignment="Center"/>
                 <Label Grid.Column="2" Grid.Row="5" x:Name="selectedBio_Sample3_y" Content="" HorizontalContentAlignment="Center"/>
 
@@ -242,8 +242,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Grid.Column="0" Content="Refresh Display" Click="buttonRefresh" Height="30"/>
-            <Button Grid.Column="1" Content="Force Prediction Update" Click="buttonPredict" Height="30"/>
+            <Button Grid.Column="0" Content="{x:Static resx:Tab_Exobiology.Button_Refresh}" Click="buttonRefresh" Height="30"/>
+            <Button Grid.Column="1" Content="{x:Static resx:Tab_Exobiology.Button_Predict}" Click="buttonPredict" Height="30"/>
         </Grid>
 
     </Grid>

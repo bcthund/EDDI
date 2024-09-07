@@ -19,6 +19,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Properties\GuardianSiteBlueprint.Designer.cs">
+      <DependentUpon>GuardianSiteBlueprint.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Properties\NebulaType.Designer.cs">
+      <DependentUpon>NebulaType.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Properties\GuardianSiteType.Designer.cs">
+      <DependentUpon>GuardianSiteType.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Properties\GuardianDesc.Designer.cs">
       <DependentUpon>GuardianDesc.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -441,6 +456,18 @@
   <ItemGroup>
     <EmbeddedResource Update="Properties\AtmosphereThickness.resx">
       <LastGenOutput>AtmosphereThickness.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\GuardianSiteBlueprint.resx">
+      <LastGenOutput>GuardianSiteBlueprint.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\NebulaType.resx">
+      <LastGenOutput>NebulaType.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\GuardianSiteType.resx">
+      <LastGenOutput>GuardianSiteType.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\GuardianDesc.resx">

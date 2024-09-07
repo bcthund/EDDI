@@ -1176,6 +1176,15 @@
       "name": "Glide",
       "description": "Triggered when your ship enters or exits glide"
     },
+    "Guardian Site Present": {
+      "enabled": true,
+      "priority": 3,
+      "responder": true,
+      "script": "{_ guardianSites[n].type: 1=Beacon, 2=Ruin, 3=Structure }\r\n{_ guardianSites[n].localizedType: }\r\n{_ guardianSites[n].blueprint: 0=None, 1=Weapon, 2=Vessel, 3=Module }\r\n{_ guardianSites[n].localizedBlueprint: }\r\n{_ guardianSites[n].body: The body (short name) in the system that the site is on }\r\n\r\n{if len(guardianSites)=1:\r\n    There is one known guardian {guardianSites[0].localizedType} in this system on body {guardianSites[0].body}\r\n    {if guardianSites[0].blueprint>0:\r\n        that has a {guardianSites[0].localizedBlueprint} blueprint\r\n    }\r\n|elif len(guardianSites)>1:\r\n    There are {len(guardianSites)} known guardian sites which includes\r\n    {for site in guardianSites:\r\n        , a {site.localizedType} on body {P(site.body, \"body\")}\r\n        {if site.blueprint>0:\r\n            that has a {site.localizedBlueprint} blueprint\r\n        }\r\n    }\r\n}",
+      "default": true,
+      "name": "Guardian Site Present",
+      "description": "Triggered when your ship enters a system with a known Guardian structure."
+    },
     "Hardpoints": {
       "enabled": true,
       "priority": 3,
