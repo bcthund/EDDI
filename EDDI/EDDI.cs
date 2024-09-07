@@ -3060,7 +3060,7 @@ namespace EddiCore
         public bool refreshProfile(bool refreshStation = false)
         {
             bool success = true;
-            if (CompanionAppService.Instance?.CurrentState == CompanionAppService.State.Authorized)
+            if (!CompanionAppService.unitTesting && CompanionAppService.Instance?.CurrentState == CompanionAppService.State.Authorized)
             {
                 try
                 {
