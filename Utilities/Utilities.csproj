@@ -63,4 +63,17 @@
       <Version>4.3.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\IPA.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IPA.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\IPA.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IPA.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

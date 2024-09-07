@@ -133,6 +133,15 @@ namespace EddiMissionMonitor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes:.
+        /// </summary>
+        public static string header_notes {
+            get {
+                return ResourceManager.GetString("header_notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Origin Station:.
         /// </summary>
         public static string header_originstation {
@@ -177,17 +186,6 @@ namespace EddiMissionMonitor.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Notes:.
-        /// </summary>
-        public static string header_notes
-        {
-            get
-            {
-                return ResourceManager.GetString( "header_notes", resourceCulture );
-            }
-        }
-
         /// <summary>
         ///   Looks up a localized string similar to Track information on your missions..
         /// </summary>

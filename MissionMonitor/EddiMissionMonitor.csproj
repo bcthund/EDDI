@@ -46,4 +46,17 @@
       <Version>4.3.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\MissionMonitor.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MissionMonitor.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\MissionMonitor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MissionMonitor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

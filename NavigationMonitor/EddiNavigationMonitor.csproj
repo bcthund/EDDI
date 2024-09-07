@@ -43,4 +43,17 @@
   <ItemGroup>
     <Resource Include="Images\Copy.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\NavigationMonitor.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NavigationMonitor.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\NavigationMonitor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NavigationMonitor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

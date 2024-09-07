@@ -36,4 +36,17 @@
       <Version>4.3.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\CrimeMonitor.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CrimeMonitor.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\CrimeMonitor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CrimeMonitor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

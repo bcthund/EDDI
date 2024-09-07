@@ -53,6 +53,19 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Properties\VoiceAttack.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VoiceAttack.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\VoiceAttack.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VoiceAttack.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="EDDI.vap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
