@@ -479,6 +479,22 @@ namespace EddiSpeechResponder.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This function will return a humanised list of items from an array (e.g. this, that, or the other thing).
+        ///
+        ///List() takes a single argument, the array variable with items you want listed.
+        ///
+        ///Common usage is to convert an array to a list, for example:
+        ///
+        ///    {set bios to [&apos;bacterium&apos;, &apos;cactoida&apos;, &apos;frutexa&apos;]}
+        ///    The body could have {ListOr(bios)}..
+        /// </summary>
+        public static string ListOr {
+            get {
+                return ResourceManager.GetString("ListOr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This function will write the supplied text to EDDI&apos;s log.
         ///
         ///Log() takes a single argument of the string to log..

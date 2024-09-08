@@ -302,18 +302,16 @@ namespace EddiSpeechResponder.Properties {
                 return ResourceManager.GetString("localizedAnd", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to and.
+        ///   Looks up a localized string similar to or.
         /// </summary>
-        public static string localizedOr
-        {
-            get
-            {
-                return ResourceManager.GetString( "localizedOr", resourceCulture );
+        public static string localizedOr {
+            get {
+                return ResourceManager.GetString("localizedOr", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to EDDI has recovered a script that was being edited when the program closed unexpectedly. Do you want to re-open it?.
         /// </summary>

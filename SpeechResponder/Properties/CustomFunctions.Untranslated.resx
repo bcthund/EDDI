@@ -351,7 +351,7 @@ Common usage is to provide distance and number of jumps for a specific query:
   <data name="List" xml:space="preserve">
     <value>This function will return a humanised list of items from an array (e.g. this, that, and the other thing).
 
-List() takes up to two arguments. The first argument is the array variable with items you want listed. The second is an optional boolean value, which if set to true will generate an "or" list rather than an "and" list.
+List() takes a single argument, the array variable with items you want listed.
 
 Common usage is to convert an array to a list, for example:
 
@@ -525,7 +525,7 @@ SecurityLevelDetails() takes a single argument of the security level for which y
 At current this does not have a lot of use as the security level object only contains its name, but this may be expanded in future.</value>
   </data>
   <data name="SetState" xml:space="preserve">
-	  <value>This function will set a session state value. The value will be available in future scripts or child scripts throughout the remainder of the EDDI session as a property of the persistent 'state' object. If you wish to refer to the stored value in the same script where it was stored then please retrieve the value using the 'GetState' function.
+    <value>This function will set a session state value. The value will be available in future scripts or child scripts throughout the remainder of the EDDI session as a property of the persistent 'state' object. If you wish to refer to the stored value in the same script where it was stored then please retrieve the value using the 'GetState' function.
 
 SetState takes two arguments: the name of the state value to set, and its value.  The name of the state value will be converted to lower-case and spaces changed to underscores.  The value must be either a boolean, a number, a string, or a null / void value; other values will be ignored.
 
@@ -762,5 +762,15 @@ Common usage of this is to retrieve cumulative or persistent information stored 
 
     {SetState("distance_travelled_today", state.distance_travelled_today + event.distance)}
     {set distance to GetState("distance_travelled_today")}</value>
+  </data>
+  <data name="ListOr" xml:space="preserve">
+    <value>This function will return a humanised list of items from an array (e.g. this, that, or the other thing).
+
+List() takes a single argument, the array variable with items you want listed.
+
+Common usage is to convert an array to a list, for example:
+
+    {set bios to ['bacterium', 'cactoida', 'frutexa']}
+    The body could have {ListOr(bios)}.</value>
   </data>
 </root>

@@ -7,16 +7,16 @@ using System.Linq;
 namespace EddiSpeechResponder.CustomFunctions
 {
     [UsedImplicitly]
-    public class List : ICustomFunction
+    public class ListOr : ICustomFunction
     {
-        public string name => "List";
+        public string name => "ListOr";
         public FunctionCategory Category => FunctionCategory.Utility;
         public string description => Properties.CustomFunctions_Untranslated.List;
         public Type ReturnType => typeof( string );
         public IFunction function => Function.CreateNative1( ( runtime, values, writer ) =>
         {
             var output = string.Empty;
-            var localisedAnd = Properties.SpeechResponder.localizedAnd;
+            var localisedOr = Properties.SpeechResponder.localizedOr;
             foreach ( var value in values.Fields )
             {
                 var valueString = value.Value.AsString;
@@ -30,7 +30,7 @@ namespace EddiSpeechResponder.CustomFunctions
                 }
                 else
                 {
-                    output = $"{output}{( values.Fields.Count() > 2 ? "," : "" )} {localisedAnd} {valueString}";
+                    output = $"{output}{( values.Fields.Count() > 2 ? "," : "" )} {localisedOr} {valueString}";
                 }
             }
             return output;
