@@ -60,10 +60,6 @@ namespace EddiDataDefinitions
                         int iMin = Math.Min(values.Count(), reportedBiologicalCount);
                         log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}\r\n";
                         value = values.Take(iMin).Select(x=>x.predictedMinimumValue).Sum();
-                        //for(int i=0; i<iMin; i++) {
-                        //    value += values.ElementAt(i).predictedMinimumValue;
-                        //    log += $"\t({i+1}/{iMin}) predictedMinimumTotalValue={value} [{values.ElementAt(i).predictedMinimumValue}]\r\n";
-                        //}
                     }
                     else {
                         log = "";
@@ -96,10 +92,6 @@ namespace EddiDataDefinitions
                         int iMin = Math.Min(values.Count(), reportedBiologicalCount);
                         log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}\r\n";
                         value = values.Take(iMin).Select(x=>x.predictedMaximumValue).Sum();
-                        //for( int i = 0; i<iMin; i++ ) {
-                        //    value += values.ElementAt(i).predictedMaximumValue;
-                        //    log += $"\t({i+1}/{iMin}) predictedMaximumTotalValue={value} [{values.ElementAt(i).predictedMaximumValue}]\r\n";
-                        //}
                     }
                     else {
                         log = "";

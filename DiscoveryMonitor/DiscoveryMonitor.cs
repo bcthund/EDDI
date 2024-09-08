@@ -207,20 +207,13 @@ namespace EddiDiscoveryMonitor
             }
             else if ( @event is JumpedEvent jumpedEvent )
             {
-                Logging.Debug($"==========> FSDJump Handled");
                 handleJumpedEvent( jumpedEvent );
-                //if (!@event.fromLoad) OnPropertyChanged("RefreshData");
                 OnPropertyChanged("RefreshData");
             }
             else if ( @event is CarrierJumpedEvent carrierJumpedEvent ) {
-                Logging.Debug($"==========> CarrierJump Handled, {carrierJumpedEvent.docked}, {carrierJumpedEvent.onFoot}");
                 handleCarrierJumpedEvent( carrierJumpedEvent );
-                //if (!@event.fromLoad && (carrierJumpedEvent.docked || carrierJumpedEvent.onFoot)) {
-                //    OnPropertyChanged("RefreshData");
-                //}
                 if ( carrierJumpedEvent.docked || carrierJumpedEvent.onFoot )
                 {
-                    Logging.Debug($"==========> REFRESHDATA TRIGGER");
                     OnPropertyChanged( "RefreshData" );
                 }
             }
@@ -238,14 +231,12 @@ namespace EddiDiscoveryMonitor
         // When an FSDJump event occurs; check the region, nearest nebula and guardian sites
         internal void handleJumpedEvent ( JumpedEvent @event )
         {
-            Logging.Debug($"==========> FSDJump {@event.systemAddress}");
             RunChecks(@event.systemAddress, @event.system, @event.x, @event.y, @event.z, @event.fromLoad);
         }
 
         // When a CarrierJump event occurs and we are docked or on foot; check the region, nearest nebula and guardian sites
         internal void handleCarrierJumpedEvent ( CarrierJumpedEvent @event )
         {
-            Logging.Debug($"==========> CarrierJump {@event.docked}, {@event.onFoot}");
             if ( @event.docked || @event.onFoot )
             {
                 RunChecks(@event.systemAddress, @event.systemname, @event.x, @event.y, @event.z, @event.fromLoad);
@@ -414,7 +405,6 @@ namespace EddiDiscoveryMonitor
         }
 
         internal void CheckGuardianSite(ulong  systemAddress, bool fromLoad) {
-            Logging.Debug($"==========> CHECK GUARDIAN SITE [{GuardianSiteDefinitions.AllOfThem.Exists(x=>x.systemAddress == systemAddress)}]");
             if(GuardianSiteDefinitions.AllOfThem.Exists(x=>x.systemAddress == systemAddress)) {
                 List<GuardianSite> guardianSites = GuardianSiteDefinitions.AllOfThem.Where(x=>x.systemAddress == systemAddress).ToList();
 
@@ -815,7 +805,6 @@ namespace EddiDiscoveryMonitor
                 foreach ( var organic in bios )
                 {
                     log += $"\tAdding predicted bio {organic.genus.invariantName}\r\n";
-                    //body.surfaceSignals.AddBioFromGenus( organic.genus, true );
                     body.surfaceSignals.AddBio( organic );
                 }
                 hasPredictedBios = true;
@@ -880,7 +869,6 @@ namespace EddiDiscoveryMonitor
                 foreach ( var organic in bios )
                 {
                     log += $"\tAdding predicted bio {organic.genus.invariantName}\r\n";
-                    //body.surfaceSignals.AddBioFromGenus( organic.genus, true );
                     body.surfaceSignals.AddBio( organic );
                 }
                 hasPredictedBios = true;
