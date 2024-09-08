@@ -20,11 +20,13 @@ namespace EddiDataDefinitions
                              genus?.maximumValue ?? 
                              0;
 
+        [JsonProperty]
         internal long? genusPredictedMinimumValue = null;
         public void SetPredictedMinimumValue(long? minimum) {
             genusPredictedMinimumValue = minimum;
         }
 
+        [JsonProperty]
         internal long? genusPredictedMaximumValue = null;
         public void SetPredictedMaximumValue(long? maximum) {
             genusPredictedMaximumValue = maximum;
@@ -46,7 +48,7 @@ namespace EddiDataDefinitions
         /// <summary>
         /// Overrides the credit values from definitions when an actual value is indicated (as by the `OrganicDataSold` event)
         /// </summary>
-        public long? valueOverride { get; set; }
+        public long? valueOverride { get; set; } = null;
 
         /// <summary>
         /// Sets the value from predictions, this could be the minimum value from several predicted species of the same genus.

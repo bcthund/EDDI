@@ -46,22 +46,23 @@ namespace EddiDataDefinitions
         public long predictedMinimumTotalValue {
             get {
                 long value = 0;
-                var log = "\r\n";
+                var log = "";
 
                 try
                 {
                     if(reportedBiologicalCount==1) {
                         //value = bioSignals.OrderBy(x => x.predictedMinimumValue).First().value;
                         value = bioSignals.Min(x => x.predictedMinimumValue);
-                        log += $"\t(1/1) predictedMinimumTotalValue={value} [{bioSignals.Min(x => x.predictedMinimumValue)}]\r\n";
+                        log += $"\t(1/1) predictedMinimumTotalValue={value}, value=[{bioSignals.Min(x => x.predictedMinimumValue)}]\r\n";
                     }
                     else if(reportedBiologicalCount>1) {
                         var values = bioSignals.OrderBy(x => x.predictedMinimumValue);
                         int iMin = Math.Min(values.Count(), reportedBiologicalCount);
-                        log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}\r\n";
+                        log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}, values=[{String.Join(";",values.Select(x=>x.predictedMinimumValue).ToList())}]\r\n";
                         value = values.Take(iMin).Select(x=>x.predictedMinimumValue).Sum();
                     }
                     else {
+                        // Error OR body has no bios
                         log = "";
                     }
                 }
@@ -79,21 +80,22 @@ namespace EddiDataDefinitions
         public long predictedMaximumTotalValue {
             get {
                 long value = 0;
-                var log = "\r\n";
+                var log = "";
 
                 try
                 {
                     if(reportedBiologicalCount==1) {
                         value = bioSignals.Max(x => x.predictedMaximumValue);
-                        log += $"\t(1/1) predictedMaximumTotalValue={value} [{bioSignals.Max(x => x.predictedMaximumValue)}]\r\n";
+                        log += $"\t(1/1) predictedMaximumTotalValue={value} value=[{bioSignals.Max(x => x.predictedMaximumValue)}]\r\n";
                     }
                     else if(reportedBiologicalCount>1) {
-                        var values = bioSignals.OrderByDescending(x => x.predictedMaximumValue).Reverse();
+                        var values = bioSignals.OrderByDescending(x => x.predictedMaximumValue);
                         int iMin = Math.Min(values.Count(), reportedBiologicalCount);
-                        log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}\r\n";
+                        log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}, values=[{String.Join(";",values.Select(x=>x.predictedMaximumValue).ToList())}]\r\n";
                         value = values.Take(iMin).Select(x=>x.predictedMaximumValue).Sum();
                     }
                     else {
+                        // Error OR body has no bios
                         log = "";
                     }
                 }

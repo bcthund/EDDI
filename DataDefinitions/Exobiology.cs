@@ -93,6 +93,8 @@ namespace EddiDataDefinitions
         {
             this.Genus = organic.genus;
             this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
+            this.SetPredictedMinimumValue(organic.predictedMinimumValue);
+            this.SetPredictedMaximumValue(organic.predictedMaximumValue);
         }
 
         public Exobiology ( OrganicGenus genus, bool isPrediction = false ) : base ( genus )
