@@ -264,13 +264,13 @@ namespace EddiDataDefinitions
         private List<Faction> _factions;
 
         [PublicAPI, JsonIgnore, Obsolete("Please use Faction instead")]
-        public string faction => Faction.name;
+        public string faction => Faction?.name;
 
         [PublicAPI, JsonIgnore, Obsolete("Please use Faction.Allegiance instead")]
-        public string allegiance => Faction.allegiance;
+        public string allegiance => (Faction?.Allegiance ?? Superpower.None).localizedName;
 
         [PublicAPI, JsonIgnore, Obsolete("Please use Faction.Government instead")]
-        public string government => Faction.government;
+        public string government => (Faction?.Government ?? Government.None).localizedName;
 
         [PublicAPI( "Faction conflicts data. Currently only available for recently visited star systems." ), JsonIgnore]
         public List<Conflict> conflicts
