@@ -84,6 +84,13 @@ namespace EddiDataDefinitions
         {
         }
 
+        // This was made specifically for predictions
+        //public Exobiology ( Organic organic, bool isPrediction = false ) : base( organic.genus )
+        //{
+        //    this = (Exobiology) organic;
+        //    this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
+        //}
+
         public Exobiology ( OrganicGenus genus, bool isPrediction = false ) : base ( genus )
         {
             this.Genus = genus;
@@ -99,6 +106,14 @@ namespace EddiDataDefinitions
         public Exobiology ( OrganicVariant variant, bool isPrediction = false ) : base( variant )
         {
             this.Variant = variant;
+            this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
+        }
+
+        public void SetScanState(State state) {
+            this.ScanState = state;
+        }
+
+        public void SetPrediction(bool isPrediction) {
             this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
         }
 

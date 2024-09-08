@@ -30,23 +30,23 @@ namespace EddiConfigService.Configurations
                 public bool skipTubers = false;             // Sinuous Tubers
 
                 // Odyssey
-                public bool skipAleoids = false;            // Aleoida
-                public bool skipVents = false;              // Amphora
-                public bool skipSphere = false;             // Anemone
-                public bool skipBacterial = false;          // Bacterium
-                public bool skipCactoid = false;            // Cactoida
-                public bool skipClypeus = false;            // Clypeus
-                public bool skipConchas = false;            // Concha
-                public bool skipElectricae = false;         // Electricae
-                public bool skipFonticulus = false;         // Fonticulua
-                public bool skipShrubs = false;             // Frutexa
-                public bool skipFumerolas = false;          // Fumerola
-                public bool skipFungoids = false;           // Fungoida
-                public bool skipOsseus = false;             // Osseus
-                public bool skipRecepta = false;            // Recepta
-                public bool skipStratum = false;            // Stratum
-                public bool skipTubus = false;              // Tubus
-                public bool skipTussocks = false;           // Tussock
+                //public bool skipAleoids = false;            // Aleoida
+                //public bool skipVents = false;              // Amphora
+                //public bool skipSphere = false;             // Anemone
+                //public bool skipBacterial = false;          // Bacterium
+                //public bool skipCactoid = false;            // Cactoida
+                //public bool skipClypeus = false;            // Clypeus
+                //public bool skipConchas = false;            // Concha
+                //public bool skipElectricae = false;         // Electricae
+                //public bool skipFonticulus = false;         // Fonticulua
+                //public bool skipShrubs = false;             // Frutexa
+                //public bool skipFumerolas = false;          // Fumerola
+                //public bool skipFungoids = false;           // Fungoida
+                //public bool skipOsseus = false;             // Osseus
+                //public bool skipRecepta = false;            // Recepta
+                //public bool skipStratum = false;            // Stratum
+                //public bool skipTubus = false;              // Tubus
+                //public bool skipTussocks = false;           // Tussock
 
                 // Non-predictable
                 //public bool skipMineralSpheres = false;

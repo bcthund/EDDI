@@ -124,7 +124,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" x:Name="datagrid_bioData" SelectionMode="Single" CanUserSortColumns="False" SelectionChanged="datagrid_SelectionChanged" ItemsSource="{Binding}" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" x:Name="datagrid_bioData" LoadingRow="datagrid_LoadingRow" SelectionMode="Single" CanUserSortColumns="False" SelectionChanged="datagrid_SelectionChanged" ItemsSource="{Binding}" CanUserAddRows="false" CanUserDeleteRows="False" HeadersVisibility="All" SelectionUnit="FullRow" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="HorizontalContentAlignment" Value="Center" />

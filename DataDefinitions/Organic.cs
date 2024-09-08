@@ -14,20 +14,30 @@ namespace EddiDataDefinitions
         [PublicAPI]
         public OrganicVariant variant { get; set; }
 
-        [JsonIgnore, PublicAPI ("The credit value for selling organic data for the species, or the predicted value, or else the minimum credit value for the genus if the species is not yet known" ) ]
+        [JsonIgnore, PublicAPI ("The credit value for selling organic data for the species, or the predicted value, or else the maximum credit value for the genus if the species is not yet known" ) ]
         public long value => valueOverride ?? 
                              species?.value ?? 
-                             genus?.minimumValue ?? 
+                             genus?.maximumValue ?? 
                              0;
+
+        internal long? genusPredictedMinimumValue = null;
+        public void SetPredictedMinimumValue(long? minimum) {
+            genusPredictedMinimumValue = minimum;
+        }
+
+        internal long? genusPredictedMaximumValue = null;
+        public void SetPredictedMaximumValue(long? maximum) {
+            genusPredictedMaximumValue = maximum;
+        }
 
         [JsonIgnore, PublicAPI ("The minimum value from all predictions of this genus.")]
         public long predictedMinimumValue => valueOverride ??
-                                             genus?.predictedMinimumValue ??
+                                             genusPredictedMinimumValue ??
                                              0;
 
         [JsonIgnore, PublicAPI ("The maximum value from all predictions of this genus.")]
         public long predictedMaximumValue => valueOverride ??
-                                             genus?.predictedMaximumValue ??
+                                             genusPredictedMaximumValue ??
                                              0;
 
         [JsonIgnore, PublicAPI( "The minimum distance that you must travel before you can collect a fresh sample of this genus" )]

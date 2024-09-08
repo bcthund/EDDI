@@ -207,8 +207,22 @@ namespace EddiDiscoveryMonitor
             }
             else if ( @event is JumpedEvent jumpedEvent )
             {
+                Logging.Debug($"==========> FSDJump Handled");
                 handleJumpedEvent( jumpedEvent );
-                if (!@event.fromLoad) OnPropertyChanged("RefreshData");
+                //if (!@event.fromLoad) OnPropertyChanged("RefreshData");
+                OnPropertyChanged("RefreshData");
+            }
+            else if ( @event is CarrierJumpedEvent carrierJumpedEvent ) {
+                Logging.Debug($"==========> CarrierJump Handled, {carrierJumpedEvent.docked}, {carrierJumpedEvent.onFoot}");
+                handleCarrierJumpedEvent( carrierJumpedEvent );
+                //if (!@event.fromLoad && (carrierJumpedEvent.docked || carrierJumpedEvent.onFoot)) {
+                //    OnPropertyChanged("RefreshData");
+                //}
+                if ( carrierJumpedEvent.docked || carrierJumpedEvent.onFoot )
+                {
+                    Logging.Debug($"==========> REFRESHDATA TRIGGER");
+                    OnPropertyChanged( "RefreshData" );
+                }
             }
             else if ( @event is LocationEvent locationEvent )
             {
@@ -221,16 +235,35 @@ namespace EddiDiscoveryMonitor
             }
         }
 
+        // When an FSDJump event occurs; check the region, nearest nebula and guardian sites
         internal void handleJumpedEvent ( JumpedEvent @event )
         {
+            Logging.Debug($"==========> FSDJump {@event.systemAddress}");
+            RunChecks(@event.systemAddress, @event.system, @event.x, @event.y, @event.z, @event.fromLoad);
+        }
+
+        // When a CarrierJump event occurs and we are docked or on foot; check the region, nearest nebula and guardian sites
+        internal void handleCarrierJumpedEvent ( CarrierJumpedEvent @event )
+        {
+            Logging.Debug($"==========> CarrierJump {@event.docked}, {@event.onFoot}");
+            if ( @event.docked || @event.onFoot )
+            {
+                RunChecks(@event.systemAddress, @event.systemname, @event.x, @event.y, @event.z, @event.fromLoad);
+            }
+        }
+
+        internal void RunChecks(ulong systemAddress, string systemName, decimal x, decimal y, decimal z, bool fromLoad) {
             var log = "\r\n";
             bool error = false;
 
+            Nebula nebula = Nebula.TryGetNearestNebula( systemName, x, y, z );
+            Region region = RegionMap.FindRegion( (double)x, (double)y, (double)z );
+
             // Check if the current region has changed
-            log += $"\tGetting Region for ({@event.x},{@event.y},{@event.z}): ";
-            if( @event.region != null )
+            log += $"\tGetting Region for ({x},{y},{z}): ";
+            if( region != null )
             {
-                CheckRegion(@event.region, @event.fromLoad);
+                CheckRegion(region, fromLoad);
             }
             else 
             {
@@ -239,10 +272,10 @@ namespace EddiDiscoveryMonitor
             }
 
             // Check if the nearest nebula has changed
-            log += $"\tGetting Nebula for {@event.system} @ ({@event.x},{@event.y},{@event.z}): ";
-            if( @event.nebula != null )
+            log += $"\tGetting Nebula for {systemName} @ ({x},{y},{z}): ";
+            if( nebula != null )
             {
-                CheckNebula(@event.nebula, @event.fromLoad);
+                CheckNebula(nebula, fromLoad);
             }
             else 
             {
@@ -251,7 +284,7 @@ namespace EddiDiscoveryMonitor
             }
 
             // Check if we are in a known Guardian site system
-            CheckGuardianSite(@event.systemAddress, @event.fromLoad);
+            CheckGuardianSite(systemAddress, fromLoad);
 
             if (error)
             {
@@ -261,7 +294,6 @@ namespace EddiDiscoveryMonitor
             {
                 Logging.Debug( log );
             }
-            
         }
 
         // When the location is recieved at startup or if the player respawns at a station update the region and nebula
@@ -382,6 +414,7 @@ namespace EddiDiscoveryMonitor
         }
 
         internal void CheckGuardianSite(ulong  systemAddress, bool fromLoad) {
+            Logging.Debug($"==========> CHECK GUARDIAN SITE [{GuardianSiteDefinitions.AllOfThem.Exists(x=>x.systemAddress == systemAddress)}]");
             if(GuardianSiteDefinitions.AllOfThem.Exists(x=>x.systemAddress == systemAddress)) {
                 List<GuardianSite> guardianSites = GuardianSiteDefinitions.AllOfThem.Where(x=>x.systemAddress == systemAddress).ToList();
 
@@ -761,7 +794,7 @@ namespace EddiDiscoveryMonitor
                        $"\tGeo Count is {signal.geoCount} ({body.surfaceSignals.reportedGeologicalCount})\r\n";
                 
                 // Predict possible biological genuses
-                List<OrganicGenus> bios;
+                List<Organic> bios;
                 log += "Predicting organics (by variant):\r\n";
                 bios = new ExobiologyPredictions( EDDI.Instance?.CurrentStarSystem, body, parentStar, configuration ).PredictByVariant();
 
@@ -771,18 +804,19 @@ namespace EddiDiscoveryMonitor
                     for(int i=bios.Count(); i<signal.bioCount; i++)
                     {
                         log += $"\t[Adding Unknown Genus: ";
-                        OrganicGenus newGenus = OrganicGenus.Unknown;
-                        newGenus.predictedMinimumValue = 1000000;
-                        newGenus.predictedMaximumValue = 1000000;
+                        Organic newGenus = new Organic( OrganicGenus.Unknown );
+                        newGenus.SetPredictedMinimumValue( 1000000 );
+                        newGenus.SetPredictedMaximumValue( 1000000 );
                         bios.Add( newGenus );
                         log += $"count={bios.Count()}]\r\n";
                     }
                 }
 
-                foreach ( var genus in bios )
+                foreach ( var organic in bios )
                 {
-                    log += $"\tAdding predicted bio {genus.invariantName}\r\n";
-                    body.surfaceSignals.AddBioFromGenus( genus, true );
+                    log += $"\tAdding predicted bio {organic.genus.invariantName}\r\n";
+                    //body.surfaceSignals.AddBioFromGenus( organic.genus, true );
+                    body.surfaceSignals.AddBio( organic );
                 }
                 hasPredictedBios = true;
             }
@@ -826,7 +860,7 @@ namespace EddiDiscoveryMonitor
                  !body.surfaceSignals.bioSignals.Any() && 
                  EDDI.Instance.CurrentStarSystem.TryGetMainStar(out var parentStar))
             {                
-                List<OrganicGenus> bios;
+                List<Organic> bios;
                 bios = new ExobiologyPredictions( EDDI.Instance?.CurrentStarSystem, body, parentStar, configuration ).PredictByVariant();
 
                 // Account for predicting less than actual signals, lets player know that we don't know what one or more bios will be
@@ -835,18 +869,19 @@ namespace EddiDiscoveryMonitor
                     for(int i=bios.Count(); i<body.surfaceSignals.reportedBiologicalCount; i++)
                     {
                         log += $"\t[Adding Unknown Genus: ";
-                        OrganicGenus newGenus = OrganicGenus.Unknown;
-                        newGenus.predictedMinimumValue = 1000000;
-                        newGenus.predictedMaximumValue = 1000000;
+                        Organic newGenus = new Organic( OrganicGenus.Unknown );
+                        newGenus.SetPredictedMinimumValue( 1000000 );
+                        newGenus.SetPredictedMaximumValue( 1000000 );
                         bios.Add( newGenus );
                         log += $"count={bios.Count()}]\r\n";
                     }
                 }
 
-                foreach ( var genus in bios )
+                foreach ( var organic in bios )
                 {
-                    log += $"\tAdding predicted bio {genus.invariantName}\r\n";
-                    body.surfaceSignals.AddBioFromGenus( genus, true );
+                    log += $"\tAdding predicted bio {organic.genus.invariantName}\r\n";
+                    //body.surfaceSignals.AddBioFromGenus( organic.genus, true );
+                    body.surfaceSignals.AddBio( organic );
                 }
                 hasPredictedBios = true;
             }

@@ -20,7 +20,7 @@ namespace EddiDataDefinitions
         public HashSet<Exobiology> bioSignals { get; set; } = new HashSet<Exobiology>();
 
         [JsonIgnore, PublicAPI( "The maximum expected credit value for biological signals on this body" )]
-        public long exobiologyValue => bioSignals.Select(s => s.value).Sum();
+        public long exobiologyValue => bioSignals.OrderByDescending(s=>s.value).Take(reportedBiologicalCount).Select(s => s.value).Sum();
 
         [JsonProperty, PublicAPI ( "The number of biologicals reported by FSS/SAA" )]
         public int reportedBiologicalCount { get; set; }
@@ -59,10 +59,11 @@ namespace EddiDataDefinitions
                         var values = bioSignals.OrderBy(x => x.predictedMinimumValue);
                         int iMin = Math.Min(values.Count(), reportedBiologicalCount);
                         log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}\r\n";
-                        for(int i=0; i<iMin; i++) {
-                            value += values.ElementAt(i).predictedMinimumValue;
-                            log += $"\t({i+1}/{iMin}) predictedMinimumTotalValue={value} [{values.ElementAt(i).predictedMinimumValue}]\r\n";
-                        }
+                        value = values.Take(iMin).Select(x=>x.predictedMinimumValue).Sum();
+                        //for(int i=0; i<iMin; i++) {
+                        //    value += values.ElementAt(i).predictedMinimumValue;
+                        //    log += $"\t({i+1}/{iMin}) predictedMinimumTotalValue={value} [{values.ElementAt(i).predictedMinimumValue}]\r\n";
+                        //}
                     }
                     else {
                         log = "";
@@ -91,13 +92,14 @@ namespace EddiDataDefinitions
                         log += $"\t(1/1) predictedMaximumTotalValue={value} [{bioSignals.Max(x => x.predictedMaximumValue)}]\r\n";
                     }
                     else if(reportedBiologicalCount>1) {
-                        var values = bioSignals.OrderBy(x => x.predictedMaximumValue).Reverse();
+                        var values = bioSignals.OrderByDescending(x => x.predictedMaximumValue).Reverse();
                         int iMin = Math.Min(values.Count(), reportedBiologicalCount);
                         log += $"\tvalues.Count()={values.Count()}, reportedBiologicalCount={reportedBiologicalCount}\r\n";
-                        for( int i = 0; i<iMin; i++ ) {
-                            value += values.ElementAt(i).predictedMaximumValue;
-                            log += $"\t({i+1}/{iMin}) predictedMaximumTotalValue={value} [{values.ElementAt(i).predictedMaximumValue}]\r\n";
-                        }
+                        value = values.Take(iMin).Select(x=>x.predictedMaximumValue).Sum();
+                        //for( int i = 0; i<iMin; i++ ) {
+                        //    value += values.ElementAt(i).predictedMaximumValue;
+                        //    log += $"\t({i+1}/{iMin}) predictedMaximumTotalValue={value} [{values.ElementAt(i).predictedMaximumValue}]\r\n";
+                        //}
                     }
                     else {
                         log = "";
@@ -147,6 +149,14 @@ namespace EddiDataDefinitions
                 bioSignals.Add( bio );
             }
             return bio;
+        }
+
+        public Exobiology AddBio ( Organic organic, bool isPrediction = false )
+        {
+            Exobiology newOrganic = (Exobiology)organic;
+            newOrganic.SetPrediction(isPrediction);
+            bioSignals.Add( newOrganic );
+            return newOrganic;
         }
 
         /// <summary>

@@ -112,7 +112,7 @@
                     <DataGridTextColumn Header="{x:Static resx:Tab_Guardian.GuardianSites_Distance}" IsReadOnly="True" Width="*" Binding="{Binding distance}"/>
                     <DataGridTextColumn Header="{x:Static resx:Tab_Guardian.GuardianSites_System}" IsReadOnly="True" Width="3*" Binding="{Binding systemName}"/>
                     <DataGridTextColumn Header="{x:Static resx:Tab_Guardian.GuardianSites_Body}" IsReadOnly="True" Width="*" Binding="{Binding body}"/>
-                    <DataGridTextColumn Header="{x:Static resx:Tab_Guardian.GuardianSites_Blueprint}" IsReadOnly="True" Width="*" Binding="{Binding localizedblueprint}"/>
+                    <DataGridTextColumn Header="{x:Static resx:Tab_Guardian.GuardianSites_Blueprint}" IsReadOnly="True" Width="*" Binding="{Binding localizedBlueprint}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -97,7 +97,8 @@ namespace EddiDiscoveryMonitor
 
             if ( CurrentBody != null )
             {
-                textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+                //textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+                textbox_CurrentSystemName.Text = currentStarSystem.systemname;
                 textbox_CurrentBodyId.Text = CurrentBodyId.ToString();
                 textbox_CurrentBodyShortName.Text = CurrentBody?.shortname;
             }
@@ -230,7 +231,8 @@ namespace EddiDiscoveryMonitor
 
                 if ( CurrentBody != null )
                 {
-                    textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+                    //textbox_CurrentSystemName.Text = CurrentBody?.systemname;
+                    textbox_CurrentSystemName.Text = currentStarSystem.systemname;
                     textbox_CurrentBodyId.Text = CurrentBodyId.ToString();
                     textbox_CurrentBodyShortName.Text = CurrentBody?.shortname;
                 }

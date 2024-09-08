@@ -25,7 +25,7 @@ namespace EddiDiscoveryMonitor
 
         // This is a list so that we can have duplicate Genus, specifically for adding multiple 'Unknown' predictions
         //public HashSet<OrganicGenus> PredictByVariant ()
-        public List<OrganicGenus> PredictByVariant ()
+        public List<Organic> PredictByVariant ()
         {
             Logging.Debug( $"Generating predictions by variant for {body.bodyname} in {_currentSystem.systemname}.");
 
@@ -77,7 +77,10 @@ namespace EddiDiscoveryMonitor
             }
 
             // Create a distinct genus list
-            List<OrganicGenus> listGenus = predictedVariants.Select(s => s.genus).Distinct().ToList();
+            List<Organic> listGenus = new List<Organic>();
+            foreach (var genus in predictedVariants.Select(s => s.genus).Distinct().ToList()) {
+                listGenus.Add(new Organic( genus ) );
+            }
 
             if ( listGenus.Count() > 0 )
             {
@@ -86,20 +89,20 @@ namespace EddiDiscoveryMonitor
                 // Iterate over all predicted variants, set the min/max values for the genus list
                 for ( int i = 0; i < listGenus.Count(); i++ )
                 {
-                    log += $"\t[{listGenus[ i ].edname}]\r\n";
+                    log += $"\t[{listGenus[ i ].genus.edname}]\r\n";
                     foreach ( var variant in predictedVariants )
                     {
-                        if ( listGenus[ i ].edname == variant.genus.edname )
+                        if ( listGenus[ i ].genus.edname == variant.genus.edname )
                         {
                             log += $"\t\t{variant.edname} ";
                             var species = OrganicSpecies.FromEDName( variant.species.edname );
                             if(species != null) {
                                 if(listGenus[ i ].predictedMinimumValue == 0 || species.value < listGenus[ i ].predictedMinimumValue) {
-                                    listGenus[ i ].predictedMinimumValue = species.value;
+                                    listGenus[ i ].SetPredictedMinimumValue(species.value);
                                 }
 
                                 if(listGenus[ i ].predictedMaximumValue == 0 || species.value > listGenus[ i ].predictedMaximumValue) {
-                                    listGenus[ i ].predictedMaximumValue = species.value;
+                                    listGenus[ i ].SetPredictedMaximumValue(species.value);
                                 }
 
                                 log += $": value={species.value}, predictedMinimum={listGenus[ i ].predictedMinimumValue}, predictedMaximum={listGenus[ i ].predictedMaximumValue}\r\n";
@@ -112,7 +115,7 @@ namespace EddiDiscoveryMonitor
             Logging.Debug( log );
 
             // Return an ordered list of only the unique genus' found
-            return listGenus.OrderBy(o => o.invariantName).ToList();
+            return listGenus.OrderBy(o => o.genus.invariantName).ToList();
         }
 
         private bool TryCheckConfiguration ( OrganicGenus genus, ref string log )
@@ -123,24 +126,24 @@ namespace EddiDiscoveryMonitor
                 if ( ( configuration.exobiology.predictions.skipGroundStructIce && genus == OrganicGenus.Ground_Struct_Ice ) ||
                      ( configuration.exobiology.predictions.skipBrancae && genus == OrganicGenus.Brancae ) ||
                      ( configuration.exobiology.predictions.skipCone && genus == OrganicGenus.Cone ) ||
-                     ( configuration.exobiology.predictions.skipTubers && genus == OrganicGenus.Tubers ) ||
-                     ( configuration.exobiology.predictions.skipAleoids && genus == OrganicGenus.Aleoids ) ||
-                     ( configuration.exobiology.predictions.skipVents && genus == OrganicGenus.Vents ) ||
-                     ( configuration.exobiology.predictions.skipSphere && genus == OrganicGenus.Sphere ) ||
-                     ( configuration.exobiology.predictions.skipBacterial && genus == OrganicGenus.Bacterial ) ||
-                     ( configuration.exobiology.predictions.skipCactoid && genus == OrganicGenus.Cactoid ) ||
-                     ( configuration.exobiology.predictions.skipClypeus && genus == OrganicGenus.Clypeus ) ||
-                     ( configuration.exobiology.predictions.skipConchas && genus == OrganicGenus.Conchas ) ||
-                     ( configuration.exobiology.predictions.skipElectricae && genus == OrganicGenus.Electricae ) ||
-                     ( configuration.exobiology.predictions.skipFonticulus && genus == OrganicGenus.Fonticulus ) ||
-                     ( configuration.exobiology.predictions.skipShrubs && genus == OrganicGenus.Shrubs ) ||
-                     ( configuration.exobiology.predictions.skipFumerolas && genus == OrganicGenus.Fumerolas ) ||
-                     ( configuration.exobiology.predictions.skipFungoids && genus == OrganicGenus.Fungoids ) ||
-                     ( configuration.exobiology.predictions.skipOsseus && genus == OrganicGenus.Osseus ) ||
-                     ( configuration.exobiology.predictions.skipRecepta && genus == OrganicGenus.Recepta ) ||
-                     ( configuration.exobiology.predictions.skipStratum && genus == OrganicGenus.Stratum ) ||
-                     ( configuration.exobiology.predictions.skipTubus && genus == OrganicGenus.Tubus ) ||
-                     ( configuration.exobiology.predictions.skipTussocks && genus == OrganicGenus.Tussocks ) )
+                     ( configuration.exobiology.predictions.skipTubers && genus == OrganicGenus.Tubers ) ) //||
+                     //( configuration.exobiology.predictions.skipAleoids && genus == OrganicGenus.Aleoids ) ||
+                     //( configuration.exobiology.predictions.skipVents && genus == OrganicGenus.Vents ) ||
+                     //( configuration.exobiology.predictions.skipSphere && genus == OrganicGenus.Sphere ) ||
+                     //( configuration.exobiology.predictions.skipBacterial && genus == OrganicGenus.Bacterial ) ||
+                     //( configuration.exobiology.predictions.skipCactoid && genus == OrganicGenus.Cactoid ) ||
+                     //( configuration.exobiology.predictions.skipClypeus && genus == OrganicGenus.Clypeus ) ||
+                     //( configuration.exobiology.predictions.skipConchas && genus == OrganicGenus.Conchas ) ||
+                     //( configuration.exobiology.predictions.skipElectricae && genus == OrganicGenus.Electricae ) ||
+                     //( configuration.exobiology.predictions.skipFonticulus && genus == OrganicGenus.Fonticulus ) ||
+                     //( configuration.exobiology.predictions.skipShrubs && genus == OrganicGenus.Shrubs ) ||
+                     //( configuration.exobiology.predictions.skipFumerolas && genus == OrganicGenus.Fumerolas ) ||
+                     //( configuration.exobiology.predictions.skipFungoids && genus == OrganicGenus.Fungoids ) ||
+                     //( configuration.exobiology.predictions.skipOsseus && genus == OrganicGenus.Osseus ) ||
+                     //( configuration.exobiology.predictions.skipRecepta && genus == OrganicGenus.Recepta ) ||
+                     //( configuration.exobiology.predictions.skipStratum && genus == OrganicGenus.Stratum ) ||
+                     //( configuration.exobiology.predictions.skipTubus && genus == OrganicGenus.Tubus ) ||
+                     //( configuration.exobiology.predictions.skipTussocks && genus == OrganicGenus.Tussocks ) )
                 {
                     log += "SKIP. Per configuration preferences.";
                     return false;

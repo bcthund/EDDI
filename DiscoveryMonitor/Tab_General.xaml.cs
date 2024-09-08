@@ -53,6 +53,7 @@ namespace EddiDiscoveryMonitor
         public Tab_General ()
         {
             InitializeComponent();
+            discoveryMonitor().PropertyChanged += DiscoveryMonitor_PropertyChanged;
             EDDI.Instance.PropertyChanged += Instance_PropertyChanged;
             RefreshData();
 
@@ -73,6 +74,17 @@ namespace EddiDiscoveryMonitor
             e.Handled = !( (!(text.Count(t => t == '.' )>0) && lastEntry == '.') 
                         || (!(text.Count(t => t == '-' )>0) && (text.Length == 0 || index==0) && lastEntry == '-')
                         || Char.IsDigit(lastEntry) );
+        }
+
+        void DiscoveryMonitor_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if ( e.PropertyName == "RefreshData" )
+            {
+                this.Dispatcher.Invoke( () =>
+                {
+                    RefreshData();
+                } );
+            }
         }
 
         void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
