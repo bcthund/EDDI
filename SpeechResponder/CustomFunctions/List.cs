@@ -3,6 +3,7 @@ using EddiSpeechResponder.ScriptResolverService;
 using JetBrains.Annotations;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace EddiSpeechResponder.CustomFunctions
 {
@@ -18,30 +19,70 @@ namespace EddiSpeechResponder.CustomFunctions
             string output = string.Empty;
 
             // Choose either And/Or for the last list item using the second argument (if any)
-            var orList = values.Count > 1 && values[1].AsBoolean;
-            var localisedAndOr = orList ? 
-                Properties.SpeechResponder.localizedOr : 
+            var orList = values.Fields.Count > 1 && values.Fields[1].AsBoolean;
+            var localisedAndOr = orList ?
+                Properties.SpeechResponder.localizedOr :
                 Properties.SpeechResponder.localizedAnd;
 
-            var cottleMap = values[0].Fields;
-            foreach ( KeyValuePair<Cottle.Value, Cottle.Value> value in cottleMap)
+            var cottleMap = values.Fields[0].Fields;
+            foreach ( KeyValuePair<Cottle.Value, Cottle.Value> value in cottleMap )
             {
                 string valueString = value.Value.AsString;
-                if (value.Key == 0)
+                if ( value.Key == 0 )
                 {
                     output = valueString;
                 }
-                else if (value.Key < ( cottleMap.Count - 1))
+                else if ( value.Key < ( cottleMap.Count - 1 ) )
                 {
                     output = $"{output}, {valueString}";
                 }
                 else
                 {
-                    output = $"{output}{( cottleMap.Count() > 2 ? "," : "")} {localisedAndOr} {valueString}";
+                    output = $"{output}{( cottleMap.Count() > 2 ? "," : "" )} {localisedAndOr} {valueString}";
                 }
             }
 
             return output;
-        }, 1, 2);
+        });
     }
 }
+
+//﻿using Cottle;
+//using EddiSpeechResponder.ScriptResolverService;
+//using JetBrains.Annotations;
+//using System;
+//using System.Linq;
+
+//namespace EddiSpeechResponder.CustomFunctions
+//{
+//    [UsedImplicitly]
+//    public class List : ICustomFunction
+//    {
+//        public string name => "List";
+//        public FunctionCategory Category => FunctionCategory.Utility;
+//        public string description => Properties.CustomFunctions_Untranslated.List;
+//        public Type ReturnType => typeof( string );
+//        public IFunction function => Function.CreateNative1( ( runtime, values, writer ) =>
+//        {
+//            var output = string.Empty;
+//            var localisedAnd = Properties.SpeechResponder.localizedAnd;
+//            foreach ( var value in values.Fields )
+//            {
+//                var valueString = value.Value.AsString;
+//                if ( value.Key == 0 )
+//                {
+//                    output = valueString;
+//                }
+//                else if ( value.Key < ( values.Fields.Count - 1 ) )
+//                {
+//                    output = $"{output}, {valueString}";
+//                }
+//                else
+//                {
+//                    output = $"{output}{( values.Fields.Count() > 2 ? "," : "" )} {localisedAnd} {valueString}";
+//                }
+//            }
+//            return output;
+//        });
+//    }
+//}

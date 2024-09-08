@@ -174,7 +174,7 @@ namespace EddiEvents
 
         public DateTime? mapped => star?.mappedDateTime;
 
-        public List<IDictionary<string, object>> parents => star?.parents ?? new List<IDictionary<string, object>>();
+        public List<IDictionary<string, long>> parents => star?.parents ?? new List<IDictionary<string, long>>();
 
         public DateTime? scanned => star?.scannedDateTime;
 

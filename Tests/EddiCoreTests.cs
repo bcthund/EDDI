@@ -172,7 +172,7 @@ namespace UnitTests
 
             // Re-scanning the same body shouldn't replace the first scan's data
             BodyScannedEvent @event2 = new BodyScannedEvent(@event.timestamp.AddSeconds(60), @event.scantype, @event.body);
-            privateObject.Invoke("eventBodyScanned", new object[] { @event2 });
+            EDDI.Instance.eventBodyScanned( @event2 );
             Assert.AreEqual(@event.timestamp, EDDI.Instance.CurrentStarSystem?.bodies.Find(b => b.bodyname == "Grea Bloae HH-T d4-44 4").scannedDateTime);
         }
 
