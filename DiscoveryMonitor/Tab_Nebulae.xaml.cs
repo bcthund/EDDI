@@ -113,5 +113,13 @@ namespace EddiDiscoveryMonitor
                 datagrid_Nebula_ToggleVisited_Template.Visibility = Visibility.Hidden;
             }
         }
+
+        private void copySystemNameToClipboard(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                Clipboard.SetText(button.Tag.ToString());
+            }
+        }
     }
 }

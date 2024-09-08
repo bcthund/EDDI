@@ -105,13 +105,13 @@ namespace EddiDataDefinitions
         // Check if system is in a known guardian sector, ignoring the region
         public static bool TryGetGuardianSector ( string systemname )
         {
-            return AllOfThem.Any( x=> systemname.Contains(x.name) );
+            return AllOfThem.Any( x=> systemname.ToLowerInvariant().Contains(x.name.ToLowerInvariant()) );
         }
 
         // Check if system is in a known guardian sector and region
         public static bool TryGetGuardianSector ( string systemname, string region )
         {
-            return AllOfThem.Any( x=> systemname.Contains(x.name) && x.region==region );
+            return AllOfThem.Any( x=> systemname.ToLowerInvariant().Contains(x.name.ToLowerInvariant()) && x.region.ToLowerInvariant()==region.ToLowerInvariant() );
         }
     }
 }

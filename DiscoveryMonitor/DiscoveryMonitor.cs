@@ -205,7 +205,10 @@ namespace EddiDiscoveryMonitor
                 handleStarScannedEvent( starScannedEvent );
                 if (!@event.fromLoad) OnPropertyChanged("RefreshData");
             }
-            else if ( @event is JumpedEvent jumpedEvent )
+        }
+
+        public void PostHandle ( Event @event ) {
+            if ( @event is JumpedEvent jumpedEvent )
             {
                 handleJumpedEvent( jumpedEvent );
                 OnPropertyChanged("RefreshData");
@@ -241,6 +244,14 @@ namespace EddiDiscoveryMonitor
             {
                 RunChecks(@event.systemAddress, @event.systemname, @event.x, @event.y, @event.z, @event.fromLoad);
             }
+        }
+
+        // When the location is recieved at startup or if the player respawns at a station update the region and nebula
+        internal void handleLocationEvent ( LocationEvent @event )
+        {
+            // Set the current body context
+            CurrentBodyId = @event.bodyId;
+            RunChecks(@event.systemAddress, @event.systemname, @event.x, @event.y, @event.z, @event.fromLoad);
         }
 
         internal void RunChecks(ulong systemAddress, string systemName, decimal x, decimal y, decimal z, bool fromLoad) {
@@ -285,52 +296,6 @@ namespace EddiDiscoveryMonitor
             {
                 Logging.Debug( log );
             }
-        }
-
-        // When the location is recieved at startup or if the player respawns at a station update the region and nebula
-        internal void handleLocationEvent ( LocationEvent @event )
-        {
-            var log = "\r\n";
-            bool error = false;
-
-            // Set the current body context
-            CurrentBodyId = @event.bodyId;
-
-            // Check if the current region has changed
-            var checkRegion = RegionMap.FindRegion( (double)@event.x, (double)@event.y, (double)@event.z );
-
-            log += $"\tGetting Region for ({@event.x},{@event.y},{@event.z}): ";
-            if( checkRegion != null )
-            {
-                CheckRegion(checkRegion, @event.fromLoad);
-            }
-            else 
-            {
-                error = true;
-                log += $"Region = NULL.\r\n";
-            }
-
-            var checkNebula = Nebula.TryGetNearestNebula( @event.systemname, (decimal)@event.x, (decimal)@event.y, (decimal) @event.z );
-            log += $"\tGetting Nebula for {@event.systemname} @ ({@event.x},{@event.y},{@event.z}): ";
-            if ( checkNebula != null )
-            {
-                CheckNebula( checkNebula, @event.fromLoad );
-            }
-            else
-            {
-                error = true;
-                log += $"Nebula = NULL.\r\n";
-            }
-
-            if (error)
-            {
-                Logging.Error( log );
-            }
-            else
-            {
-                Logging.Debug( log );
-            }
-            
         }
 
         // When the location is recieved at startup or if the player respawns at a station update the region and nebula
@@ -805,7 +770,7 @@ namespace EddiDiscoveryMonitor
                 foreach ( var organic in bios )
                 {
                     log += $"\tAdding predicted bio {organic.genus.invariantName}\r\n";
-                    body.surfaceSignals.AddBio( organic );
+                    body.surfaceSignals.AddBio( organic, true );
                 }
                 hasPredictedBios = true;
             }
@@ -869,7 +834,7 @@ namespace EddiDiscoveryMonitor
                 foreach ( var organic in bios )
                 {
                     log += $"\tAdding predicted bio {organic.genus.invariantName}\r\n";
-                    body.surfaceSignals.AddBio( organic );
+                    body.surfaceSignals.AddBio( organic, true );
                 }
                 hasPredictedBios = true;
             }
@@ -911,9 +876,6 @@ namespace EddiDiscoveryMonitor
 
             return false;
         }
-
-        public void PostHandle ( Event @event )
-        { }
 
         public void HandleProfile ( JObject profile )
         { }

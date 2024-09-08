@@ -162,7 +162,7 @@ namespace EddiDiscoveryMonitor
             {
                 var currentRegion = Utilities.RegionMap.RegionMap.FindRegion((double)_currentSystem.x, (double)_currentSystem.y, (double)_currentSystem.z);
                 if (currentRegion != null) {
-                    if (checkRegions.Any( a => a == currentRegion.name ) )
+                    if (checkRegions.Any( a => a.ToLowerInvariant() == currentRegion.name.ToLowerInvariant() ) )
                     {
                         //log += $"ACCEPT. '{currentRegion.name}' is in '{string.Join(",", checkRegions)}'. ";
                         return true;
@@ -272,7 +272,7 @@ namespace EddiDiscoveryMonitor
                     {
                         // Check Class only
                         if ( 
-                            ( ( checkParts[0] == "None" || checkParts[0] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                            ( ( checkParts[0] == "None" || checkParts[0] == "No Atmosphere" || checkParts[0] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
                             checkParts[0] == "Any" ||
                             checkParts[0] == body.atmosphereclass.edname )
                         {
@@ -283,13 +283,13 @@ namespace EddiDiscoveryMonitor
 
                         // Check Thickness
                         if ( 
-                            ( ( checkParts[0] == "none" || checkParts[0] == string.Empty ) && ( body.atmospherethickness == null || body.atmospherethickness == AtmosphereThickness.None ) ) ||
+                            ( ( checkParts[0] == "None" || checkParts[0] == "No Atmosphere" || checkParts[0] == string.Empty ) && ( body.atmospherethickness == null || body.atmospherethickness == AtmosphereThickness.None ) ) ||
                             checkParts[0] == "any" ||
                             checkParts[0] == body.atmospherethickness.edname )
                         {
                             // Check Class
                             if ( 
-                                ( ( checkParts[1] == "None" || checkParts[1] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
+                                ( ( checkParts[1] == "None" || checkParts[0] == "No Atmosphere" || checkParts[1] == string.Empty ) && ( body.atmosphereclass == null || body.atmosphereclass == AtmosphereClass.None ) ) ||
                                 checkParts[1] == "Any" ||
                                 checkParts[1] == body.atmosphereclass.edname )
                             {

@@ -120,6 +120,9 @@
   <data name="Button_GetNearest" xml:space="preserve">
     <value>Get Nearest Nebula</value>
   </data>
+  <data name="copy_system_button_tooltip" xml:space="preserve">
+    <value>Copy this system name to your clipboard</value>
+  </data>
   <data name="MaxDistance" xml:space="preserve">
     <value>Max Distance</value>
   </data>

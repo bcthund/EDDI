@@ -84,6 +84,17 @@ namespace EddiDataDefinitions
         {
         }
 
+        /// <summary>
+        /// This is meant for creating new predicted organics as only the genus is saved
+        /// </summary>
+        /// <param name="organic"></param>
+        /// <param name="isPrediction"></param>
+        public Exobiology ( Organic organic, bool isPrediction = false ) : base ( organic.genus ) 
+        {
+            this.Genus = organic.genus;
+            this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
+        }
+
         public Exobiology ( OrganicGenus genus, bool isPrediction = false ) : base ( genus )
         {
             this.Genus = genus;

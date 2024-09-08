@@ -16,6 +16,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DataDefinitions\EddiDataDefinitions.csproj" />
     <ProjectReference Include="..\EddiStatusService\EddiStatusService.csproj" />
     <ProjectReference Include="..\EDDI\Eddi.csproj" />
@@ -39,6 +42,9 @@
     <PackageReference Include="System.Runtime.Extensions">
       <Version>4.3.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Copy.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\DiscoveryMonitor.Designer.cs">

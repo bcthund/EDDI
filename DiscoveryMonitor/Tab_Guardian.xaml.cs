@@ -89,5 +89,13 @@ namespace EddiDiscoveryMonitor
 
             datagrid_GuardianData.DataContext = guardianResult;
         }
+
+        private void copySystemNameToClipboard(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                Clipboard.SetText(button.Tag.ToString());
+            }
+        }
     }
 }

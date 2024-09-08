@@ -145,8 +145,8 @@ namespace EddiDataDefinitions
 
         public Exobiology AddBio ( Organic organic, bool isPrediction = false )
         {
-            Exobiology newOrganic = (Exobiology)organic;
-            newOrganic.SetPrediction(isPrediction);
+            Exobiology newOrganic = new Exobiology(organic, isPrediction);
+            //newOrganic.SetPrediction(isPrediction);
             bioSignals.Add( newOrganic );
             return newOrganic;
         }

@@ -70,6 +70,15 @@ namespace EddiDiscoveryMonitor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy this system name to your clipboard.
+        /// </summary>
+        public static string copy_system_button_tooltip {
+            get {
+                return ResourceManager.GetString("copy_system_button_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         public static string Filter {
