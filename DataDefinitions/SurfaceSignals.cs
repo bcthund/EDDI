@@ -39,6 +39,9 @@ namespace EddiDataDefinitions
         [JsonIgnore,  PublicAPI( "True if the current biologicals are predicted (but not confirmed) " ) ]
         public bool predicted => bioSignals.Any( s => s.ScanState == Exobiology.State.Predicted );
 
+        [JsonIgnore, PublicAPI( "A legacy prediction exists, there could be more legacy variants to scan." )]
+        public bool legacyExists => bioSignals.Any( s => s.Genus==OrganicGenus.Brancae || s.Genus==OrganicGenus.Sphere || s.Genus==OrganicGenus.Tubers );
+
         [JsonIgnore, PublicAPI( "The maximum expected credit value for biological signals that have not been fully scanned on this body" )]
         public long remainingExobiologyValue => bioSignalsRemaining.Select( s => s.value ).Sum();
 
@@ -119,9 +122,31 @@ namespace EddiDataDefinitions
 
         public bool TryGetBio ( OrganicVariant variant, OrganicSpecies species, OrganicGenus genus, out Exobiology bio )
         {
-            bio = bioSignals.FirstOrDefault( b => b.variant == variant ) ?? 
-                  bioSignals.FirstOrDefault( b => b.species == species ) ?? 
-                  bioSignals.FirstOrDefault( b => b.genus == genus );
+            // Allow more than one Brain Tree
+            if ( genus == OrganicGenus.Brancae )
+            {
+                // If the Brain Tree Genus/Variant COMBINATION already exists then return true
+                // If the Brain Tree Genus exists and has no varient, then return true (Shouldn't happen but lets check anyways?)
+                // Otherwise, return false (we need to add a new one)
+                // TODO: 2212 - What other biologicals can have more than one variant?
+                if ( bioSignals.Where( x => x.genus == genus && x.variant == variant ).Count() > 0 )
+                {
+                    bio = bioSignals.Where( x => x.genus == genus && x.variant == variant ).FirstOrDefault();
+                }
+                else if ( bioSignals.Where( x => x.genus == genus && x.variant == null ).Count() > 0 ) {
+                    bio = bioSignals.FirstOrDefault( b => b.genus == genus && b.variant == null );
+                }
+                else
+                {
+                    bio = null;
+                }
+            }
+            else
+            {
+                bio = bioSignals.FirstOrDefault( b => b.variant == variant ) ?? 
+                      bioSignals.FirstOrDefault( b => b.species == species ) ?? 
+                      bioSignals.FirstOrDefault( b => b.genus == genus );
+            }
             return bio != null;
         }
 
@@ -148,7 +173,6 @@ namespace EddiDataDefinitions
         public Exobiology AddBio ( Organic organic, bool isPrediction = false )
         {
             Exobiology newOrganic = new Exobiology(organic, isPrediction);
-            //newOrganic.SetPrediction(isPrediction);
             bioSignals.Add( newOrganic );
             return newOrganic;
         }

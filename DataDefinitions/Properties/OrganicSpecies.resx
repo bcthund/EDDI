@@ -433,28 +433,28 @@
     <value>Conditivus</value>
   </data>
   <data name="Seed" xml:space="preserve">
-    <value>Roseum Brain Tree</value>
+    <value />
   </data>
   <data name="SeedABCD_01" xml:space="preserve">
-    <value>Gypseeum Brain Tree</value>
+    <value />
   </data>
   <data name="SeedABCD_02" xml:space="preserve">
-    <value>Ostrinum Brain Tree</value>
+    <value />
   </data>
   <data name="SeedABCD_03" xml:space="preserve">
-    <value>Viride Brain Tree</value>
+    <value />
   </data>
   <data name="SeedEFGH" xml:space="preserve">
-    <value>Lividum Brain Tree</value>
+    <value />
   </data>
   <data name="SeedEFGH_01" xml:space="preserve">
-    <value>Aureum Brain Tree</value>
+    <value />
   </data>
   <data name="SeedEFGH_02" xml:space="preserve">
-    <value>Puniceum Brain Tree</value>
+    <value />
   </data>
   <data name="SeedEFGH_03" xml:space="preserve">
-    <value>Lindigoticum Brain Tree</value>
+    <value />
   </data>
   <data name="Shrubs_01" xml:space="preserve">
     <value>Flabellum</value>

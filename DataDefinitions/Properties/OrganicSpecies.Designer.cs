@@ -1321,7 +1321,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roseum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string Seed {
             get {
@@ -1330,7 +1330,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gypseeum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedABCD_01 {
             get {
@@ -1339,7 +1339,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ostrinum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedABCD_02 {
             get {
@@ -1348,7 +1348,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viride Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedABCD_03 {
             get {
@@ -1357,7 +1357,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lividum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedEFGH {
             get {
@@ -1366,7 +1366,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aureum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedEFGH_01 {
             get {
@@ -1375,7 +1375,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puniceum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedEFGH_02 {
             get {
@@ -1384,7 +1384,7 @@ namespace EddiDataDefinitions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lindigoticum Brain Tree.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string SeedEFGH_03 {
             get {

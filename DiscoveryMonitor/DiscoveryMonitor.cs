@@ -509,6 +509,16 @@ namespace EddiDiscoveryMonitor
                         var unpredictedBiologicals = confirmedBiologicals.Except( predictedBiologicals ).ToList();
                         var missingBiologicals = predictedBiologicals.Except( confirmedBiologicals ).ToList();
 
+                        // Preserve predicted Min/Max values
+                        // For each existing prediction, check if it is in the confirmed list,
+                        // if it is then save the predicted Min/Max values
+                        foreach( var bio in body.surfaceSignals.bioSignals) {
+                            if (@event.bioSignals.Any(x => x.genus == bio.Genus)) {
+                                @event.bioSignals.SingleOrDefault(x => x.genus == bio.Genus).SetPredictedMinimumValue( bio.predictedMinimumValue );
+                                @event.bioSignals.SingleOrDefault(x => x.genus == bio.Genus).SetPredictedMaximumValue( bio.predictedMaximumValue );
+                            }
+                        }
+
                         if ( unpredictedBiologicals.Any() )
                         {
                             log = "Unpredicted biologicals found";
@@ -576,11 +586,11 @@ namespace EddiDiscoveryMonitor
                     // Retrieve and/or add the organic
                     if ( body.surfaceSignals.TryGetBio( @event.variant, @event.species, @event.genus, out var bio ) )
                     {
-                        log += "Fetched biological\r\n";
+                        log += $"Fetched biological (v={@event.variant.edname}, s={@event.species.edname}, g={@event.genus.edname})\r\n";
                     }
                     else
                     {
-                        log += "Adding biological\r\n";
+                        log += $"Adding biological (v={@event.variant.edname}, s={@event.species.edname}, g={@event.genus.edname})\r\n";
                         bio = bio ?? body.surfaceSignals.AddBio( @event.variant, @event.species, @event.genus );
                     }
 

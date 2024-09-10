@@ -105,12 +105,15 @@ namespace EddiDataDefinitions
 
         public Exobiology ( OrganicSpecies species, bool isPrediction = false ) : base( species )
         {
+            this.Genus = species.genus;
             this.Species = species;
             this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
         }
 
         public Exobiology ( OrganicVariant variant, bool isPrediction = false ) : base( variant )
         {
+            this.Genus = variant.genus;
+            this.Species = variant.species;
             this.Variant = variant;
             this.ScanState = isPrediction ? State.Predicted : State.Confirmed;
         }

@@ -1013,7 +1013,7 @@ namespace EddiJournalMonitor
                                     var parents = new List<IDictionary<string, long>>();
                                     if ( data.TryGetValue( "Parents", out object parentsVal ) )
                                     {
-                                        foreach ( IDictionary<string, object> parentsDict in (List<object>)parentsVal )
+                                        foreach ( IDictionary<string, object> parentsDict in ( (List<object>)parentsVal ).Cast<IDictionary<string, object>>() )
                                         {
                                             foreach ( var kvPair in parentsDict )
                                             {
